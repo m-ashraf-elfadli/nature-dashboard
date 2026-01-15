@@ -1,3 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.css';
+
+@font-face {
+  font-family: 'Dubai';
+  src: url('../src/app/assets/fonts/Dubai-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Dubai-bold';
+  src: url('../src/app/assets/fonts/Dubai-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Dubai-light';
+  src: url('../src/app/assets/fonts/Dubai-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Dubai';
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #fefefe;
+}
+
+body {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Nature theme colors */
+:root {
+  --primary-color: #2d7d5e;
+  --primary-light: #81c784;
+  --primary-very-light: #e8f5e9;
+  --text-dark: #2c3e50;
+  --text-gray: #4b5563;
+  --border-color: #E4E7EC;
+  --background-light: #fefefe;
+}
