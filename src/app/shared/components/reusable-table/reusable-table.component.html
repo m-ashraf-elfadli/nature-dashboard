@@ -1,0 +1,134 @@
+<div class="table-container">
+  <div class="filter">
+    Our filter
+  </div>
+  <div class="custom-table">
+    <p-table
+      [value]="displayedData"
+      [rows]="rows"
+      [paginator]="false"
+      [lazy]="config.serverSidePagination || config.serverSideSort || config.serverSideSearch"
+      [selection]="selection"
+      (selectionChange)="onSelectionChange($event)"
+      (onSort)="onSort($event)">
+      <ng-template pTemplate="header">
+        <tr>
+          @if (config.selectionMode) {
+          <th>
+            @if (config.selectionMode === 'multiple') {
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            }
+          </th>
+          }
+          <th *ngFor="let col of config.columns" [style.width]="col.width"
+            [pSortableColumn]="col.sortable ? col.field : ''">
+            {{ col.header }}
+            @if (col.sortable) {
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+            }
+          </th>
+
+          @if (actions.length) {
+          <th>Actions</th>
+          }
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-row>
+        <tr>
+          @if (config.selectionMode) {
+          <td>
+            @if (config.selectionMode === 'multiple') {
+            <p-tableCheckbox [value]="row"></p-tableCheckbox>
+            } @else if (config.selectionMode === 'single') {
+            <p-tableRadioButton [value]="row"></p-tableRadioButton>
+            }
+          </td>
+          }
+          <td *ngFor="let col of config.columns" [class]="col.class">
+            @switch (col.type) {
+
+            @case ('avatar-and-name') {
+            <div class="avatar-and-name-cell">
+              <img [src]="col.avatarField ? row[col.avatarField] : ''"
+                alt="avatar" />
+              <span>{{ row[col.field] }}</span>
+            </div>
+            }
+
+            @case ('country-chip') {
+            <div class="country-chip-cell">
+              <img [src]="col.avatarField ? row[col.avatarField] : ''" />
+              <span>{{ row[col.field] }}</span>
+            </div>
+            }
+
+            @case ('services') {
+            <div class="services">
+              <span *ngFor="let s of row[col.field] | slice:0:2">{{ s }}</span>
+              @if (row[col.field].length > 2) {
+              <span class="chip plus">+{{ row[col.field].length - 2 }}</span>
+              }
+            </div>
+            }
+
+            @case ('locale') {
+            <div class="locale">
+              <div *ngFor="let l of row[col.field]">
+                <img [src]="l.flag" />
+                <span>{{ l.code }}</span>
+                <i class="pi pi-check"></i>
+              </div>
+            </div>
+            }
+
+            @case ('status') {
+            <p-inputswitch [(ngModel)]="row[col.field]"></p-inputswitch>
+            }
+
+            @case ('badge') {
+            <span
+              [class]="'badge ' + (col.badgeColorField ? col.badgeColorField(row) : '')">
+              {{ row[col.field] }}
+            </span>
+            }
+
+            @case ('text-and-desc') {
+            <div>
+              <div>{{ row[col.field] }}</div>
+              <small>{{ col.secondaryField ? row[col.secondaryField] : ''
+                }}</small>
+            </div>
+            }
+
+            @case ('image') {
+            <img [src]="row[col.field]" alt="image" class="table-image" />
+            }
+
+            @default {
+            <span>{{ row[col.field] }}</span>
+            }
+            }
+          </td>
+
+          @if (actions.length) {
+          <td>
+            <button *ngFor="let act of getVisibleRowActions(row)"
+              (click)="act.callback(row,$event)">
+              {{ act.label }}
+            </button>
+          </td>
+          }
+        </tr>
+      </ng-template>
+    </p-table></div>
+
+  <div class="custom-pagination">
+    <app-reusable-pagination
+      [totalRecords]="totalRecords"
+      [rowsOptions]="config.rowsPerPageOptions"
+      [page]="page"
+      (paginationChange)="onPaginationChange($event)"></app-reusable-pagination>
+  </div>
+
+</div>

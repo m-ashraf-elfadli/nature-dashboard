@@ -1,0 +1,36 @@
+<div class="table-footer">
+
+  <div class="info">
+    Showing {{ page * rows + 1 }}
+    to {{ getLastItemIndex() }}
+    of {{ totalRecords }} entries
+  </div>
+
+  <div class="pagination">
+    <button (click)="prev()" [disabled]="page === 0">‹</button>
+
+    @for (p of pages; track p) {
+      @if (typeof p === 'number') {
+        <button [class.active]="p === page" (click)="go(+p)">
+          {{ +(p) + 1 }}
+        </button>
+      } @else {
+        <span class="disabled">...</span>
+      }
+    }
+
+    <button (click)="next()" [disabled]="page === totalPages - 1">›</button>
+  </div>
+
+  <div class="rows">
+    Show
+    <p-select 
+      [options]="rowsOptions"
+      [(ngModel)]="rows"
+      (ngModelChange)="onPaginationChange({ perPage: $event })"
+      styleClass="rows-dropdown"
+    />
+    entries
+  </div>
+
+</div>

@@ -1,0 +1,33 @@
+:host{
+    .table-footer{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap:8px;
+        .info,.rows{
+            color: var(--Color-Neutral-800, #6E7072);
+            font-size: var(--Font-Size-3Xs, 12px);
+            font-weight: var(--Font-Weight-Regular, 400);
+        }
+        .pagination{
+            button{
+                width: 40px;
+                height: 40px;
+                padding: 10px;
+                border: none;
+                background-color: transparent;
+                border-radius: 8px;
+                font-size: var(--Font-Size-3Xs, 12px);
+                font-weight: var(--Font-Weight-Regular, 400);
+                color: var(--Color-Neutral-800, #6E7072);
+                cursor: pointer;
+                &.active{
+                    color: white;
+                    background: var(--Color-Primary-100, #F3F9F1);
+                    color: var(--Color-Primary-1000, #2E4528);
+                }
+            }
+        }
+    }
+    
+}

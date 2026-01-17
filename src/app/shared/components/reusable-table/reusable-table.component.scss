@@ -1,0 +1,64 @@
+:host{
+    .table-container{
+        border-radius: 12px;
+        border: 1px solid var(--Color-Neutral-400, #DEDEDF);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        .custom-table{
+            border: 1px solid var(--Color-Neutral-200, #F4F4F5);
+            .avatar-and-name-cell{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                img{
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 12px;
+                    object-fit: cover;
+                    width: 44px;
+                    height: 44px;
+                }
+            }
+            .country-chip-cell{
+                padding: 2px 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: fit-content;
+                gap: 8px;
+                border-radius: 12px;
+                background: var(--Color-Neutral-200, #F4F4F5);
+                img{
+                    width: 19px;
+                    height: 14px;
+                    object-fit: cover;
+                }
+            }
+        }
+        ::ng-deep{
+            .p-datatable-tbody > tr > td{
+                img{
+                    width: 50px;
+                }
+            }
+            .p-datatable-thead > tr > th{
+                &:first-child{
+                    border-top-left-radius: 8px;
+
+                }
+                &:last-child{
+                    border-top-right-radius: 8px;
+                }
+                background: var(--Color-Secondary-100, #EDF3F8);
+            }
+        }
+
+    }
+}
+
+// hide bottom border of table cells
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  border-bottom: none !important;
+}
