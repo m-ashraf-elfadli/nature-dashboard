@@ -14,7 +14,7 @@
       <ng-template pTemplate="header">
         <tr>
           @if (config.selectionMode) {
-          <th>
+          <th style="width: 40px;">
             @if (config.selectionMode === 'multiple') {
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             }
@@ -63,21 +63,21 @@
             </div>
             }
 
-            @case ('services') {
-            <div class="services">
-              <span *ngFor="let s of row[col.field] | slice:0:2">{{ s }}</span>
-              @if (row[col.field].length > 2) {
-              <span class="chip plus">+{{ row[col.field].length - 2 }}</span>
+            @case ('chips-group') {
+            <div class="chips-group" [class]="row[col.field]">
+              <span class="chip" *ngFor="let s of row[col.field] | slice:0:3">{{ s }}</span>
+              @if (row[col.field].length > 3) {
+              <span class="chip plus">+ {{ row[col.field].length - 3 }}</span>
               }
             </div>
             }
 
-            @case ('locale') {
-            <div class="locale">
-              <div *ngFor="let l of row[col.field]">
+            @case ('languages-chips') {
+            <div class="chips-group">
+              <div class="country-chip-cell" *ngFor="let l of row[col.field]">
                 <img [src]="l.flag" />
                 <span>{{ l.code }}</span>
-                <i class="pi pi-check"></i>
+                <i class="pi pi-check checked-lang"></i>
               </div>
             </div>
             }

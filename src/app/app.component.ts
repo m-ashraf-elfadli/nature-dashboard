@@ -67,7 +67,7 @@ export class AppComponent {
       image: 'https://i.pravatar.cc/50?img=1',
       country: 'USA',
       countryFlag: 'https://flagcdn.com/us.svg',
-      services: ['Web', 'Design', 'Marketing'],
+      services: ['Web', 'Design', 'Marketing','Web', 'Design', 'Marketing'],
       locale: [{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
       active: true,
       status: 'approved',
@@ -79,7 +79,7 @@ export class AppComponent {
       country: 'Canada',
       countryFlag: 'https://flagcdn.com/ca.svg',
       services: ['Design'],
-      locale: [{ code: 'FR', flag: 'https://flagcdn.com/ca.svg' }],
+      locale: [{ code: 'FR', flag: 'https://flagcdn.com/ca.svg' },{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
       active: false,
       status: 'pending',
     }
@@ -90,16 +90,16 @@ export class AppComponent {
   columns: TableColumn<TableRow>[] = [
     { field: 'name',header: 'Name', type: 'avatar-and-name', width: '200px', avatarField: 'image' },
     { field: 'country', header: 'Country', type: 'country-chip', width: '150px',avatarField: 'countryFlag' },
-    { field: 'services', header: 'Services', type: 'services', width: '200px' },
-    { field: 'locale', header: 'Locale', type: 'locale', width: '150px' },
+    { field: 'services', header: 'Services', type: 'chips-group', width: '200px',class:"max-w-4rem overflow-auto custom-scrollbar" },
+    { field: 'locale', header: 'Locale', type: 'languages-chips', width: '150px' },
     { field: 'active', header: 'Active', type: 'status', width: '100px' },
     { field: 'status', header: 'Status', type: 'badge', width: '120px', badgeColorField: (row:TableRow) => (row.status) }
   ];
 
   actions: TableAction<TableRow>[] = [
-    {label:"Action 1", 
+    {label:"Action 1",
       callback:(row,event)=> this.edit(row,event), icon: 'pi pi-pencil', severity: 'primary' },
-    {label:"Action 2", 
+    {label:"Action 2",
       callback:(row,event)=> this.delete(row,event), icon: 'pi pi-trash', severity: 'danger', visibleWhen: (row:TableRow) => (row.active) }
   ];
   edit(row: TableRow,event?:Event){

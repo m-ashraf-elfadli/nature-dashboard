@@ -2,7 +2,7 @@ export interface TableColumn<T> {
   field: string;
   secondaryField?: string;
   header: string;
-  type?: 'project' | 'country-chip' | 'services' | 'locale' | 'status' | 'text' | 'text-editor' | 'badge' | 'image' | 'date' | 'custom' | 'chip' | 'avatar-and-name' | 'progress-bar' | 'progress-bar-circle' | 'score' | 'text-and-desc',
+  type?: 'project' | 'country-chip' | 'chips-group' | 'languages-chips' | 'status' | 'text' | 'text-editor' | 'badge' | 'image' | 'date' | 'custom' | 'chip' | 'avatar-and-name' | 'progress-bar' | 'progress-bar-circle' | 'score' | 'text-and-desc',
   badgeColorField?: (
     row: T
   ) =>
