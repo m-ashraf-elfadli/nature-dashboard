@@ -25,7 +25,6 @@ export interface TableRow {
   active: boolean;
 
   // For badges
-  status: 'pending' | 'approved' | 'rejected' | 'in-progress' | 'yellow' | 'recurring';
 
   // Any other generic field for text, text-editor, image, etc.
   [key: string]: any;
@@ -82,6 +81,116 @@ export class AppComponent {
       locale: [{ code: 'FR', flag: 'https://flagcdn.com/ca.svg' },{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
       active: false,
       status: 'pending',
+    },
+    {
+      id: 3,
+      name: 'John Doe',
+      image: 'https://i.pravatar.cc/50?img=1',
+      country: 'USA',
+      countryFlag: 'https://flagcdn.com/us.svg',
+      services: ['Web', 'Design', 'Marketing','Web', 'Design', 'Marketing'],
+      locale: [{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: true,
+      status: 'approved',
+    },
+    {
+      id: 4,
+      name: 'Jane Smith',
+      image: 'https://i.pravatar.cc/50?img=2',
+      country: 'Canada',
+      countryFlag: 'https://flagcdn.com/ca.svg',
+      services: ['Design'],
+      locale: [{ code: 'FR', flag: 'https://flagcdn.com/ca.svg' },{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: false,
+      status: 'pending',
+    },
+    {
+      id: 3,
+      name: 'John Doe',
+      image: 'https://i.pravatar.cc/50?img=1', 
+      country: 'USA',
+      countryFlag: 'https://flagcdn.com/us.svg',
+      services: ['Web', 'Design', 'Marketing','Web', 'Design', 'Marketing'],
+      locale: [{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: true,
+      status: 'approved',
+    },
+    {
+      id: 4,
+      name: 'Jane Smith',
+      image: 'https://i.pravatar.cc/50?img=2',
+      country: 'Canada',
+      countryFlag: 'https://flagcdn.com/ca.svg',
+      services: ['Design'],
+      locale: [{ code: 'FR', flag: 'https://flagcdn.com/ca.svg' },{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: false,
+      status: 'pending',
+    },
+    {
+      id: 3,
+      name: 'John Doe',
+      image: 'https://i.pravatar.cc/50?img=1',
+      country: 'USA',
+      countryFlag: 'https://flagcdn.com/us.svg',
+      services: ['Web', 'Design', 'Marketing','Web', 'Design', 'Marketing'],
+      locale: [{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: true,
+      status: 'approved',
+    },
+    {
+      id: 4,
+      name: 'Jane Smith',
+      image: 'https://i.pravatar.cc/50?img=2',
+      country: 'Canada',
+      countryFlag: 'https://flagcdn.com/ca.svg',
+      services: ['Design'],
+      locale: [{ code: 'FR', flag: 'https://flagcdn.com/ca.svg' },{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: false,
+      status: 'pending',
+    },
+    {
+      id: 3,
+      name: 'John Doe',
+      image: 'https://i.pravatar.cc/50?img=1',
+      country: 'USA',
+      countryFlag: 'https://flagcdn.com/us.svg',
+      services: ['Web', 'Design', 'Marketing','Web', 'Design', 'Marketing'],
+      locale: [{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: true,
+      status: 'approved',
+    },
+    {
+      id: 4,
+      name: 'Jane Smith',
+      image: 'https://i.pravatar.cc/50?img=2',
+      country: 'Canada',
+      countryFlag: 'https://flagcdn.com/ca.svg',
+      services: ['Design'],
+      locale: [{ code: 'FR', flag: 'https://flagcdn.com/ca.svg' },{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: false,
+      status: 'pending',
+    },
+    {
+      id: 3,
+      name: 'John Doe',
+      image: 'https://i.pravatar.cc/50?img=1',
+      country: 'USA',
+      countryFlag: 'https://flagcdn.com/us.svg',
+      services: ['Web', 'Design', 'Marketing','Web', 'Design', 'Marketing'],
+      locale: [{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: true,
+      status: 'approved',
+    },
+    {
+      id: 4,
+      name: 'Jane Smith',
+      image: 'https://i.pravatar.cc/50?img=2',
+      country: 'Canada',
+      countryFlag: 'https://flagcdn.com/ca.svg',
+      services: ['Design'],
+      locale: [{ code: 'FR', flag: 'https://flagcdn.com/ca.svg' },{ code: 'EN', flag: 'https://flagcdn.com/us.svg' }],
+      active: false,
+      status: 'pending',
     }
   ];
   ngOnInit() {
@@ -93,14 +202,23 @@ export class AppComponent {
     { field: 'services', header: 'Services', type: 'chips-group', width: '200px',class:"max-w-4rem overflow-auto custom-scrollbar" },
     { field: 'locale', header: 'Locale', type: 'languages-chips', width: '150px' },
     { field: 'active', header: 'Active', type: 'status', width: '100px' },
-    { field: 'status', header: 'Status', type: 'badge', width: '120px', badgeColorField: (row:TableRow) => (row.status) }
   ];
 
   actions: TableAction<TableRow>[] = [
-    {label:"Action 1",
-      callback:(row,event)=> this.edit(row,event), icon: 'pi pi-pencil', severity: 'primary' },
-    {label:"Action 2",
-      callback:(row,event)=> this.delete(row,event), icon: 'pi pi-trash', severity: 'danger', visibleWhen: (row:TableRow) => (row.active) }
+    {
+      label:"Action 1",
+      callback:(row,event)=> this.edit(row,event), 
+      icon: 'pi pi-pencil', 
+      severity: 'primary' ,
+      class: 'p-2'
+    },
+    {
+      label:"Action 2",
+      callback:(row,event)=> this.delete(row,event), 
+      icon: 'pi pi-trash', severity: 'white', 
+      visibleWhen: (row:TableRow) => (row.active) ,
+      class: 'p-2'
+    }
   ];
   edit(row: TableRow,event?:Event){
     console.log("Edit action triggered",row,event);

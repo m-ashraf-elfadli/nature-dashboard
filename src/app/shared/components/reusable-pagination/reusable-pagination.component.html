@@ -7,7 +7,7 @@
   </div>
 
   <div class="pagination">
-    <button (click)="prev()" [disabled]="page === 0">‹</button>
+    <button class="" (click)="prev()" [disabled]="page === 0">‹</button>
 
     @for (p of pages; track p) {
       @if (typeof p === 'number') {
@@ -19,7 +19,7 @@
       }
     }
 
-    <button (click)="next()" [disabled]="page === totalPages - 1">›</button>
+    <button class="" (click)="next()" [disabled]="page === totalPages - 1">›</button>
   </div>
 
   <div class="rows">

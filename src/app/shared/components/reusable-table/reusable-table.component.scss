@@ -59,6 +59,11 @@
                     background: var(--Color-Primary-100, #F3F9F1);
                 }
             }
+            .actions-cell{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
         }
         ::ng-deep{
             .p-datatable-tbody > tr > td{
@@ -78,6 +83,18 @@
             }
         }
 
+    }
+    :ng-deep{
+        .p-datatable .p-datatable-tbody > tr > td {
+            ::ng-deep{
+                .p-checkbox-checked .p-checkbox-box{
+                    width: 14px;
+                    height: 14px;
+                    border-radius: 4px;
+                    border: 1.5px solid var(--Color-Neutral-500, #939598);
+                }
+            }
+        }
     }
 }
 

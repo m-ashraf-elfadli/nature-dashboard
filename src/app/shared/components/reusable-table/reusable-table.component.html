@@ -112,8 +112,9 @@
           </td>
 
           @if (actions.length) {
-          <td>
+          <td class="actions-cell">
             <button *ngFor="let act of getVisibleRowActions(row)"
+              class="custom-btn btn-{{act.severity}} {{ act.class }}"
               (click)="act.callback(row,$event)">
               {{ act.label }}
             </button>
