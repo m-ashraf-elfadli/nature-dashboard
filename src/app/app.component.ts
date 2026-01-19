@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ReusableTableComponent } from "./shared/components/reusable-table/reusable-table.component";
 import { TableAction, TableColumn, TableConfig } from './shared/components/reusable-table/reusable-table.types';
+import { FilterItems } from './shared/components/filters/filters.component';
 
 export interface TableRow {
   id: number;
@@ -226,6 +227,36 @@ export class AppComponent {
   delete( row: TableRow,event?:Event){
     console.log("Delete action triggered",row,event);
   }
+  filterItems: FilterItems[] = [
+    {
+      type: 'search',
+      name: 'name',
+      placeholder: 'Search by name ...'
+    },
+    {
+      type: 'filter',
+      filterOptions: [
+        {
+          type: 'select',
+          label: 'Country',
+          inputName: 'country',
+          multiple: true,
+          options: [
+            { id: 'USA', name: 'USA' },
+            { id: 'Canada', name: 'Canada' }
+          ]
+        },
+        
+      ]
+    },
+    {
+      type: 'btn',
+      label:"Add New Project",
+      btnIcon:"pi pi-plus",
+      btnSeverity:"primary",
+      btnCallback:(e:Event) => this.addNewProject(e)
+    },
+  ];
   config: TableConfig<TableRow> = {
     columns: this.columns,
     serverSidePagination: false,
@@ -246,6 +277,9 @@ export class AppComponent {
   }
   selectionChange(e:TableRow[] | TableRow){
     console.log('selected items',e)
+  }
+  addNewProject(e:Event){
+    console.log("Add New Project button clicked",e);
   }
 
 }

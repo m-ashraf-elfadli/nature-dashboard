@@ -1,6 +1,9 @@
 <div class="table-container">
   <div class="filter">
-    Our filter
+    <app-filters
+      [filterConfig]="filterItems"
+      (filterChange)="onFilterChange($event)">
+    </app-filters>
   </div>
   <div class="custom-table">
     <p-table
