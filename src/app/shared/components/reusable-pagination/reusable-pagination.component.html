@@ -7,7 +7,9 @@
   </div>
 
   <div class="pagination">
-    <button class="" (click)="prev()" [disabled]="page === 0">‹</button>
+    <button class="pagination-table-btn" (click)="prev()" [disabled]="page === 0">
+      <i class="pi pi-angle-left"></i>
+    </button>
 
     @for (p of pages; track p) {
       @if (typeof p === 'number') {
@@ -19,7 +21,9 @@
       }
     }
 
-    <button class="" (click)="next()" [disabled]="page === totalPages - 1">›</button>
+    <button class="pagination-table-btn" (click)="next()" [disabled]="page === totalPages - 1">
+      <i class="pi pi-angle-right"></i>
+    </button>
   </div>
 
   <div class="rows">
