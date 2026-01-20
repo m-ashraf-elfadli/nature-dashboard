@@ -6,11 +6,11 @@ import {
   FormGroup,
   ReactiveFormsModule
 } from '@angular/forms';
-
+import { PasswordModule } from 'primeng/password';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, PasswordModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -45,10 +45,5 @@ get username() {
 
     console.log(this.loginForm.value);
   }
-  showPassword = false;
-
-togglePassword() {
-  this.showPassword = !this.showPassword;
-}
 
 }
