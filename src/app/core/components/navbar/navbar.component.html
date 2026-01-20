@@ -1,0 +1,79 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Hamburger Menu (Mobile Only) -->
+    <button
+      class="hamburger-menu"
+      (click)="toggleMobileMenu()"
+      [class.open]="mobileMenuOpen"
+      title="Toggle Menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Page Title Section -->
+    <div class="navbar-title">
+      <h1>{{ currentPageTitle }}</h1>
+    </div>
+
+    <!-- Right Section -->
+    <div class="navbar-right">
+      <!-- Language Selector -->
+      <div class="language-selector">
+        <p-select
+          [options]="languages" 
+          [(ngModel)]="selectedLanguage" 
+          optionLabel="label"
+          optionValue="code"
+          (onChange)="changeLang(selectedLanguage)"
+          placeholder="Select a Language"
+          class="w-full">
+          <ng-template let-lang pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2" *ngIf="lang">
+              <img
+                [src]="lang.flag"
+                width="20"
+                height="18"
+                alt=""
+              />
+              <span class="font-medium">{{ lang.label }}</span>
+            </div>
+          </ng-template>
+        </p-select>
+      </div>
+
+      <!-- User Profile Section -->
+      <div class="user-profile" (click)="toggleUserMenu()">
+        <img src="images/user.png" alt="User" class="user-avatar" />
+        <div class="user-info">
+          <div class="user-name">Nature Admin</div>
+          <div class="user-role">Superadmin</div>
+        </div>
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+        >
+          <path
+            d="M5 7.5L10 12.5L15 7.5"
+            stroke="black"
+            stroke-width="1.66666"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+
+      <!-- User Menu Dropdown -->
+      <div class="user-menu" [class.visible]="userMenuVisible">
+        <a href="#" class="menu-item">Profile</a>
+        <a href="#" class="menu-item">Settings</a>
+        <a href="#" class="menu-item">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>

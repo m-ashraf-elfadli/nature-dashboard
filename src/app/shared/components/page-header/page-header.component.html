@@ -1,0 +1,30 @@
+<div class="page-header">
+    <div class="breadcrumb-section">
+        <nav class="breadcrumb">
+            <ng-container *ngFor="let item of breadcrumbs; let last = last">
+                <span class="breadcrumb-item" [class.active]="last" [class.clickable]="item.route"
+                    (click)="navigateToBreadcrumb(item.route)">
+                    {{ item.label }}
+                </span>
+                <span class="breadcrumb-separator" *ngIf="!last">/</span>
+            </ng-container>
+        </nav>
+    </div>
+
+    <div class="page-title">
+        <button class="backBtn" *ngIf="breadcrumbs.length > 2" (click)="goBack()" severity="success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <g clip-path="url(#clip0_10269_3464)">
+                    <path d="M11.2 14.4L6.40001 9.59995L11.2 4.79995" stroke="#FEFEFE" stroke-width="1.2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_10269_3464">
+                        <rect width="19.2" height="19.2" fill="white" transform="matrix(-1 0 0 -1 19.2 19.2)" />
+                    </clipPath>
+                </defs>
+            </svg>
+        </button>
+        <span>{{ title }}</span>
+    </div>
+</div>
