@@ -40,9 +40,8 @@ export class ConfirmationTestComponent {
     this.config = {
       title: 'Confirm Action',
       subtitle: 'Do you want to continue?',
-      icon: 'assets/icons/check.svg',
       confirmText: 'Yes, Continue',
-      confirmSeverity: 'primary'
+      confirmSeverity: 'success'
     };
     this.visible = true;
   }
