@@ -39,26 +39,8 @@ export interface TableRow {
 })
 export class AppComponent {
   title = 'nature-dashboard';
-  private readonly LANG_KEY = 'app_lang';
-
-  constructor(private translate: TranslateService) {
-    const savedLang = localStorage.getItem(this.LANG_KEY) || 'en';
-
-    this.translate.use(savedLang);
-    this.setDirection(savedLang);
-  }
-
-  changeLang(lang: string) {
-    this.translate.use(lang);
-    localStorage.setItem(this.LANG_KEY, lang);
-    this.setDirection(lang);
-  }
-
-  private setDirection(lang: string) {
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = lang;
-  }
- data: TableRow[] = [
+  // ========================= example table data ============================
+  data: TableRow[] = [
     {
       id: 1,
       name: 'John Doe111111111111',

@@ -320,3 +320,46 @@
     }
   }
 }
+html:lang(ar) :host {
+  .sidebar {
+    left: auto;
+    right: 0;
+    border-left: 1px solid #DEDEDF;
+    border-right: none;
+  }
+
+  .collapse-btn {
+    right: auto;
+    left: 0;
+    transform: translateX(-50%);
+  }
+
+  .sidebar.collapsed {
+
+    .collapse-btn {
+      transform: translateX(-50%) rotate(180deg);
+    }
+  }
+  @media (max-width: 768px) {
+    .sidebar {
+      right: -275px;
+      left: auto;
+      transition: right 0.3s ease;
+
+      &.show-mobile {
+        right: 0;
+      }
+
+      &.collapsed {
+        .collapse-btn {
+          transform: translateX(-50%) rotate(180deg);
+        }
+      }
+    }
+
+    .sidebar-overlay {
+      left: 0;
+      right: 0;
+    }
+  }
+}
