@@ -1,0 +1,74 @@
+:host ::ng-deep .confirmation-dialog {
+  border-radius: 16px;
+}
+
+.dialog-content {
+  padding: 32px;
+  text-align: center;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  border-radius: 96px;
+  width: fit-content;
+  margin: 0 auto 16px;
+
+  .icon-inner {
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  }
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333435;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 14px;
+  color: #6e7072;
+  max-width: 320px;
+  margin: 0 auto 24px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+
+  button {
+    flex: 1;
+    height: 43px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+}
+
+/* Button Variants */
+.confirm-danger {
+  background: #b3261e;
+  border: none;
+
+  &:hover {
+    background: #9e1f19;
+  }
+}
+
+.confirm-primary {
+  background: #2563eb;
+  border: none;
+}
+
+.confirm-success {
+  background: #16a34a;
+  border: none;
+}
+
+.confirm-warning {
+  background: #f59e0b;
+  border: none;
+}
