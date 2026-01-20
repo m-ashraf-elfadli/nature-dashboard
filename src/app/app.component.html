@@ -3,3 +3,13 @@
 
     <button (click)="changeLang('en')">EN</button>
     <button (click)="changeLang('ar')">AR</button>
+<app-reusable-table
+  [data]="data"
+  [config]="config"
+  [actions]="actions"
+  [totalRecords]="totalRecords"
+  [filterItems]="filterItems"
+  (paginationChange)="onPaginationChange($event)"
+  (selectionChange)="selectionChange($event)"
+>
+</app-reusable-table>
