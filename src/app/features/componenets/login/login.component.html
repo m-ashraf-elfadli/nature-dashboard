@@ -1,0 +1,93 @@
+<div class="login-wrapper">
+  <div class="production">
+    Powerd By
+    <img src="2blogo.svg" alt="2b" />
+  </div>
+  <!-- Left Side -->
+  <div class="login-left">
+    <div class="logo">
+      <img src="logo.svg" alt="Nature" />
+    </div>
+    <div class="head">
+      <h2>Login to your account</h2>
+      <p class="subtitle">
+        Unlock Your Progress - Securely Access Your Content!
+      </p>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+      <!-- USERNAME -->
+      <label>Username <span>*</span></label>
+      <div class="field">
+        <input
+          type="text"
+          placeholder="Enter your username"
+          formControlName="username"
+        />
+        @if (username?.touched && username?.invalid) {
+          <div class="error">
+            @if (username?.errors?.["required"]) {
+              <span>Please enter your username</span>
+            }
+
+            @if (username?.errors?.["minlength"]) {
+              <span>Username must be at least 6 characters</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- PASSWORD -->
+      <label>Password <span>*</span></label>
+      <div class="field password-field">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Enter your password"
+          formControlName="password"
+        />
+
+        <button
+          type="button"
+          class="toggle-password"
+          (click)="togglePassword()"
+          aria-label="Toggle password visibility"
+        >
+          <i
+            class="fa"
+            [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+          ></i>
+        </button>
+
+        @if (password?.touched && password?.invalid) {
+          <div class="error">
+            @if (password?.errors?.["required"]) {
+              <span>Please enter your password</span>
+            }
+            @if (password?.errors?.["minlength"]) {
+              <span>Password must be at least 6 characters</span>
+            }
+          </div>
+        }
+      </div>
+
+      <button class="submit" type="submit">Sign In</button>
+
+      <p class="support">
+        Have a problem signing in?
+        <a href="#">Call Support</a>
+      </p>
+    </form>
+  </div>
+
+  <!-- Right Side -->
+  <div class="login-right">
+    <!-- <div class="overlay">
+      <h3>Manage your website content</h3>
+      <p>
+        Dive in to set up your Website content, upload projects, and manage your
+        website effectively.
+      </p>
+    </div> -->
+
+    <img class="dashboard-preview" src="images/dasboard.png" alt="Dashboard" />
+  </div>
+</div>

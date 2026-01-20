@@ -7,19 +7,8 @@ import { ConfirmationDialogConfig } from '../services/confirmation-popup.service
   selector: 'app-confirmation-test',
   standalone: true,
   imports: [ButtonModule, ConfirmDialogComponent],
-  template: `
-    <div style="padding: 40px; display: flex; gap: 12px;">
-      <button pButton label="Delete Project" (click)="openDelete()"></button>
-      <button pButton label="Confirm Action" (click)="openConfirm()"></button>
-    </div>
-
-    <app-confirm-dialog
-      [(visible)]="visible"
-      [config]="config"
-      (confirm)="onConfirm()"
-      (cancel)="onCancel()"
-    />
-  `
+  templateUrl: './confirmation-test.component.html',
+  styleUrl: './confirmation-test.component.scss'
 })
 export class ConfirmationTestComponent {
   visible = false;

@@ -1,4 +1,11 @@
 <div style="padding: 40px; display: flex; gap: 12px">
-  <button pButton label="Delete Project" (click)="openDelete()"></button>
-  <button pButton label="Confirm Action" (click)="openConfirm()"></button>
+  <p-button label="Delete Project" (click)="openDelete()"></p-button>
+  <p-button label="Confirm Action" (click)="openConfirm()"></p-button>
 </div>
+
+<app-confirm-dialog
+  [(visible)]="visible"
+  [config]="config"
+  (confirm)="onConfirm()"
+  (cancel)="onCancel()"
+/>
