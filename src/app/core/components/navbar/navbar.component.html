@@ -1,0 +1,131 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Hamburger Menu (Mobile Only) -->
+    <button
+      class="hamburger-menu"
+      (click)="toggleMobileMenu()"
+      [class.open]="mobileMenuOpen"
+      title="Toggle Menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Page Title Section -->
+    <div class="navbar-title">
+      <h1>{{ currentPageTitle }}</h1>
+    </div>
+
+    <!-- Right Section -->
+    <div class="navbar-right">
+      <!-- Language Selector -->
+      <div class="language-selector">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="14"
+          viewBox="0 0 20 14"
+          fill="none"
+        >
+          <rect width="19.6" height="14" rx="1.4" fill="white" />
+          <mask
+            id="mask0_10113_726"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="20"
+            height="14"
+          >
+            <rect width="19.6" height="14" rx="1.4" fill="white" />
+          </mask>
+          <g mask="url(#mask0_10113_726)">
+            <rect width="19.6" height="14" fill="#0A17A7" />
+            <path
+              d="M21.5418 0.206299L14.9285 4.66724H19.6004V9.33325H14.9285L21.5418 13.7942L20.4979 15.342L12.1336 9.69946V14.9338H7.46663V9.69946L-0.897629 15.342L-1.94157 13.7942L4.67171 9.33325H-0.000167847V4.66724H4.67171L-1.94157 0.206299L-0.897629 -1.34155L7.46663 4.30005V-0.93335H12.1336V4.30005L20.4979 -1.34155L21.5418 0.206299Z"
+              fill="white"
+            />
+            <path
+              d="M13.0676 4.43251L21.9333 -1.40002"
+              stroke="#DB1F35"
+              stroke-width="0.466667"
+              stroke-linecap="round"
+            />
+            <path
+              d="M14.0089 9.58827L21.9566 14.9453"
+              stroke="#DB1F35"
+              stroke-width="0.466667"
+              stroke-linecap="round"
+            />
+            <path
+              d="M5.60385 4.41739L-2.68626 -1.16962"
+              stroke="#DB1F35"
+              stroke-width="0.466667"
+              stroke-linecap="round"
+            />
+            <path
+              d="M6.503 9.52347L-2.68626 15.6174"
+              stroke="#DB1F35"
+              stroke-width="0.466667"
+              stroke-linecap="round"
+            />
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M0 8.4H8.4V14H11.2V8.4H19.6V5.6H11.2V0H8.4V5.6H0V8.4Z"
+              fill="#E6273E"
+            />
+          </g>
+        </svg>
+        <span class="lang-text">English</span>
+        <svg
+          class="lang-dropdown"
+          width="12"
+          height="8"
+          viewBox="0 0 12 8"
+          fill="none"
+        >
+          <path
+            d="M1 1L6 6L11 1"
+            stroke="#4b5563"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <!-- User Profile Section -->
+      <div class="user-profile" (click)="toggleUserMenu()">
+        <img src="images/user.png" alt="User" class="user-avatar" />
+        <div class="user-info">
+          <div class="user-name">Nature Admin</div>
+          <div class="user-role">Superadmin</div>
+        </div>
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+        >
+          <path
+            d="M5 7.5L10 12.5L15 7.5"
+            stroke="black"
+            stroke-width="1.66666"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+
+      <!-- User Menu Dropdown -->
+      <div class="user-menu" [class.visible]="userMenuVisible">
+        <a href="#" class="menu-item">Profile</a>
+        <a href="#" class="menu-item">Settings</a>
+        <a href="#" class="menu-item">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>

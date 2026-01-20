@@ -1,0 +1,308 @@
+.gallery-container {
+  width: 100%;
+  max-width: 350px;
+  margin: 24px 0;
+
+  .gallery-label {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+
+  .single-image-section {
+    margin-bottom: 2rem;
+
+    .image-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      .image-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+      }
+
+      .image-dimensions {
+        font-size: 0.875rem;
+        color: #999;
+      }
+    }
+
+    .upload-area.single {
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+    }
+  }
+
+  .upload-area {
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+
+    &.multiple {
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    &.drag-over {
+      border-color: #82c672;
+      background-color: #f1f8e9;
+    }
+
+    .upload-icon {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+
+      svg {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .upload-label {
+      cursor: pointer;
+      display: block;
+
+      .text-upload {
+        display: inline;
+        font-weight: 600;
+        color: #82c672;
+        font-size: 0.95rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .text-or {
+        display: inline;
+        color: #333;
+        font-size: 0.95rem;
+        margin-left: 0.25rem;
+      }
+    }
+
+    .file-info {
+      color: #999;
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .image-preview {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    &.single-preview {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid #ddd;
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      &:hover {
+        .remove-btn,
+        .replace-label {
+          opacity: 1;
+        }
+      }
+
+      .remove-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(220, 53, 69, 0.8);
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        opacity: 0;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        &:hover {
+          background: rgba(220, 53, 69, 0.95);
+        }
+      }
+
+      .replace-label {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #1976d2;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        opacity: 0;
+
+        &:hover {
+          background: #1565c0;
+        }
+
+        svg {
+          width: 22px;
+          height: 22px;
+        }
+      }
+    }
+  }
+
+  .featured-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border: 2px solid #ddd;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .gallery-grid,
+  .gallery-grid-second {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid #ddd;
+      position: relative;
+      background: #fafafa;
+      transition: all 0.3s ease;
+
+      &.image-item {
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        &:hover .remove-btn {
+          opacity: 1;
+          background: rgba(220, 53, 69, 0.9);
+        }
+
+        .remove-btn {
+          position: absolute;
+          top: 6px;
+          right: 6px;
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          border: none;
+          background: rgba(220, 53, 69, 0.7);
+          color: white;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+          opacity: 0;
+          padding: 0;
+
+          svg {
+            width: 16px;
+            height: 16px;
+          }
+
+          &:hover {
+            background: rgba(220, 53, 69, 0.95);
+          }
+        }
+      }
+
+      &.add-more {
+        border: 2px dashed #82c672;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background-color: #fafafa;
+
+        &:hover {
+          border-color: #7cb342;
+          background-color: #f1f8e9;
+        }
+
+        .add-label {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+
+          .plus-icon {
+            font-size: 2.5rem;
+            color: #82c672;
+            line-height: 1;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+}
