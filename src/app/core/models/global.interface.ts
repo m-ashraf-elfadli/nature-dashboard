@@ -1,0 +1,9 @@
+export interface PaginationResponse<T> {
+  status: string
+  message: string
+  result: T[]
+  page: number
+  size: number
+  total: number
+  lastPage: number
+}

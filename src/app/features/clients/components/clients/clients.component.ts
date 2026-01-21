@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PageHeaderComponent } from "../../shared/components/page-header/page-header.component";
-import { ReusableTableComponent } from "../../shared/components/reusable-table/reusable-table.component";
-import { TableAction, TableColumn, TableConfig } from '../../shared/components/reusable-table/reusable-table.types';
-import { FilterItems } from '../../shared/components/filters/filters.component';
+import { PageHeaderComponent } from "../../../../shared/components/page-header/page-header.component";
+import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
+import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
+import { FilterItems } from '../../../../shared/components/filters/filters.component';
 export interface Client {
   id: number;
   clientName: string;
@@ -73,10 +73,10 @@ export class ClientsComponent {
   { "id": 50, "clientName": "Origin Coffee Co", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=OC", "dateAdded": "30/03/2026", "status": false }
 ]
   columns: TableColumn<Client>[] = [
-    { field: 'clientName',header: 'Client name', type: 'text', width: '200px', avatarField: 'image' },
-    { field: 'clientImage', header: 'Client image', type: 'image', width: '150px',avatarField: 'countryFlag' },
-    { field: 'dateAdded', header: 'Date added', type: 'date', width: '200px',class:"max-w-4rem overflow-auto custom-scrollbar" },
-    { field: 'status', header: 'Status', type: 'status', width: '150px' },
+    { field: 'clientName',header: 'Client name', type: 'text', avatarField: 'image' },
+    { field: 'clientImage', header: 'Client image', type: 'image',avatarField: 'countryFlag' },
+    { field: 'dateAdded', header: 'Date added', type: 'date',class:"max-w-4rem overflow-auto custom-scrollbar" },
+    { field: 'status', header: 'Status', type: 'status' },
   ];
 
   actions: TableAction<Client>[] = [
@@ -103,7 +103,7 @@ export class ClientsComponent {
   filterItems: FilterItems[] = [
     {
       type: 'search',
-      name: 'name',
+      name: 'keyword',
       placeholder: 'Search by name ...'
     },
     {
