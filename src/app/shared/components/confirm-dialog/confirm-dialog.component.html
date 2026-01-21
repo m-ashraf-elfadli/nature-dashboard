@@ -1,51 +1,40 @@
-<p-dialog
-  [(visible)]="visible"
-  [modal]="true"
-  [closable]="false"
-  [draggable]="false"
-  [resizable]="false"
-  styleClass="confirmation-dialog"
->
-  <div class="dialog-content">
-    <!-- ICON -->
-    @if (config.icon) {
-      <div
-        class="icon-wrapper"
-        [style.border-color]="config.iconBorderColor"
-        [style.background]="config.iconBgColor"
-      >
-        <div class="icon-inner">
-          <img [src]="config.icon" alt="icon" />
-        </div>
-      </div>
-    }
-
-    <!-- TEXT -->
-    <h2>{{ config.title }}</h2>
-
-    @if (config.subtitle) {
-      <p>{{ config.subtitle }}</p>
-    }
-
-    <!-- ACTIONS -->
-    <div class="actions">
-      @if (config.showCancel !== false) {
-        <button
-          pButton
-          type="button"
-          [label]="config.cancelText ?? 'Cancel'"
-          class="p-button-outlined cancel-btn"
-          (click)="close()"
-        ></button>
-      }
-
-      <button
-        pButton
-        type="button"
-        [label]="config.confirmText ?? 'Confirm'"
-        [class]="severityClass"
-        (click)="onConfirm()"
-      ></button>
+<div class="popup-wrraper">
+  <!-- ICON -->
+  <!-- ICON -->
+  @if (data?.icon) {
+    <div class="icon-wrapper">
+      <img [src]="data.icon" alt="icon" />
     </div>
+  }
+  <!-- TEXT -->
+  <div class="popup-text">
+    <h2 class="title">{{ data?.title }}</h2>
+
+    @if (data?.subtitle) {
+      <p class="subtitle">{{ data?.subtitle }}</p>
+    }
   </div>
-</p-dialog>
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button
+      class="popup-button confirm-{{ data?.cancelSeverity ?? 'cancel' }}"
+      (click)="close()"
+    >
+      {{ data?.cancelText ?? "Cancel" }}
+    </button>
+    @if (data?.showExtraButton === true) {
+      <button
+        class="popup-button confirm-{{ data?.confirmSeverity }}"
+        (click)="close()"
+      >
+        {{ data?.extraButtonText }}
+      </button>
+    }
+    <button
+      class="popup-button confirm-{{ data?.confirmSeverity }}"
+      (click)="confirm()"
+    >
+      {{ data?.confirmText }}
+    </button>
+  </div>
+</div>

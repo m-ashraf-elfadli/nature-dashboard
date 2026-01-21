@@ -74,7 +74,9 @@ body{
   box-sizing: border-box;
   font-family: "Dubai";
 }
-
+.p-dialog-header {
+display: none !important;
+}
 html,
 body {
   height: 100%;
