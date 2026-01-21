@@ -24,7 +24,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class GalleryUploadComponent implements ControlValueAccessor {
   @Input() multiple: boolean = false;
-  @Input() label: string = 'Project Gallery';
+  @Input() label: string = '';
   @Input() dimensions: string = '';
   @Input() maxSize: number = 100;
   @Input() formControlName: string = '';

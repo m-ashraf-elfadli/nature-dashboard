@@ -1,1 +1,19 @@
-<p>client-form works!</p>
+<div class="form-inputs">
+    <div class="our-field">
+        <label for="">Client name (English) <span class="text-red-val">*</span></label>
+        <input type="text" pInputText placeholder="Enter client name in English" />
+        <!-- <span class="text-red-val">Validation</span> -->
+    </div>
+    <div class="our-field">
+        <label for="">Client name (Arabic) <span class="text-red-val">*</span></label>
+        <input type="text" pInputText placeholder="Enter client name in Arabic" />
+        <!-- <span class="text-red-val">Validation</span> -->
+    </div>
+    <div class="galary-field">
+        <app-gallery-upload></app-gallery-upload>
+    </div>
+</div>
+<div class="form-footer">
+    <button type="button" class="custom-btn btn-white">Save And Create New</button>
+    <button type="submit" class="custom-btn btn-primary">Save</button>
+</div>

@@ -4,6 +4,9 @@ import { PageHeaderComponent } from "../../../../shared/components/page-header/p
 import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
 import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
 import { FilterItems } from '../../../../shared/components/filters/filters.component';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { ClientFormComponent } from "../client-form/client-form.component";
 export interface Client {
   id: number;
   clientName: string;
@@ -14,11 +17,17 @@ export interface Client {
 @Component({
   selector: 'app-clients',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, ReusableTableComponent],
+  imports: [CommonModule, PageHeaderComponent, ReusableTableComponent, DialogModule, ButtonModule, ClientFormComponent],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss',
 })
 export class ClientsComponent {
+
+  visible: boolean = false;
+
+    showDialog() {
+        this.visible = true;
+    }
   // ========================= example table data ============================
   data: Client[] = [
   { "id": 1, "clientName": "Ministry of Climate Change & Environment", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=MC", "dateAdded": "12/12/2024", "status": true },
@@ -81,7 +90,7 @@ export class ClientsComponent {
 
   actions: TableAction<Client>[] = [
     {
-      callback:(row,event)=> this.edit(row,event), 
+      callback:(row)=> this.showDialog(), 
       icon: 'pi pi-pencil', 
       severity: 'white' ,
       class: 'p-2'
