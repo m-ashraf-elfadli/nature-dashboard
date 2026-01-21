@@ -3,12 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { SidebarService } from '../../services/sidebar.service';
-import { ConfirmationTestComponent } from "../../../shared/confirmation-test/confirmation-test.component";
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-main',
-  imports: [RouterOutlet, SidebarComponent, NavbarComponent, ConfirmationTestComponent,TranslateModule],
+  imports: [RouterOutlet, SidebarComponent, NavbarComponent,TranslateModule],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })
