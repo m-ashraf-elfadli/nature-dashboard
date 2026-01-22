@@ -120,6 +120,9 @@
               class="custom-btn btn-{{act.severity}} {{ act.class }}"
               (click)="act.callback(row,$event)">
               {{ act.label }}
+              @if( act.icon ) {
+              <i [class]="act.icon"></i>
+              }
             </button>
           </td>
           }

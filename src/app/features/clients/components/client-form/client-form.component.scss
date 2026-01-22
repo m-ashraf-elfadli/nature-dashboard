@@ -1,0 +1,13 @@
+:host{
+    .form-inputs{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .form-footer{
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 24px;
+    }
+}

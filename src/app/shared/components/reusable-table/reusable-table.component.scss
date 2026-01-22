@@ -103,3 +103,8 @@
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
   border-bottom: none !important;
 }
+:host ::ng-deep{
+    .pi-trash{
+        color: var(--Color-Error-500, #E74C3C);
+    }
+}
