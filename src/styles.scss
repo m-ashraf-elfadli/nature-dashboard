@@ -153,7 +153,7 @@ a {
   }
 
   &:hover {
-    background-color: oklch(0.98 -1 0 / 1);
+    background: oklch(0.98 -1 0 / 1);
   }
 }
 
@@ -168,7 +168,7 @@ a {
   background: var(--Secondary-White, #fff);
   transition: 0.2s ease;
   cursor: pointer;
-
+  min-width: 200px;
   span {
     color: var(--Secondary-500, #232323);
     text-align: center;

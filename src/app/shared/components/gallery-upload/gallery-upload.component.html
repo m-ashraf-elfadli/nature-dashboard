@@ -140,7 +140,7 @@
     </div>
 
     <!-- Gallery Grid (show when images exist) -->
-    <div class="gallery-grid" *ngIf="images.length > 0">
+    <div class="gallery-grid" *ngIf="images.length >= 0">
       <!-- First Row: Show up to 4 images -->
       <div
         *ngFor="let image of images.slice(0, 4); let i = index"
@@ -181,7 +181,7 @@
     </div>
 
     <!-- Second Row (if more than 4 images) -->
-    <div class="gallery-grid-second" *ngIf="images.length > 4">
+    <div class="gallery-grid-second" *ngIf="images.length >= 4">
       <div
         *ngFor="let image of images.slice(4); let i = index"
         class="gallery-item image-item"
