@@ -1,127 +1,223 @@
 <div class="gallery-container">
-    <!-- Single Image Mode -->
-    <ng-container *ngIf="!multiple">
-        <div class="single-image-section">
-            <!-- <div class="image-header">
-                <h3 class="image-title">{{ label }}</h3>
-                <span class="image-dimensions" *ngIf="dimensions">{{ dimensions }}</span>
-            </div> -->
+  <!-- Single Image Mode -->
+  <ng-container *ngIf="!multiple">
+    <div class="single-image-section">
+      <div class="image-header">
+        <h3 class="image-title">{{ label }}</h3>
+        <span class="image-dimensions" *ngIf="dimensions">{{
+          dimensions
+        }}</span>
+      </div>
 
-            <div class="upload-area single" [class.drag-over]="isDragOver" (dragover)="onDragOver($event)"
-                (dragleave)="onDragLeave()" (drop)="onDrop($event)">
-                <ng-container *ngIf="images.length === 0">
-                    <div class="upload-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="17" viewBox="0 0 21 17" fill="none">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M0 2.25C0 1.00736 1.00736 0 2.25 0H18.75C19.9926 0 21 1.00736 21 2.25V14.25C21 15.4926 19.9926 16.5 18.75 16.5H2.25C1.00736 16.5 0 15.4926 0 14.25V2.25ZM1.5 12.3107V14.25C1.5 14.6642 1.83579 15 2.25 15H18.75C19.1642 15 19.5 14.6642 19.5 14.25V12.3107L16.8107 9.62132C16.2249 9.03553 15.2751 9.03553 14.6893 9.62132L13.8107 10.5L14.7803 11.4697C15.0732 11.7626 15.0732 12.2374 14.7803 12.5303C14.4874 12.8232 14.0126 12.8232 13.7197 12.5303L8.56066 7.37132C7.97487 6.78553 7.02513 6.78553 6.43934 7.37132L1.5 12.3107ZM11.625 4.5C11.625 3.87868 12.1287 3.375 12.75 3.375C13.3713 3.375 13.875 3.87868 13.875 4.5C13.875 5.12132 13.3713 5.625 12.75 5.625C12.1287 5.625 11.625 5.12132 11.625 4.5Z"
-                                fill="#82C672" />
-                        </svg>
-                    </div>
-                    <label class="upload-label">
-                        <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
-                        <span class="text-upload">Click to upload</span>
-                        <span class="text-or">or Drag and Drop files here</span>
-                    </label>
-                    <p class="file-info">JPG or PNG (max 3MB)</p>
-                </ng-container>
-
-                <ng-container *ngIf="images.length > 0">
-                    <div class="image-preview single-preview">
-                        <img [src]="images[0]" alt="Preview" />
-                        <button type="button" class="remove-btn" (click)="removeImage(0)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                            </svg>
-                        </button>
-                        <label class="replace-label">
-                            <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="currentColor">
-                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" />
-                                <path
-                                    d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-                            </svg>
-                        </label>
-                    </div>
-                </ng-container>
-            </div>
-        </div>
-    </ng-container>
-
-    <!-- Multiple Images Mode -->
-    <ng-container *ngIf="multiple">
-        <!-- Featured Image (if images exist) -->
-        <ng-container *ngIf="images.length > 0">
-            <div class="featured-image">
-                <img [src]="images[0]" alt="Featured image" />
-            </div>
+      <div
+        class="upload-area single"
+        [class.drag-over]="isDragOver"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()"
+        (drop)="onDrop($event)"
+      >
+        <ng-container *ngIf="images.length === 0">
+          <div class="upload-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="21"
+              height="17"
+              viewBox="0 0 21 17"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M0 2.25C0 1.00736 1.00736 0 2.25 0H18.75C19.9926 0 21 1.00736 21 2.25V14.25C21 15.4926 19.9926 16.5 18.75 16.5H2.25C1.00736 16.5 0 15.4926 0 14.25V2.25ZM1.5 12.3107V14.25C1.5 14.6642 1.83579 15 2.25 15H18.75C19.1642 15 19.5 14.6642 19.5 14.25V12.3107L16.8107 9.62132C16.2249 9.03553 15.2751 9.03553 14.6893 9.62132L13.8107 10.5L14.7803 11.4697C15.0732 11.7626 15.0732 12.2374 14.7803 12.5303C14.4874 12.8232 14.0126 12.8232 13.7197 12.5303L8.56066 7.37132C7.97487 6.78553 7.02513 6.78553 6.43934 7.37132L1.5 12.3107ZM11.625 4.5C11.625 3.87868 12.1287 3.375 12.75 3.375C13.3713 3.375 13.875 3.87868 13.875 4.5C13.875 5.12132 13.3713 5.625 12.75 5.625C12.1287 5.625 11.625 5.12132 11.625 4.5Z"
+                fill="#82C672"
+              />
+            </svg>
+          </div>
+          <label class="upload-label">
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              hidden
+            />
+            <span class="text-upload">Click to upload</span>
+            <span class="text-or">or Drag and Drop files here</span>
+          </label>
+          <p class="file-info">JPG or PNG (max 3MB)</p>
         </ng-container>
 
-        <!-- Large Upload Area (only show if no images) -->
-        <div class="upload-area multiple" *ngIf="images.length === 0" [class.drag-over]="isDragOver"
-            (dragover)="onDragOver($event)" (dragleave)="onDragLeave()" (drop)="onDrop($event)">
-            <div class="upload-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 21 17" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M0 2.25C0 1.00736 1.00736 0 2.25 0H18.75C19.9926 0 21 1.00736 21 2.25V14.25C21 15.4926 19.9926 16.5 18.75 16.5H2.25C1.00736 16.5 0 15.4926 0 14.25V2.25ZM1.5 12.3107V14.25C1.5 14.6642 1.83579 15 2.25 15H18.75C19.1642 15 19.5 14.6642 19.5 14.25V12.3107L16.8107 9.62132C16.2249 9.03553 15.2751 9.03553 14.6893 9.62132L13.8107 10.5L14.7803 11.4697C15.0732 11.7626 15.0732 12.2374 14.7803 12.5303C14.4874 12.8232 14.0126 12.8232 13.7197 12.5303L8.56066 7.37132C7.97487 6.78553 7.02513 6.78553 6.43934 7.37132L1.5 12.3107ZM11.625 4.5C11.625 3.87868 12.1287 3.375 12.75 3.375C13.3713 3.375 13.875 3.87868 13.875 4.5C13.875 5.12132 13.3713 5.625 12.75 5.625C12.1287 5.625 11.625 5.12132 11.625 4.5Z"
-                        fill="#82C672" />
-                </svg>
-            </div>
-            <label class="upload-label">
-                <input type="file" accept="image/*" multiple (change)="onFileSelected($event)" hidden />
-                <span class="text-upload">Click to upload</span>
-                <span class="text-or">or Drag and Drop files here</span>
+        <ng-container *ngIf="images.length > 0">
+          <div class="image-preview single-preview">
+            <img [src]="images[0]" alt="Preview" />
+            <button type="button" class="remove-btn" (click)="removeImage(0)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path
+                  d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                ></path>
+              </svg>
+            </button>
+            <label class="replace-label">
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                hidden
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" />
+                <path
+                  d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                />
+              </svg>
             </label>
-            <p class="file-info">JPG or PNG (max 3MB)</p>
-        </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
 
-        <!-- Gallery Grid (show when images exist) -->
-        <div class="gallery-grid" *ngIf="images.length > 0">
-            <!-- First Row: Show up to 4 images -->
-            <div *ngFor="let image of images.slice(0, 4); let i = index" class="gallery-item image-item">
-                <img [src]="image" alt="Gallery item" />
-                <button type="button" class="remove-btn" (click)="removeImage(i)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Add More Button (in first row if less than 4 images) -->
-            <div class="gallery-item add-more" *ngIf="images.length < 4">
-                <label class="add-label">
-                    <input type="file" accept="image/*" multiple (change)="onFileSelected($event)" hidden />
-                    <div class="plus-icon">+</div>
-                </label>
-            </div>
-        </div>
-
-        <!-- Second Row (if more than 4 images) -->
-        <div class="gallery-grid-second" *ngIf="images.length > 4">
-            <div *ngFor="let image of images.slice(4); let i = index" class="gallery-item image-item">
-                <img [src]="image" alt="Gallery item" />
-                <button type="button" class="remove-btn" (click)="removeImage(i + 4)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Add More Button (in second row) -->
-            <div class="gallery-item add-more">
-                <label class="add-label">
-                    <input type="file" accept="image/*" multiple (change)="onFileSelected($event)" hidden />
-                    <div class="plus-icon">+</div>
-                </label>
-            </div>
-        </div>
+  <!-- Multiple Images Mode -->
+  <ng-container *ngIf="multiple">
+    <!-- Featured Image (if images exist) -->
+    <ng-container *ngIf="images.length > 0">
+      <div class="featured-image">
+        <img [src]="images[0]" alt="Featured image" />
+      </div>
     </ng-container>
+
+    <!-- Large Upload Area (only show if no images) -->
+    <div
+      class="upload-area multiple"
+      *ngIf="images.length === 0"
+      [class.drag-over]="isDragOver"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave()"
+      (drop)="onDrop($event)"
+    >
+      <div class="upload-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="40"
+          height="40"
+          viewBox="0 0 21 17"
+          fill="none"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M0 2.25C0 1.00736 1.00736 0 2.25 0H18.75C19.9926 0 21 1.00736 21 2.25V14.25C21 15.4926 19.9926 16.5 18.75 16.5H2.25C1.00736 16.5 0 15.4926 0 14.25V2.25ZM1.5 12.3107V14.25C1.5 14.6642 1.83579 15 2.25 15H18.75C19.1642 15 19.5 14.6642 19.5 14.25V12.3107L16.8107 9.62132C16.2249 9.03553 15.2751 9.03553 14.6893 9.62132L13.8107 10.5L14.7803 11.4697C15.0732 11.7626 15.0732 12.2374 14.7803 12.5303C14.4874 12.8232 14.0126 12.8232 13.7197 12.5303L8.56066 7.37132C7.97487 6.78553 7.02513 6.78553 6.43934 7.37132L1.5 12.3107ZM11.625 4.5C11.625 3.87868 12.1287 3.375 12.75 3.375C13.3713 3.375 13.875 3.87868 13.875 4.5C13.875 5.12132 13.3713 5.625 12.75 5.625C12.1287 5.625 11.625 5.12132 11.625 4.5Z"
+            fill="#82C672"
+          />
+        </svg>
+      </div>
+      <label class="upload-label">
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          (change)="onFileSelected($event)"
+          hidden
+        />
+        <span class="text-upload">Click to upload</span>
+        <span class="text-or">or Drag and Drop files here</span>
+      </label>
+      <p class="file-info">JPG or PNG (max 3MB)</p>
+    </div>
+
+    <!-- Gallery Grid (show when images exist) -->
+    <div class="gallery-grid" *ngIf="images.length > 0">
+      <!-- First Row: Show up to 4 images -->
+      <div
+        *ngFor="let image of images.slice(0, 4); let i = index"
+        class="gallery-item image-item"
+      >
+        <img [src]="image" alt="Gallery item" />
+        <button type="button" class="remove-btn" (click)="removeImage(i)">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path
+              d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Add More Button (in first row if less than 4 images) -->
+      <div class="gallery-item add-more" *ngIf="images.length < 4">
+        <label class="add-label">
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            (change)="onFileSelected($event)"
+            hidden
+          />
+          <div class="plus-icon">+</div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Second Row (if more than 4 images) -->
+    <div class="gallery-grid-second" *ngIf="images.length > 4">
+      <div
+        *ngFor="let image of images.slice(4); let i = index"
+        class="gallery-item image-item"
+      >
+        <img [src]="image" alt="Gallery item" />
+        <button type="button" class="remove-btn" (click)="removeImage(i + 4)">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path
+              d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Add More Button (in second row) -->
+      <div class="gallery-item add-more">
+        <label class="add-label">
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            (change)="onFileSelected($event)"
+            hidden
+          />
+          <div class="plus-icon">+</div>
+        </label>
+      </div>
+    </div>
+  </ng-container>
 </div>
