@@ -38,6 +38,14 @@ form {
     align-items: center;
     gap: 8px;
 
+    span 
+    {
+        color: var(--Color-Neutral-2000, #333435);
+        font-size: var(--Font-Size-2Xs, 14px);
+        font-style: normal;
+        font-weight: var(--Font-Weight-Medium, 500);
+    }
+
     .remove-badge {
         background: none;
         border: none;
