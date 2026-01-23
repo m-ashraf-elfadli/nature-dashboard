@@ -24,9 +24,9 @@ import {
   MiniTableComponent,
 } from '../../../shared/components/mini-table/mini-table.component';
 
-import { StageFormComponent } from '../../../shared/components/stage-form/stage-form.component';
-import { ValueFormComponent } from '../../../shared/components/value-form/value-form.component';
-import { ResultsFormComponent } from '../../../shared/components/results-form/results-form.component';
+import { StageFormComponent } from '../stage-form/stage-form.component';
+import { ValueFormComponent } from '../value-form/value-form.component';
+import { ResultsFormComponent } from '../results-form/results-form.component';
 import { AppDialogService } from '../../../shared/services/dialog.service';
 
 export interface ServiceItemFormValue {

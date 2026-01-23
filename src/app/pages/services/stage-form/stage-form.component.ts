@@ -4,7 +4,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
-import { GalleryUploadComponent } from '../gallery-upload/gallery-upload.component';
+import { GalleryUploadComponent } from '../../../shared/components/gallery-upload/gallery-upload.component';
 
 @Component({
   standalone: true,
