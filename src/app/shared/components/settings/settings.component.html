@@ -1,0 +1,41 @@
+<div class="settings-container">
+  <h4>Service Settings</h4>
+  <div class="our-field">
+    <label for="">
+      Service Status
+      <span class="required">*</span>
+    </label>
+    <p-select
+      [options]="statusOptions"
+      [(ngModel)]="value"
+      (ngModelChange)="onChange($event)"
+      placeholder="Select Status"
+    >
+    </p-select>
+  </div>
+
+  <div class="localization">
+    <h4>Localization Status</h4>
+    <div class="languages">
+      <div class="language-item">
+        <div class="language-info">
+          <img src="./images/usa.webp" alt="English" />
+          <span>English</span>
+        </div>
+        <div class="status-pill" [ngClass]="statusView(englishStatus).class">
+          {{ statusView(englishStatus).text }}
+        </div>
+      </div>
+
+      <div class="language-item">
+        <div class="language-info">
+          <img src="./images/eg.webp" alt="Arabic" />
+          <span>Arabic</span>
+        </div>
+        <div class="status-pill" [ngClass]="statusView(arabicStatus).class">
+          {{ statusView(arabicStatus).text }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

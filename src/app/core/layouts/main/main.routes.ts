@@ -5,7 +5,6 @@ import { DashboardComponent } from '../../../pages/dashboard/dashboard.component
 import { ServicesComponent } from '../../../pages/services/services.component';
 import { TestimonialsComponent } from '../../../pages/testimonials/testimonials.component';
 
-
 export const dashboardRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
@@ -13,9 +12,17 @@ export const dashboardRoutes: Routes = [
   {
     path: 'projects',
     loadChildren: () =>
-      import('./../../../pages/projects/projects.routes').then((m) => m.projectsRoutes),
+      import('./../../../pages/projects/projects.routes').then(
+        (m) => m.projectsRoutes
+      ),
   },
-  { path: 'services', component: ServicesComponent },
+  {
+    path: 'services',
+    loadChildren: () =>
+      import('./../../../pages/services/services.routes').then(
+        (m) => m.servicesRoutes
+      ),
+  },
   { path: 'awards', component: AwardsComponent },
   { path: 'testimonials', component: TestimonialsComponent },
 ];

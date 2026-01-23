@@ -78,9 +78,7 @@ body {
   box-sizing: border-box;
   font-family: "Dubai";
 }
-.p-dialog-header {
-display: none !important;
-}
+
 html,
 body {
   height: 100%;
@@ -233,9 +231,15 @@ a {
   gap: 8px;
   label{
     color: var(--Color-Neutral-800, #6E7072);
-    font-family: var(--Font-Family-Secondary, Dubai);
     font-size: var(--Font-Size-S, 18px);
+    font-style: normal;
     font-weight: var(--Font-Weight-Regular, 500);
+    line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
+
+    .required 
+    {
+      color: var(--Alert-Error-100, #DF1C41);
+    }
   }
    .p-inputtext {
     font-size: 12px;
@@ -269,5 +273,22 @@ a {
     font-style: normal;
     font-weight: 400;
     line-height: 150%; /* 18px */
+  }
+}
+.add-another
+{
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  background: none;
+  span 
+  {
+    color: var(--Color-Primary-500, #75B267);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%; /* 28.8px */
   }
 }

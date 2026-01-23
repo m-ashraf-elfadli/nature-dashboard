@@ -1,0 +1,70 @@
+.drag-icon {
+  cursor: grab;
+  font-size: 18px;
+}
+
+.delete-btn {
+    cursor: pointer;
+    border-radius: 8.239px;
+    border: 1.03px solid var(--Greyscale-100, #DFE1E7);
+    background: var(--Greyscale-0, #FFF);
+    box-shadow: 0 1.03px 2.06px 0 rgba(13, 13, 18, 0.06);
+    display: flex;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    gap: 8.239px;
+    transition:  0.2s ease;
+
+    &:hover {
+        background: oklch(97.1% .013 17.38);
+        border-color: oklch(88.5% .062 18.334);
+    }
+}
+:host ::ng-deep{
+    .p-datatable-thead
+    {
+        background: radial-gradient(183.55% 120.47% at 116.93% -44.32%, rgba(231, 241, 203, 0.50) 0%, rgba(231, 241, 203, 0.00) 100%), radial-gradient(991.32% 174.48% at 95.31% 50%, rgba(176, 211, 87, 0.50) 0%, rgba(176, 211, 87, 0.00) 100%), radial-gradient(228.08% 210.57% at 106.77% 135.23%, rgba(58, 109, 149, 0.25) 0%, rgba(55, 102, 140, 0.00) 100%);
+    }
+    .p-datatable-thead > tr > th
+    {
+        background: none;
+        color: var(--Grey-grey-500, #242424);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 120%; /* 16.8px */
+        letter-spacing: 0.28px;
+    }
+}
+
+.drag-icon
+{
+    display: flex;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8.239px;
+    border: 1px solid var(--Greyscale-100, #DFE1E7);
+    background: var(--Greyscale-0, #FFF);
+    box-shadow: 0 1.03px 2.06px 0 rgba(13, 13, 18, 0.06);
+    cursor: grab;
+}
+.name-column
+{
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+.row-image
+{
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    object-fit: cover;
+}

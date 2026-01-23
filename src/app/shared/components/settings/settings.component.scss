@@ -1,0 +1,85 @@
+.settings-container 
+{
+    border-radius: 20px;
+    background: var(--Color-Neutral-white, #FFF);
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+
+    & > h4 
+    {
+        color: var(--Color-Neutral-2000, #333435);
+        font-size: var(--Font-Size-M, 20px);
+        font-style: normal;
+        font-weight: var(--Font-Weight-Medium, 500);
+        line-height: var(--Font-Line-Height-M, 24px); /* 120% */
+    }
+
+    .localization
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+
+        h4 
+        {
+            color: var(--Color-Neutral-800, #6E7072);
+            font-size: var(--Font-Size-S, 18px);
+            font-style: normal;
+            font-weight: var(--Font-Weight-Regular, 400);
+            line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
+        }
+    }
+
+    .languages
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        .language-item
+        {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .language-info
+            {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                span 
+                {
+                    color: var(--Color-Neutral-2000, #333435);
+                    font-size: var(--Font-Size-Xs, 16px);
+                    font-style: normal;
+                    font-weight: var(--Font-Weight-Medium, 500);
+                    line-height: var(--Font-Line-Height-2Xs, 16.8px); /* 105% */
+                }
+            }
+        }
+    }
+}
+.status-pill {
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.status-ongoing {
+  background: #e9f9ee;
+  color: #18a957;
+}
+
+.status-not-started {
+  background: #fdecec;
+  color: #f04438;
+}
