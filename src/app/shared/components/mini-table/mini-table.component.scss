@@ -3,25 +3,7 @@
   font-size: 18px;
 }
 
-.delete-btn {
-    cursor: pointer;
-    border-radius: 8.239px;
-    border: 1.03px solid var(--Greyscale-100, #DFE1E7);
-    background: var(--Greyscale-0, #FFF);
-    box-shadow: 0 1.03px 2.06px 0 rgba(13, 13, 18, 0.06);
-    display: flex;
-    width: 32px;
-    height: 32px;
-    justify-content: center;
-    align-items: center;
-    gap: 8.239px;
-    transition:  0.2s ease;
 
-    &:hover {
-        background: oklch(97.1% .013 17.38);
-        border-color: oklch(88.5% .062 18.334);
-    }
-}
 :host ::ng-deep{
     .p-datatable-thead
     {

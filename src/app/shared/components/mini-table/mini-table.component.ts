@@ -35,6 +35,7 @@ export class MiniTableComponent {
   }
 
   onRowReorder(event: any) {
-    this.reordered.emit(event);
+    // Emit the reordered data array
+    this.reordered.emit(this.data);
   }
 }

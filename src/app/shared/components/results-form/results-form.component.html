@@ -1,27 +1,27 @@
 <form [formGroup]="form">
   <div class="our-field">
-    <label for="stageTitle"
+    <label for="resultTitle"
       >Title
       <span class="required">*</span>
     </label>
     <input
-      id="stageTitle"
+      id="resultTitle"
       pInputText
       formControlName="title"
-      placeholder="Enter stage title.."
+      placeholder="Enter result title.."
     />
   </div>
 
   <div class="our-field">
-    <label for="stageDescription"
+    <label for="resultDescription"
       >Description
       <span class="required">*</span>
     </label>
     <input
-      id="stageDescription"
+      id="resultDescription"
       pInputText
       formControlName="description"
-      placeholder="Enter stage description"
+      placeholder="Enter result description"
     />
   </div>
 
@@ -31,7 +31,7 @@
     style="width: 100%"
   ></app-gallery-upload>
 
-  <button pButton label="Save" class="action-btn" (click)="submit()">
+  <button (click)="submit()" class="action-btn">
     <span>Save</span>
   </button>
 </form>
