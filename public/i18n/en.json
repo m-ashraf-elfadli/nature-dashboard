@@ -1,5 +1,61 @@
 {
-  "HELLO": "Hello",
-  "WELCOME": "Welcome to the app",
-  "SAVE": "Save"
+  "general":{
+    "save": "Save",
+    "discard": "Discard"
+  },
+  "projects": {
+    "form": {
+      "title":"Add New Project",
+      "english":"(English)",
+      "arabic":"(Arabic)",
+      "titles":{
+        "deatils":"Project Details",
+        "settings":"Project Settings",
+        "galary":"Project Galary",
+        "location":"Project Location",
+        "results":"Results & Reflects",
+        "metrics":"Metrics indicators",
+        "metrics_desc":"(Maximum 3 allowed)"
+      },
+      "labels":{
+        "name":"Project Name",
+        "overview":"Overview",
+        "brief":"Brief",
+        "location":"Project Location",
+        "start_date":"Project Start Date",
+        "end_date":"Project End Date",
+        "services":"Project Services",
+        "status":"Project Status",
+        "images":"Project Images",
+        "country":"Country",
+        "city":"City",
+        "before_image":"Before Image",
+        "after_image":"After Image",
+        "additional_images":"Additional Images",
+        "timeline":"Project Timeline",
+        "section_title":"Section title",
+        "section_body":"Section body",
+        "metrics":"Metrics ({{count}})"
+      },
+      "placeholders":{
+        "name":"Write project name ...",
+        "overview":"Write project overview ...",
+        "brief":"Write project brief ...",
+        "services":"Select project services",
+        "country":"Choose project country",
+        "city":"Choose project city",
+        "form":"Form",
+        "to":"To",
+        "section_title":"Enter section title",
+        "section_body":"Enter section body",
+        "metric_title":"Enter section title",
+        "metric_number":"Number",
+        "metric_case":"Icon"
+      },
+      "btns":{
+        "add_result":"Add another section",
+        "add_metrics":"Add another metrics"
+      }
+    }
+  }
 }

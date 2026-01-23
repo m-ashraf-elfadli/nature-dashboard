@@ -7,3 +7,7 @@ export interface PaginationResponse<T> {
   total: number
   lastPage: number
 }
+export interface DropDownOption {
+  name: string;
+  id: any;
+}

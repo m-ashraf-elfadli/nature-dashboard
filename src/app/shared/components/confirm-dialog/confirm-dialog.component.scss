@@ -4,6 +4,9 @@
 :host ::ng-deep .confirmation-dialog {
   border-radius: 16px;
 }
+::ng-deep .p-dialog-header {
+display: none !important;
+}
 
 .popup-wrraper {
   display: flex;

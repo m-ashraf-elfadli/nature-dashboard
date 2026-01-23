@@ -1,21 +1,185 @@
-<div class="page-container">
+<div class="form-content">
     <div class="form-header">
-        <app-page-header [title]="pageTitle"></app-page-header>
+        <app-page-header [title]="'projects.form.title' | translate"></app-page-header>
         <app-form-actions (discard)="onDiscard($event)" (save)="onSave($event)"
             (languageChange)="onLanguageChange($event)"></app-form-actions>
     </div>
-    <form [formGroup]="projectForm" (ngSubmit)="submitForm(projectForm)" class="project-form">
-        <!-- Single image -->
-        <app-gallery-upload formControlName="beforeImage" [multiple]="false" label="Project Before Image"
-            dimensions="1024x1024">
-        </app-gallery-upload>
+    <form [formGroup]="form" (ngSubmit)="submitForm()" class="project-form">
+        <div class="form-left-section">
+            <div class="details-section">
+                <div class="header-section gap-2">
+                    <h3>{{ 'projects.form.titles.deatils' | translate }}</h3>
+                    <span>{{ 'projects.form.english' | translate }}</span>
+                </div>
+                <div class="inputs">
+                    <div class="our-field">
+                        <label for="name">{{ 'projects.form.labels.name' | translate }} <span class="text-red-val">*</span></label>
+                        <input pInputText id="name" [placeholder]="'projects.form.placeholders.name' | translate" type="text" formControlName="name" />
+                    </div>
+                    <div class="our-field">
+                        <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span class="text-red-val">*</span></label>
+                        <div class="textarea-container">
+                            <textarea pTextarea [placeholder]="'projects.form.placeholders.overview' | translate" id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
+                            <span class="char-counter">{{ form.get('overview')?.value?.length || 0 }}/200</span>
+                        </div>
+                    </div>
+                    <div class="our-field">
+                        <label for="brief">{{ 'projects.form.labels.brief' | translate }} <span class="text-red-val">*</span></label>
+                        <div class="textarea-container">
+                            <textarea pTextarea [disabled]="true" [placeholder]="'projects.form.placeholders.brief' | translate" id="brief" [autoResize]="true" formControlName="brief" rows="4"></textarea>
+                            <span class="char-counter">{{ form.get('brief')?.value?.length || 0 }}/200</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-and-locations-sections">
+                <div class="settings-section">
+                    <div class="header-section gap-2">
+                        <h3>{{ 'projects.form.titles.settings' | translate }}</h3>
+                    </div>
+                    <div class="inputs">
+                        <!-- Settings inputs go here -->
+                        <div class="our-field">
+                            <label for="service_ids">{{ 'projects.form.labels.services' | translate }} <span class="text-red-val">*</span></label>
+                            <p-multiselect [options]="services" formControlName="service_ids" optionLabel="name" [placeholder]="'projects.form.placeholders.services' | translate" [maxSelectedLabels]="3" [showHeader]="false"/>
+                        </div>
+                        <div class="our-field">
+                            <label>{{'projects.form.labels.timeline' | translate}} <span class="text-red-val">*</span></label>
+                            <div class="flex align-items-center gap-2">
+                                <p-datepicker appendTo="body" [showIcon]="true" formControlName="start_date" [placeholder]="'projects.form.placeholders.form' | translate" dateFormat="dd.mm.yy">
+                                    <ng-template pTemplate="triggericon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z" stroke="#818898" stroke-width="1.5"/>
+                                            <path d="M7 4V2.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M17 4V2.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M2.5 9H21.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z" fill="#818898"/>
+                                            <path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z" fill="#818898"/>
+                                            <path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z" fill="#818898"/>
+                                            <path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z" fill="#818898"/>
+                                            <path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z" fill="#818898"/>
+                                            <path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z" fill="#818898"/>
+                                        </svg>
+                                    </ng-template>
+                                </p-datepicker>
+                                <p-datepicker appendTo="body" [showIcon]="true" formControlName="end_date" [placeholder]="'projects.form.placeholders.to' | translate" dateFormat="dd.mm.yy">
+                                    <ng-template pTemplate="triggericon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z" stroke="#818898" stroke-width="1.5"/>
+                                            <path d="M7 4V2.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M17 4V2.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M2.5 9H21.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z" fill="#818898"/>
+                                            <path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z" fill="#818898"/>
+                                            <path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z" fill="#818898"/>
+                                            <path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z" fill="#818898"/>
+                                            <path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z" fill="#818898"/>
+                                            <path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z" fill="#818898"/>
+                                        </svg>
+                                    </ng-template>
+                                </p-datepicker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="location-section">
+                    <div class="header-section gap-2">
+                        <h3>{{ 'projects.form.titles.location' | translate }}</h3>
+                    </div>
+                    <div class="inputs">
+                        <!-- Location inputs go here -->
+                         <div class="our-field">
+                            <label for="country_id">{{ 'projects.form.labels.country' | translate }} <span class="text-red-val">*</span></label>
+                            <p-select [options]="countries" formControlName="country_id" optionLabel="name" [placeholder]="'projects.form.placeholders.country' | translate"/>
+                         </div>
+                         <div class="our-field">
+                            <label for="city_id">{{ 'projects.form.labels.city' | translate }} <span class="text-red-val">*</span></label>
+                            <p-select [options]="countries" formControlName="city_id" optionLabel="name" [placeholder]="'projects.form.placeholders.city' | translate"/>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="results-section">
+                <div class="header-section justify-content-between">
+                    <h3>{{ 'projects.form.titles.results' | translate }}</h3>
+                    <p-toggleswitch class="flex align-items-center justify-content-center" formControlName="enableResults" (onChange)="toggleResults()" />
+                </div>
+                <div class="inputs" formArrayName="results">
+                    @for (item of results.controls; track $index) {
+                        <div class="inputs" [formGroupName]="$index">
+                            <div class="our-field">
+                                <label for="section_title">{{ 'projects.form.labels.section_title' | translate }}</label>
+                                <input pInputText type="text" formControlName="section_title" id="section_title" [placeholder]="'projects.form.placeholders.section_title' | translate">
+                            </div>
+                            <div class="our-field">
+                                <label for="section_body">{{ 'projects.form.labels.section_body' | translate }}</label>
+                                <p-editor formControlName="section_body" [style]="{ height: '100px' }">
+                                    <ng-template #header>
+                                        <!-- Text formatting -->
+                                        <span class="ql-formats">
+                                            <button class="ql-bold"></button>
+                                            <button class="ql-italic"></button>
+                                            <button class="ql-underline"></button>
+                                        </span>
+                                        <!-- Text color -->
+                                        <span class="ql-formats">
+                                            <select class="ql-color"></select>
+                                        </span>
+                                        <!-- Lists -->
+                                        <span class="ql-formats">
+                                            <button class="ql-list" value="ordered"></button>
+                                            <button class="ql-list" value="bullet"></button>
+                                        </span>
+                                    </ng-template>
+                                </p-editor>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @if(form.get('enableResults')?.value){
+                    <button type="button" (click)="addResult()" class="add-form-group-btn">
+                        <i class="pi pi-plus"></i>
+                        {{ 'projects.form.btns.add_result' | translate }}
+                    </button>
+                }
+            </div>
+            <div class="metrics-section">
+                <div class="header-section justify-content-between">
+                    <h3>{{ 'projects.form.titles.metrics' | translate }} <span>{{ 'projects.form.titles.metrics_desc' | translate }}</span></h3>
+                    <p-toggleswitch class="flex align-items-center justify-content-center" formControlName="enableMetrics" (onChange)="toggleMetrics()" />
+                </div>
+                <div class="inputs" formArrayName="metrics">
+                    @for (item of metrics.controls; track $index) {
+                        <div [formGroupName]="$index">
+                            <div class="our-field">
+                                <label>{{'projects.form.labels.metrics' | translate:{count:$index + 1} }}</label>
+                                <div class="metrics-form-group-fields">
+                                    <div class="title-field">
+                                        <input pInputText type="text" formControlName="metric_title" id="metric_title" [placeholder]="'projects.form.placeholders.metric_title' | translate">
+                                    </div>
+                                    <div class="number-field">
+                                        <input type="number" formControlName="metric_number" id="metric_number" pInputText [placeholder]="'projects.form.placeholders.metric_number' | translate">
+                                    </div>
+                                    <div class="case-field">
+                                        <p-select [options]="metricCases" formControlName="metric_case" optionValue="id" optionLabel="name" [placeholder]="'projects.form.placeholders.metric_case' | translate"/>
+                                    </div>
+                                </div>
+                            </div>
 
-        <app-gallery-upload formControlName="gallery" [multiple]="true" label="Project Gallery">
-        </app-gallery-upload>
+                        </div>
 
-
-        <br>
-
-        <button type="submit">Save Project</button>
+                    }
+                </div>
+                @if(form.get('enableMetrics')?.value && metrics.controls.length < 3){
+                    <button type="button" (click)="addMetric()" class="add-form-group-btn">
+                        <i class="pi pi-plus"></i>
+                        {{ 'projects.form.btns.add_metrics' | translate }}
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="form-right-section">
+            
+        </div>
     </form>
 </div>
