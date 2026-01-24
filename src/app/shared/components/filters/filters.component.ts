@@ -9,6 +9,7 @@ import { SelectModule } from 'primeng/select';
 import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 import { debounceTime } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface FilterItems {
     name?: string;
@@ -47,7 +48,8 @@ export interface OptionsFilter {
     CheckboxModule, 
     MultiSelectModule,
     InputIcon,
-    IconField
+    IconField,
+    TranslateModule
   ],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss'

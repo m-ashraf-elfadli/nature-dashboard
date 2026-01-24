@@ -25,14 +25,14 @@
           }
           <th *ngFor="let col of config.columns" [style.width]="col.width"
             [pSortableColumn]="col.sortable ? col.field : ''">
-            {{ col.header }}
+            {{ col.header | translate }}
             @if (col.sortable) {
             <p-sortIcon [field]="col.field"></p-sortIcon>
             }
           </th>
 
           @if (actions.length) {
-          <th>Actions</th>
+          <th>{{'general.actions' | translate}}</th>
           }
         </tr>
       </ng-template>
@@ -119,7 +119,7 @@
             <button *ngFor="let act of getVisibleRowActions(row)"
               class="custom-btn btn-{{act.severity}} {{ act.class }}"
               (click)="act.callback(row,$event)">
-              {{ act.label }}
+              {{ act.label | translate }}
               @if( act.icon ) {
               <i [class]="act.icon"></i>
               }

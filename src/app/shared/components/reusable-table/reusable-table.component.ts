@@ -9,6 +9,7 @@ import { ReusablePaginationComponent } from '../reusable-pagination/reusable-pag
 import { TableAction, TableConfig } from './reusable-table.types';
 import { FormsModule } from '@angular/forms';
 import { FilterItems, FiltersComponent } from '../filters/filters.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reusable-table',
@@ -22,7 +23,8 @@ import { FilterItems, FiltersComponent } from '../filters/filters.component';
     RadioButtonModule,
     FormsModule,
     ReusablePaginationComponent,
-    FiltersComponent
+    FiltersComponent,
+    TranslateModule
 ],
   templateUrl: './reusable-table.component.html',
   styleUrls: ['./reusable-table.component.scss'], // ❌ fix typo: styleUrls not styleUrl

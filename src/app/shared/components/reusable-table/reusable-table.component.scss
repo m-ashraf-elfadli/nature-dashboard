@@ -9,6 +9,9 @@
         .custom-table{
             border-radius: 8px 8px 0 0;
             border: 1px solid var(--Color-Neutral-200, #F4F4F5);
+            max-width: 100%;
+            width: 100%;
+            overflow-x: auto;
             .avatar-and-name-cell{
                 display: flex;
                 align-items: center;

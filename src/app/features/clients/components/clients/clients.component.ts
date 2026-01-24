@@ -81,6 +81,8 @@ export class ClientsComponent {
   { "id": 49, "clientName": "Summit Peak Ventures", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=SP", "dateAdded": "22/03/2026", "status": true },
   { "id": 50, "clientName": "Origin Coffee Co", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=OC", "dateAdded": "30/03/2026", "status": false }
 ]
+  totalRecords = this.data.length;
+
   columns: TableColumn<Client>[] = [
     { field: 'clientName',header: 'Client name', type: 'text', avatarField: 'image' },
     { field: 'clientImage', header: 'Client image', type: 'image',avatarField: 'countryFlag' },
@@ -139,7 +141,6 @@ export class ClientsComponent {
     serverSideSort: true,
   };
 
-  totalRecords = this.data.length;
 
   onAction(event: { action: string; row: Client }) {
     console.log('Action clicked:', event);

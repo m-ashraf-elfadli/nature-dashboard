@@ -1,9 +1,25 @@
 {
   "general":{
     "save": "Save",
-    "discard": "Discard"
+    "discard": "Discard",
+    "actions":"Actions",
+    "filter":"Filter"
   },
   "projects": {
+    "list":{
+      "page_title":"All Projects",
+      "table_headers":{
+        "project":"Project",
+        "country":"Country",
+        "city":"City",
+        "services":"Services",
+        "locale":"Locale",
+        "status":"Status"
+      },
+      "btns":{
+        "add_new":"Add new project"
+      }
+    },
     "form": {
       "title":"Add New Project",
       "english":"(English)",

@@ -1,4 +1,13 @@
-<div class="page-container">
-  <app-page-header [title]="'All Projects'"></app-page-header>
-  <p-button (click)="addNew()">Add New Project</p-button>
+<div class="page-content">
+  <app-page-header></app-page-header>
+  <h1>{{ 'projects.list.page_title' | translate }}</h1>
+  <app-reusable-table
+    [data]="data"
+    [config]="config"
+    [actions]="actions"
+    [totalRecords]="totalRecords"
+    [filterItems]="filterItems"
+    (paginationChange)="onPaginationChange($event)"
+    (selectionChange)="selectionChange($event)">
+  </app-reusable-table>
 </div>
