@@ -46,7 +46,7 @@ export class ProjectsComponent {
       status: Math.random() > 0.2 // 80% active
     }
   ]
-    totalRecords = this.data.length;
+  totalRecords = this.data.length;
   
     columns: TableColumn<Project>[] = [
       { field: 'name',header: 'projects.list.table_headers.project', type: 'avatar-and-name', avatarField: 'image' },
@@ -83,11 +83,11 @@ export class ProjectsComponent {
         name: 'keyword',
         placeholder: 'Search by name ...'
       },
-      {
-        type: 'filter',
-        btnIcon:"pi pi-download",
-        btnSeverity:"white",
-      },
+      // {
+      //   type: 'filter',
+      //   btnIcon:"pi pi-download",
+      //   btnSeverity:"white",
+      // },
       {
         type: 'btn',
         label:"Import CSV",
