@@ -179,7 +179,15 @@
             </div>
         </div>
         <div class="form-right-section">
-            
+            <div class="gallery-section">
+                <app-gallery-upload [label]="'projects.form.labels.gallery' | translate" [multiple]="true"></app-gallery-upload>
+            </div>
+            <div class="image-before-and-after-section">
+                <div class="inputs">
+                    <app-gallery-upload [label]="'projects.form.labels.image_before' | translate" [multiple]="false"></app-gallery-upload>
+                    <app-gallery-upload [label]="'projects.form.labels.image_after' | translate" [multiple]="false"></app-gallery-upload>
+                </div>
+            </div>
         </div>
     </form>
 </div>

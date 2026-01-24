@@ -35,7 +35,10 @@
         "timeline":"Project Timeline",
         "section_title":"Section title",
         "section_body":"Section body",
-        "metrics":"Metrics ({{count}})"
+        "metrics":"Metrics ({{count}})",
+        "gallery":"Project Gallery",
+        "image_before":"Project Before Image",
+        "image_after":"Project Status"
       },
       "placeholders":{
         "name":"Write project name ...",

@@ -13,6 +13,7 @@ import { EditorModule } from 'primeng/editor';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../shared/components/form-actions/form-actions.component';
 import { DropDownOption } from '../../../core/models/global.interface';
+import { GalleryUploadComponent } from "../../../shared/components/gallery-upload/gallery-upload.component";
 
 
 @Component({
@@ -30,7 +31,8 @@ import { DropDownOption } from '../../../core/models/global.interface';
     SelectModule,
     DatePickerModule,
     ToggleSwitchModule,
-    EditorModule
+    EditorModule,
+    GalleryUploadComponent
 ],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss',
