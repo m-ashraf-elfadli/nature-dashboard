@@ -288,41 +288,6 @@ a {
     font-size: var(--Font-Size-2-xs, 14px);
   }
 
-  // 🔒 Disabled state
-  .p-inputtext:disabled,
-  .p-textarea:disabled,
-  .p-multiselect.p-disabled,
-  .p-select.p-disabled,
-  .p-datepicker.p-disabled {
-    background: var(--Color-Neutral-200, #F5F5F6);
-    border-color: var(--Color-Neutral-300, #D1D3D4);
-    color: var(--Color-Neutral-600, #8E8F91);
-    cursor: not-allowed;
-    opacity: 1; // prevent PrimeNG opacity dimming
-  }
-
-
-  // Disabled placeholder
-  .p-inputtext:disabled::placeholder,
-  .p-textarea:disabled::placeholder {
-  color: var(--Color-Neutral-500, #A0A2A4);
-  }
-
-  // ❌ Invalid state (after touch or submit)
-  .ng-invalid.ng-touched,
-  .ng-invalid.ng-dirty {
-
-
-  &.p-inputtext,
-  &.p-textarea,
-  &.p-multiselect,
-  &.p-select,
-  .p-datepicker {
-    border-color: var(--Color-Error-500, #E74C3C) !important;
-    background: rgba(231, 76, 60, 0.03);
-  }
-  }
-
   .textarea-container{
     width: 100%;
     position: relative;
@@ -388,7 +353,40 @@ a {
   .p-editor .p-editor-content .ql-editor,.ql-toolbar.ql-snow + .ql-container.ql-snow {
     border-end-end-radius: 14px;
     border-end-start-radius: 14px;
-}
+  }
+    // Disabled state
+  .p-inputtext:disabled,
+  .p-textarea:disabled,
+  .p-multiselect.p-disabled,
+  .p-select.p-disabled,
+  .p-datepicker.p-disabled {
+    border: 1.261px solid var(--Color-Neutral-300, #EFEFF0);
+    background: var(--Color-Neutral-200, #F4F4F5);
+    color: var(--Color-Neutral-600, #8E8F91);
+    cursor: not-allowed;
+    opacity: 1; // prevent PrimeNG opacity dimming
+  }
+
+
+  // Disabled placeholder
+  .p-inputtext:disabled::placeholder,
+  .p-textarea:disabled::placeholder {
+    color: var(--Color-Neutral-500, #A0A2A4);
+  }
+
+  // Invalid state
+  .ng-invalid.ng-touched,
+  .ng-invalid.ng-dirty {
+
+  &.p-inputtext,
+  &.p-textarea,
+  &.p-multiselect,
+  &.p-select,
+  .p-datepicker {
+      border-color: var(--Color-Error-500, #E74C3C) !important;
+      background: rgba(231, 76, 60, 0.03);
+    }
+  }
   .text-red-val {
     color: var(--Color-Error-500, #E74C3C);
     font-size: 12px;
