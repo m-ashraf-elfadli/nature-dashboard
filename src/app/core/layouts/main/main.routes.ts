@@ -4,6 +4,8 @@ import { ClientsComponent } from '../../../features/clients/components/clients/c
 import { DashboardComponent } from '../../../pages/dashboard/dashboard.component';
 import { ServicesComponent } from '../../../pages/services/services.component';
 import { TestimonialsComponent } from '../../../pages/testimonials/testimonials.component';
+import { AwardFormComponent } from '../../../features/awards/components/award-form/award-form.component';
+import { AwardsListComponent } from '../../../features/awards/components/awards-list/awards-list.component';
 
 export const dashboardRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -23,6 +25,20 @@ export const dashboardRoutes: Routes = [
         (m) => m.servicesRoutes
       ),
   },
-  { path: 'awards', component: AwardsComponent },
+  { 
+    path: 'awards', 
+    component: AwardsComponent,
+    children:[
+      {
+        path:'',
+        component:AwardsListComponent
+      },
+      {
+        path:'add',
+        component:AwardFormComponent
+      },
+    ]
+
+  },
   { path: 'testimonials', component: TestimonialsComponent },
 ];

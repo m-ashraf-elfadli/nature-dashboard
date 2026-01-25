@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-awards',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterOutlet],
   templateUrl: './awards.component.html',
   styleUrl: './awards.component.scss',
 })
-export class AwardsComponent {}
+export class AwardsComponent {
+  
+}
