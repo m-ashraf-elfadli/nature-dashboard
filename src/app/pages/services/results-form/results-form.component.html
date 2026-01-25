@@ -1,0 +1,37 @@
+<form [formGroup]="form">
+  <div class="our-field">
+    <label for="resultTitle"
+      >Title
+      <span class="required">*</span>
+    </label>
+    <input
+      id="resultTitle"
+      pInputText
+      formControlName="title"
+      placeholder="Enter result title.."
+    />
+  </div>
+
+  <div class="our-field">
+    <label for="resultDescription"
+      >Description
+      <span class="required">*</span>
+    </label>
+    <input
+      id="resultDescription"
+      pInputText
+      formControlName="description"
+      placeholder="Enter result description"
+    />
+  </div>
+
+  <app-gallery-upload
+    [multiple]="false"
+    formControlName="image"
+    style="width: 100%"
+  ></app-gallery-upload>
+
+  <button (click)="submit()" class="action-btn">
+    <span>Save</span>
+  </button>
+</form>

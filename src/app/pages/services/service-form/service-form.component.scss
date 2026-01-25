@@ -1,0 +1,191 @@
+.page-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  .form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  form 
+  {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    .fieldsets-container
+    {
+        display: flex;
+        gap: 16px;
+
+        & > div 
+        {
+            width: 100%;
+
+        }
+        & > app-settings 
+        {
+            width: 40%;
+
+            @media (max-width: 768px) 
+            {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) 
+        {
+            flex-direction: column;
+        }
+    }
+    .fieldset
+    {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+    border-radius: 20px;
+    background: var(--Color-Neutral-white, #FFF);
+
+    legend 
+    {
+        color: var(--Color-Neutral-2000, #333435);
+        font-size: var(--Font-Size-M, 20px);
+        font-style: normal;
+        font-weight: var(--Font-Weight-Medium, 500);
+        line-height: var(--Font-Line-Height-M, 24px); /* 120% */
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        span 
+        {
+            color: var(--Color-Neutral-500, #939598);
+            font-size: var(--Font-Size-2Xs, 14px);
+            font-style: normal;
+            font-weight: var(--Font-Weight-Medium, 500);
+            line-height: 16.8px;
+        }
+    }
+    }   
+  }
+}
+
+.legend-with-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+
+  legend {
+    margin: 0;
+    flex: 1;
+  }
+}
+
+.benefits-fields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.insights-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.insight-row {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  flex-direction: column;
+
+  .insight-inputs
+  {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+  }
+
+  .insight-label {
+    flex: 0 0 auto;
+    min-width: 100px;
+
+    label {
+    color: var(--Color-Neutral-800, #6E7072);
+    font-size: var(--Font-Size-S, 18px);
+    font-style: normal;
+    font-weight: var(--Font-Weight-Regular, 500);
+    line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
+    }
+  }
+
+  .insight-input {
+    flex: 1;
+    min-width: 90px;
+
+    
+
+    @media (max-width: 768px) {
+      min-width: auto;
+    }
+  }
+
+  .insight-number {
+    flex: 0 0 auto;
+    min-width: 150px;
+
+    label {
+      color: var(--Color-Neutral-600, #6C6C6C);
+      font-size: 12px;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px 12px;
+    }
+
+    @media (max-width: 768px) {
+      min-width: auto;
+      width: 100%;
+    }
+  }
+
+  
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .insight-input,
+    .insight-number {
+      width: 100%;
+    }
+  }
+}
+
+.add-button-wrapper,
+.add-insight-button-wrapper {
+  width: 100%;
+  margin-top: 12px;
+}
+:host ::ng-deep{
+    .p-toggleswitch-slider
+    {
+        position: relative;
+    }
+}

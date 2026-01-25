@@ -1,0 +1,66 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tools-input-wrapper {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    position: relative;
+    input {
+        flex: 1;
+    }
+
+    button {
+    flex-shrink: 0;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    }
+}
+
+.tools-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.tool-badge {
+    border-radius: 12px;
+    background: var(--Color-Primary2-300, #E7F1CB);
+    display: flex;
+    padding: 4px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    span 
+    {
+        color: var(--Color-Neutral-2000, #333435);
+        font-size: var(--Font-Size-2Xs, 14px);
+        font-style: normal;
+        font-weight: var(--Font-Weight-Medium, 500);
+    }
+
+    .remove-badge {
+        background: none;
+        border: none;
+        color: #2e7d32;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 0;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}

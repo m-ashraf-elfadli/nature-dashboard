@@ -153,7 +153,7 @@ a {
   }
 
   &:hover {
-    background-color: oklch(0.98 -1 0 / 1);
+    background: oklch(0.98 -1 0 / 1);
   }
 }
 
@@ -168,7 +168,7 @@ a {
   background: var(--Secondary-White, #fff);
   transition: 0.2s ease;
   cursor: pointer;
-
+  min-width: 200px;
   span {
     color: var(--Secondary-500, #232323);
     text-align: center;
@@ -233,9 +233,15 @@ a {
   gap: 8px;
   label{
     color: var(--Color-Neutral-800, #6E7072);
-    font-family: var(--Font-Family-Secondary, Dubai);
     font-size: var(--Font-Size-S, 18px);
+    font-style: normal;
     font-weight: var(--Font-Weight-Regular, 500);
+    line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
+
+    .required 
+    {
+      color: var(--Alert-Error-100, #DF1C41);
+    }
   }
   .p-inputtext,.p-textarea,.p-multiselect,.p-select,.p-datepicker{
     font-size: 12px;
@@ -380,4 +386,45 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   appearance:textfield;
   -moz-appearance: textfield;
+}
+.add-another
+{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  background: none;
+  span 
+  {
+    color: var(--Color-Primary-500, #75B267);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%; /* 28.8px */
+  }
+}
+.delete-btn {
+    cursor: pointer;
+    border-radius: 8.239px;
+    border: 1.03px solid var(--Greyscale-100, #DFE1E7);
+    background: var(--Greyscale-0, #FFF);
+    box-shadow: 0 1.03px 2.06px 0 rgba(13, 13, 18, 0.06);
+    display: flex;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    gap: 8.239px;
+    transition:  0.2s ease;
+    flex: 0 0 auto;
+
+    &:hover {
+        background: oklch(97.1% .013 17.38);
+        border-color: oklch(88.5% .062 18.334);
+    }
+}
+.p-inputtext:disabled
+{
+  opacity: 0.6;
 }
