@@ -14,6 +14,7 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
 import { FormActionsComponent } from '../../../shared/components/form-actions/form-actions.component';
 import { DropDownOption } from '../../../core/models/global.interface';
 import { GalleryUploadComponent } from "../../../shared/components/gallery-upload/gallery-upload.component";
+import { SettingsComponent } from "../../../shared/components/settings/settings.component";
 
 
 @Component({
@@ -32,7 +33,8 @@ import { GalleryUploadComponent } from "../../../shared/components/gallery-uploa
     DatePickerModule,
     ToggleSwitchModule,
     EditorModule,
-    GalleryUploadComponent
+    GalleryUploadComponent,
+    SettingsComponent
 ],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss',
@@ -71,7 +73,7 @@ export class ProjectFormComponent implements OnInit {
       image_before: [null],
       image_after: [null],
       gallery: [],
-      city_id: ['', Validators.required],
+      city_id: [{ value: null, disabled: true }, Validators.required],
       country_id: ['', Validators.required],
       // Toggles
       enableResults:[false],
@@ -156,7 +158,7 @@ export class ProjectFormComponent implements OnInit {
     console.log(event);
   }
   onSave(event: Event) {
-    console.log(event);
+    this.form.markAllAsTouched()
   }
   onLanguageChange(event: Event) {
     console.log(event);

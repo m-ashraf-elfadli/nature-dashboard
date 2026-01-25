@@ -94,7 +94,7 @@
                          </div>
                          <div class="our-field">
                             <label for="city_id">{{ 'projects.form.labels.city' | translate }} <span class="text-red-val">*</span></label>
-                            <p-select [options]="countries" formControlName="city_id" optionLabel="name" [placeholder]="'projects.form.placeholders.city' | translate"/>
+                            <p-select [options]="countries" formControlName="city_id" optionLabel="name" [disabled]="true" [placeholder]="'projects.form.placeholders.city' | translate"/>
                          </div>
                     </div>
                 </div>
@@ -186,8 +186,10 @@
                 <div class="inputs">
                     <app-gallery-upload [label]="'projects.form.labels.image_before' | translate" [multiple]="false"></app-gallery-upload>
                     <app-gallery-upload [label]="'projects.form.labels.image_after' | translate" [multiple]="false"></app-gallery-upload>
+                    <app-settings></app-settings>
                 </div>
             </div>
+
         </div>
     </form>
 </div>
