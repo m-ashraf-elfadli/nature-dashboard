@@ -23,10 +23,9 @@ export function TokenInterceptor(req: HttpRequest<any>, next: HttpHandlerFn) {
   }
 
   req = req.clone({ setHeaders: headers });
-
   return next(req).pipe(
     catchError(error => {
-      if (error.status === 401) {
+      if (error.status === 401 && !(req.url.toLocaleLowerCase().includes('logout'))) {
         auth.logout().subscribe({
           next: () => router.navigate(['/auth']),
           error: () => router.navigate(['/auth'])
