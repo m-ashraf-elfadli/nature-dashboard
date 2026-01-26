@@ -1,101 +1,106 @@
-%section-shared-styles{
+%section-shared-styles {
   border-radius: 20px;
-  background: var(--Color-Neutral-white, #FFF);
+  background: var(--Color-Neutral-white, #fff);
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-:host{
+:host {
   .form-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 16px;
   }
-  .header-section{
+  .header-section {
     display: flex;
     align-items: center;
     color: var(--Color-Neutral-2000, #333435);
     font-size: var(--Font-Size-M, 20px);
     font-weight: var(--Font-Weight-Medium, 500);
-    span{
-      color: var(--Secondary-200, #9A9A9A);
+    span {
+      color: var(--Secondary-200, #9a9a9a);
       font-size: var(--Static-Body-Small-Size, 12px);
       font-weight: 500;
       letter-spacing: var(--Static-Body-Small-Tracking, 0.4px);
     }
   }
-  .project-form{
+  .project-form {
     width: 100%;
     display: flex;
     gap: 16px;
     background-color: transparent;
-    .form-left-section{
+    .form-left-section {
       width: 70%;
       display: flex;
       flex-direction: column;
       gap: 16px;
-      .details-section{
+      .details-section {
         @extend %section-shared-styles;
-        
       }
-      .settings-and-locations-sections{
+      .settings-and-locations-sections {
         display: flex;
         gap: 16px;
-        .settings-section, .location-section{
+        .settings-section,
+        .location-section {
           @extend %section-shared-styles;
           width: calc(50% - 8px);
           gap: 16px;
         }
       }
-      .results-section{
+      .results-section {
         @extend %section-shared-styles;
       }
-      .metrics-section{
+      .metrics-section {
         @extend %section-shared-styles;
-        .metrics-form-group-fields{
+        .metrics-form-group-fields {
           display: flex;
           align-items: center;
           gap: 8px;
-          .title-field{
+          .title-field {
             width: 70%;
           }
-          .case-field{
+          .case-field {
             width: 30%;
           }
         }
       }
     }
-    .form-right-section{
+    .form-right-section {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      .gallery-section,.image-before-and-after-section{
-        @extend %section-shared-styles
+      max-width: 30%;
+      .gallery-section,
+      .image-before-and-after-section {
+        @extend %section-shared-styles;
+      }
+      @media (max-width: 768px) {
+        max-width: 100%;
       }
     }
-    .inputs{
+    .inputs {
       display: flex;
       flex-direction: column;
       row-gap: 16px;
     }
-    .add-form-group-btn{
+    .add-form-group-btn {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--Color-Primary-500, #75B267);
+      color: var(--Color-Primary-500, #75b267);
       font-size: var(--Font-Size-S, 18px);
       font-weight: var(--Font-Weight-Medium, 500);
       border: none;
       background-color: transparent;
-      transition: all .3s;
+      transition: all 0.3s;
       border-radius: 12px;
       cursor: pointer;
-      padding: .5rem;
+      padding: 0.5rem;
       width: fit-content;
-      &:hover{
+      &:hover {
         background-color: rgba(240, 249, 238, 0.8);
       }
     }
