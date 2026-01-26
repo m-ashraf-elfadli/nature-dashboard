@@ -1,116 +1,147 @@
 {
-  "general":{
+  "general": {
     "save": "Save",
     "discard": "Discard",
-    "actions":"Actions",
-    "filter":"Filter",
-    "text_editor_header":"Section body",
-    "search_input_table_placeholder":"Search by name ..."
+    "actions": "Actions",
+    "filter": "Filter",
+    "text_editor_header": "Section body",
+    "search_input_table_placeholder": "Search by name ..."
   },
   "projects": {
-    "list":{
-      "page_title":"All Projects",
-      "table_headers":{
-        "project":"Project",
-        "country":"Country",
-        "city":"City",
-        "services":"Services",
-        "locale":"Locale",
-        "status":"Status"
+    "list": {
+      "page_title": "All Projects",
+      "table_headers": {
+        "project": "Project",
+        "country": "Country",
+        "city": "City",
+        "services": "Services",
+        "locale": "Locale",
+        "status": "Status"
       },
-      "btns":{
-        "add_new":"Add new project"
+      "btns": {
+        "add_new": "Add new project"
       }
     },
     "form": {
-      "title":"Add New Project",
-      "english":"(English)",
-      "arabic":"(Arabic)",
-      "titles":{
-        "deatils":"Project Details",
-        "settings":"Project Settings",
-        "galary":"Project Galary",
-        "location":"Project Location",
-        "results":"Results & Reflects",
-        "metrics":"Metrics indicators",
-        "metrics_desc":"(Maximum 3 allowed)"
+      "title": "Add New Project",
+      "english": "(English)",
+      "arabic": "(Arabic)",
+      "titles": {
+        "deatils": "Project Details",
+        "settings": "Project Settings",
+        "galary": "Project Galary",
+        "location": "Project Location",
+        "results": "Results & Reflects",
+        "metrics": "Metrics indicators",
+        "metrics_desc": "(Maximum 3 allowed)"
       },
-      "labels":{
-        "name":"Project Name",
-        "overview":"Overview",
-        "brief":"Brief",
-        "location":"Project Location",
-        "start_date":"Project Start Date",
-        "end_date":"Project End Date",
-        "services":"Project Services",
-        "status":"Project Status",
-        "images":"Project Images",
-        "country":"Country",
-        "city":"City",
-        "before_image":"Before Image",
-        "after_image":"After Image",
-        "additional_images":"Additional Images",
-        "timeline":"Project Timeline",
-        "section_title":"Section title",
-        "section_body":"Section body",
-        "metrics":"Metrics ({{count}})",
-        "gallery":"Project Gallery",
-        "image_before":"Project Before Image",
-        "image_after":"Project Status"
+      "labels": {
+        "name": "Project Name",
+        "overview": "Overview",
+        "brief": "Brief",
+        "location": "Project Location",
+        "start_date": "Project Start Date",
+        "end_date": "Project End Date",
+        "services": "Project Services",
+        "status": "Project Status",
+        "images": "Project Images",
+        "country": "Country",
+        "city": "City",
+        "before_image": "Before Image",
+        "after_image": "After Image",
+        "additional_images": "Additional Images",
+        "timeline": "Project Timeline",
+        "section_title": "Section title",
+        "section_body": "Section body",
+        "metrics": "Metrics ({{count}})",
+        "gallery": "Project Gallery",
+        "image_before": "Project Before Image",
+        "image_after": "Project Status"
       },
-      "placeholders":{
-        "name":"Write project name ...",
-        "overview":"Write project overview ...",
-        "brief":"Write project brief ...",
-        "services":"Select project services",
-        "country":"Choose project country",
-        "city":"Choose project city",
-        "form":"Form",
-        "to":"To",
-        "section_title":"Enter section title",
-        "section_body":"Enter section body",
-        "metric_title":"Enter section title",
-        "metric_number":"Number",
-        "metric_case":"Icon"
+      "placeholders": {
+        "name": "Write project name ...",
+        "overview": "Write project overview ...",
+        "brief": "Write project brief ...",
+        "services": "Select project services",
+        "country": "Choose project country",
+        "city": "Choose project city",
+        "form": "Form",
+        "to": "To",
+        "section_title": "Enter section title",
+        "section_body": "Enter section body",
+        "metric_title": "Enter section title",
+        "metric_number": "Number",
+        "metric_case": "Icon"
       },
-      "btns":{
-        "add_result":"Add another section",
-        "add_metrics":"Add another metrics"
+      "btns": {
+        "add_result": "Add another section",
+        "add_metrics": "Add another metrics"
       }
     }
   },
-  "awards":{
-    "list":{
-      "page_title":"All Awards",
-      "table_headers":{
-        "award":"Award",
-        "date":"Date",
-        "description":"Description",
-        "status":"Status"
+  "awards": {
+    "list": {
+      "page_title": "All Awards",
+      "table_headers": {
+        "award": "Award",
+        "date": "Date",
+        "description": "Description",
+        "status": "Status"
       },
-      "btns":{
-        "add_new":"Add new award"
+      "btns": {
+        "add_new": "Add new award"
       }
     },
-    "form":{
-      "title":"Add New Award",
-      "english":"(English)",
-      "arabic":"(Arabic)",
-      "titles":{
-        "details":"Award Details",
-        "settings":"Awards Settings",
-        "organizations":"Organizations Logos",
-        "award":"Award Image"
+    "form": {
+      "title": "Add New Award",
+      "english": "(English)",
+      "arabic": "(Arabic)",
+      "titles": {
+        "details": "Award Details",
+        "settings": "Awards Settings",
+        "organizations": "Organizations Logos",
+        "award": "Award Image"
       },
-      "labels":{
-        "name":"Award name",
-        "date":"Award Date",
-        "description":"Description"
+      "labels": {
+        "name": "Award name",
+        "date": "Award Date",
+        "description": "Description"
       },
-      "placeholders":{
-        "name":"Write award name ...",
-        "date":"Enter award date",
-        "description":"Write section description here ..."
+      "placeholders": {
+        "name": "Write award name ...",
+        "date": "Enter award date",
+        "description": "Write section description here ..."
+      }
+    }
+  },
+  "services": {
+    "list": {
+      "page_title": "All Services",
+      "table_headers": {
+        "service": "Service",
+        "description": "Description",
+        "status": "Status"
+      },
+      "btns": {
+        "add_new": "Add new service"
+      }
+    },
+    "form": {
+      "title": "Add New Service",
+      "english": "(English)",
+      "arabic": "(Arabic)",
+      "titles": {
+        "details": "Service Details",
+        "settings": "Service Settings",
+        "icon": "Service Icon"
+      },
+      "labels": {
+        "name": "Service name",
+        "description": "Description"
+      },
+      "placeholders": {
+        "name": "Write service name ...",
+        "description": "Write section description here ..."
       }
     }
   }

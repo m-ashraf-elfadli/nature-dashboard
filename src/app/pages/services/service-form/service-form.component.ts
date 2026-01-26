@@ -28,7 +28,7 @@ import { StageFormComponent } from '../stage-form/stage-form.component';
 import { ValueFormComponent } from '../value-form/value-form.component';
 import { ResultsFormComponent } from '../results-form/results-form.component';
 import { AppDialogService } from '../../../shared/services/dialog.service';
-import { TestService } from './test.service';
+import { ServicesService } from '../../../services/services.service';
 
 export interface ServiceItemFormValue {
   title: string;
@@ -70,7 +70,7 @@ export class ServiceFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogService: AppDialogService,
-    private testService: TestService,
+    private servicesService: ServicesService,
   ) {}
 
   ngOnInit(): void {
@@ -393,7 +393,7 @@ export class ServiceFormComponent implements OnInit {
 
     this.appendFormData(formData, this.serviceForm.value);
 
-    this.testService.send(formData).subscribe({
+    this.servicesService.createService(formData).subscribe({
       next: (res) => console.log(res),
       error: (err) => console.log(err),
     });

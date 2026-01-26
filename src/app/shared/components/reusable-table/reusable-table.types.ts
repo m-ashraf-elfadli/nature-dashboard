@@ -2,9 +2,26 @@ export interface TableColumn<T> {
   field: string;
   secondaryField?: string;
   header: string;
-  type?: 'project' | 'country-chip' | 'chips-group' | 'languages-chips' | 'status' | 'text' | 'text-editor' | 'badge' | 'image' | 'date' | 'custom' | 'chip' | 'avatar-and-name' | 'progress-bar' | 'progress-bar-circle' | 'score' | 'text-and-desc',
+  type?:
+    | 'project'
+    | 'country-chip'
+    | 'chips-group'
+    | 'languages-chips'
+    | 'status'
+    | 'text'
+    | 'text-editor'
+    | 'badge'
+    | 'image'
+    | 'date'
+    | 'custom'
+    | 'chip'
+    | 'avatar-and-name'
+    | 'progress-bar'
+    | 'progress-bar-circle'
+    | 'score'
+    | 'text-and-desc';
   badgeColorField?: (
-    row: T
+    row: T,
   ) =>
     | 'pending'
     | 'rejected'
@@ -17,7 +34,7 @@ export interface TableColumn<T> {
   avatarField?: string;
   formatDate?: string;
   sortable?: boolean;
-  statusCallback?:(e:Event) => void
+  statusCallback?: (e: Event) => void;
 }
 
 export interface TableAction<T> {
@@ -37,7 +54,7 @@ export interface TableAction<T> {
     | 'discard'
     | 'square-shadow';
   tooltip?: string;
-  callback: (row: T,event?:Event) => void;
+  callback: (row: T, event?: Event) => void;
   route?: string;
   type?: 'edit' | 'delete' | string;
   class?: string;
@@ -56,4 +73,8 @@ export interface TableConfig<T> {
   serverSidePagination?: boolean;
   serverSideSearch?: boolean;
   serverSideSort?: boolean;
+}
+export interface LocaleChip {
+  code: string;
+  flag?: string;
 }
