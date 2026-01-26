@@ -31,23 +31,7 @@ export class ServicesComponent {
   private router = inject(Router);
   private servicesService = inject(ServicesService);
 
-  data: any[] = [
-    {
-      id: 1,
-      name: `Plantation UAE Project ${1}`,
-      image: `https://picsum.photos/seed/${50}/100/100`,
-      country: 'UAE',
-      countryCode: 'AE',
-      countryFlag: 'https://flagcdn.com/w40/ae.png', // Flag URL property
-      city: 'Sohag',
-      services: ['Service 1', 'Service 2', 'Service 3', 'Service 4'],
-      locales: [
-        { code: 'EN', flag: '🇬🇧', status: true },
-        { code: 'AR', flag: '🇦🇪', status: false }, // AR only for some
-      ],
-      status: Math.random() > 0.2, // 80% active
-    },
-  ];
+  data: any[] = [];
   totalRecords = this.data.length;
 
   columns: TableColumn<any>[] = [
