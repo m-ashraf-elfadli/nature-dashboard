@@ -11,7 +11,7 @@ export class ApiService {
   private readonly baseUrl = environment.baseUrl;
   private readonly http = inject(HttpClient);
 
-  private culture: string = 'en';
+  private culture: string = localStorage.getItem('app_lang') || 'en';
 
   // =============================
   // Culture
