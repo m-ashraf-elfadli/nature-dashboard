@@ -62,6 +62,10 @@ export class ServiceFormComponent implements OnInit {
   pageTitle = 'Add New Service';
   serviceForm!: FormGroup;
 
+  StageFormComponent = StageFormComponent;
+  ValueFormComponent = ValueFormComponent;
+  ResultsFormComponent = ResultsFormComponent;
+
   constructor(
     private fb: FormBuilder,
     private dialogService: AppDialogService,
@@ -124,7 +128,8 @@ export class ServiceFormComponent implements OnInit {
   cols: MiniTableColumn[] = [
     { field: 'title', header: 'Title' },
     { field: 'description', header: 'Description' },
-    { field: 'action', header: 'Action', type: 'action' },
+    { field: 'actions', header: 'Actions', type: 'edit-action' },
+    { field: 'actions', header: '', type: 'delete-action' },
   ];
 
   /* ---------------- FORM ARRAYS ---------------- */
@@ -225,25 +230,6 @@ export class ServiceFormComponent implements OnInit {
     );
   }
 
-  openBenefitsInsightPopup(): void {
-    const ref = this.dialogService.open(StageFormComponent, {
-      header: 'Create New Insight',
-      width: '600px',
-    });
-
-    ref.onClose.subscribe((data: ServiceItemFormValue | null) => {
-      if (!data) return;
-
-      // For benefits insights, create a group with title and number fields
-      const insightGroup = this.fb.group({
-        title: [data.title, Validators.required],
-        number: [''],
-      });
-
-      this.benefitsInsightsArray.push(insightGroup);
-    });
-  }
-
   addBenefitsInsight(): void {
     if (this.benefitsInsightsArray.length < 3) {
       const insightGroup = this.fb.group({
@@ -263,8 +249,6 @@ export class ServiceFormComponent implements OnInit {
       component = ValueFormComponent;
     } else if (header.includes('Results')) {
       component = ResultsFormComponent;
-    } else if (header.includes('Insight')) {
-      component = StageFormComponent; // Reuse for insights
     } else {
       component = StageFormComponent;
     }
@@ -309,6 +293,41 @@ export class ServiceFormComponent implements OnInit {
 
   onDeleteBenefitsInsight(index: number): void {
     this.removeFromArray(this.benefitsInsightsArray, index);
+  }
+
+  onEditStage(result: any): void {
+    if (!result) return;
+
+    // Handle the result structure from the edit dialog
+    const updatedData = result.rowData || result;
+    const index = result.index;
+
+    if (index !== undefined && this.stagesArray.at(index)) {
+      // Update the form control at the given index
+      this.stagesArray.at(index).patchValue(updatedData);
+    }
+  }
+
+  onEditServiceValue(result: any): void {
+    console.log(result);
+
+    const updatedData = result.rowData || result;
+    const index = result.index;
+
+    if (index !== undefined && this.serviceValuesArray.at(index)) {
+      this.serviceValuesArray.at(index).patchValue(updatedData);
+    }
+  }
+
+  onEditServiceResult(result: any): void {
+    if (!result) return;
+
+    const updatedData = result.rowData || result;
+    const index = result.index;
+
+    if (index !== undefined && this.serviceResultsArray.at(index)) {
+      this.serviceResultsArray.at(index).patchValue(updatedData);
+    }
   }
 
   onReorder(data: any): void {
