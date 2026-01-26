@@ -1,4 +1,6 @@
 export const environment = {
-    production: false,
-    baseUrl: 'http://localhost:3000/api'
+  production: true,
+  baseUrl: 'https://lavenderblush-reindeer-325183.hostingersite.com/api/',
+  mediaUrl:
+    'https://lavenderblush-reindeer-325183.hostingersite.com/api/media/',
 };
