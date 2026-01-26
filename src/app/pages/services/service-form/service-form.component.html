@@ -1,46 +1,27 @@
-<div class="page-container">
+<div class="page-container form-content">
   <div class="form-header">
     <app-page-header [title]="pageTitle"></app-page-header>
-    <app-form-actions
-      (discard)="onDiscard()"
-      (save)="onSave()"
-      (languageChange)="onLanguageChange($event)"
-    ></app-form-actions>
+    <app-form-actions (discard)="onDiscard()" (save)="onSave()"
+      (languageChange)="onLanguageChange($event)"></app-form-actions>
   </div>
-  <form
-    [formGroup]="serviceForm"
-    (ngSubmit)="submitForm()"
-    class="service-form"
-  >
+  <form [formGroup]="serviceForm" (ngSubmit)="submitForm()" class="service-form">
     <div class="fieldsets-container">
       <div class="fieldset">
         <legend>Service Details</legend>
         <div class="our-field">
-          <label for="serviceName"
-            >Service Name
+          <label for="serviceName">Service Name
             <span class="required">*</span>
           </label>
-          <input
-            type="text"
-            id="serviceName"
-            placeholder="Enter service Name...."
-            formControlName="serviceName"
-            pInputText
-          />
+          <input type="text" id="serviceName" placeholder="Enter service Name...." formControlName="serviceName"
+            pInputText />
         </div>
 
         <div class="our-field">
-          <label for="serviceTagline"
-            >Service Tagline
+          <label for="serviceTagline">Service Tagline
             <span class="required">*</span>
           </label>
-          <input
-            type="text"
-            id="serviceTagline"
-            placeholder="Enter Service Tagline...."
-            formControlName="serviceTagline"
-            pInputText
-          />
+          <input type="text" id="serviceTagline" placeholder="Enter Service Tagline...."
+            formControlName="serviceTagline" pInputText />
         </div>
       </div>
       <app-settings formControlName="status"></app-settings>
@@ -49,64 +30,27 @@
       <legend>
         Service Stages
         <span>(Maximum 3 allowed)</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path
             d="M8.66666 13.9999H14M10 3.33326L12.6667 5.99993M14.116 4.54126C14.4685 4.18888 14.6665 3.71091 14.6666 3.2125C14.6666 2.71409 14.4687 2.23607 14.1163 1.8836C13.7639 1.53112 13.286 1.33307 12.7876 1.33301C12.2892 1.33295 11.8111 1.53088 11.4587 1.88326L2.56133 10.7826C2.40654 10.9369 2.29207 11.127 2.228 11.3359L1.34733 14.2373C1.3301 14.2949 1.3288 14.3562 1.34356 14.4145C1.35833 14.4728 1.38861 14.5261 1.43119 14.5686C1.47378 14.6111 1.52708 14.6413 1.58544 14.656C1.64379 14.6707 1.70504 14.6693 1.76266 14.6519L4.66466 13.7719C4.87344 13.7084 5.06345 13.5947 5.218 13.4406L14.116 4.54126Z"
-            stroke="#6C6C6C"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+            stroke="#6C6C6C" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </legend>
       @if(stages.length > 0) {
-      <app-mini-table
-        [data]="stages"
-        [columns]="cols"
-        [reorderable]="true"
-        [showImage]="true"
-        imageField="imagePreview"
-        (rowDeleted)="onDeleteStage($event)"
-        (reordered)="onReorder($event)"
-        style="width: 100%"
-      >
+      <app-mini-table [data]="stages" [columns]="cols" [reorderable]="true" [showImage]="true" imageField="imagePreview"
+        (rowDeleted)="onDeleteStage($event)" (reordered)="onReorder($event)" style="width: 100%">
       </app-mini-table>
-      <button
-        class="add-another"
-        type="button"
-        (click)="openStagePopup()"
-        *ngIf="stages.length < 3"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 18 18"
-          fill="none"
-        >
-          <path
-            d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192"
-            stroke="#75B267"
-            stroke-width="1.5913"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+      <button class="add-another" type="button" (click)="openStagePopup()" *ngIf="stages.length < 3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192" stroke="#75B267" stroke-width="1.5913"
+            stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <span>Add Another</span>
       </button>
       } @else {
-      <app-empty-state-action
-        title="Start Adding stages to appear here"
-        subtitle="Start adding the first service stage."
-        buttonLabel="Add New Stage"
-        (action)="openStagePopup()"
-        style="width: 100%"
-      ></app-empty-state-action>
+      <app-empty-state-action title="Start Adding stages to appear here"
+        subtitle="Start adding the first service stage." buttonLabel="Add New Stage" (action)="openStagePopup()"
+        style="width: 100%"></app-empty-state-action>
       }
     </div>
     <div class="fieldset">
@@ -115,50 +59,29 @@
         <p-inputSwitch [formControl]="benefitsEnabledControl"></p-inputSwitch>
       </div>
 
-      <div
-        class="benefits-fields"
-        [class.disabled]="!benefitsEnabledControl.value"
-      >
+      <div class="benefits-fields" [class.disabled]="!benefitsEnabledControl.value">
         <div class="our-field">
-          <label for="benefitsTitle"
-            >Benefits Title
+          <label for="benefitsTitle">Benefits Title
             <span class="required">*</span>
           </label>
-          <input
-            type="text"
-            id="benefitsTitle"
-            placeholder="Please enter benefits title"
-            formControlName="benefitsTitle"
-            pInputText
-          />
+          <input type="text" id="benefitsTitle" placeholder="Please enter benefits title"
+            formControlName="benefitsTitle" pInputText />
         </div>
 
         <div class="our-field">
-          <label for="benefitsTagline"
-            >Benefits Tagline
+          <label for="benefitsTagline">Benefits Tagline
             <span class="required">*</span>
           </label>
-          <input
-            type="text"
-            id="benefitsTagline"
-            placeholder="Please enter benefits title"
-            formControlName="benefitsTagline"
-            pInputText
-          />
+          <input type="text" id="benefitsTagline" placeholder="Please enter benefits title"
+            formControlName="benefitsTagline" pInputText />
         </div>
 
         <div class="our-field">
-          <label for="benefitsBody"
-            >Benefits Body
+          <label for="benefitsBody">Benefits Body
             <span class="required">*</span>
           </label>
-          <input
-            type="text"
-            id="benefitsBody"
-            placeholder="Please enter benefits title"
-            formControlName="benefitsBody"
-            pInputText
-          />
+          <input type="text" id="benefitsBody" placeholder="Please enter benefits title" formControlName="benefitsBody"
+            pInputText />
         </div>
 
         <div class="fieldset">
@@ -168,55 +91,28 @@
           </legend>
 
           <div class="insights-container">
-            <div
-              class="insight-row"
-              *ngFor="
+            <div class="insight-row" *ngFor="
                 let control of benefitsInsightsArray.controls;
                 let i = index
-              "
-            >
+              ">
               <div class="insight-label">
                 <label>Metrics ({{ i + 1 }})</label>
               </div>
               <div class="insight-inputs">
                 <div class="our-field">
-                  <input
-                    type="text"
-                    placeholder="Please enter benefits title"
-                    [formControl]="$any(control.get('title'))"
-                    pInputText
-                  />
+                  <input type="text" placeholder="Please enter benefits title"
+                    [formControl]="$any(control.get('title'))" pInputText />
                 </div>
                 <div class="our-field insight-input">
-                  <input
-                    type="text"
-                    placeholder="Number"
-                    [formControl]="$any(control.get('number'))"
-                    pInputText
-                  />
+                  <input type="text" placeholder="Number" [formControl]="$any(control.get('number'))" pInputText />
                 </div>
-                <button
-                  type="button"
-                  class="delete-btn"
-                  (click)="onDeleteBenefitsInsight(i)"
-                  *ngIf="benefitsInsightsArray.length > 1"
-                  title="Delete"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                  >
+                <button type="button" class="delete-btn" (click)="onDeleteBenefitsInsight(i)"
+                  *ngIf="benefitsInsightsArray.length > 1" title="Delete">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <g clip-path="url(#clip0_9916_20048)">
                       <path
                         d="M8.71281 3.26727V2.83164C8.71281 2.2217 8.71281 1.91673 8.5941 1.68376C8.48969 1.47884 8.32308 1.31223 8.11816 1.20781C7.88519 1.08911 7.58022 1.08911 6.97028 1.08911H6.09901C5.48907 1.08911 5.1841 1.08911 4.95114 1.20781C4.74621 1.31223 4.5796 1.47884 4.47519 1.68376C4.35649 1.91673 4.35649 2.2217 4.35649 2.83164V3.26727M5.44557 6.26224V8.98494M7.62373 6.26224V8.98494M1.63379 3.26727H11.4355M10.3464 3.26727V9.36612C10.3464 10.281 10.3464 10.7385 10.1684 11.0879C10.0117 11.3953 9.76184 11.6452 9.45445 11.8019C9.105 11.9799 8.64755 11.9799 7.73263 11.9799H5.33666C4.42175 11.9799 3.96429 11.9799 3.61484 11.8019C3.30745 11.6452 3.05754 11.3953 2.90092 11.0879C2.72287 10.7385 2.72287 10.281 2.72287 9.36612V3.26727"
-                        stroke="#F96C4D"
-                        stroke-width="0.980172"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
+                        stroke="#F96C4D" stroke-width="0.980172" stroke-linecap="round" stroke-linejoin="round" />
                     </g>
                     <defs>
                       <clipPath id="clip0_9916_20048">
@@ -229,26 +125,11 @@
             </div>
           </div>
 
-          <button
-            class="add-another"
-            type="button"
-            (click)="addBenefitsInsight()"
-            *ngIf="benefitsInsightsArray.length < 3"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-            >
-              <path
-                d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192"
-                stroke="#75B267"
-                stroke-width="1.5913"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+          <button class="add-another" type="button" (click)="addBenefitsInsight()"
+            *ngIf="benefitsInsightsArray.length < 3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192" stroke="#75B267" stroke-width="1.5913"
+                stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span>Add New Benefit</span>
           </button>
@@ -260,63 +141,28 @@
         <legend>
           Service Values
           <span>(Maximum 3 allowed)</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
               d="M8.66666 13.9999H14M10 3.33326L12.6667 5.99993M14.116 4.54126C14.4685 4.18888 14.6665 3.71091 14.6666 3.2125C14.6666 2.71409 14.4687 2.23607 14.1163 1.8836C13.7639 1.53112 13.286 1.33307 12.7876 1.33301C12.2892 1.33295 11.8111 1.53088 11.4587 1.88326L2.56133 10.7826C2.40654 10.9369 2.29207 11.127 2.228 11.3359L1.34733 14.2373C1.3301 14.2949 1.3288 14.3562 1.34356 14.4145C1.35833 14.4728 1.38861 14.5261 1.43119 14.5686C1.47378 14.6111 1.52708 14.6413 1.58544 14.656C1.64379 14.6707 1.70504 14.6693 1.76266 14.6519L4.66466 13.7719C4.87344 13.7084 5.06345 13.5947 5.218 13.4406L14.116 4.54126Z"
-              stroke="#6C6C6C"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+              stroke="#6C6C6C" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </legend>
         @if(serviceValuesArray.length > 0) {
-        <app-mini-table
-          [data]="serviceValuesArray.value"
-          [columns]="cols"
-          [reorderable]="true"
-          [showImage]="false"
-          (rowDeleted)="onDeleteServiceValue($event)"
-          (reordered)="onReorderServiceValues($event)"
-          style="width: 100%"
-        >
+        <app-mini-table [data]="serviceValuesArray.value" [columns]="cols" [reorderable]="true" [showImage]="false"
+          (rowDeleted)="onDeleteServiceValue($event)" (reordered)="onReorderServiceValues($event)" style="width: 100%">
         </app-mini-table>
-        <button
-          class="add-another"
-          type="button"
-          (click)="openServiceValuePopup()"
-          *ngIf="serviceValuesArray.length < 3"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-          >
-            <path
-              d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192"
-              stroke="#75B267"
-              stroke-width="1.5913"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+        <button class="add-another" type="button" (click)="openServiceValuePopup()"
+          *ngIf="serviceValuesArray.length < 3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192" stroke="#75B267" stroke-width="1.5913"
+              stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <span>Add Another</span>
         </button>
         } @else {
-        <app-empty-state-action
-          title="Start Adding values to appear here"
-          subtitle="Start adding the first service value."
-          buttonLabel="Add New Value"
-          (action)="openServiceValuePopup()"
-          style="width: 100%"
-        ></app-empty-state-action>
+        <app-empty-state-action title="Start Adding values to appear here"
+          subtitle="Start adding the first service value." buttonLabel="Add New Value"
+          (action)="openServiceValuePopup()" style="width: 100%"></app-empty-state-action>
         }
       </div>
 
@@ -324,63 +170,29 @@
         <legend>
           Results & Impacts
           <span>(Maximum 3 allowed)</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
               d="M8.66666 13.9999H14M10 3.33326L12.6667 5.99993M14.116 4.54126C14.4685 4.18888 14.6665 3.71091 14.6666 3.2125C14.6666 2.71409 14.4687 2.23607 14.1163 1.8836C13.7639 1.53112 13.286 1.33307 12.7876 1.33301C12.2892 1.33295 11.8111 1.53088 11.4587 1.88326L2.56133 10.7826C2.40654 10.9369 2.29207 11.127 2.228 11.3359L1.34733 14.2373C1.3301 14.2949 1.3288 14.3562 1.34356 14.4145C1.35833 14.4728 1.38861 14.5261 1.43119 14.5686C1.47378 14.6111 1.52708 14.6413 1.58544 14.656C1.64379 14.6707 1.70504 14.6693 1.76266 14.6519L4.66466 13.7719C4.87344 13.7084 5.06345 13.5947 5.218 13.4406L14.116 4.54126Z"
-              stroke="#6C6C6C"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+              stroke="#6C6C6C" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </legend>
         @if(serviceResultsArray.length > 0) {
-        <app-mini-table
-          [data]="serviceResultsArray.value"
-          [columns]="cols"
-          [reorderable]="true"
-          [showImage]="false"
-          (rowDeleted)="onDeleteServiceResult($event)"
-          (reordered)="onReorderServiceResults($event)"
-          style="width: 100%"
-        >
+        <app-mini-table [data]="serviceResultsArray.value" [columns]="cols" [reorderable]="true" [showImage]="false"
+          (rowDeleted)="onDeleteServiceResult($event)" (reordered)="onReorderServiceResults($event)"
+          style="width: 100%">
         </app-mini-table>
-        <button
-          class="add-another"
-          type="button"
-          (click)="openServiceResultPopup()"
-          *ngIf="serviceResultsArray.length < 3"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-          >
-            <path
-              d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192"
-              stroke="#75B267"
-              stroke-width="1.5913"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+        <button class="add-another" type="button" (click)="openServiceResultPopup()"
+          *ngIf="serviceResultsArray.length < 3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192" stroke="#75B267" stroke-width="1.5913"
+              stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <span>Add Another</span>
         </button>
         } @else {
-        <app-empty-state-action
-          title="Start Adding results & impacts to appear here"
-          subtitle="Start adding the first result & impact."
-          buttonLabel="Add New Result & Impact"
-          (action)="openServiceResultPopup()"
-          style="width: 100%"
-        ></app-empty-state-action>
+        <app-empty-state-action title="Start Adding results & impacts to appear here"
+          subtitle="Start adding the first result & impact." buttonLabel="Add New Result & Impact"
+          (action)="openServiceResultPopup()" style="width: 100%"></app-empty-state-action>
         }
       </div>
     </div>

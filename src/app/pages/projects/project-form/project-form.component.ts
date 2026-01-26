@@ -1,21 +1,26 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { InputText } from "primeng/inputtext";
+import { InputText } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TextareaModule } from 'primeng/textarea';
-import { SelectModule } from "primeng/select";
+import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { EditorModule } from 'primeng/editor';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../shared/components/form-actions/form-actions.component';
 import { DropDownOption } from '../../../core/models/global.interface';
-import { GalleryUploadComponent } from "../../../shared/components/gallery-upload/gallery-upload.component";
-import { SettingsComponent } from "../../../shared/components/settings/settings.component";
-
+import { GalleryUploadComponent } from '../../../shared/components/gallery-upload/gallery-upload.component';
+import { SettingsComponent } from '../../../shared/components/settings/settings.component';
 
 @Component({
   selector: 'app-project-form',
@@ -34,8 +39,8 @@ import { SettingsComponent } from "../../../shared/components/settings/settings.
     ToggleSwitchModule,
     EditorModule,
     GalleryUploadComponent,
-    SettingsComponent
-],
+    SettingsComponent,
+  ],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss',
 })
@@ -44,25 +49,24 @@ export class ProjectFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private cachedResults: any[] = [];
   private cachedMetrics: any[] = [];
-  services:DropDownOption[] = [
+  services: DropDownOption[] = [
     { name: 'Conservation', id: 1 },
     { name: 'Reforestation', id: 2 },
   ];
-  countries:DropDownOption[] = [
+  countries: DropDownOption[] = [
     { name: 'Kenya', id: 1 },
     { name: 'Uganda', id: 2 },
   ];
-  metricCases:DropDownOption[] = [
-    {name:'Plus',id:1},
-    {name:'Minus',id:2}
-  ]
+  metricCases: DropDownOption[] = [
+    { name: 'Plus', id: 1 },
+    { name: 'Minus', id: 2 },
+  ];
   form!: FormGroup;
 
-
   ngOnInit() {
-    this.initForm()
+    this.initForm();
   }
-  initForm(){
+  initForm() {
     this.form = this.fb.group({
       name: ['', Validators.required],
       brief: ['', [Validators.required, Validators.maxLength(200)]],
@@ -76,11 +80,11 @@ export class ProjectFormComponent implements OnInit {
       city_id: [{ value: null, disabled: true }, Validators.required],
       country_id: ['', Validators.required],
       // Toggles
-      enableResults:[false],
-      enableMetrics:[false],
+      enableResults: [false],
+      enableMetrics: [false],
       // form arrays
       results: this.fb.array([]),
-      metrics: this.fb.array([])
+      metrics: this.fb.array([]),
     });
   }
   get results(): FormArray {
@@ -93,7 +97,7 @@ export class ProjectFormComponent implements OnInit {
   createResult(data?: any): FormGroup {
     return this.fb.group({
       section_title: [data?.section_title || '', Validators.required],
-      section_body: [data?.section_body || '', Validators.required]
+      section_body: [data?.section_body || '', Validators.required],
     });
   }
 
@@ -102,9 +106,9 @@ export class ProjectFormComponent implements OnInit {
       metric_title: [data?.metric_title || '', Validators.required],
       metric_number: [
         data?.metric_number || '',
-        [Validators.required, Validators.max(100)]
+        [Validators.required, Validators.max(100)],
       ],
-      metric_case: [data?.metric_case || '', Validators.required]
+      metric_case: [data?.metric_case || '', Validators.required],
     });
   }
   toggleResults() {
@@ -115,8 +119,8 @@ export class ProjectFormComponent implements OnInit {
     } else {
       // 🟢 TOGGLE ON → RESTORE
       if (this.cachedResults.length) {
-        this.cachedResults.forEach(r =>
-          this.results.push(this.createResult(r))
+        this.cachedResults.forEach((r) =>
+          this.results.push(this.createResult(r)),
         );
       } else {
         // optional: add empty row
@@ -130,8 +134,8 @@ export class ProjectFormComponent implements OnInit {
       this.metrics.clear();
     } else {
       if (this.cachedMetrics.length) {
-        this.cachedMetrics.forEach(m =>
-          this.metrics.push(this.createMetric(m))
+        this.cachedMetrics.forEach((m) =>
+          this.metrics.push(this.createMetric(m)),
         );
       } else {
         this.metrics.push(this.createMetric());
@@ -158,7 +162,7 @@ export class ProjectFormComponent implements OnInit {
     console.log(event);
   }
   onSave(event: Event) {
-    this.form.markAllAsTouched()
+    this.form.markAllAsTouched();
   }
   onLanguageChange(event: Event) {
     console.log(event);
