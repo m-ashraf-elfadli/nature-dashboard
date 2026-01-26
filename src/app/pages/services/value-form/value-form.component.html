@@ -14,9 +14,9 @@
   </div>
 
   <div class="our-field">
-    <label for="toolsUsed">Tools Used</label>
+    <label for="tools">Tools Used</label>
     <div class="tools-input-wrapper">
-      <input id="toolsUsed" pInputText [(ngModel)]="toolInput" [ngModelOptions]="{ standalone: true }"
+      <input id="tools" pInputText [(ngModel)]="toolInput" [ngModelOptions]="{ standalone: true }"
         placeholder="Enter tool name" (keyup.enter)="addTool()" />
       <button type="button" class="add-another" (click)="addTool()">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -26,8 +26,8 @@
         <span>Add</span>
       </button>
     </div>
-    <div class="tools-badges" *ngIf="toolsUsedArray.length > 0">
-      <div class="tool-badge" *ngFor="let tool of toolsUsedArray.value; let i = index">
+    <div class="tools-badges" *ngIf="toolsArray.length > 0">
+      <div class="tool-badge" *ngFor="let tool of toolsArray.value; let i = index">
         <span>{{ tool }}</span>
         <button type="button" class="remove-badge" (click)="removeTool(i)" title="Remove">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
