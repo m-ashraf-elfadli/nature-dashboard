@@ -34,7 +34,7 @@ export class ValueFormComponent implements OnInit {
     this.form = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      toolsUsed: this.fb.array([]),
+      tools: this.fb.array([]),
     });
 
     // EDIT MODE
@@ -47,28 +47,28 @@ export class ValueFormComponent implements OnInit {
         description: this.rowData.description,
       });
 
-      // populate toolsUsed array
-      if (this.rowData.toolsUsed && Array.isArray(this.rowData.toolsUsed)) {
-        this.rowData.toolsUsed.forEach((tool: string) =>
-          this.toolsUsedArray.push(this.fb.control(tool)),
+      // populate tools array
+      if (this.rowData.tools && Array.isArray(this.rowData.tools)) {
+        this.rowData.tools.forEach((tool: string) =>
+          this.toolsArray.push(this.fb.control(tool)),
         );
       }
     }
   }
 
-  get toolsUsedArray(): FormArray {
-    return this.form.get('toolsUsed') as FormArray;
+  get toolsArray(): FormArray {
+    return this.form.get('tools') as FormArray;
   }
 
   addTool(): void {
     if (this.toolInput.trim()) {
-      this.toolsUsedArray.push(this.fb.control(this.toolInput.trim()));
+      this.toolsArray.push(this.fb.control(this.toolInput.trim()));
       this.toolInput = '';
     }
   }
 
   removeTool(index: number): void {
-    this.toolsUsedArray.removeAt(index);
+    this.toolsArray.removeAt(index);
   }
 
   submit() {
