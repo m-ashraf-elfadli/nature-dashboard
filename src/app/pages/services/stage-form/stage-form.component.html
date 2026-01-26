@@ -1,37 +1,22 @@
 <form [formGroup]="form">
   <div class="our-field">
-    <label for="stageTitle"
-      >Title
+    <label for="stageTitle">Title
       <span class="required">*</span>
     </label>
-    <input
-      id="stageTitle"
-      pInputText
-      formControlName="title"
-      placeholder="Enter stage title.."
-    />
+    <input id="stageTitle" pInputText formControlName="title" placeholder="Enter stage title.." />
   </div>
 
   <div class="our-field">
-    <label for="stageDescription"
-      >Description
+    <label for="stageDescription">Description
       <span class="required">*</span>
     </label>
-    <input
-      id="stageDescription"
-      pInputText
-      formControlName="description"
-      placeholder="Enter stage description"
-    />
+    <input id="stageDescription" pInputText formControlName="description" placeholder="Enter stage description" />
   </div>
 
-  <app-gallery-upload
-    [multiple]="false"
-    formControlName="image"
-    style="width: 100%"
-  ></app-gallery-upload>
+  <app-gallery-upload [multiple]="false" (removed)="onImageRemoved()" formControlName="image"
+    style="width: 100%"></app-gallery-upload>
 
-  <button pButton label="Save" class="action-btn" (click)="submit()">
-    <span>Save</span>
+  <button pButton class="action-btn" (click)="submit()">
+    <span>{{ isEditMode ? 'Update' : 'Save' }}</span>
   </button>
 </form>

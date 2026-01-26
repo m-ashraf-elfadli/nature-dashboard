@@ -86,7 +86,7 @@
             }
 
             @case ('status') {
-            <p-inputswitch [(ngModel)]="row[col.field]"></p-inputswitch>
+            <p-inputswitch (onChange)="row.col.statusCallback($event)" [(ngModel)]="row[col.field]"></p-inputswitch>
             }
 
             @case ('badge') {

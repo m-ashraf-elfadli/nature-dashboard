@@ -28,6 +28,7 @@ import { StageFormComponent } from '../stage-form/stage-form.component';
 import { ValueFormComponent } from '../value-form/value-form.component';
 import { ResultsFormComponent } from '../results-form/results-form.component';
 import { AppDialogService } from '../../../shared/services/dialog.service';
+import { TestService } from './test.service';
 
 export interface ServiceItemFormValue {
   title: string;
@@ -62,41 +63,46 @@ export class ServiceFormComponent implements OnInit {
   pageTitle = 'Add New Service';
   serviceForm!: FormGroup;
 
+  StageFormComponent = StageFormComponent;
+  ValueFormComponent = ValueFormComponent;
+  ResultsFormComponent = ResultsFormComponent;
+
   constructor(
     private fb: FormBuilder,
-    private dialogService: AppDialogService
+    private dialogService: AppDialogService,
+    private testService: TestService,
   ) {}
 
   ngOnInit(): void {
     this.serviceForm = this.fb.group({
-      serviceName: ['', Validators.required],
-      serviceTagline: ['', Validators.required],
+      name: ['', Validators.required],
+      tagline: ['', Validators.required],
       status: [1],
 
-      stages: this.fb.array([]),
-      serviceValues: this.fb.array([]),
-      serviceResults: this.fb.array([]),
+      steps: this.fb.array([]),
+      values: this.fb.array([]),
+      impacts: this.fb.array([]),
 
       // Benefits section
-      benefitsEnabled: [true],
-      benefitsTitle: [''],
-      benefitsTagline: [''],
-      benefitsBody: [''],
-      benefitsInsights: this.fb.array([
-        this.fb.group({ title: [''], number: [''] }),
+      benefitEnabled: [true],
+      benefitTitle: [''],
+      benefitTagline: [''],
+      benefitBody: [''],
+      benefitInsights: this.fb.array([
+        this.fb.group({ metricTitle: [''], metricNumber: [''] }),
       ]),
     });
 
-    // Subscribe to benefitsEnabled changes to enable/disable benefits fields
+    // Subscribe to benefitEnabled changes to enable/disable benefits fields
     this.serviceForm
-      .get('benefitsEnabled')
+      .get('benefitEnabled')
       ?.valueChanges.subscribe((enabled) => {
         this.toggleBenefitsFields(enabled);
       });
   }
 
   private toggleBenefitsFields(enabled: boolean): void {
-    const benefitsFields = ['benefitsTitle', 'benefitsTagline', 'benefitsBody'];
+    const benefitsFields = ['benefitTitle', 'benefitTagline', 'benefitBody'];
     benefitsFields.forEach((field) => {
       const control = this.serviceForm.get(field);
       if (enabled) {
@@ -109,8 +115,8 @@ export class ServiceFormComponent implements OnInit {
       control?.updateValueAndValidity();
     });
 
-    // Handle benefitsInsights array - disable/enable all controls
-    this.benefitsInsightsArray.controls.forEach((group) => {
+    // Handle benefitInsights array - disable/enable all controls
+    this.benefitInsightsArray.controls.forEach((group) => {
       if (enabled) {
         group.enable();
       } else {
@@ -124,29 +130,30 @@ export class ServiceFormComponent implements OnInit {
   cols: MiniTableColumn[] = [
     { field: 'title', header: 'Title' },
     { field: 'description', header: 'Description' },
-    { field: 'action', header: 'Action', type: 'action' },
+    { field: 'actions', header: 'Actions', type: 'edit-action' },
+    { field: 'actions', header: '', type: 'delete-action' },
   ];
 
   /* ---------------- FORM ARRAYS ---------------- */
 
   get stagesArray(): FormArray {
-    return this.serviceForm.get('stages') as FormArray;
+    return this.serviceForm.get('steps') as FormArray;
   }
 
   get serviceValuesArray(): FormArray {
-    return this.serviceForm.get('serviceValues') as FormArray;
+    return this.serviceForm.get('values') as FormArray;
   }
 
   get serviceResultsArray(): FormArray {
-    return this.serviceForm.get('serviceResults') as FormArray;
+    return this.serviceForm.get('impacts') as FormArray;
   }
 
-  get benefitsInsightsArray(): FormArray {
-    return this.serviceForm.get('benefitsInsights') as FormArray;
+  get benefitInsightsArray(): FormArray {
+    return this.serviceForm.get('benefitInsights') as FormArray;
   }
 
-  get benefitsEnabledControl(): FormControl {
-    return this.serviceForm.get('benefitsEnabled') as FormControl;
+  get benefitEnabledControl(): FormControl {
+    return this.serviceForm.get('benefitEnabled') as FormControl;
   }
 
   get stages(): ServiceItemFormValue[] {
@@ -161,12 +168,12 @@ export class ServiceFormComponent implements OnInit {
     return this.serviceResultsArray.value;
   }
 
-  get benefitsInsights(): ServiceItemFormValue[] {
-    return this.benefitsInsightsArray.value;
+  get benefitInsights(): ServiceItemFormValue[] {
+    return this.benefitInsightsArray.value;
   }
 
   getInsightControl(index: number, field: string) {
-    return this.benefitsInsightsArray.at(index)?.get(field);
+    return this.benefitInsightsArray.at(index)?.get(field);
   }
 
   /* ---------------- FACTORY ---------------- */
@@ -221,36 +228,17 @@ export class ServiceFormComponent implements OnInit {
   openServiceResultPopup(): void {
     this.openItemPopup(
       this.serviceResultsArray,
-      'Create New Results & Impacts'
+      'Create New Results & Impacts',
     );
   }
 
-  openBenefitsInsightPopup(): void {
-    const ref = this.dialogService.open(StageFormComponent, {
-      header: 'Create New Insight',
-      width: '600px',
-    });
-
-    ref.onClose.subscribe((data: ServiceItemFormValue | null) => {
-      if (!data) return;
-
-      // For benefits insights, create a group with title and number fields
-      const insightGroup = this.fb.group({
-        title: [data.title, Validators.required],
-        number: [''],
-      });
-
-      this.benefitsInsightsArray.push(insightGroup);
-    });
-  }
-
   addBenefitsInsight(): void {
-    if (this.benefitsInsightsArray.length < 3) {
+    if (this.benefitInsightsArray.length < 3) {
       const insightGroup = this.fb.group({
-        title: [''],
-        number: [''],
+        metricTitle: [''],
+        metricNumber: [''],
       });
-      this.benefitsInsightsArray.push(insightGroup);
+      this.benefitInsightsArray.push(insightGroup);
     }
   }
 
@@ -263,8 +251,6 @@ export class ServiceFormComponent implements OnInit {
       component = ValueFormComponent;
     } else if (header.includes('Results')) {
       component = ResultsFormComponent;
-    } else if (header.includes('Insight')) {
-      component = StageFormComponent; // Reuse for insights
     } else {
       component = StageFormComponent;
     }
@@ -308,7 +294,42 @@ export class ServiceFormComponent implements OnInit {
   }
 
   onDeleteBenefitsInsight(index: number): void {
-    this.removeFromArray(this.benefitsInsightsArray, index);
+    this.removeFromArray(this.benefitInsightsArray, index);
+  }
+
+  onEditStage(result: any): void {
+    if (!result) return;
+
+    // Handle the result structure from the edit dialog
+    const updatedData = result.rowData || result;
+    const index = result.index;
+
+    if (index !== undefined && this.stagesArray.at(index)) {
+      // Update the form control at the given index
+      this.stagesArray.at(index).patchValue(updatedData);
+    }
+  }
+
+  onEditServiceValue(result: any): void {
+    console.log(result);
+
+    const updatedData = result.rowData || result;
+    const index = result.index;
+
+    if (index !== undefined && this.serviceValuesArray.at(index)) {
+      this.serviceValuesArray.at(index).patchValue(updatedData);
+    }
+  }
+
+  onEditServiceResult(result: any): void {
+    if (!result) return;
+
+    const updatedData = result.rowData || result;
+    const index = result.index;
+
+    if (index !== undefined && this.serviceResultsArray.at(index)) {
+      this.serviceResultsArray.at(index).patchValue(updatedData);
+    }
   }
 
   onReorder(data: any): void {
@@ -326,7 +347,7 @@ export class ServiceFormComponent implements OnInit {
 
     this.serviceValuesArray.clear();
     items.forEach((item) =>
-      this.serviceValuesArray.push(this.createItemGroup(item))
+      this.serviceValuesArray.push(this.createItemGroup(item)),
     );
   }
 
@@ -336,17 +357,17 @@ export class ServiceFormComponent implements OnInit {
 
     this.serviceResultsArray.clear();
     items.forEach((item) =>
-      this.serviceResultsArray.push(this.createItemGroup(item))
+      this.serviceResultsArray.push(this.createItemGroup(item)),
     );
   }
 
-  onReorderBenefitsInsights(data: any): void {
+  onReorderbenefitInsights(data: any): void {
     const items = Array.isArray(data) ? data : data?.value || [];
     if (!Array.isArray(items) || items.length === 0) return;
 
-    this.benefitsInsightsArray.clear();
+    this.benefitInsightsArray.clear();
     items.forEach((item) =>
-      this.benefitsInsightsArray.push(this.createItemGroup(item))
+      this.benefitInsightsArray.push(this.createItemGroup(item)),
     );
   }
 
@@ -367,10 +388,49 @@ export class ServiceFormComponent implements OnInit {
   onSave(): void {
     this.submitForm();
   }
-
   submitForm(): void {
-    console.log(this.serviceForm.value);
+    const formData = new FormData();
+
+    this.appendFormData(formData, this.serviceForm.value);
+
+    this.testService.send(formData).subscribe({
+      next: (res) => console.log(res),
+      error: (err) => console.log(err),
+    });
   }
 
-  onLanguageChange(event: any): void {}
+  appendFormData(formData: FormData, data: any, parentKey: string = '') {
+    if (data === null || data === undefined) return;
+
+    if (data instanceof File) {
+      formData.append(parentKey, data);
+      return;
+    }
+
+    if (Array.isArray(data)) {
+      data.forEach((item, index) => {
+        this.appendFormData(formData, item, `${parentKey}[${index}]`);
+      });
+      return;
+    }
+
+    if (typeof data === 'object') {
+      Object.keys(data).forEach((key) => {
+        if (key.endsWith('imagePreview') || key.includes('[imagePreview]')) {
+          return;
+        }
+        const newKey = parentKey ? `${parentKey}[${key}]` : key;
+
+        this.appendFormData(formData, data[key], newKey);
+      });
+      return;
+    }
+
+    // primitive values
+    formData.append(parentKey, data);
+  }
+
+  onLanguageChange(event: any): void {
+    console.log(event);
+  }
 }
