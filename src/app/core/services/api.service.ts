@@ -8,13 +8,34 @@ import { environment } from '../../../environments/environment.prod';
 })
 export class ApiService {
 
-
   private readonly baseUrl = environment.baseUrl;
   private readonly http = inject(HttpClient);
-  culture: string = 'en';
 
+  private culture: string = localStorage.getItem('app_lang') || 'en';
+
+  // =============================
+  // Culture
+  // =============================
   setCulture(val: string) {
     this.culture = val;
+  }
+
+  getCulture(): string {
+    return this.culture;
+  }
+
+  // =============================
+  // Helpers
+  // =============================
+  private buildHeaders(headers?: HttpHeaders): HttpHeaders {
+    let finalHeaders = headers ?? new HttpHeaders();
+
+    // always send Accept-Language
+    if (!finalHeaders.has('locale')) {
+      finalHeaders = finalHeaders.set('locale', this.culture);
+    }
+
+    return finalHeaders;
   }
 
   // =============================
@@ -27,7 +48,7 @@ export class ApiService {
   ): Observable<T> {
     return this.http.get<T>(`${this.baseUrl}/${endpoint}`, {
       params,
-      headers
+      headers: this.buildHeaders(headers)
     });
   }
 
@@ -40,9 +61,11 @@ export class ApiService {
     headers?: HttpHeaders
   ): Observable<T> {
     return this.http.post<T>(
-      `${this.baseUrl}/${endpoint}?culture=${this.culture}`,
+      `${this.baseUrl}/${endpoint}`,
       body,
-      { headers }
+      {
+        headers: this.buildHeaders(headers)
+      }
     );
   }
 
@@ -57,7 +80,9 @@ export class ApiService {
     return this.http.put<T>(
       `${this.baseUrl}/${endpoint}`,
       body,
-      { headers }
+      {
+        headers: this.buildHeaders(headers)
+      }
     );
   }
 
@@ -72,7 +97,9 @@ export class ApiService {
     return this.http.patch<T>(
       `${this.baseUrl}/${endpoint}`,
       body,
-      { headers }
+      {
+        headers: this.buildHeaders(headers)
+      }
     );
   }
 
@@ -86,7 +113,10 @@ export class ApiService {
   ): Observable<T> {
     return this.http.delete<T>(
       `${this.baseUrl}/${endpoint}`,
-      { params, headers }
+      {
+        params,
+        headers: this.buildHeaders(headers)
+      }
     );
   }
 }
