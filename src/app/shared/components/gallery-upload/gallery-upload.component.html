@@ -2,12 +2,12 @@
   <!-- Single Image Mode -->
   <ng-container *ngIf="!multiple">
     <div class="single-image-section">
-      <div class="image-header">
+      <!-- <div class="image-header">
         <h3 class="image-title">{{ label }}</h3>
         <span class="image-dimensions" *ngIf="dimensions">{{
           dimensions
-          }}</span>
-      </div>
+        }}</span>
+      </div> -->
 
       <div class="upload-area single" [class.drag-over]="isDragOver" (dragover)="onDragOver($event)"
         (dragleave)="onDragLeave()" (drop)="onDrop($event)">
