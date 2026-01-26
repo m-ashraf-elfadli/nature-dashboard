@@ -2,15 +2,11 @@
   <h4>Service Settings</h4>
   <div class="our-field">
     <label for="">
-      Service Status
+      Status
       <span class="required">*</span>
     </label>
-    <p-select
-      [options]="statusOptions"
-      [(ngModel)]="value"
-      (ngModelChange)="onChange($event)"
-      placeholder="Select Status"
-    >
+    <p-select [options]="statusOptions" [(ngModel)]="value" (ngModelChange)="onChange($event)"
+      placeholder="Select Status">
     </p-select>
   </div>
 
