@@ -64,18 +64,18 @@ export class ServiceFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private dialogService: AppDialogService
+    private dialogService: AppDialogService,
   ) {}
 
   ngOnInit(): void {
     this.serviceForm = this.fb.group({
-      serviceName: ['', Validators.required],
-      serviceTagline: ['', Validators.required],
+      name: ['', Validators.required],
+      tagline: ['', Validators.required],
       status: [1],
 
-      stages: this.fb.array([]),
-      serviceValues: this.fb.array([]),
-      serviceResults: this.fb.array([]),
+      steps: this.fb.array([]),
+      values: this.fb.array([]),
+      impacts: this.fb.array([]),
 
       // Benefits section
       benefitsEnabled: [true],
@@ -130,15 +130,15 @@ export class ServiceFormComponent implements OnInit {
   /* ---------------- FORM ARRAYS ---------------- */
 
   get stagesArray(): FormArray {
-    return this.serviceForm.get('stages') as FormArray;
+    return this.serviceForm.get('steps') as FormArray;
   }
 
   get serviceValuesArray(): FormArray {
-    return this.serviceForm.get('serviceValues') as FormArray;
+    return this.serviceForm.get('values') as FormArray;
   }
 
   get serviceResultsArray(): FormArray {
-    return this.serviceForm.get('serviceResults') as FormArray;
+    return this.serviceForm.get('impacts') as FormArray;
   }
 
   get benefitsInsightsArray(): FormArray {
@@ -221,7 +221,7 @@ export class ServiceFormComponent implements OnInit {
   openServiceResultPopup(): void {
     this.openItemPopup(
       this.serviceResultsArray,
-      'Create New Results & Impacts'
+      'Create New Results & Impacts',
     );
   }
 
@@ -326,7 +326,7 @@ export class ServiceFormComponent implements OnInit {
 
     this.serviceValuesArray.clear();
     items.forEach((item) =>
-      this.serviceValuesArray.push(this.createItemGroup(item))
+      this.serviceValuesArray.push(this.createItemGroup(item)),
     );
   }
 
@@ -336,7 +336,7 @@ export class ServiceFormComponent implements OnInit {
 
     this.serviceResultsArray.clear();
     items.forEach((item) =>
-      this.serviceResultsArray.push(this.createItemGroup(item))
+      this.serviceResultsArray.push(this.createItemGroup(item)),
     );
   }
 
@@ -346,7 +346,7 @@ export class ServiceFormComponent implements OnInit {
 
     this.benefitsInsightsArray.clear();
     items.forEach((item) =>
-      this.benefitsInsightsArray.push(this.createItemGroup(item))
+      this.benefitsInsightsArray.push(this.createItemGroup(item)),
     );
   }
 

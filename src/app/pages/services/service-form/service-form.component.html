@@ -12,16 +12,15 @@
           <label for="serviceName">Service Name
             <span class="required">*</span>
           </label>
-          <input type="text" id="serviceName" placeholder="Enter service Name...." formControlName="serviceName"
-            pInputText />
+          <input type="text" id="serviceName" placeholder="Enter service Name...." formControlName="name" pInputText />
         </div>
 
         <div class="our-field">
           <label for="serviceTagline">Service Tagline
             <span class="required">*</span>
           </label>
-          <input type="text" id="serviceTagline" placeholder="Enter Service Tagline...."
-            formControlName="serviceTagline" pInputText />
+          <input type="text" id="serviceTagline" placeholder="Enter Service Tagline...." formControlName="tagline"
+            pInputText />
         </div>
       </div>
       <app-settings formControlName="status"></app-settings>
@@ -96,7 +95,7 @@
                 let i = index
               ">
               <div class="insight-label">
-                <label>Metrics ({{ i + 1 }})</label>
+                <label>Insight ({{ i + 1 }})</label>
               </div>
               <div class="insight-inputs">
                 <div class="our-field">
