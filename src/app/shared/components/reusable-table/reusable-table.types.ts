@@ -17,6 +17,7 @@ export interface TableColumn<T> {
   avatarField?: string;
   formatDate?: string;
   sortable?: boolean;
+  statusCallback?:(e:Event) => void
 }
 
 export interface TableAction<T> {
