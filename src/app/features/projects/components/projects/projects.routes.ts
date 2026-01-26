@@ -9,7 +9,7 @@ export const projectsRoutes: Routes = [
   {
     path: 'add',
     loadComponent: () =>
-      import('./project-form/project-form.component').then(
+      import('../project-form/project-form.component').then(
         (m) => m.ProjectFormComponent
       ),
     data: {

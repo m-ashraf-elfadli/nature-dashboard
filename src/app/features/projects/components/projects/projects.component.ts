@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
-import { ReusableTableComponent } from "../../shared/components/reusable-table/reusable-table.component";
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
 import { TranslateModule } from '@ngx-translate/core';
-import { FilterItems } from '../../shared/components/filters/filters.component';
-import { Client } from '../../features/clients/components/clients/clients.component';
-import { TableAction, TableColumn, TableConfig } from '../../shared/components/reusable-table/reusable-table.types';
+import { FilterItems } from '../../../../shared/components/filters/filters.component';
+import { Client } from '../../../clients/components/clients/clients.component';
+import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
 export interface Project {
   id: number;
   name: string;

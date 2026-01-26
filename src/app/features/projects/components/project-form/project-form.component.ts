@@ -15,12 +15,13 @@ import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { MessageModule } from 'primeng/message';
 import { EditorModule } from 'primeng/editor';
-import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
-import { FormActionsComponent } from '../../../shared/components/form-actions/form-actions.component';
-import { DropDownOption } from '../../../core/models/global.interface';
-import { GalleryUploadComponent } from '../../../shared/components/gallery-upload/gallery-upload.component';
-import { SettingsComponent } from '../../../shared/components/settings/settings.component';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
+import { DropDownOption } from '../../../../core/models/global.interface';
+import { GalleryUploadComponent } from '../../../../shared/components/gallery-upload/gallery-upload.component';
+import { SettingsComponent } from '../../../../shared/components/settings/settings.component';
 
 @Component({
   selector: 'app-project-form',
@@ -40,6 +41,7 @@ import { SettingsComponent } from '../../../shared/components/settings/settings.
     EditorModule,
     GalleryUploadComponent,
     SettingsComponent,
+    MessageModule
   ],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss',
@@ -79,6 +81,7 @@ export class ProjectFormComponent implements OnInit {
       gallery: [],
       city_id: [{ value: null, disabled: true }, Validators.required],
       country_id: ['', Validators.required],
+      status:[1,Validators.required],
       // Toggles
       enableResults: [false],
       enableMetrics: [false],
@@ -143,6 +146,19 @@ export class ProjectFormComponent implements OnInit {
     }
   }
 
+  hasError(controlName: string, errorName?: string): boolean {
+    const control = this.form.get(controlName);
+    if (!control) return false;
+    if (errorName) {
+    return !!(
+    control.touched &&
+    control.invalid &&
+    control.hasError(errorName)
+    );
+    }
+    return !!(control.touched && control.invalid);
+  }
+
   addResult() {
     this.results.push(this.createResult());
   }
@@ -162,6 +178,7 @@ export class ProjectFormComponent implements OnInit {
     console.log(event);
   }
   onSave(event: Event) {
+    console.log(this.form.value)
     this.form.markAllAsTouched();
   }
   onLanguageChange(event: Event) {

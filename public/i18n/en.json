@@ -73,6 +73,16 @@
         "metric_number":"Number",
         "metric_case":"Icon"
       },
+      "validation":{
+        "name":"Name is required",
+        "overview":"Overview is required",
+        "brief":"Brief is required",
+        "services":"Project Services is required",
+        "from":"From date is required",
+        "to":"To date is required",
+        "country":"Country is required",
+        "city":"City is required"
+      },
       "btns":{
         "add_result":"Add another section",
         "add_metrics":"Add another metrics"

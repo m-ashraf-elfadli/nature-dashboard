@@ -14,7 +14,7 @@ export const dashboardRoutes: Routes = [
   {
     path: 'projects',
     loadChildren: () =>
-      import('./../../../pages/projects/projects.routes').then(
+      import('../../../features/projects/components/projects/projects.routes').then(
         (m) => m.projectsRoutes
       ),
   },
