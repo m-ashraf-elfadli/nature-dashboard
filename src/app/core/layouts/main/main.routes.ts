@@ -3,7 +3,7 @@ import { AwardsComponent } from '../../../pages/awards/awards.component';
 import { ClientsComponent } from '../../../features/clients/components/clients/clients.component';
 import { DashboardComponent } from '../../../pages/dashboard/dashboard.component';
 import { ServicesComponent } from '../../../pages/services/services.component';
-import { TestimonialsComponent } from '../../../pages/testimonials/testimonials.component';
+import { TestimonialsComponent } from '../../../features/testimonials/components/testimonials/testimonials.component';
 import { AwardFormComponent } from '../../../features/awards/components/award-form/award-form.component';
 import { AwardsListComponent } from '../../../features/awards/components/awards-list/awards-list.component';
 

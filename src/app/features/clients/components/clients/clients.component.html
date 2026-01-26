@@ -8,16 +8,21 @@
     [totalRecords]="totalRecords"
     [filterItems]="filterItems"
     (paginationChange)="onPaginationChange($event)"
-    (selectionChange)="selectionChange($event)">
-</app-reusable-table>
+    (selectionChange)="selectionChange($event)"
+  >
+  </app-reusable-table>
 </div>
-
 
 <!-- client form dialog -->
 
-<p-dialog styleClass="form-dialog" [modal]="true" [(visible)]="visible" [style]="{ width: '35rem' }">
-    <ng-template pTemplate="header">
-        <h2>Add new client</h2>
-    </ng-template>
-    <app-client-form></app-client-form>
+<p-dialog
+  styleClass="form-dialog"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '35rem' }"
+>
+  <ng-template pTemplate="header">
+    <h2>Add new client</h2>
+  </ng-template>
+  <app-client-form></app-client-form>
 </p-dialog>

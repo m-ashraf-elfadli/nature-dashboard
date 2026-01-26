@@ -11,3 +11,51 @@
         margin-top: 24px;
     }
 }
+::ng-deep{
+  .p-dialog.form-dialog {
+    .p-dialog-header{
+      border-bottom: 1px solid var(--Greyscale-100, #DFE1E7);
+      padding: 24px;
+
+      h2{
+        color: var(--Color-Neutral-2000, #333435);
+        text-align: center;
+
+        /* Button/Regular/Semi Bold */
+        font-family: var(--Font-Family-Secondary, Dubai);
+        font-size: var(--Font-Size-S, 18px);
+        font-style: normal;
+        font-weight: var(--Font-Weight-Semi-Bold, 700);
+        line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
+      }
+      .p-dialog-header-actions{
+        .p-dialog-close-button{
+            border-radius: 24px 0;
+            background: linear-gradient(180deg, var(--Color-Primary2-400, #B0D357) 0%, var(--Color-Primary-400, #82C672) 100%);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+
+            svg {
+              path{
+                fill: white;
+              }
+            }
+
+            &:hover {
+              opacity: 0.8;
+            }
+        }
+      }
+    }
+    .p-dialog-content{
+      padding: 24px;
+    }
+  }
+}
