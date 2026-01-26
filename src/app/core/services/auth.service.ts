@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
+import { ApiService } from '../services/api.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  
-  private baseUrl = 'https://lavenderblush-reindeer-325183.hostingersite.com';
+
+  private api = inject(ApiService);
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   private hasToken(): boolean {
     return !!localStorage.getItem('authToken');
   }
 
   login(credentials: { username: string, password: string }) {
-    return this.http.post<any>(`${this.baseUrl}/api/users/signin`, credentials).pipe(
+    return this.api.post<any>('users/signin', credentials).pipe(
       tap(res => {
         const token = `${res.data.token_type} ${res.data.token}`;
         localStorage.setItem('authToken', token);
@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.post(`${this.baseUrl}/api/users/logout`, {}).pipe(
+    return this.api.post('users/logout', {}).pipe(
       tap(() => {
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
@@ -39,6 +39,11 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('authToken');
+  }
+
+  getUser(): any | null {
+    const u = localStorage.getItem('user');
+    return u ? JSON.parse(u) : null;
   }
 
   isAuthenticated(): boolean {
