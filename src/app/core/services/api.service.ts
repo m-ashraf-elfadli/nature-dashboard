@@ -31,8 +31,8 @@ export class ApiService {
     let finalHeaders = headers ?? new HttpHeaders();
 
     // always send Accept-Language
-    if (!finalHeaders.has('Accept-Language')) {
-      finalHeaders = finalHeaders.set('Accept-Language', this.culture);
+    if (!finalHeaders.has('locale')) {
+      finalHeaders = finalHeaders.set('locale', this.culture);
     }
 
     return finalHeaders;
