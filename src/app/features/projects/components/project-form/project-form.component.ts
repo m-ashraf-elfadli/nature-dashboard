@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormArray,
   FormBuilder,
@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InputText } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TextareaModule } from 'primeng/textarea';
@@ -22,6 +22,8 @@ import { FormActionsComponent } from '../../../../shared/components/form-actions
 import { DropDownOption } from '../../../../core/models/global.interface';
 import { GalleryUploadComponent } from '../../../../shared/components/gallery-upload/gallery-upload.component';
 import { SettingsComponent } from '../../../../shared/components/settings/settings.component';
+import { ProjectsService } from '../../services/projects.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-project-form',
@@ -47,25 +49,26 @@ import { SettingsComponent } from '../../../../shared/components/settings/settin
   styleUrl: './project-form.component.scss',
 })
 export class ProjectFormComponent implements OnInit {
+  private readonly service = inject(ProjectsService);
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
+  private readonly translate = inject(TranslateService);
+  private readonly router = inject(Router)
   private cachedResults: any[] = [];
   private cachedMetrics: any[] = [];
-  services: DropDownOption[] = [
-    { name: 'Conservation', id: 1 },
-    { name: 'Reforestation', id: 2 },
-  ];
-  countries: DropDownOption[] = [
-    { name: 'Kenya', id: 1 },
-    { name: 'Uganda', id: 2 },
-  ];
+  services: DropDownOption[] = [];
+  countries: DropDownOption[] = [];
   metricCases: DropDownOption[] = [
-    { name: 'Plus', id: 1 },
-    { name: 'Minus', id: 2 },
+    {name:'general.up',id:'up'},
+    {name:'general.down',id:'down'},
+    {name:'general.stable',id:'stable'},
   ];
+  cities:DropDownOption[] = [];
+  
   form!: FormGroup;
 
   ngOnInit() {
+    this.getDropDowns()
     this.initForm();
   }
   initForm() {
@@ -89,6 +92,35 @@ export class ProjectFormComponent implements OnInit {
       results: this.fb.array([]),
       metrics: this.fb.array([]),
     });
+  }
+  getDropDowns(){
+    forkJoin({
+      countries:this.service.getCountries(),
+      services:this.service.getServicesDropDown()
+    }).subscribe({
+      next:(res)=>{
+        this.services = res.services.result
+        this.countries = res.countries.result
+      },
+      error:(err)=>{
+        console.error(err)
+      }
+    })
+  }
+  getCitiesByCountry(countryId:string){
+    this.service.getCitiesByCountry(countryId).subscribe({
+      next:(res)=>{
+        this.cities = res.result
+        if(this.cities){
+          this.form.get('city_id')?.enable();
+        }else{
+          this.form.get('city_id')?.disable();
+        }
+      },
+      error:(err)=>{
+        console.error(err)
+      }
+    })
   }
   get results(): FormArray {
     return this.form.get('results') as FormArray;
@@ -151,12 +183,83 @@ export class ProjectFormComponent implements OnInit {
     if (!control) return false;
     if (errorName) {
     return !!(
-    control.touched &&
-    control.invalid &&
-    control.hasError(errorName)
+      control.touched &&
+      control.invalid &&
+      control.hasError(errorName)
     );
     }
     return !!(control.touched && control.invalid);
+  }
+
+  buildFormData(): FormData {
+    const formData = new FormData();
+    const value = this.form.getRawValue(); // includes disabled fields
+
+    // 🔹 Basic fields
+    formData.append('name', value.name);
+    formData.append('brief', value.brief);
+    formData.append('overview', value.overview);
+    formData.append('start_date', this.formatDate(value.start_date));
+    formData.append('end_date', this.formatDate(value.end_date));
+    formData.append('country_id', value.country_id);
+    formData.append('city_id', value.city_id);
+    formData.append('status', value.status);
+
+    // 🔹 Services (array of ids)
+    value.service_ids.forEach((id: number, index: number) => {
+      formData.append(`service_ids[${index}]`, id.toString());
+    });
+
+    // 🔹 Single images
+    if (value.image_before) {
+      formData.append('image_before', value.image_before);
+    }
+
+    if (value.image_after) {
+      formData.append('image_after', value.image_after);
+    }
+
+    // 🔹 Gallery (array of images)
+    if (value.gallery?.length) {
+      value.gallery.forEach((file: File | any, index: number) => {
+        // support old images (edit mode)
+        if (file instanceof File) {
+          formData.append(`gallery[${index}]`, file);
+        } else if (file?.id) {
+          formData.append(`gallery_ids[${index}]`, file.id);
+        }
+      });
+    }
+
+    // 🔹 Results
+    if (value.enableResults && value.results?.length) {
+      value.results.forEach((res: any, index: number) => {
+        formData.append(`results[${index}][section_title]`, res.section_title);
+        formData.append(`results[${index}][section_body]`, res.section_body);
+      });
+    }
+
+    // 🔹 Metrics
+    if (value.enableMetrics && value.metrics?.length) {
+      value.metrics.forEach((met: any, index: number) => {
+        formData.append(`metrics[${index}][metric_title]`, met.metric_title);
+        formData.append(`metrics[${index}][metric_number]`, met.metric_number);
+        formData.append(`metrics[${index}][metric_case]`, met.metric_case);
+      });
+    }
+
+    return formData;
+  }
+  formatDate(date: Date | string | null): string {
+    if (!date) return '';
+
+    const d = new Date(date);
+
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+
+    return `${day}/${month}/${year}`;
   }
 
   addResult() {
@@ -178,8 +281,19 @@ export class ProjectFormComponent implements OnInit {
     console.log(event);
   }
   onSave(event: Event) {
-    console.log(this.form.value)
-    this.form.markAllAsTouched();
+    console.log(this.form.value);
+    if(this.form.invalid){
+      this.form.markAllAsTouched();
+      return;
+    }
+    this.service.create(this.buildFormData()).subscribe({
+      next:(res)=>{
+        this.router.navigate(['/projects'])
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+    })
   }
   onLanguageChange(event: Event) {
     console.log(event);

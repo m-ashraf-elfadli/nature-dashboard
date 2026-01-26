@@ -5,7 +5,10 @@
     "actions":"Actions",
     "filter":"Filter",
     "text_editor_header":"Section body",
-    "search_input_table_placeholder":"Search by name ..."
+    "search_input_table_placeholder":"Search by name ...",
+    "up":"Up",
+    "down":"Down",
+    "stable":"Stable"
   },
   "projects": {
     "list":{

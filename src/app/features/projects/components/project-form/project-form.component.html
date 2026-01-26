@@ -50,7 +50,7 @@
                         <!-- Settings inputs go here -->
                         <div class="our-field">
                             <label for="service_ids">{{ 'projects.form.labels.services' | translate }} <span class="text-red-val">*</span></label>
-                            <p-multiselect [options]="services" formControlName="service_ids" optionLabel="name" [placeholder]="'projects.form.placeholders.services' | translate" [maxSelectedLabels]="3" [showHeader]="false"/>
+                            <p-multiselect [options]="services" formControlName="service_ids" optionValue="id" optionLabel="name" [placeholder]="'projects.form.placeholders.services' | translate" [maxSelectedLabels]="3" [showHeader]="false"/>
                             @if(hasError('service_ids')){
                                 <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.services' | translate}}</p-message>
                             }
@@ -112,14 +112,14 @@
                         <!-- Location inputs go here -->
                          <div class="our-field">
                             <label for="country_id">{{ 'projects.form.labels.country' | translate }} <span class="text-red-val">*</span></label>
-                            <p-select [options]="countries" formControlName="country_id" optionLabel="name" [placeholder]="'projects.form.placeholders.country' | translate"/>
+                            <p-select [options]="countries" formControlName="country_id" optionValue="id" optionLabel="name" (onChange)="getCitiesByCountry($event.value)" [placeholder]="'projects.form.placeholders.country' | translate"/>
                             @if(hasError('country_id')){
                                 <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.country' | translate}}</p-message>
                             }
                          </div>
                          <div class="our-field">
                             <label for="city_id">{{ 'projects.form.labels.city' | translate }} <span class="text-red-val">*</span></label>
-                            <p-select [options]="countries" formControlName="city_id" optionLabel="name" [disabled]="true" [placeholder]="'projects.form.placeholders.city' | translate"/>
+                            <p-select [options]="cities" formControlName="city_id" optionValue="id" optionLabel="name" [disabled]="true" [placeholder]="'projects.form.placeholders.city' | translate"/>
                             @if(hasError('city')){
                                 <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.city' | translate}}</p-message>
                             }
@@ -196,7 +196,14 @@
                                         <input type="number" formControlName="metric_number" id="metric_number" pInputText [placeholder]="'projects.form.placeholders.metric_number' | translate">
                                     </div>
                                     <div class="case-field">
-                                        <p-select [options]="metricCases" formControlName="metric_case" optionValue="id" optionLabel="name" [placeholder]="'projects.form.placeholders.metric_case' | translate"/>
+                                        <p-select [options]="metricCases" formControlName="metric_case" optionValue="id" optionLabel="name" [placeholder]="'projects.form.placeholders.metric_case' | translate">
+                                            <ng-template let-item #item>
+                                                {{item.name | translate}}
+                                            </ng-template>
+                                            <ng-template let-item #selectedItem>
+                                                {{item.name | translate}}
+                                            </ng-template>
+                                        </p-select>
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +225,7 @@
                 <h3 class="header-section">
                     {{'projects.form.labels.gallery' | translate}}
                 </h3>
-                <app-gallery-upload [multiple]="true"></app-gallery-upload>
+                <app-gallery-upload formControlName="gallery" [multiple]="true"></app-gallery-upload>
             </div>
             <div class="image-before-and-after-section">
                 
@@ -227,13 +234,13 @@
                         <h3 class="header-section">
                             {{'projects.form.labels.image_before' | translate}}
                          </h3>
-                        <app-gallery-upload [multiple]="false"></app-gallery-upload>
+                        <app-gallery-upload formControlName="image_before" class="image_before" [multiple]="false"></app-gallery-upload>
                     </div>
                     <div class="gallery-field flex flex-column gap-3">
                         <h3 class="header-section">
                             {{'projects.form.labels.image_after' | translate}}
                          </h3>
-                        <app-gallery-upload [multiple]="false"></app-gallery-upload>
+                        <app-gallery-upload formControlName="image_after" class="image_after" [multiple]="false"></app-gallery-upload>
                     </div>
                     <app-settings formControlName="status"></app-settings>
                 </div>
