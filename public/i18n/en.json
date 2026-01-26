@@ -56,7 +56,7 @@
         "metrics":"Metrics ({{count}})",
         "gallery":"Project Gallery",
         "image_before":"Project Before Image",
-        "image_after":"Project Status"
+        "image_after":"Project After Image"
       },
       "placeholders":{
         "name":"Write project name ...",
