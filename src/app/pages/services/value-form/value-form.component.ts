@@ -1,19 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FileUploadModule } from 'primeng/fileupload';
-import { ReactiveFormsModule } from '@angular/forms';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
-import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FileUploadModule,
     InputText,
     ButtonModule,
     FormsModule,
@@ -21,11 +18,17 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './value-form.component.html',
   styleUrl: './value-form.component.scss',
 })
-export class ValueFormComponent {
-  constructor(private fb: FormBuilder, private ref: DynamicDialogRef) {}
-
+export class ValueFormComponent implements OnInit {
   form!: FormGroup;
   toolInput = '';
+  isEditMode = false;
+  rowData: any = null;
+
+  constructor(
+    private fb: FormBuilder,
+    private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+  ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -33,6 +36,24 @@ export class ValueFormComponent {
       description: ['', Validators.required],
       toolsUsed: this.fb.array([]),
     });
+
+    // EDIT MODE
+    if (this.config.data?.rowData) {
+      this.isEditMode = true;
+      this.rowData = this.config.data.rowData;
+
+      this.form.patchValue({
+        title: this.rowData.title,
+        description: this.rowData.description,
+      });
+
+      // populate toolsUsed array
+      if (this.rowData.toolsUsed && Array.isArray(this.rowData.toolsUsed)) {
+        this.rowData.toolsUsed.forEach((tool: string) =>
+          this.toolsUsedArray.push(this.fb.control(tool)),
+        );
+      }
+    }
   }
 
   get toolsUsedArray(): FormArray {
@@ -51,8 +72,18 @@ export class ValueFormComponent {
   }
 
   submit() {
-    if (this.form.valid) {
-      this.ref.close(this.form.value);
+    if (!this.form.valid) return;
+
+    const formValue = { ...this.form.value };
+
+    if (this.isEditMode && this.config.data?.index !== undefined) {
+      this.ref.close({
+        ...formValue,
+        rowData: formValue,
+        index: this.config.data.index,
+      });
+    } else {
+      this.ref.close(formValue);
     }
   }
 }
