@@ -19,9 +19,9 @@
     align-items: center;
     color: var(--Color-Neutral-2000, #333435);
     font-size: var(--Font-Size-M, 20px);
-    font-weight: var(--Font-Weight-Medium, 500);
-    span {
-      color: var(--Secondary-200, #9a9a9a);
+    // font-weight: var(--Font-Weight-Medium, 500);
+    span{
+      color: var(--Secondary-200, #9A9A9A);
       font-size: var(--Static-Body-Small-Size, 12px);
       font-weight: 500;
       letter-spacing: var(--Static-Body-Small-Tracking, 0.4px);

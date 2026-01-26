@@ -3,7 +3,9 @@
     "save": "Save",
     "discard": "Discard",
     "actions":"Actions",
-    "filter":"Filter"
+    "filter":"Filter",
+    "text_editor_header":"Section body",
+    "search_input_table_placeholder":"Search by name ..."
   },
   "projects": {
     "list":{
@@ -74,6 +76,41 @@
       "btns":{
         "add_result":"Add another section",
         "add_metrics":"Add another metrics"
+      }
+    }
+  },
+  "awards":{
+    "list":{
+      "page_title":"All Awards",
+      "table_headers":{
+        "award":"Award",
+        "date":"Date",
+        "description":"Description",
+        "status":"Status"
+      },
+      "btns":{
+        "add_new":"Add new award"
+      }
+    },
+    "form":{
+      "title":"Add New Award",
+      "english":"(English)",
+      "arabic":"(Arabic)",
+      "titles":{
+        "details":"Award Details",
+        "settings":"Awards Settings",
+        "organizations":"Organizations Logos",
+        "award":"Award Image"
+      },
+      "labels":{
+        "name":"Award name",
+        "date":"Award Date",
+        "description":"Description"
+      },
+      "placeholders":{
+        "name":"Write award name ...",
+        "date":"Enter award date",
+        "description":"Write section description here ..."
       }
     }
   }

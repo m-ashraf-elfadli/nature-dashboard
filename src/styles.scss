@@ -346,6 +346,14 @@ a {
           }
         }
   }
+  .p-editor{
+    .text-editor-header{
+      color: var(--Teal-Green-green-300, #609292);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.28px;
+    }
+  }
   .p-editor .p-editor-toolbar.ql-snow .ql-stroke{
     stroke-width:1px;
     stroke:var(--Color-Primary-1000,#2E4528);
@@ -465,4 +473,23 @@ input[type=number] {
 .p-inputtext:disabled
 {
   opacity: 0.6;
+}
+
+.add-form-group-btn{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--Color-Primary-500, #75B267);
+  font-size: var(--Font-Size-S, 18px);
+  font-weight: var(--Font-Weight-Medium, 500);
+  border: none;
+  background-color: transparent;
+  transition: all .3s;
+  border-radius: 12px;
+  cursor: pointer;
+  padding: .5rem;
+  width: fit-content;
+  &:hover{
+    background-color: rgba(240, 249, 238, 0.8);
+  }
 }

@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="header-section">
+    <div class="title-wrapper">
+      <img src="images/awards/Award.svg" alt="" />
+      <span class="subtitle">Our work has been honored by </span>
+    </div>
+    <h2 class="main-title">Awards & Recognition</h2>
+  </div>
+</div>
+<section class="awards-section">
+  <!-- Header Section -->
+
+  <!-- TOP CURVE -->
+  <div class="curve curve-top">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <ellipse cx="720" cy="-20" rx="900" ry="80" fill="#ffffff" />
+    </svg>
+  </div>
+
+  <!-- CAROUSEL -->
+  <owl-carousel-o [options]="carouselOptions">
+    @for (award of awards; track award; let i = $index) {
+    <ng-template carouselSlide>
+      <div
+        class="award-item"
+        (mouseenter)="onHover(i)"
+        (mouseleave)="onLeave()"
+      >
+        <div
+          class="award-image"
+          [style.backgroundImage]="'url(' + award.image + ')'"
+          [class.blurred]="hoveredAwardIndex === i"
+        ></div>
+
+        <div class="award-overlay" [class.visible]="hoveredAwardIndex === i">
+          <h3>{{ award.name }}</h3>
+          <span>{{ award.year }}</span>
+        </div>
+      </div>
+    </ng-template>
+    }
+  </owl-carousel-o>
+
+  <!-- BOTTOM CURVE -->
+  <div class="curve curve-bottom">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <ellipse cx="720" cy="80" rx="900" ry="80" fill="#ffffff" />
+    </svg>
+  </div>
+</section>
+<!-- ===== AWARDS INFO SECTION ===== -->
+<div class="awards-info">
+  <div class="info-grid">
+    <div class="info-item">
+      <h4>Global Recognition</h4>
+      <p>
+        Honored by international bodies<br />
+        for advancing sustainability and innovation.
+      </p>
+    </div>
+
+    <div class="info-item bordered">
+      <h4>National Excellence</h4>
+      <p>
+        Endorsed by UAE ministries and<br />
+        institutions for impactful contributions.
+      </p>
+    </div>
+
+    <div class="info-item">
+      <h4>Trusted by Leading Organizations</h4>
+      <p>
+        Acknowledged by NGOs, global<br />
+        partners, and industry leaders for measurable results.
+      </p>
+    </div>
+  </div>
+
+  <div class="download-wrapper">
+    <a href="assets/files/awards.pdf" class="download-btn" download>
+      Download Full Awards Portfolio (PDF)
+      <span class="icon">⬇</span>
+    </a>
+  </div>
+</div>

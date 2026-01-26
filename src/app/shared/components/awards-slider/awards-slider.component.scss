@@ -1,0 +1,304 @@
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+  }
+.awards-section {
+  position: relative;
+  background: #f6f8f4;
+  ::ng-deep {
+  .owl-carousel {
+    .owl-stage-outer {
+      padding: 20px 0;
+    }
+     .owl-next::before{
+        content: url('/images/arr1.svg');
+        display: flex;
+        transform: rotate(-225deg);
+        justify-self: center;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+}
+        .owl-prev::before{
+content: url('/images/arr2.svg');
+    display: flex;
+    transform: rotate(-45deg);
+    justify-self: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    }
+.owl-prev, .owl-next {
+        width: 40px;
+        justify-content: center;
+        align-items: center;
+        height: 40px; 
+        border-radius: 24px 0;
+        background: linear-gradient(180deg, var(--Color-Primary2-400, #B0D357) 0%, var(--Color-Primary-400, #82C672) 100%);
+        border: none;
+        border-color: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+}
+.owl-prev{
+            &:hover {
+transform: rotate(225deg) translate(16px , -16px);
+    background:white ;
+    border: 1px solid #82C672 ;
+        &::before{
+        content: url('/images/arr2gr.svg');
+    }
+        }
+          transform: rotate(225deg) ;
+}
+.owl-next{
+          transform: rotate(45deg);
+                    &:hover {
+transform: rotate(45deg) translate(16px, -16px);
+    background:white ;
+    border: 1px solid #82C672 ;
+            &::before{
+        content: url('/images/arr1gr.svg');
+    }
+        }
+}
+    .owl-nav {
+      position: absolute;
+      top: -80px;
+      right: 70px;
+      display: flex;
+      gap: 8px;
+      
+
+
+      @media (max-width: 768px) {
+        top: auto;
+        bottom: -60px;
+        right: 50%;
+        transform: translateX(50%);
+      }
+    }
+
+    .owl-dots {
+      display: none;
+    }
+  }
+}
+
+}
+  .header-section {
+    position: relative;
+    z-index: 1;
+
+    .title-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+h2{
+  color: var(--Color-Primary-900, #3A5933);
+font-family: var(--Font-Family-Primary, Bryant);
+font-size: var(--Font-Size-6Xl, 46px);
+font-style: normal;
+font-weight: var(--Font-Weight-Bold, 700);
+line-height: var(--Font-Line-Height-6Xl, 55.2px); /* 120% */
+}
+      .icon-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+
+      .subtitle {
+        font-size: 16px;
+        color: #66BB6A;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .main-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: #2D5016;
+      margin: 0;
+      letter-spacing: -0.5px;
+
+      @media (max-width: 768px) {
+        font-size: 36px;
+      }
+    }
+  }
+/* ===== CURVES (ORIGINAL STYLE) ===== */
+.curve {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 3;
+  pointer-events: none;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+.curve-top {
+  top: 0;
+}
+
+.curve-bottom {
+  bottom: 0;
+}
+
+/* ===== OWL FIX ===== */
+
+
+
+/* ===== AWARD ITEM ===== */
+.award-item {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.award-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.award-image.blurred {
+  filter: blur(5px);
+  transform: scale(1.06);
+}
+
+/* ===== OVERLAY ===== */
+.award-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  color: #fff;
+}
+
+.award-overlay.visible {
+  opacity: 1;
+}
+
+.award-overlay h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.award-overlay span {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .award-item {
+    height: 180px;
+  }
+
+  .curve {
+    height: 40px;
+  }
+}
+/* ===== INFO SECTION ===== */
+.awards-info {
+  background: #ffffff;
+  text-align: center;
+}
+
+/* ===== GRID ===== */
+.info-grid {
+display: flex;
+  justify-content: center;
+text-align: start;
+align-items: center;
+gap: 0;
+  max-width: 1200px;
+}
+
+.info-item {
+  padding: 0 20px;
+}
+
+.info-item h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.info-item p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* dashed vertical separator (like Magento) */
+.info-item.bordered {
+  border-left: 2px dashed #cfcfcf;
+  border-right: 2px dashed #cfcfcf;
+}
+
+/* ===== DOWNLOAD BUTTON ===== */
+.download-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  border: 1.5px solid #7bc043;
+  border-radius: 999px;
+  color: #7bc043;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.download-btn .icon {
+  font-size: 18px;
+}
+
+.download-btn:hover {
+  background: #7bc043;
+  color: #fff;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 991px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .info-item.bordered {
+    border: none;
+  }
+}
