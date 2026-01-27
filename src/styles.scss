@@ -403,7 +403,11 @@ a {
     line-height: 150%;
   }
 }
-
+.p-toggleswitch-slider{
+  &::before{
+    display: block !important;
+  }
+}
 // main-layout styles 
 /* ! important
   I deleted it from main.component.scss and put it here to make it global 
@@ -491,5 +495,32 @@ input[type=number] {
   width: fit-content;
   &:hover{
     background-color: rgba(240, 249, 238, 0.8);
+  }
+}
+.checkbox-field{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  label{
+    color: #000;
+    font-family: var(--Font-Family-Secondary, Dubai);
+    font-size: var(--Font-Size-Xs, 16px);
+    font-weight: var(--Font-Weight-Light, 300);
+  }
+}
+
+.p-checkbox{
+  width: 14px !important;
+  height: 14px !important;
+}
+.p-checkbox-box{
+  width: 14px !important;
+  height: 14px !important;
+  border: 1px solid var(--Color-Neutral-500, #939598) !important;
+  .p-iconwrapper{
+    svg{
+      width: 10px;
+      height: 10px;
+    }
   }
 }

@@ -17,6 +17,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { MessageModule } from 'primeng/message';
 import { EditorModule } from 'primeng/editor';
+import { CheckboxModule } from 'primeng/checkbox';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
 import { DropDownOption } from '../../../../core/models/global.interface';
@@ -43,7 +44,8 @@ import { forkJoin } from 'rxjs';
     EditorModule,
     GalleryUploadComponent,
     SettingsComponent,
-    MessageModule
+    MessageModule,
+    CheckboxModule
   ],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss',
@@ -88,6 +90,7 @@ export class ProjectFormComponent implements OnInit {
       // Toggles
       enableResults: [false],
       enableMetrics: [false],
+      isCurrentlyActive:[false],
       // form arrays
       results: this.fb.array([]),
       metrics: this.fb.array([]),
@@ -175,6 +178,25 @@ export class ProjectFormComponent implements OnInit {
       } else {
         this.metrics.push(this.createMetric());
       }
+    }
+  }
+  toggleCurrentlyActive() {
+    const isActive = this.form.get('isCurrentlyActive')?.value;
+    const endDateControl = this.form.get('end_date');
+
+    console.log(this.form.value)
+    if (!endDateControl) return;
+
+
+    if (isActive) {
+      // 🔴 Disable & clear end_date
+      endDateControl.disable({ emitEvent: false });
+      endDateControl.setValue(null);
+    } else {
+      // 🟢 Enable & re-validate end_date
+      endDateControl.enable({ emitEvent: false });
+      endDateControl.setValidators(Validators.required);
+      endDateControl.updateValueAndValidity();
     }
   }
 

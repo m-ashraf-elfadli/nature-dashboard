@@ -61,7 +61,8 @@
         "metrics":"Metrics ({{count}})",
         "gallery":"Project Gallery",
         "image_before":"Project Before Image",
-        "image_after":"Project After Image"
+        "image_after":"Project After Image",
+        "is_currently_active":"Is Currently Active"
       },
       "placeholders": {
         "name": "Write project name ...",

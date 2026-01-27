@@ -42,7 +42,7 @@ export class ProjectsComponent implements OnInit {
 
   actions: TableAction<Project>[] = [
     {
-      callback: (row) => this.addNew(),
+      callback: (row) => this.edit(row),
       icon: 'pi pi-pencil',
       severity: 'white',
       class: 'p-2'
@@ -55,6 +55,7 @@ export class ProjectsComponent implements OnInit {
     }
   ];
   edit(row: Project, event?: Event) {
+    this.router.navigate([`/projects/edit/${row.id}`])
     console.log("Edit action triggered", row, event);
   }
   delete(row: Project, event?: Event) {
