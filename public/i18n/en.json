@@ -2,10 +2,13 @@
   "general": {
     "save": "Save",
     "discard": "Discard",
-    "actions": "Actions",
-    "filter": "Filter",
-    "text_editor_header": "Section body",
-    "search_input_table_placeholder": "Search by name ..."
+    "actions":"Actions",
+    "filter":"Filter",
+    "text_editor_header":"Section body",
+    "search_input_table_placeholder":"Search by name ...",
+    "up":"Up",
+    "down":"Down",
+    "stable":"Stable"
   },
   "projects": {
     "list": {
@@ -35,28 +38,28 @@
         "metrics": "Metrics indicators",
         "metrics_desc": "(Maximum 3 allowed)"
       },
-      "labels": {
-        "name": "Project Name",
-        "overview": "Overview",
-        "brief": "Brief",
-        "location": "Project Location",
-        "start_date": "Project Start Date",
-        "end_date": "Project End Date",
-        "services": "Project Services",
-        "status": "Project Status",
-        "images": "Project Images",
-        "country": "Country",
-        "city": "City",
-        "before_image": "Before Image",
-        "after_image": "After Image",
-        "additional_images": "Additional Images",
-        "timeline": "Project Timeline",
-        "section_title": "Section title",
-        "section_body": "Section body",
-        "metrics": "Metrics ({{count}})",
-        "gallery": "Project Gallery",
-        "image_before": "Project Before Image",
-        "image_after": "Project Status"
+      "labels":{
+        "name":"Project Name",
+        "overview":"Overview",
+        "brief":"Brief",
+        "location":"Project Location",
+        "start_date":"Project Start Date",
+        "end_date":"Project End Date",
+        "services":"Project Services",
+        "status":"Project Status",
+        "images":"Project Images",
+        "country":"Country",
+        "city":"City",
+        "before_image":"Before Image",
+        "after_image":"After Image",
+        "additional_images":"Additional Images",
+        "timeline":"Project Timeline",
+        "section_title":"Section title",
+        "section_body":"Section body",
+        "metrics":"Metrics ({{count}})",
+        "gallery":"Project Gallery",
+        "image_before":"Project Before Image",
+        "image_after":"Project After Image"
       },
       "placeholders": {
         "name": "Write project name ...",
@@ -73,9 +76,19 @@
         "metric_number": "Number",
         "metric_case": "Icon"
       },
-      "btns": {
-        "add_result": "Add another section",
-        "add_metrics": "Add another metrics"
+      "validation":{
+        "name":"Name is required",
+        "overview":"Overview is required",
+        "brief":"Brief is required",
+        "services":"Project Services is required",
+        "from":"From date is required",
+        "to":"To date is required",
+        "country":"Country is required",
+        "city":"City is required"
+      },
+      "btns":{
+        "add_result":"Add another section",
+        "add_metrics":"Add another metrics"
       }
     }
   },
