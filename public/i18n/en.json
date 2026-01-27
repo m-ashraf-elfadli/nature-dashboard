@@ -10,7 +10,8 @@
     "down":"Down",
     "stable":"Stable",
     "reset":"Reset",
-    "apply":"Apply"
+    "apply":"Apply",
+    "cancel":"Cancel"
   },
   "projects": {
     "list": {
@@ -91,7 +92,12 @@
       },
       "btns":{
         "add_result":"Add another section",
-        "add_metrics":"Add another metrics"
+        "add_metrics":"Add another metrics",
+        "save":"Save changes"
+      },
+      "language_dialog":{
+        "header":"Unsaved Changes?",
+        "desc":"You have unsaved changes in the current language. Do you want to save them before switching to Arabic?"
       }
     }
   },

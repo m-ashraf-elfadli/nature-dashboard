@@ -8,6 +8,12 @@ export interface PaginationResponse<T> {
   lastPage?: number;
 }
 
+export interface GetByIdResponse<T> {
+  status: string;
+  message: string;
+  result: T;
+}
+
 export interface PaginationObj{
   page:number;
   size:number;

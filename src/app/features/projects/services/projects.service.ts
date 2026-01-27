@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../../../core/services/api.service';
 import { count, Observable } from 'rxjs';
-import { DropDownOption, PaginationObj, PaginationResponse } from '../../../core/models/global.interface';
+import { DropDownOption, GetByIdResponse, PaginationObj, PaginationResponse } from '../../../core/models/global.interface';
 import { HttpParams } from '@angular/common/http';
-import { Project } from '../models/projects.interface';
+import { Project, ProjectById } from '../models/projects.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +46,9 @@ export class ProjectsService {
       });
     }
     return this.apiService.get(this.endpoint, params);
+  }
+  getById(id:string):Observable<GetByIdResponse<ProjectById>>{
+    return this.apiService.get(`${this.endpoint}/${id}`)
   }
   getCountries(): Observable<PaginationResponse<DropDownOption>> {
     return this.apiService.get('countries')

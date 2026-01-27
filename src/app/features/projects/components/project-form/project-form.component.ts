@@ -25,6 +25,8 @@ import { GalleryUploadComponent } from '../../../../shared/components/gallery-up
 import { SettingsComponent } from '../../../../shared/components/settings/settings.component';
 import { ProjectsService } from '../../services/projects.service';
 import { forkJoin } from 'rxjs';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-project-form',
@@ -51,10 +53,10 @@ import { forkJoin } from 'rxjs';
   styleUrl: './project-form.component.scss',
 })
 export class ProjectFormComponent implements OnInit {
+  private readonly dialogService = inject(DialogService)
   private readonly service = inject(ProjectsService);
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
-  private readonly translate = inject(TranslateService);
   private readonly router = inject(Router)
   private cachedResults: any[] = [];
   private cachedMetrics: any[] = [];
@@ -66,10 +68,12 @@ export class ProjectFormComponent implements OnInit {
     {name:'general.stable',id:'stable'},
   ];
   cities:DropDownOption[] = [];
+  ref:DynamicDialogRef | undefined
   
   form!: FormGroup;
 
   ngOnInit() {
+
     this.getDropDowns()
     this.initForm();
   }
@@ -317,7 +321,25 @@ export class ProjectFormComponent implements OnInit {
       }
     })
   }
+  showConfirmDialog() {
+    this.ref = this.dialogService.open(ConfirmDialogComponent, {
+        header: 'Select a Product',
+        width: '40vw',
+        modal:true,
+        data:{
+            title:'projects.form.language_dialog.header',
+            subtitle: 'projects.form.language_dialog.header',
+            confirmText: 'projects.form.btns.save',
+            cancelText: 'general.text',
+            confirmSeverity: 'success',
+            cancelSeverity: 'cancel',
+            showCancel: true,
+            showExtraButton: false,
+        }
+    });
+  }
   onLanguageChange(event: Event) {
+    this.showConfirmDialog();
     console.log(event);
   }
   onFileSelected(event: File | File[]) {
