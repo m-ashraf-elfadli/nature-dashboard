@@ -337,7 +337,7 @@ export class ProjectFormComponent implements OnInit {
         }
     });
   }
-  onLanguageChange(event: Event) {
+  onLanguageChange(event: {newLang: string; oldLang: string;}) {
     this.showConfirmDialog();
     console.log(event);
   }
