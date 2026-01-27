@@ -1,7 +1,7 @@
 <div class="form-content">
     <div class="form-header">
         <app-page-header [title]="'projects.form.title' | translate"></app-page-header>
-        <app-form-actions (discard)="onDiscard($event)" (save)="onSave($event)"
+        <app-form-actions (discard)="onDiscard($event)" (save)="onSave()"
             (languageChange)="onLanguageChange($event)"></app-form-actions>
     </div>
     <form [formGroup]="form" (ngSubmit)="submitForm()" class="project-form">
@@ -120,7 +120,7 @@
                          <div class="our-field">
                             <label for="city_id">{{ 'projects.form.labels.city' | translate }} <span class="text-red-val">*</span></label>
                             <p-select [options]="cities" formControlName="city_id" optionValue="id" optionLabel="name" [disabled]="true" [placeholder]="'projects.form.placeholders.city' | translate"/>
-                            @if(hasError('city')){
+                            @if(hasError('city_id')){
                                 <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.city' | translate}}</p-message>
                             }
                          </div>

@@ -280,7 +280,7 @@ export class ProjectFormComponent implements OnInit {
   onDiscard(event: Event) {
     console.log(event);
   }
-  onSave(event: Event) {
+  onSave() {
     console.log(this.form.value);
     if(this.form.invalid){
       this.form.markAllAsTouched();
