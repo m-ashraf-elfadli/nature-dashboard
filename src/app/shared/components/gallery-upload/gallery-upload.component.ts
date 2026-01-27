@@ -29,6 +29,7 @@ export class GalleryUploadComponent implements ControlValueAccessor {
   @Input() maxSize: number = 100;
   @Input() formControlName: string = '';
   @Output() fileSelected = new EventEmitter<File | File[]>();
+  @Output() removed = new EventEmitter<void>();
 
   images: (string | ArrayBuffer)[] = [];
   isDragOver: boolean = false;
@@ -104,18 +105,28 @@ export class GalleryUploadComponent implements ControlValueAccessor {
       this.fileSelected.emit(file);
     }
   }
-
   removeImage(index: number) {
     this.images.splice(index, 1);
     if (this.images.length === 0) {
       this.onChange(null);
     }
+    this.removed.emit(); // ⬅️ إعلام الأب إن الصورة اتشالت
   }
-
   // ControlValueAccessor methods
   writeValue(obj: any): void {
     if (obj) {
-      // If value is set externally
+      // Handle both File objects and image preview URLs
+      if (typeof obj === 'string') {
+        // It's a URL/preview string
+        this.images = [obj];
+      } else if (obj instanceof File) {
+        // It's a File object, convert to preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.images = [e.target?.result as string | ArrayBuffer];
+        };
+        reader.readAsDataURL(obj);
+      }
     }
   }
 

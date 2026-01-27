@@ -1,10 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'primeicons/primeicons.css';
-@import 'primeflex/primeflex.css';
-@import './styles/variables.scss';
-@import './styles/buttons.scss';
-@import 'quill/dist/quill.snow.css';
-@import 'quill/dist/quill.core.css';
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+@import "./styles/variables.scss";
+@import "./styles/buttons.scss";
+@import "quill/dist/quill.snow.css";
+@import "quill/dist/quill.core.css";
 
 :root {
   --p-emerald-100: var(--color-primary-100) !important;
@@ -107,9 +107,11 @@ a {
 
 .backBtn {
   border-radius: 19.2px 0;
-  background: linear-gradient(180deg,
-      var(--Color-Primary2-400, #b0d357) 0%,
-      var(--Color-Primary-400, #82c672) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--Color-Primary2-400, #b0d357) 0%,
+    var(--Color-Primary-400, #82c672) 100%
+  );
   width: 32px;
   height: 32px;
   transform: rotate(45deg);
@@ -187,9 +189,11 @@ a {
 
 .action-btn {
   border-radius: 12px;
-  background: linear-gradient(270deg,
-      var(--Color-Primary-400, #82c672) 39.41%,
-      var(--Color-Primary2-400, #b0d357) 98.64%);
+  background: linear-gradient(
+    270deg,
+    var(--Color-Primary-400, #82c672) 39.41%,
+    var(--Color-Primary2-400, #b0d357) 98.64%
+  );
   display: flex;
   height: 42px;
   padding: 4px 24px;
@@ -212,6 +216,12 @@ a {
   &:hover {
     background-color: #71b362;
   }
+
+  &.disabled {
+    color: #fff;
+    background: #d1d5dc;
+    cursor: not-allowed;
+  }
 }
 
 .page-container {
@@ -231,19 +241,22 @@ a {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  label{
-    color: var(--Color-Neutral-800, #6E7072);
+  label {
+    color: var(--Color-Neutral-800, #6e7072);
     font-size: var(--Font-Size-S, 18px);
     font-style: normal;
     font-weight: var(--Font-Weight-Regular, 500);
     line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
 
-    .required 
-    {
-      color: var(--Alert-Error-100, #DF1C41);
+    .required {
+      color: var(--Alert-Error-100, #df1c41);
     }
   }
-  .p-inputtext,.p-textarea,.p-multiselect,.p-select,.p-datepicker{
+  .p-inputtext,
+  .p-textarea,
+  .p-multiselect,
+  .p-select,
+  .p-datepicker {
     font-size: 12px;
     width: 100%;
     display: flex;
@@ -253,13 +266,14 @@ a {
     gap: 10.087px;
     align-self: stretch;
     border-radius: 15.13px !important;
-    border: 1.261px solid var(--Color-Neutral-300, #EFEFF0);
-    background: var(--Color-Neutral-white, #FFF);
-    
-    .p-multiselect-label,.p-select-label{
+    border: 1.261px solid var(--Color-Neutral-300, #efeff0);
+    background: var(--Color-Neutral-white, #fff);
+
+    .p-multiselect-label,
+    .p-select-label {
       padding: 0;
     }
-    .p-placeholder{
+    .p-placeholder {
       color: var(--Color-Neutral-500, #939598);
       /* Small Text/Light */
       font-family: var(--Font-Family-Secondary, Dubai);
@@ -268,30 +282,31 @@ a {
       font-weight: var(--Font-Weight-Light, 300);
       line-height: var(--Font-Line-Height-Xs, 19.2px); /* 120% */
     }
-    .p-multiselect-dropdown,.p-select-dropdown{
+    .p-multiselect-dropdown,
+    .p-select-dropdown {
       justify-content: end;
     }
     &:focus {
       outline: none;
       border-color: #8bc34a;
     }
-    &::placeholder{
+    &::placeholder {
       color: var(--Color-Neutral-500, #939598);
       font-size: var(--Font-Size-Xs, 16px);
       font-style: normal;
       font-weight: var(--Font-Weight-Light, 300);
     }
-    
   }
-  .p-multiselect,.p-select{
+  .p-multiselect,
+  .p-select {
     gap: 0;
     font-size: var(--Font-Size-2-xs, 14px);
   }
 
-  .textarea-container{
+  .textarea-container {
     width: 100%;
     position: relative;
-    span.char-counter{
+    span.char-counter {
       position: absolute;
       left: 15.13px;
       bottom: 0.174px;
@@ -302,109 +317,128 @@ a {
   }
   .ng-invalid.ng-touched .p-editor,
   .ng-invalid.ng-dirty .p-editor {
-    border: 1.2px solid var(--Color-Error-500, #E74C3C);
+    border: 1.2px solid var(--Color-Error-500, #e74c3c);
     border-radius: 14px;
   }
-  .p-datepicker{
-    transition: all .3s;
-    &:focus-within{
-      border-color:  var(--Color-Primary-500, #75B267);;
+  .p-datepicker {
+    transition: all 0.3s;
+    &:focus-within {
+      border-color: var(--Color-Primary-500, #75b267);
     }
-    .p-datepicker-dropdown{
+    .p-datepicker-dropdown {
       border: none;
       background-color: transparent;
     }
-    .p-datepicker-dropdown:not(:disabled):hover{
+    .p-datepicker-dropdown:not(:disabled):hover {
       background-color: transparent;
     }
-    input{
+    input {
       border: none;
       padding: 0;
       height: 100%;
       box-shadow: none;
     }
   }
-  .p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input{
+  .p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input {
     border-radius: 0 !important;
   }
-  .p-editor .p-editor-toolbar.ql-snow{
+  .p-editor .p-editor-toolbar.ql-snow {
     border-radius: 14px 14px 0 0;
-    background: radial-gradient(183.55% 120.47% at 116.93% -44.32%, rgba(231, 241, 203, 0.50) 0%, rgba(231, 241, 203, 0.00) 100%), radial-gradient(991.32% 174.48% at 95.31% 50%, rgba(176, 211, 87, 0.50) 0%, rgba(176, 211, 87, 0.00) 100%), radial-gradient(228.08% 210.57% at 106.77% 135.23%, rgba(58, 109, 149, 0.25) 0%, rgba(55, 102, 140, 0.00) 100%);
+    background:
+      radial-gradient(
+        183.55% 120.47% at 116.93% -44.32%,
+        rgba(231, 241, 203, 0.5) 0%,
+        rgba(231, 241, 203, 0) 100%
+      ),
+      radial-gradient(
+        991.32% 174.48% at 95.31% 50%,
+        rgba(176, 211, 87, 0.5) 0%,
+        rgba(176, 211, 87, 0) 100%
+      ),
+      radial-gradient(
+        228.08% 210.57% at 106.77% 135.23%,
+        rgba(58, 109, 149, 0.25) 0%,
+        rgba(55, 102, 140, 0) 100%
+      );
     display: flex;
     justify-content: end;
-    span{
+    span {
       margin: 0;
       font-weight: 100;
     }
-    
   }
-  .ql-snow.ql-toolbar button{
-    svg{
-          path,line,polyline{
-            stroke-width:1px;
-            stroke:var();
-          }
-        }
+  .ql-snow.ql-toolbar button {
+    svg {
+      path,
+      line,
+      polyline {
+        stroke-width: 1px;
+        stroke: var();
+      }
+    }
   }
-  .p-editor{
-    .text-editor-header{
+  .p-editor {
+    .text-editor-header {
       color: var(--Teal-Green-green-300, #609292);
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.28px;
     }
   }
-  .p-editor .p-editor-toolbar.ql-snow .ql-stroke{
-    stroke-width:1px;
-    stroke:var(--Color-Primary-1000,#2E4528);
+  .p-editor .p-editor-toolbar.ql-snow .ql-stroke {
+    stroke-width: 1px;
+    stroke: var(--Color-Primary-1000, #2e4528);
   }
-  .p-editor .p-editor-content .ql-editor,.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  .p-editor .p-editor-content .ql-editor,
+  .ql-toolbar.ql-snow + .ql-container.ql-snow {
     border-end-end-radius: 14px;
     border-end-start-radius: 14px;
   }
-    // Disabled state
+  // Disabled state
   .p-inputtext:disabled,
   .p-textarea:disabled,
   .p-multiselect.p-disabled,
   .p-select.p-disabled,
   .p-datepicker.p-disabled {
-    border: 1.261px solid var(--Color-Neutral-300, #EFEFF0);
-    background: var(--Color-Neutral-200, #F4F4F5);
-    color: var(--Color-Neutral-600, #8E8F91);
+    border: 1.261px solid var(--Color-Neutral-300, #efeff0);
+    background: var(--Color-Neutral-200, #f4f4f5);
+    color: var(--Color-Neutral-600, #8e8f91);
     cursor: not-allowed;
     opacity: 1; // prevent PrimeNG opacity dimming
   }
 
-
   // Disabled placeholder
   .p-inputtext:disabled::placeholder,
   .p-textarea:disabled::placeholder {
-    color: var(--Color-Neutral-500, #A0A2A4);
+    color: var(--Color-Neutral-500, #a0a2a4);
   }
 
   // Invalid state
   .ng-invalid.ng-touched,
   .ng-invalid.ng-dirty {
-
-  &.p-inputtext,
-  &.p-textarea,
-  &.p-multiselect,
-  &.p-select,
-  .p-datepicker {
-      border-color: var(--Color-Error-500, #E74C3C) !important;
+    &.p-inputtext,
+    &.p-textarea,
+    &.p-multiselect,
+    &.p-select,
+    .p-datepicker {
+      border-color: var(--Color-Error-500, #e74c3c) !important;
       background: rgba(231, 76, 60, 0.03);
     }
   }
   .text-red-val {
-    color: var(--Color-Error-500, #E74C3C);
+    color: var(--Color-Error-500, #e74c3c);
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
   }
 }
-
-// main-layout styles 
+.p-toggleswitch-slider {
+  &::before {
+    display: block !important;
+  }
+}
+// main-layout styles
 /* ! important
   I deleted it from main.component.scss and put it here to make it global 
   because the form layout bg is different from page layout bg
@@ -415,13 +449,13 @@ a {
 }
 .page-content {
   padding: 1rem;
-  background: var(--Color-Neutral-100, #FEFEFE);
+  background: var(--Color-Neutral-100, #fefefe);
 }
-.form-content{
+.form-content {
   padding: 1rem;
-  background: #FAFAFA;
+  background: #fafafa;
 }
-// hide the 
+// hide the
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -429,21 +463,19 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
-  appearance:textfield;
+input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
-.add-another
-{
+.add-another {
   display: flex;
   align-items: center;
   gap: 8px;
   border: none;
   cursor: pointer;
   background: none;
-  span 
-  {
-    color: var(--Color-Primary-500, #75B267);
+  span {
+    color: var(--Color-Primary-500, #75b267);
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -451,45 +483,71 @@ input[type=number] {
   }
 }
 .delete-btn {
-    cursor: pointer;
-    border-radius: 8.239px;
-    border: 1.03px solid var(--Greyscale-100, #DFE1E7);
-    background: var(--Greyscale-0, #FFF);
-    box-shadow: 0 1.03px 2.06px 0 rgba(13, 13, 18, 0.06);
-    display: flex;
-    width: 32px;
-    height: 32px;
-    justify-content: center;
-    align-items: center;
-    gap: 8.239px;
-    transition:  0.2s ease;
-    flex: 0 0 auto;
+  cursor: pointer;
+  border-radius: 8.239px;
+  border: 1.03px solid var(--Greyscale-100, #dfe1e7);
+  background: var(--Greyscale-0, #fff);
+  box-shadow: 0 1.03px 2.06px 0 rgba(13, 13, 18, 0.06);
+  display: flex;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  gap: 8.239px;
+  transition: 0.2s ease;
+  flex: 0 0 auto;
 
-    &:hover {
-        background: oklch(97.1% .013 17.38);
-        border-color: oklch(88.5% .062 18.334);
-    }
+  &:hover {
+    background: oklch(97.1% 0.013 17.38);
+    border-color: oklch(88.5% 0.062 18.334);
+  }
 }
-.p-inputtext:disabled
-{
+.p-inputtext:disabled {
   opacity: 0.6;
 }
 
-.add-form-group-btn{
+.add-form-group-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--Color-Primary-500, #75B267);
+  color: var(--Color-Primary-500, #75b267);
   font-size: var(--Font-Size-S, 18px);
   font-weight: var(--Font-Weight-Medium, 500);
   border: none;
   background-color: transparent;
-  transition: all .3s;
+  transition: all 0.3s;
   border-radius: 12px;
   cursor: pointer;
-  padding: .5rem;
+  padding: 0.5rem;
   width: fit-content;
-  &:hover{
+  &:hover {
     background-color: rgba(240, 249, 238, 0.8);
+  }
+}
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  label {
+    color: #000;
+    font-family: var(--Font-Family-Secondary, Dubai);
+    font-size: var(--Font-Size-Xs, 16px);
+    font-weight: var(--Font-Weight-Light, 300);
+  }
+}
+
+.p-checkbox {
+  width: 14px !important;
+  height: 14px !important;
+}
+.p-checkbox-box {
+  width: 14px !important;
+  height: 14px !important;
+  border: 1px solid var(--Color-Neutral-500, #939598) !important;
+  .p-iconwrapper {
+    svg {
+      width: 10px;
+      height: 10px;
+    }
   }
 }

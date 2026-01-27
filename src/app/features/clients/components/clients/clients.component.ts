@@ -7,6 +7,7 @@ import { FilterItems } from '../../../../shared/components/filters/filters.compo
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ClientFormComponent } from "../client-form/client-form.component";
+import { PaginationObj } from '../../../../core/models/global.interface';
 export interface Client {
   id: number;
   clientName: string;
@@ -146,7 +147,7 @@ export class ClientsComponent {
     console.log('Action clicked:', event);
   }
 
-  onPaginationChange(event: {page: number, perPage: number}) {
+  onPaginationChange(event: PaginationObj) {
     console.log('Pagination changed:', event);
   }
   selectionChange(e:Client[] | Client){

@@ -1,94 +1,40 @@
 <form [formGroup]="form">
   <div class="our-field">
-    <label for="valueTitle"
-      >Title
+    <label for="valueTitle">Title
       <span class="required">*</span>
     </label>
-    <input
-      id="valueTitle"
-      pInputText
-      formControlName="title"
-      placeholder="Enter value title.."
-    />
+    <input id="valueTitle" pInputText formControlName="title" placeholder="Enter value title.." />
   </div>
 
   <div class="our-field">
-    <label for="valueDescription"
-      >Description
+    <label for="valueDescription">Description
       <span class="required">*</span>
     </label>
-    <input
-      id="valueDescription"
-      pInputText
-      formControlName="description"
-      placeholder="Enter value description"
-    />
+    <input id="valueDescription" pInputText formControlName="description" placeholder="Enter value description" />
   </div>
 
   <div class="our-field">
-    <label for="toolsUsed">Tools Used</label>
+    <label for="tools">Tools Used</label>
     <div class="tools-input-wrapper">
-      <input
-        id="toolsUsed"
-        pInputText
-        [(ngModel)]="toolInput"
-        [ngModelOptions]="{ standalone: true }"
-        placeholder="Enter tool name"
-        (keyup.enter)="addTool()"
-      />
+      <input id="tools" pInputText [(ngModel)]="toolInput" [ngModelOptions]="{ standalone: true }"
+        placeholder="Enter tool name" (keyup.enter)="addTool()" />
       <button type="button" class="add-another" (click)="addTool()">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 18 18"
-          fill="none"
-        >
-          <path
-            d="M4.5 9H13.5"
-            stroke="#82C672"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M9 13.5V4.5"
-            stroke="#82C672"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M4.5 9H13.5" stroke="#82C672" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M9 13.5V4.5" stroke="#82C672" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <span>Add</span>
       </button>
     </div>
-    <div class="tools-badges" *ngIf="toolsUsedArray.length > 0">
-      <div
-        class="tool-badge"
-        *ngFor="let tool of toolsUsedArray.value; let i = index"
-      >
+    <div class="tools-badges" *ngIf="toolsArray.length > 0">
+      <div class="tool-badge" *ngFor="let tool of toolsArray.value; let i = index">
         <span>{{ tool }}</span>
-        <button
-          type="button"
-          class="remove-badge"
-          (click)="removeTool(i)"
-          title="Remove"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-          >
+        <button type="button" class="remove-badge" (click)="removeTool(i)" title="Remove">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <g clip-path="url(#clip0_9956_112566)">
               <path
                 d="M8.71256 3.26703V2.83139C8.71256 2.22145 8.71256 1.91648 8.59386 1.68351C8.48944 1.47859 8.32284 1.31198 8.11791 1.20757C7.88495 1.08887 7.57998 1.08887 6.97003 1.08887H6.09877C5.48883 1.08887 5.18386 1.08887 4.95089 1.20757C4.74597 1.31198 4.57936 1.47859 4.47495 1.68351C4.35624 1.91648 4.35624 2.22145 4.35624 2.83139V3.26703M5.44532 6.26199V8.98469M7.62348 6.26199V8.98469M1.63354 3.26703H11.4353M10.3462 3.26703V9.36587C10.3462 10.2808 10.3462 10.7382 10.1681 11.0877C10.0115 11.3951 9.76159 11.645 9.45421 11.8016C9.10476 11.9797 8.6473 11.9797 7.73239 11.9797H5.33642C4.4215 11.9797 3.96405 11.9797 3.6146 11.8016C3.30721 11.645 3.0573 11.3951 2.90068 11.0877C2.72262 10.7382 2.72262 10.2808 2.72262 9.36587V3.26703"
-                stroke="#F96C4D"
-                stroke-width="0.980172"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+                stroke="#F96C4D" stroke-width="0.980172" stroke-linecap="round" stroke-linejoin="round" />
             </g>
             <defs>
               <clipPath id="clip0_9956_112566">

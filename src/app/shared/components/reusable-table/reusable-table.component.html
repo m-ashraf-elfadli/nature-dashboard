@@ -1,8 +1,6 @@
 <div class="table-container">
   <div class="filter">
-    <app-filters
-      [filterConfig]="filterItems"
-      (filterChange)="onFilterChange($event)">
+    <app-filters [filterConfig]="filterItems" (filterChange)="onFilterChange($event)">
     </app-filters>
   </div>
   <div class="custom-table">
@@ -10,7 +8,7 @@
       [value]="displayedData"
       [rows]="rows"
       [paginator]="false"
-      [lazy]="config.serverSidePagination || config.serverSideSort || config.serverSideSearch"
+      [lazy]="config.serverSidePagination || config.serverSideSort || config.serverSideFilter"
       [selection]="selection"
       (selectionChange)="onSelectionChange($event)"
       (onSort)="onSort($event)">
@@ -53,7 +51,7 @@
 
             @case ('avatar-and-name') {
             <div class="avatar-and-name-cell">
-              <img [src]="col.avatarField ? row[col.avatarField] : ''"
+              <img [src]="baseMediaUrl+(col.avatarField ? row[col.avatarField] : '')"
                 alt="avatar" />
               <span>{{ row[col.field] }}</span>
             </div>
@@ -61,7 +59,7 @@
 
             @case ('country-chip') {
             <div class="country-chip-cell">
-              <img [src]="col.avatarField ? row[col.avatarField] : ''" />
+              <img [src]="baseMediaUrl+(col.avatarField ? row[col.avatarField] : '')" />
               <span>{{ row[col.field] }}</span>
             </div>
             }
@@ -74,24 +72,21 @@
               }
             </div>
             }
-
             @case ('languages-chips') {
             <div class="chips-group">
-              <div class="country-chip-cell" *ngFor="let l of row[col.field]">
-                <img [src]="l.flag" />
+              <div class="country-chip-cell" *ngFor="let l of getLanguagesChips(row[col.field])">
+                <img *ngIf="l.flag" [src]="l.flag" />
                 <span>{{ l.code }}</span>
                 <i class="pi pi-check checked-lang"></i>
               </div>
             </div>
             }
-
             @case ('status') {
             <p-inputswitch (onChange)="row.col.statusCallback($event)" [(ngModel)]="row[col.field]"></p-inputswitch>
             }
 
             @case ('badge') {
-            <span
-              [class]="'badge ' + (col.badgeColorField ? col.badgeColorField(row) : '')">
+            <span [class]="'badge ' + (col.badgeColorField ? col.badgeColorField(row) : '')">
               {{ row[col.field] }}
             </span>
             }
@@ -117,8 +112,7 @@
           @if (actions.length) {
           <td class="actions-cell">
             <button *ngFor="let act of getVisibleRowActions(row)"
-              class="custom-btn btn-{{act.severity}} {{ act.class }}"
-              (click)="act.callback(row,$event)">
+              class="custom-btn btn-{{act.severity}} {{ act.class }}" (click)="act.callback(row,$event)">
               {{ act.label | translate }}
               @if( act.icon ) {
               <i [class]="act.icon"></i>
@@ -128,13 +122,15 @@
           }
         </tr>
       </ng-template>
-    </p-table></div>
+    </p-table>
+  </div>
 
   <div class="custom-pagination">
     <app-reusable-pagination
       [totalRecords]="totalRecords"
       [rowsOptions]="config.rowsPerPageOptions"
       [page]="page"
+      [rows]="config.rowsPerPage!"
       (paginationChange)="onPaginationChange($event)"></app-reusable-pagination>
   </div>
 

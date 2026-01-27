@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
+import { PaginationObj } from '../../../core/models/global.interface';
 
 @Component({
   selector: 'app-reusable-pagination',
@@ -16,7 +17,7 @@ export class ReusablePaginationComponent implements OnInit {
   @Input() rows!: number;
   @Input() rowsOptions: number[] = [5, 10, 20, 50];
 
-  @Output() paginationChange = new EventEmitter<{page:number, perPage:number}>();
+  @Output() paginationChange = new EventEmitter<PaginationObj>();
 
   ngOnInit() {
     this.rows = this.rows ?? this.rowsOptions[0];
@@ -73,15 +74,15 @@ export class ReusablePaginationComponent implements OnInit {
     this.onPaginationChange({ page });
   }
 
-  onPaginationChange(change: { page?: number; perPage?: number }) {
+  onPaginationChange(change: { page?: number; size?: number }) {
     if (change.page !== undefined) {
       this.page = change.page;
     }
-    if (change.perPage !== undefined) {
-      this.rows = change.perPage;
-      this.page = 0;
+    if (change.size !== undefined) {
+      this.rows = change.size;
+      this.page = 1;
     }
-    this.paginationChange.emit({ page: this.page, perPage: this.rows });
+    this.paginationChange.emit({ page: this.page, size: this.rows });
   }
 
   /** Returns the index of the last item shown on the current page */

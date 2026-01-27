@@ -9,11 +9,21 @@ export const projectsRoutes: Routes = [
   {
     path: 'add',
     loadComponent: () =>
-      import('./project-form/project-form.component').then(
+      import('../project-form/project-form.component').then(
         (m) => m.ProjectFormComponent
       ),
     data: {
       title: 'Add New Project',
+    },
+  },
+  {
+    path: 'edit/:id',
+    loadComponent: () =>
+      import('../project-form/project-form.component').then(
+        (m) => m.ProjectFormComponent
+      ),
+    data: {
+      title: 'Edit Project',
     },
   },
 ];

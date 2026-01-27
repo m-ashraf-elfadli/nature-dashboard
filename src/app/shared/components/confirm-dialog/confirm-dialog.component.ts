@@ -5,13 +5,14 @@ import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 export interface ConfirmationDialogConfig<T> {
   title: string;
   subtitle?: string;
-  icon?: string;               
-  iconBgColor?: string;        
+  icon?: string;
+  iconBgColor?: string;
   iconBorderColor?: string;
   confirmText?: string;
+  extraButtonSeverity?: 'delete' | 'cancel' | 'success' | 'warning';
   cancelText?: string;
-  confirmSeverity?: 'delete' | 'cancel' | 'extra' | 'warning';
-  cancelSeverity?: 'delete' | 'cancel' | 'extra' | 'warning';
+  confirmSeverity?: 'delete' | 'cancel' | 'success' | 'warning';
+  cancelSeverity?: 'delete' | 'cancel' | 'success' | 'warning';
   showCancel?: boolean;
   showExtraButton?: boolean;
   extraButtonText?: string;
@@ -23,30 +24,34 @@ export interface ConfirmationDialogConfig<T> {
   standalone: true,
   imports: [ButtonModule],
   templateUrl: './confirm-dialog.component.html',
-  styleUrl: './confirm-dialog.component.scss'
+  styleUrl: './confirm-dialog.component.scss',
 })
 export class ConfirmDialogComponent implements OnInit {
   data: any = null;
+  product: any;
 
   constructor(
-    public ref: DynamicDialogRef, 
-    public configs: DynamicDialogConfig
+    public ref: DynamicDialogRef,
+    public configs: DynamicDialogConfig,
   ) {}
 
   ngOnInit(): void {
-    // The entire config is passed as configs.data
     this.data = this.configs?.data ?? null;
-    console.log('Confirm dialog initialized with data:', this.data);
+    if (this.data) {
+      if (this.data.name) {
+        this.product.name = this.data.name;
+      } else if (this.data.id) {
+        this.product.name = `ID: ${this.data.id}`;
+      }
+    }
   }
 
   confirm() {
-    // Return the actual data object (the testimonial)
-    console.log('Confirming with data:', this.data?.data);
-    this.ref.close(this.data?.data);
+    this.ref.close({ action: 'confirm', data: this.data.data });
   }
 
   elseAction() {
-    this.ref.close({ name: 'Else Action' });
+    this.ref.close({ action: 'else', data: this.data.data });
   }
 
   close() {

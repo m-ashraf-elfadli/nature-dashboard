@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { PopoverModule } from 'primeng/popover';
+import { Popover, PopoverModule } from 'primeng/popover';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -56,8 +56,10 @@ export interface OptionsFilter {
 })
 
 export class FiltersComponent implements OnInit {
+    @ViewChild('op') op!:Popover;
     private readonly fb = inject(FormBuilder);
     formFilter!: FormGroup;
+    isFilterApplied:boolean = false;
     @Input() filterConfig: FilterItems[] = [];
     @Output() filterChange = new EventEmitter<any>();
 
@@ -98,17 +100,26 @@ export class FiltersComponent implements OnInit {
           });
         }
       }
-      if (field.type === 'filter') {
-        field.filterOptions.forEach((f: FilterOption) => {
-          const control = this.formFilter.get(f.inputName);
-          if (control) {
-            control.valueChanges.pipe(debounceTime(4)).subscribe(() => {
-              this.filterChange.emit(this.formFilter.value);
-            });
-          }
-        });
-      }
+      // if (field.type === 'filter') {
+      //   field.filterOptions.forEach((f: FilterOption) => {
+      //     const control = this.formFilter.get(f.inputName);
+      //     if (control) {
+      //       control.valueChanges.pipe(debounceTime(4)).subscribe(() => {
+      //         this.filterChange.emit(this.formFilter.value);
+      //       });
+      //     }
+      //   });
+      // }
     });
   }
-      
+  applyOrResetFilter(e:Event){
+    if(this.isFilterApplied){
+      this.isFilterApplied = false;
+      this.formFilter.reset();
+    }else{
+      this.isFilterApplied = true;
+      this.filterChange.emit(this.formFilter.value);
+    }
+    this.op.toggle(e);
+  }
 }

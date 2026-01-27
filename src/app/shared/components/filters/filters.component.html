@@ -6,7 +6,7 @@
                         @if(item.name){
                             <p-iconfield>
                                 <p-inputicon styleClass="pi pi-search" />
-                                <input pInputText [formControlName]="item.name" id="searchBy" type="text"
+                                <input pInputText [formControlName]="item.name || 'key'" id="searchBy" type="text"
                                     [placeholder]="item.placeholder | translate" class="w-full sm:w-auto" />
                             </p-iconfield>
                         }
@@ -23,20 +23,25 @@
                 <p-popover styleClass="filter-overlay" #op>
                     <div class="filter-body">
                         @for (option of item.filterOptions; track $index) {
-                            <div class="filter-group">
+                            <div class="filter-group our-field">
                                 @if (option.type === 'input') {
-                                    <input pInputText [formControlName]="option.inputName" [type]="option.inputType" [placeholder]="option.placeholder" />
+                                    <input pInputText [formControlName]="option.inputName" [type]="option.inputType" [placeholder]="option.placeholder | translate" />
                                 } @else if (option.type === 'select') {
                                     @if(option.multiple){
-                                        <p-multiSelect [formControlName]="option.inputName" [options]="option.options" optionLabel="name" optionValue="id" [placeholder]="option.placeholder || option.label"></p-multiSelect>
+                                        <p-multiSelect [formControlName]="option.inputName" [options]="option.options" optionLabel="name" optionValue="id" [placeholder]="(option.placeholder || option.label) | translate"></p-multiSelect>
                                     }@else{
-                                        <p-select [formControlName]="option.inputName" [options]="option.options" optionLabel="name" optionValue="id" [placeholder]="option.placeholder || option.label"></p-select>
+                                        <p-select [formControlName]="option.inputName" [options]="option.options" optionLabel="name" optionValue="id" [placeholder]="(option.placeholder || option.label) | translate"></p-select>
                                     }
                                 } @else if (option.type === 'date') {
                                     <p-calendar [formControlName]="option.inputName"></p-calendar>
                                 }
                             </div>
                         }
+                    </div>
+                    <div class="filter-footer">
+                        <button class="custom-btn btn-primary" (click)="applyOrResetFilter($event)">
+                            {{ (isFilterApplied?'general.reset':'general.apply') | translate }}
+                        </button>
                     </div>
                 </p-popover >
             </div>
