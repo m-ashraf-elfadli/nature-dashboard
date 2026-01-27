@@ -2,10 +2,10 @@
     <button (click)="onDiscard($event)" class="basic-btn">
         <span>Discard</span>
     </button>
-    <!-- Language Selector -->
+
     <div class="language-selector">
-        <p-select [options]="languages" [(ngModel)]="selectedLanguage" optionLabel="label" optionValue="code"
-            (onChange)="onLanguageChange($event)" placeholder="Select a Language" class="w-full">
+        <p-select [(ngModel)]="displayLanguage" [options]="languages" optionLabel="label" optionValue="code"
+            placeholder="Select Language" (onChange)="onLanguageChange($event)">
             <ng-template let-lang pTemplate="selectedItem">
                 <div class="flex align-items-center gap-2" *ngIf="lang">
                     <img [src]="lang.flag" width="20" height="18" [alt]="lang.label" />
@@ -15,10 +15,7 @@
         </p-select>
     </div>
 
-
-    <button (click)="onSave($event)" class="action-btn">
+    <button (click)="onSave($event)" class="action-btn" [disabled]="!isFormValid" [class.disabled]="!isFormValid">
         <span>Save</span>
     </button>
-
-
 </div>

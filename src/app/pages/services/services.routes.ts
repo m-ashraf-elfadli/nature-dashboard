@@ -10,10 +10,20 @@ export const servicesRoutes: Routes = [
     path: 'add',
     loadComponent: () =>
       import('./service-form/service-form.component').then(
-        (m) => m.ServiceFormComponent
+        (m) => m.ServiceFormComponent,
       ),
     data: {
       title: 'Add New Service',
+    },
+  },
+  {
+    path: 'edit/:id',
+    loadComponent: () =>
+      import('./service-form/service-form.component').then(
+        (m) => m.ServiceFormComponent,
+      ),
+    data: {
+      title: 'Edit Service',
     },
   },
 ];

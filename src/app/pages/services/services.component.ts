@@ -59,7 +59,7 @@ export class ServicesComponent {
 
   actions: TableAction<Project>[] = [
     {
-      callback: (row) => this.addNew(),
+      callback: (row) => this.edit(row),
       icon: 'pi pi-pencil',
       severity: 'white',
       class: 'p-2',
@@ -71,8 +71,8 @@ export class ServicesComponent {
       class: 'p-2',
     },
   ];
-  edit(row: Project, event?: Event) {
-    console.log('Edit action triggered', row, event);
+  edit(row: any) {
+    this.router.navigate(['/services/edit', row.id]);
   }
   delete(row: Project, event?: Event) {
     console.log('Delete action triggered', row, event);
