@@ -1,5 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../core/services/api.service';
+import { Observable } from 'rxjs';
+import { ServiceResponse } from '../pages/services/service-form/service-form.component';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +19,10 @@ export class ServicesService {
   getAllServices() {
     return this.apiService.get(this.endpoint);
   }
-  getServiceById(id: string, lang: string = this.lang) {
+  getServiceById(
+    id: string,
+    lang: string = this.lang,
+  ): Observable<ServiceResponse> {
     this.apiService.setCulture(lang);
     return this.apiService.get(`${this.endpoint}/show/${id}`);
   }

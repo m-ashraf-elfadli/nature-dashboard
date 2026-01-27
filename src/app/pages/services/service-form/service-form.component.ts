@@ -46,6 +46,30 @@ export interface LanguageStatus {
   status: 'not-started' | 'ongoing' | 'completed';
 }
 
+export interface ServiceResponse {
+  status: string;
+  message: string;
+  result: {
+    id: string;
+    name: string;
+    tagline: string;
+    steps: any[];
+    benefitTitle: string | null;
+    benefitTagline: string | null;
+    benefitBody: string | null;
+    benefitInsights: any[];
+    benefitEnabled: boolean;
+    values: any[];
+    impacts: any[];
+    status: boolean;
+    localeComplete: {
+      [key: string]: boolean;
+    };
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+
 @Component({
   selector: 'app-service-form',
   standalone: true,
@@ -79,6 +103,9 @@ export class ServiceFormComponent implements OnInit {
     ['ar', { code: 'ar', status: 'not-started' }],
   ]);
 
+  // Track if form was loaded from API (pristine state from server)
+  private loadedFromApi = false;
+
   StageFormComponent = StageFormComponent;
   ValueFormComponent = ValueFormComponent;
   ResultsFormComponent = ResultsFormComponent;
@@ -107,7 +134,6 @@ export class ServiceFormComponent implements OnInit {
         this.serviceId = id;
         this.pageTitle = 'Edit Service';
         this.loadService(id, this.currentLanguage);
-        this.checkAllLanguageStatuses(id);
       } else {
         // Create mode - mark current language as ongoing
         this.updateLanguageStatus(this.currentLanguage, 'ongoing');
@@ -116,8 +142,15 @@ export class ServiceFormComponent implements OnInit {
 
     // Track form changes to update status
     this.serviceForm.valueChanges.subscribe(() => {
-      if (this.serviceForm.dirty) {
-        this.updateLanguageStatus(this.currentLanguage, 'ongoing');
+      // Only mark as ongoing if form is dirty AND was loaded from API
+      if (this.serviceForm.dirty && this.loadedFromApi) {
+        const currentStatus = this.languageStatuses.get(
+          this.currentLanguage,
+        )?.status;
+        // Only change to ongoing if it was completed before
+        if (currentStatus === 'completed') {
+          this.updateLanguageStatus(this.currentLanguage, 'ongoing');
+        }
       }
     });
   }
@@ -156,30 +189,21 @@ export class ServiceFormComponent implements OnInit {
   }
 
   /**
-   * Check status of all languages for edit mode
+   * Update language statuses from API response
    */
-  private checkAllLanguageStatuses(serviceId: string): void {
-    ['en', 'ar'].forEach((lang) => {
-      this.servicesService.getServiceById(serviceId, lang).subscribe({
-        next: (res: any) => {
-          if (res.result && this.isLanguageDataComplete(res.result)) {
-            this.updateLanguageStatus(lang, 'completed');
-          } else {
-            this.updateLanguageStatus(lang, 'not-started');
-          }
-        },
-        error: () => {
-          this.updateLanguageStatus(lang, 'not-started');
-        },
-      });
+  private updateLanguageStatusesFromApi(localeComplete: {
+    [key: string]: boolean;
+  }): void {
+    Object.keys(localeComplete).forEach((lang) => {
+      const isComplete = localeComplete[lang];
+      const status = isComplete ? 'completed' : 'not-started';
+      this.languageStatuses.set(lang, { code: lang, status });
     });
-  }
 
-  /**
-   * Check if language data is complete
-   */
-  private isLanguageDataComplete(data: any): boolean {
-    return !!(data.name && data.tagline);
+    // Mark current language as ongoing since we're viewing/editing it
+    // this.updateLanguageStatus(this.currentLanguage, 'ongoing');
+
+    this.updateSettingsComponent();
   }
 
   /**
@@ -213,15 +237,18 @@ export class ServiceFormComponent implements OnInit {
     }
   }
 
-  loadService(id: string, lang: string = 'en') {
+  loadService(id: string, lang: string) {
     this.servicesService.getServiceById(id, lang).subscribe({
-      next: (res: any) => {
+      next: (res: ServiceResponse) => {
         const service = res.result;
 
-        // Check if data exists and is complete
-        if (this.isLanguageDataComplete(service)) {
-          this.updateLanguageStatus(lang, 'completed');
+        // Update language statuses from API
+        if (service.localeComplete) {
+          this.updateLanguageStatusesFromApi(service.localeComplete);
         }
+
+        // Set flag that data was loaded from API
+        this.loadedFromApi = true;
 
         // Populate the form
         this.serviceForm.patchValue({
@@ -231,7 +258,7 @@ export class ServiceFormComponent implements OnInit {
           benefitTitle: service.benefitTitle || '',
           benefitTagline: service.benefitTagline || '',
           benefitBody: service.benefitBody || '',
-          benefitEnabled: true,
+          benefitEnabled: service.benefitEnabled ?? true,
         });
 
         // Clear and populate arrays
@@ -265,15 +292,17 @@ export class ServiceFormComponent implements OnInit {
         });
 
         this.benefitInsightsArray.clear();
-        service.benefitInsights?.forEach((insight: any) => {
-          this.benefitInsightsArray.push(
-            this.fb.group({
-              id: [insight.id],
-              metricTitle: [insight.metricTitle],
-              metricNumber: [insight.metricNumber],
-            }),
-          );
-        });
+        if (service.benefitInsights && service.benefitInsights.length > 0) {
+          service.benefitInsights.forEach((insight: any) => {
+            this.benefitInsightsArray.push(
+              this.fb.group({
+                id: [insight.id],
+                metricTitle: [insight.metricTitle || ''],
+                metricNumber: [insight.metricNumber || ''],
+              }),
+            );
+          });
+        }
 
         // If no insights, add default one
         if (this.benefitInsightsArray.length === 0) {
@@ -287,11 +316,13 @@ export class ServiceFormComponent implements OnInit {
 
         // Mark form as pristine after loading
         this.serviceForm.markAsPristine();
+        this.serviceForm.markAsUntouched();
       },
       error: (err) => {
         console.log(
           `No data found for language ${lang}, starting fresh for this language`,
         );
+        this.loadedFromApi = false;
         this.clearFormForNewLanguage();
         this.updateLanguageStatus(lang, 'not-started');
       },
@@ -308,7 +339,6 @@ export class ServiceFormComponent implements OnInit {
       const control = this.serviceForm.get(field);
       if (enabled) {
         control?.enable();
-        control?.setValidators(Validators.required);
       } else {
         control?.disable();
         control?.clearValidators();
@@ -648,6 +678,10 @@ export class ServiceFormComponent implements OnInit {
 
         // Mark form as pristine
         this.serviceForm.markAsPristine();
+        this.serviceForm.markAsUntouched();
+
+        // Update loaded from API flag
+        this.loadedFromApi = true;
 
         console.log(`Service saved successfully for language: ${lang}`);
 
@@ -738,7 +772,7 @@ export class ServiceFormComponent implements OnInit {
         confirmText: 'Save Changes',
         cancelText: 'Discard Changes',
         confirmSeverity: 'success',
-        cancelSeverity: 'cancel',
+        cancelSeverity: 'secondary',
         showCancel: true,
       },
     });
@@ -814,8 +848,11 @@ export class ServiceFormComponent implements OnInit {
     this.currentLanguage = lang;
     this.commitLanguage(lang);
 
-    // Mark new language as ongoing
-    this.updateLanguageStatus(lang, 'ongoing');
+    // Mark new language as ongoing (if not already completed or not-started)
+    const currentStatus = this.languageStatuses.get(lang)?.status;
+    if (currentStatus === 'not-started') {
+      this.updateLanguageStatus(lang, 'ongoing');
+    }
 
     if (this.isEditMode && this.serviceId) {
       // Load data for the new language
@@ -823,6 +860,7 @@ export class ServiceFormComponent implements OnInit {
     } else {
       // Clear form for new language in create mode
       this.clearFormForNewLanguage();
+      this.loadedFromApi = false;
     }
   }
 
