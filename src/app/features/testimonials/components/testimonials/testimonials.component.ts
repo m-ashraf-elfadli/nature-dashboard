@@ -1,6 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { TestimonialsService } from '../../services/testimonials.service';
-import { CommonModule } from '@angular/common';
 import { PageHeaderComponent } from "../../../../shared/components/page-header/page-header.component";
 import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
 import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
@@ -8,40 +6,44 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TestimonialsFormComponent } from "../testimonials-form/testimonials-form.component";
 import { FilterItems } from '../../../../shared/components/filters/filters.component';
+import { TestimonialsService } from '../../services/testimonials.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmDialogComponent, ConfirmationDialogConfig } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
-// ================== Inline Interface ==================
 export interface Testimonial {
   id: string;
   clientName: string;
   jobTitle: string;
-  testimonial: string;
-  status: boolean;
+  Testimonial: string;
+  status: number;
   createdAt: string;
   updatedAt: string;
 }
-// =======================================================
 
 @Component({
   selector: 'app-testimonials',
   standalone: true,
   imports: [
-    CommonModule,
     PageHeaderComponent,
     ReusableTableComponent,
     DialogModule,
     ButtonModule,
     TestimonialsFormComponent
   ],
+  providers: [DialogService],
   templateUrl: './testimonials.component.html',
   styleUrl: './testimonials.component.scss'
 })
 export class TestimonialsComponent implements OnInit {
 
   private testimonialsService = inject(TestimonialsService);
+  private dialogService = inject(DialogService);
 
   visible = false;
   data: Testimonial[] = [];
   totalRecords = 0;
+  currentTestimonialId?: string;
+  confirmDialogRef?: DynamicDialogRef;
 
   ngOnInit() {
     this.loadTestimonials();
@@ -50,30 +52,17 @@ export class TestimonialsComponent implements OnInit {
   loadTestimonials(page = 1, size = 10) {
     this.testimonialsService.getAll(page, size).subscribe({
       next: (res) => {
-        const arr = res.result || [];
-
-        this.data = arr.map((item: any) => ({
-          id: item.id,
-          clientName: item.clientName,
-          jobTitle: item.jobTitle,
-          testimonial: item.Testimonial,   // backend uses capital T
-          status: item.status === 1,        // convert 1/0 → boolean
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt
-        }));
-
+        this.data = res.result || [];
         this.totalRecords = res.total;
       },
       error: (err) => console.error('Testimonials fetch error:', err)
     });
   }
 
-  // ================= Table Config =================
-
   columns: TableColumn<Testimonial>[] = [
     { field: 'clientName', header: 'Client name', type: 'text' },
     { field: 'jobTitle', header: 'Job Title', type: 'text' },
-    { field: 'testimonial', header: 'Testimonial', type: 'text', class: "max-w-15rem" },
+    { field: 'Testimonial', header: 'Testimonial', type: 'text', class: "max-w-15rem" },
     { field: 'createdAt', header: 'Date added', type: 'date' },
     { field: 'status', header: 'Status', type: 'status' },
   ];
@@ -89,7 +78,6 @@ export class TestimonialsComponent implements OnInit {
       icon: 'pi pi-trash',
       callback: (row) => this.delete(row),
       severity: 'white',
-      visibleWhen: (row) => row.status,
       class: 'p-2'
     }
   ];
@@ -117,20 +105,61 @@ export class TestimonialsComponent implements OnInit {
     }
   ];
 
-  // ================= Actions =================
-
   showDialog() {
+    this.currentTestimonialId = undefined;
     this.visible = true;
   }
 
   edit(row: Testimonial) {
-    console.log('Edit:', row);
+    this.currentTestimonialId = row.id;
     this.visible = true;
   }
 
   delete(row: Testimonial) {
-    this.testimonialsService.delete(row.id).subscribe({
-      next: () => this.loadTestimonials()
+    console.log('Delete called with row:', row); // Debug log
+    
+    const dialogConfig: ConfirmationDialogConfig<Testimonial> = {
+      title: 'Delete Testimonial',
+      subtitle: `Are you sure you want to delete the testimonial from "${row.clientName}"? This action cannot be undone.`,
+      icon: 'images/delete.svg', 
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      confirmSeverity: 'delete',
+      cancelSeverity: 'cancel',
+      data: row
+    };
+
+    this.confirmDialogRef = this.dialogService.open(ConfirmDialogComponent, {
+      modal: true,
+      data: dialogConfig,
+      header: '',
+      width: '400px',
+      closable: false,
+      styleClass: 'confirm-dialog'
+    });
+
+    this.confirmDialogRef.onClose.subscribe((result: any) => {
+      console.log('Dialog closed with result:', result); // Debug log
+      
+      if (result && result.id) {
+        // User confirmed deletion
+        this.performDelete(result.id);
+      }
+    });
+  }
+
+  private performDelete(id: string) {
+    console.log('Performing delete for ID:', id); // Debug log
+    
+    this.testimonialsService.delete(id).subscribe({
+      next: () => {
+        console.log('Deleted successfully');
+        this.loadTestimonials();
+      },
+      error: (err) => {
+        console.error('Delete error:', err);
+        alert('Failed to delete testimonial');
+      }
     });
   }
 
@@ -138,12 +167,69 @@ export class TestimonialsComponent implements OnInit {
     this.loadTestimonials(event.page, event.perPage);
   }
 
-  createTestimonial(payload: any) {
-    this.testimonialsService.create(payload).subscribe({
-      next: () => {
-        this.visible = false;
-        this.loadTestimonials();
+  handleSave(payload: any) {
+    console.log('handleSave called with payload:', payload);
+    
+    if (this.currentTestimonialId) {
+      // Update existing
+      console.log('Updating testimonial:', this.currentTestimonialId);
+      this.testimonialsService.update(this.currentTestimonialId, payload).subscribe({
+        next: (res) => {
+          console.log('Update success:', res);
+          this.visible = false;
+          this.loadTestimonials();
+        },
+        error: (err) => {
+          console.error('Update error:', err);
+          console.error('Error details:', err.error);
+          this.showErrorMessage(err);
+        }
+      });
+    } else {
+      // Create new
+      console.log('Creating new testimonial');
+      this.testimonialsService.create(payload).subscribe({
+        next: (res) => {
+          console.log('Create success:', res);
+          if (payload.createNew) {
+            // Keep dialog open and reload data
+            this.loadTestimonials();
+          } else {
+            this.visible = false;
+            this.loadTestimonials();
+          }
+        },
+        error: (err) => {
+          console.error('Create error:', err);
+          console.error('Error details:', err.error);
+          this.showErrorMessage(err);
+        }
+      });
+    }
+  }
+
+  private showErrorMessage(err: any) {
+    let errorMessage = 'An error occurred';
+    
+    if (err.error) {
+      if (err.error.errors) {
+        const errors = err.error.errors;
+        const errorMessages = Object.keys(errors).map(key => {
+          return `${key}: ${Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key]}`;
+        });
+        errorMessage = errorMessages.join('\n');
+      } else if (err.error.message) {
+        errorMessage = err.error.message;
       }
-    });
+    }
+    
+    console.log('Full error message:', errorMessage);
+    alert(`Failed to save testimonial:\n${errorMessage}`);
+  }
+
+  ngOnDestroy() {
+    if (this.confirmDialogRef) {
+      this.confirmDialogRef.close();
+    }
   }
 }

@@ -18,12 +18,34 @@ export class TestimonialsService {
     return this.api.get('testimonials', params);
   }
 
+  getById(id: string): Observable<any> {
+    return this.api.get(`testimonials/${id}`);
+  }
+
   create(payload: any): Observable<any> {
-    return this.api.post('testimonials', payload);
+    const body = {
+      client_name_en: payload.clientNameEn,
+      client_name_ar: payload.clientNameAr,
+      job_title_en: payload.jobTitleEn,
+      job_title_ar: payload.jobTitleAr,
+      testimonial_en: payload.testimonialEn,
+      testimonial_ar: payload.testimonialAr
+    };
+    
+    return this.api.post('testimonials', body);
   }
 
   update(id: string, payload: any): Observable<any> {
-    return this.api.put(`testimonials/${id}`, payload);
+    const body = {
+      client_name_en: payload.clientNameEn,
+      client_name_ar: payload.clientNameAr,
+      job_title_en: payload.jobTitleEn,
+      job_title_ar: payload.jobTitleAr,
+      testimonial_en: payload.testimonialEn,
+      testimonial_ar: payload.testimonialAr
+    };
+    
+    return this.api.post(`testimonials/${id}`, body);
   }
 
   delete(id: string): Observable<any> {

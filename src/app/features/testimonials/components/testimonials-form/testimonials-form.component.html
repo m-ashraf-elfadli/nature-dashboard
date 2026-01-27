@@ -1,46 +1,121 @@
-<div class="form-inputs">
-  <div class="our-field">
-    <label for=""
-      >Client name (English) <span class="text-red-val">*</span></label
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-inputs">
+    <div class="our-field">
+      <label for="clientNameEn">
+        Client name (English) <span class="text-red-val">*</span>
+      </label>
+      <input
+        id="clientNameEn"
+        type="text"
+        pInputText
+        formControlName="clientNameEn"
+        placeholder="Enter client name in English"
+      />
+      @if (isFieldInvalid("clientNameEn")) {
+        <span class="text-red-val"> Client name in English is required </span>
+      }
+    </div>
+
+    <div class="our-field">
+      <label for="clientNameAr">
+        Client name (Arabic) <span class="text-red-val">*</span>
+      </label>
+      <input
+        id="clientNameAr"
+        type="text"
+        pInputText
+        formControlName="clientNameAr"
+        placeholder="أدخل اسم العميل بالعربية"
+      />
+      @if (isFieldInvalid("clientNameAr")) {
+        <span class="text-red-val"> Client name in Arabic is required </span>
+      }
+    </div>
+
+    <div class="our-field">
+      <label for="jobTitleEn">
+        Job Title (English) <span class="text-red-val">*</span>
+      </label>
+      <input
+        id="jobTitleEn"
+        type="text"
+        pInputText
+        formControlName="jobTitleEn"
+        placeholder="Enter Job Title in English"
+      />
+      @if (isFieldInvalid("jobTitleEn")) {
+        <span class="text-red-val"> Job title in English is required </span>
+      }
+    </div>
+
+    <div class="our-field">
+      <label for="jobTitleAr">
+        Job Title (Arabic) <span class="text-red-val">*</span>
+      </label>
+      <input
+        id="jobTitleAr"
+        type="text"
+        pInputText
+        formControlName="jobTitleAr"
+        placeholder="أدخل المسمى الوظيفي بالعربية"
+      />
+      @if (isFieldInvalid("jobTitleAr")) {
+        <span class="text-red-val"> Job title in Arabic is required </span>
+      }
+    </div>
+
+    <div class="our-field">
+      <label for="testimonialEn">
+        Testimonial (English) <span class="text-red-val">*</span>
+      </label>
+      <textarea
+        id="testimonialEn"
+        pInputText
+        formControlName="testimonialEn"
+        placeholder="Enter Testimonial in English"
+        rows="3"
+      ></textarea>
+      @if (isFieldInvalid("testimonialEn")) {
+        <span class="text-red-val"> Testimonial in English is required </span>
+      }
+    </div>
+
+    <div class="our-field">
+      <label for="testimonialAr">
+        Testimonial (Arabic) <span class="text-red-val">*</span>
+      </label>
+      <textarea
+        id="testimonialAr"
+        pInputText
+        formControlName="testimonialAr"
+        placeholder="أدخل الشهادة بالعربية"
+        rows="3"
+      ></textarea>
+      @if (isFieldInvalid("testimonialAr")) {
+        <span class="text-red-val"> Testimonial in Arabic is required </span>
+      }
+    </div>
+  </div>
+
+  <div class="form-footer">
+    <button
+      type="button"
+      class="custom-btn btn-white"
+      (click)="onSaveAndCreateNew()"
+      [disabled]="form.invalid || isLoading"
     >
-    <input type="text" pInputText placeholder="Enter client name in English" />
-    <!-- <span class="text-red-val">Validation</span> -->
-  </div>
-  <div class="our-field">
-    <label for=""
-      >Client name (Arabic) <span class="text-red-val">*</span></label
+      Save And Create New
+    </button>
+    <button
+      type="submit"
+      class="custom-btn btn-primary"
+      [disabled]="form.invalid || isLoading"
     >
-    <input type="text" pInputText placeholder="Enter client name in Arabic" />
-    <!-- <span class="text-red-val">Validation</span> -->
+      @if (isEditMode) {
+        Update
+      } @else {
+        Save
+      }
+    </button>
   </div>
-  <div class="our-field">
-    <label for="">Job Title (Arabic) <span class="text-red-val">*</span></label>
-    <input type="text" pInputText placeholder="Enter Job Title in Arabic" />
-    <!-- <span class="text-red-val">Validation</span> -->
-  </div>
-  <div class="our-field">
-    <label for="">Job Title (Arabic) <span class="text-red-val">*</span></label>
-    <input type="text" pInputText placeholder="Enter Job Title in Arabic" />
-    <!-- <span class="text-red-val">Validation</span> -->
-  </div>
-  <div class="our-field">
-    <label for=""
-      >Testimonials (Arabic) <span class="text-red-val">*</span></label
-    >
-    <input type="text" pInputText placeholder="Enter Testimonials in Arabic" />
-    <!-- <span class="text-red-val">Validation</span> -->
-  </div>
-  <div class="our-field">
-    <label for=""
-      >Testimonials (Arabic) <span class="text-red-val">*</span></label
-    >
-    <input type="text" pInputText placeholder="Enter Testimonials in Arabic" />
-    <!-- <span class="text-red-val">Validation</span> -->
-  </div>
-</div>
-<div class="form-footer">
-  <button type="button" class="custom-btn btn-white">
-    Save And Create New
-  </button>
-  <button type="submit" class="custom-btn btn-primary">Save</button>
-</div>
+</form>
