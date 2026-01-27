@@ -51,6 +51,9 @@ export class ProjectsService {
     this.apiService.setCulture(culture || 'en')
     return this.apiService.get(`${this.endpoint}/${id}`)
   }
+  delete(id:string):Observable<any>{
+    return this.apiService.delete(`${this.endpoint}/${id}`)
+  }
   getCountries(): Observable<PaginationResponse<DropDownOption>> {
     return this.apiService.get('countries')
   }

@@ -10,6 +10,8 @@ import { ProjectsService } from '../../services/projects.service';
 import { DropDownOption, PaginationObj } from '../../../../core/models/global.interface';
 import { Project } from '../../models/projects.interface';
 import { forkJoin } from 'rxjs';
+import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-projects',
@@ -21,6 +23,7 @@ import { forkJoin } from 'rxjs';
 export class ProjectsComponent implements OnInit {
   private readonly service = inject(ProjectsService);
   private readonly router = inject(Router);
+  private readonly dialogService = inject(DialogService)
 
   data: WritableSignal<Project[]> = signal([])
   totalRecords = signal(0);
@@ -31,6 +34,7 @@ export class ProjectsComponent implements OnInit {
     size: 10,
   }
   filterObj:any;
+  ref:DynamicDialogRef | undefined
   columns: TableColumn<Project>[] = [
     { field: 'name', header: 'projects.list.table_headers.project', type: 'avatar-and-name', avatarField: 'image' },
     { field: 'countryName', header: 'projects.list.table_headers.country', type: 'country-chip', avatarField: 'countryLogo' },
@@ -60,6 +64,36 @@ export class ProjectsComponent implements OnInit {
   }
   delete(row: Project, event?: Event) {
     console.log("Delete action triggered", row, event);
+    this.showConfirmDialog(row)
+  }
+  showConfirmDialog(row:Project) {
+    this.ref = this.dialogService.open(ConfirmDialogComponent, {
+        header: 'Select a Product',
+        width: '40vw',
+        modal:true,
+        data:{
+            title:'projects.list.delete_dialog.header',
+            subtitle: 'projects.list.delete_dialog.desc',
+            confirmText: 'general.delete',
+            cancelText: 'general.cancel',
+            confirmSeverity: 'delete',
+            cancelSeverity: 'cancel',
+            showCancel: true,
+            showExtraButton: false,
+            data: row
+        }
+    });
+    this.ref.onClose.subscribe((product:{action:string,data:Project}) => {
+        if (product) {
+          if(product.action === 'confirm'){
+            this.service.delete(product.data.id).subscribe({
+              next:()=>{
+                this.fetchData(this.paginationObj)
+              }
+            })
+          }
+        }
+    });
   }
   filterItems: FilterItems[] = []
   config: TableConfig<Project> = {

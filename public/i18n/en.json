@@ -11,7 +11,8 @@
     "stable":"Stable",
     "reset":"Reset",
     "apply":"Apply",
-    "cancel":"Cancel"
+    "cancel":"Cancel",
+    "delete":"Delete"
   },
   "projects": {
     "list": {
@@ -23,6 +24,10 @@
         "services": "Services",
         "locale": "Locale",
         "status": "Status"
+      },
+      "delete_dialog":{
+        "header":"Delete Project?",
+        "desc":"Are you sure want to delete this project? This action can’t be undone."
       },
       "btns": {
         "add_new": "Add new project"

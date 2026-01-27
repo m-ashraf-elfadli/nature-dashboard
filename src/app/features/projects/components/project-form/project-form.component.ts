@@ -79,7 +79,6 @@ export class ProjectFormComponent implements OnInit {
   projectData:ProjectById = {} as ProjectById
 
   ngOnInit() {
-
     this.getDropDowns()
     this.initForm();
   }
