@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormArray,
   FormBuilder,
@@ -71,6 +71,7 @@ export class ServiceFormComponent implements OnInit {
     private fb: FormBuilder,
     private dialogService: AppDialogService,
     private servicesService: ServicesService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -394,7 +395,10 @@ export class ServiceFormComponent implements OnInit {
     this.appendFormData(formData, this.serviceForm.value);
 
     this.servicesService.createService(formData).subscribe({
-      next: (res) => console.log(res),
+      next: (res) => {
+        console.log(res);
+        this.router.navigate(['/services']);
+      },
       error: (err) => console.log(err),
     });
   }
