@@ -21,3 +21,45 @@
     height: 100%;
   }
 }
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.actions-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.language-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.flag-icon {
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.save-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.error-message {
+  color: #f96c4d;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.our-field input.error {
+  border-color: #f96c4d;
+}

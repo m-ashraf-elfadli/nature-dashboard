@@ -2,38 +2,29 @@
   <!-- ICON -->
   <!-- ICON -->
   @if (data?.icon) {
-    <div class="icon-wrapper">
-      <img [src]="data.icon" alt="icon" />
-    </div>
+  <div class="icon-wrapper">
+    <img [src]="data.icon" alt="icon" />
+  </div>
   }
   <!-- TEXT -->
   <div class="popup-text">
     <h2 class="title">{{ data?.title }}</h2>
 
     @if (data?.subtitle) {
-      <p class="subtitle">{{ data?.subtitle }}</p>
+    <p class="subtitle">{{ data?.subtitle }}</p>
     }
   </div>
   <!-- ACTIONS -->
   <div class="actions">
-    <button
-      class="popup-button confirm-{{ data?.cancelSeverity ?? 'cancel' }}"
-      (click)="close()"
-    >
+    <button class="popup-button confirm-{{ data?.cancelSeverity ?? 'cancel' }}" (click)="close()">
       {{ data?.cancelText ?? "Cancel" }}
     </button>
     @if (data?.showExtraButton === true) {
-      <button
-        class="popup-button confirm-{{ data?.confirmSeverity }}"
-        (click)="close()"
-      >
-        {{ data?.extraButtonText }}
-      </button>
+    <button class="popup-button confirm-{{ data?.extraButtonSeverity }}" (click)="elseAction()">
+      {{ data?.extraButtonText }}
+    </button>
     }
-    <button
-      class="popup-button confirm-{{ data?.confirmSeverity }}"
-      (click)="confirm()"
-    >
+    <button class="popup-button confirm-{{ data?.confirmSeverity }}" (click)="confirm()">
       {{ data?.confirmText }}
     </button>
   </div>
