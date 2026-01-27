@@ -139,20 +139,6 @@ export class ServiceFormComponent implements OnInit {
         this.updateLanguageStatus(this.currentLanguage, 'ongoing');
       }
     });
-
-    // Track form changes to update status
-    this.serviceForm.valueChanges.subscribe(() => {
-      // Only mark as ongoing if form is dirty AND was loaded from API
-      if (this.serviceForm.dirty && this.loadedFromApi) {
-        const currentStatus = this.languageStatuses.get(
-          this.currentLanguage,
-        )?.status;
-        // Only change to ongoing if it was completed before
-        if (currentStatus === 'completed') {
-          this.updateLanguageStatus(this.currentLanguage, 'ongoing');
-        }
-      }
-    });
   }
 
   buildForm(): void {
