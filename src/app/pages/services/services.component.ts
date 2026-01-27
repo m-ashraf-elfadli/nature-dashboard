@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Button } from 'primeng/button';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { FilterItems } from '../../shared/components/filters/filters.component';
 import {
@@ -9,17 +8,16 @@ import {
   TableAction,
   TableConfig,
 } from '../../shared/components/reusable-table/reusable-table.types';
-import { Project } from '../projects/projects.component';
 import { ReusableTableComponent } from '../../shared/components/reusable-table/reusable-table.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ServicesService } from '../../services/services.service';
+import { Project } from '../../features/projects/components/projects/projects.component';
 
 @Component({
   selector: 'app-services',
   standalone: true,
   imports: [
     CommonModule,
-    Button,
     PageHeaderComponent,
     ReusableTableComponent,
     TranslateModule,
