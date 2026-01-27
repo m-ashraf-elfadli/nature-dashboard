@@ -43,7 +43,7 @@ import { forkJoin } from 'rxjs';
     EditorModule,
     GalleryUploadComponent,
     SettingsComponent,
-    MessageModule
+    MessageModule,
   ],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss',
@@ -53,22 +53,22 @@ export class ProjectFormComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
   private readonly translate = inject(TranslateService);
-  private readonly router = inject(Router)
+  private readonly router = inject(Router);
   private cachedResults: any[] = [];
   private cachedMetrics: any[] = [];
   services: DropDownOption[] = [];
   countries: DropDownOption[] = [];
   metricCases: DropDownOption[] = [
-    {name:'general.up',id:'up'},
-    {name:'general.down',id:'down'},
-    {name:'general.stable',id:'stable'},
+    { name: 'general.up', id: 'up' },
+    { name: 'general.down', id: 'down' },
+    { name: 'general.stable', id: 'stable' },
   ];
-  cities:DropDownOption[] = [];
-  
+  cities: DropDownOption[] = [];
+
   form!: FormGroup;
 
   ngOnInit() {
-    this.getDropDowns()
+    this.getDropDowns();
     this.initForm();
   }
   initForm() {
@@ -84,7 +84,7 @@ export class ProjectFormComponent implements OnInit {
       gallery: [],
       city_id: [{ value: null, disabled: true }, Validators.required],
       country_id: ['', Validators.required],
-      status:[1,Validators.required],
+      status: [1, Validators.required],
       // Toggles
       enableResults: [false],
       enableMetrics: [false],
@@ -93,34 +93,34 @@ export class ProjectFormComponent implements OnInit {
       metrics: this.fb.array([]),
     });
   }
-  getDropDowns(){
+  getDropDowns() {
     forkJoin({
-      countries:this.service.getCountries(),
-      services:this.service.getServicesDropDown()
+      countries: this.service.getCountries(),
+      services: this.service.getServicesDropDown(),
     }).subscribe({
-      next:(res)=>{
-        this.services = res.services.result
-        this.countries = res.countries.result
+      next: (res) => {
+        this.services = res.services.result;
+        this.countries = res.countries.result;
       },
-      error:(err)=>{
-        console.error(err)
-      }
-    })
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
-  getCitiesByCountry(countryId:string){
+  getCitiesByCountry(countryId: string) {
     this.service.getCitiesByCountry(countryId).subscribe({
-      next:(res)=>{
-        this.cities = res.result
-        if(this.cities){
+      next: (res) => {
+        this.cities = res.result;
+        if (this.cities) {
           this.form.get('city_id')?.enable();
-        }else{
+        } else {
           this.form.get('city_id')?.disable();
         }
       },
-      error:(err)=>{
-        console.error(err)
-      }
-    })
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
   get results(): FormArray {
     return this.form.get('results') as FormArray;
@@ -182,11 +182,11 @@ export class ProjectFormComponent implements OnInit {
     const control = this.form.get(controlName);
     if (!control) return false;
     if (errorName) {
-    return !!(
-      control.touched &&
-      control.invalid &&
-      control.hasError(errorName)
-    );
+      return !!(
+        control.touched &&
+        control.invalid &&
+        control.hasError(errorName)
+      );
     }
     return !!(control.touched && control.invalid);
   }
@@ -282,20 +282,20 @@ export class ProjectFormComponent implements OnInit {
   }
   onSave() {
     console.log(this.form.value);
-    if(this.form.invalid){
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
     this.service.create(this.buildFormData()).subscribe({
-      next:(res)=>{
-        this.router.navigate(['/projects'])
+      next: (res) => {
+        this.router.navigate(['/projects']);
       },
-      error:(err)=>{
-        console.log(err)
-      }
-    })
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
-  onLanguageChange(event: Event) {
+  onLanguageChange(event: any) {
     console.log(event);
   }
   onFileSelected(event: File | File[]) {
