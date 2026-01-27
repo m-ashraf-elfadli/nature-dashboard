@@ -98,14 +98,16 @@
   </div>
 
   <div class="form-footer">
-    <button
-      type="button"
-      class="custom-btn btn-white"
-      (click)="onSaveAndCreateNew()"
-      [disabled]="form.invalid || isLoading"
-    >
-      Save And Create New
-    </button>
+    @if (!isEditMode) {
+      <button
+        type="button"
+        class="custom-btn btn-white"
+        (click)="onSaveAndCreateNew()"
+        [disabled]="form.invalid || isLoading"
+      >
+        Save And Create New
+      </button>
+    }
     <button
       type="submit"
       class="custom-btn btn-primary"

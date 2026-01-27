@@ -9,6 +9,7 @@ import { FilterItems } from '../../../../shared/components/filters/filters.compo
 import { TestimonialsService } from '../../services/testimonials.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent, ConfirmationDialogConfig } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { PaginationObj } from '../../../../core/models/global.interface';
 
 export interface Testimonial {
   id: string;
@@ -44,13 +45,19 @@ export class TestimonialsComponent implements OnInit {
   totalRecords = 0;
   currentTestimonialId?: string;
   confirmDialogRef?: DynamicDialogRef;
+  paginationObj: PaginationObj = {
+    page: 1,
+    size: 10,
+  };
+  filterObj: any;
 
   ngOnInit() {
     this.loadTestimonials();
   }
 
-  loadTestimonials(page = 1, size = 10) {
-    this.testimonialsService.getAll(page, size).subscribe({
+  loadTestimonials(pagination?: PaginationObj) {
+    const pag = pagination || this.paginationObj;
+    this.testimonialsService.getAll(pag, this.filterObj?.key || '').subscribe({
       next: (res) => {
         this.data = res.result || [];
         this.totalRecords = res.total;
@@ -87,13 +94,14 @@ export class TestimonialsComponent implements OnInit {
     serverSidePagination: true,
     rowsPerPageOptions: [5, 10, 20],
     selectionMode: 'multiple',
-    sortable: true
+    sortable: true,
+    serverSideFilter: true
   };
 
   filterItems: FilterItems[] = [
     {
       type: 'search',
-      name: 'keyword',
+      name: 'key',
       placeholder: 'Search by name ...'
     },
     {
@@ -133,7 +141,7 @@ export class TestimonialsComponent implements OnInit {
       modal: true,
       data: dialogConfig,
       header: '',
-      width: '400px',
+      width: '505px',
       closable: false,
       styleClass: 'confirm-dialog'
     });
@@ -141,9 +149,9 @@ export class TestimonialsComponent implements OnInit {
     this.confirmDialogRef.onClose.subscribe((result: any) => {
       console.log('Dialog closed with result:', result); // Debug log
       
-      if (result && result.id) {
+      if (result && result.action === 'confirm' && result.data && result.data.id) {
         // User confirmed deletion
-        this.performDelete(result.id);
+        this.performDelete(result.data.id);
       }
     });
   }
@@ -163,8 +171,14 @@ export class TestimonialsComponent implements OnInit {
     });
   }
 
-  onPaginationChange(event: { page: number; perPage: number }) {
-    this.loadTestimonials(event.page, event.perPage);
+  onPaginationChange(event: PaginationObj) {
+    this.paginationObj = event;
+    this.loadTestimonials();
+  }
+
+  onFilterChange(filter: any) {
+    this.filterObj = filter;
+    this.loadTestimonials();
   }
 
   handleSave(payload: any) {
