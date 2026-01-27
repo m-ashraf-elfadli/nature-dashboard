@@ -27,7 +27,6 @@ export class FormActionsComponent {
   }
 
   onLanguageChange(event: any) {
-    console.log(event);
     this.languageChange.emit(event);
   }
   languages: { code: string; label: string; flag: string }[] = [

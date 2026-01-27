@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormArray,
   FormBuilder,
@@ -28,7 +28,7 @@ import { StageFormComponent } from '../stage-form/stage-form.component';
 import { ValueFormComponent } from '../value-form/value-form.component';
 import { ResultsFormComponent } from '../results-form/results-form.component';
 import { AppDialogService } from '../../../shared/services/dialog.service';
-import { TestService } from './test.service';
+import { ServicesService } from '../../../services/services.service';
 
 export interface ServiceItemFormValue {
   title: string;
@@ -70,7 +70,8 @@ export class ServiceFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogService: AppDialogService,
-    private testService: TestService,
+    private servicesService: ServicesService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -393,8 +394,11 @@ export class ServiceFormComponent implements OnInit {
 
     this.appendFormData(formData, this.serviceForm.value);
 
-    this.testService.send(formData).subscribe({
-      next: (res) => console.log(res),
+    this.servicesService.createService(formData).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.router.navigate(['/services']);
+      },
       error: (err) => console.log(err),
     });
   }

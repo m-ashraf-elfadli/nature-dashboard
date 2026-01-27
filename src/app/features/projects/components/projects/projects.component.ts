@@ -14,7 +14,12 @@ import { Project } from '../../models/projects.interface';
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, ReusableTableComponent, TranslateModule],
+  imports: [
+    CommonModule,
+    PageHeaderComponent,
+    ReusableTableComponent,
+    TranslateModule,
+  ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
@@ -32,36 +37,48 @@ export class ProjectsComponent implements OnInit{
     { field: 'name',header: 'projects.list.table_headers.project', type: 'avatar-and-name', avatarField: 'image' },
     { field: 'countryName', header: 'projects.list.table_headers.country', type: 'country-chip',avatarField: 'countryLogo' },
     { field: 'city', header: 'projects.list.table_headers.city', type: 'text' },
-    { field: 'services', header: 'projects.list.table_headers.services', type: 'chips-group' },
-    { field: 'locales', header: 'projects.list.table_headers.locale', type: 'languages-chips' },
-    { field: 'status', header: 'projects.list.table_headers.status', type: 'status' },
+    {
+      field: 'services',
+      header: 'projects.list.table_headers.services',
+      type: 'chips-group',
+    },
+    {
+      field: 'localeComplete',
+      header: 'projects.list.table_headers.locale',
+      type: 'languages-chips',
+    },
+    {
+      field: 'status',
+      header: 'projects.list.table_headers.status',
+      type: 'status',
+    },
   ];
 
   actions: TableAction<Project>[] = [
     {
-      callback:(row)=> this.addNew(), 
-      icon: 'pi pi-pencil', 
-      severity: 'white' ,
-      class: 'p-2'
+      callback: (row) => this.addNew(),
+      icon: 'pi pi-pencil',
+      severity: 'white',
+      class: 'p-2',
     },
     {
-      callback:(row,event)=> this.delete(row,event), 
-      icon: 'pi pi-trash', 
-      severity: 'white', 
-      class: 'p-2'
-    }
+      callback: (row, event) => this.delete(row, event),
+      icon: 'pi pi-trash',
+      severity: 'white',
+      class: 'p-2',
+    },
   ];
-  edit(row: Project,event?:Event){
-    console.log("Edit action triggered",row,event);
+  edit(row: Project, event?: Event) {
+    console.log('Edit action triggered', row, event);
   }
-  delete( row: Project,event?:Event){
-    console.log("Delete action triggered",row,event);
+  delete(row: Project, event?: Event) {
+    console.log('Delete action triggered', row, event);
   }
   filterItems: FilterItems[] = [
     {
       type: 'search',
       name: 'keyword',
-      placeholder: 'Search by name ...'
+      placeholder: 'Search by name ...',
     },
     // {
     //   type: 'filter',
@@ -70,17 +87,17 @@ export class ProjectsComponent implements OnInit{
     // },
     {
       type: 'btn',
-      label:"Import CSV",
-      btnIcon:"pi pi-download",
-      btnSeverity:"white",
-      btnCallback:(e:Event) => this.addNewProject(e)
+      label: 'Import CSV',
+      btnIcon: 'pi pi-download',
+      btnSeverity: 'white',
+      btnCallback: (e: Event) => this.addNewProject(e),
     },
     {
       type: 'btn',
-      label:"projects.list.btns.add_new",
-      btnIcon:"pi pi-plus",
-      btnSeverity:"primary",
-      btnCallback:(e:Event) => this.addNew()
+      label: 'projects.list.btns.add_new',
+      btnIcon: 'pi pi-plus',
+      btnSeverity: 'primary',
+      btnCallback: (e: Event) => this.addNew(),
     },
   ];
   config: TableConfig<Project> = {
@@ -117,11 +134,11 @@ export class ProjectsComponent implements OnInit{
     this.paginationObj = event
     this.fetchData(this.paginationObj)
   }
-  selectionChange(e:Project[] | Project){
-    console.log('selected items',e)
+  selectionChange(e: Project[] | Project) {
+    console.log('selected items', e);
   }
-  addNewProject(e:Event){
-    console.log("Add New Project button clicked",e);
+  addNewProject(e: Event) {
+    console.log('Add New Project button clicked', e);
   }
   addNew() {
     this.router.navigate(['/projects/add']);

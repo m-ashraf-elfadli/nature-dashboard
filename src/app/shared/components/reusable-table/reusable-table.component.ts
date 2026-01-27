@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -6,7 +13,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ReusablePaginationComponent } from '../reusable-pagination/reusable-pagination.component';
-import { TableAction, TableConfig } from './reusable-table.types';
+import { LocaleChip, TableAction, TableConfig } from './reusable-table.types';
 import { FormsModule } from '@angular/forms';
 import { FilterItems, FiltersComponent } from '../filters/filters.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -26,8 +33,8 @@ import { PaginationObj } from '../../../core/models/global.interface';
     FormsModule,
     ReusablePaginationComponent,
     FiltersComponent,
-    TranslateModule
-],
+    TranslateModule,
+  ],
   templateUrl: './reusable-table.component.html',
   styleUrls: ['./reusable-table.component.scss'], // ❌ fix typo: styleUrls not styleUrl
 })
@@ -56,7 +63,9 @@ export class ReusableTableComponent<T> implements OnChanges {
   }
 
   get rows() {
-    return this.config?.rowsPerPage || this.config?.rowsPerPageOptions?.[0] || 10;
+    return (
+      this.config?.rowsPerPage || this.config?.rowsPerPageOptions?.[0] || 10
+    );
   }
 
   get displayedData(): T[] {
@@ -89,7 +98,7 @@ export class ReusableTableComponent<T> implements OnChanges {
   }
 
   onSelectionChange(selection: T[] | T) {
-    this.selection = selection
+    this.selection = selection;
     this.selectionChange.emit(this.selection);
   }
 
@@ -98,7 +107,7 @@ export class ReusableTableComponent<T> implements OnChanges {
   }
 
   private applyClientSideFilters(filters: any) {
-    this.filteredData = this.data.filter(row => {
+    this.filteredData = this.data.filter((row) => {
       for (const key in filters) {
         const value = filters[key];
         if (value != null && value !== '') {
@@ -108,7 +117,11 @@ export class ReusableTableComponent<T> implements OnChanges {
             }
           } else {
             const rowValue = (row as any)[key];
-            if (rowValue && typeof rowValue === 'string' && !rowValue.toLowerCase().includes(value.toLowerCase())) {
+            if (
+              rowValue &&
+              typeof rowValue === 'string' &&
+              !rowValue.toLowerCase().includes(value.toLowerCase())
+            ) {
               return false;
             }
           }
@@ -121,8 +134,32 @@ export class ReusableTableComponent<T> implements OnChanges {
   }
 
   getVisibleRowActions(row: T): TableAction<T>[] {
-        return this.actions.filter(
-            (a) => !a.visibleWhen || a.visibleWhen(row)
-        );
+    return this.actions.filter((a) => !a.visibleWhen || a.visibleWhen(row));
+  }
+
+  getLanguagesChips(
+    value: Record<string, boolean> | LocaleChip[],
+  ): LocaleChip[] {
+    // لو Array (جاهزة للعرض)
+    if (Array.isArray(value)) {
+      return value;
     }
+
+    // لو Object جاي من API
+    if (value && typeof value === 'object') {
+      const flagsMap: Record<string, string> = {
+        ar: 'images/eg.webp',
+        en: 'images/usa.webp',
+      };
+
+      return Object.entries(value)
+        .filter(([_, isComplete]) => isComplete)
+        .map(([code]) => ({
+          code: code.toUpperCase(),
+          flag: flagsMap[code],
+        }));
+    }
+
+    return [];
+  }
 }
