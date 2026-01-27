@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { TranslateModule } from '@ngx-translate/core';
 export interface ConfirmationDialogConfig<T> {
   title: string;
   subtitle?: string;
@@ -20,7 +21,7 @@ export interface ConfirmationDialogConfig<T> {
 }
 @Component({
   selector: 'app-confirm-dialog',
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, TranslateModule],
   templateUrl: './confirm-dialog.component.html',
   styleUrl: './confirm-dialog.component.scss',
 })

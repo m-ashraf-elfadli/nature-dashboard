@@ -2,7 +2,7 @@
     <div class="form-header">
         <app-page-header [title]="'projects.form.title' | translate"></app-page-header>
         <app-form-actions (discard)="onDiscard($event)" (save)="onSave()"
-            (languageChange)="onLanguageChange($event)"></app-form-actions>
+            (languageChange)="onLanguageChange($event)" [isFormValid]="form.valid"></app-form-actions>
     </div>
     <form [formGroup]="form" (ngSubmit)="submitForm()" class="project-form">
         <div class="form-left-section">

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -27,6 +27,7 @@ import { ProjectsService } from '../../services/projects.service';
 import { forkJoin } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ProjectById } from '../../models/projects.interface';
 
 @Component({
   selector: 'app-project-form',
@@ -53,8 +54,10 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
   styleUrl: './project-form.component.scss',
 })
 export class ProjectFormComponent implements OnInit {
+  @ViewChild(FormActionsComponent)formActionsComponent!:FormActionsComponent
   private readonly dialogService = inject(DialogService)
   private readonly service = inject(ProjectsService);
+  private readonly translateService = inject(TranslateService)
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router)
@@ -71,6 +74,9 @@ export class ProjectFormComponent implements OnInit {
   ref:DynamicDialogRef | undefined
   
   form!: FormGroup;
+  projectId:string = '';
+  isEditMode:boolean = false;
+  projectData:ProjectById = {} as ProjectById
 
   ngOnInit() {
 
@@ -113,6 +119,117 @@ export class ProjectFormComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+  getProjectById(id:string,culture:string){
+    this.service.getById(id,culture).subscribe({
+      next:(res)=>{
+        if (!res.result) return;
+        this.projectData = res.result;
+        this.patchValues(this.projectData)
+      },
+      error:(err)=>{
+        console.error('Failed to load project',err)
+      }
+    })
+  }
+  patchValues(data:ProjectById){
+    if (!data) return;
+
+    this.projectData = data;
+    this.isEditMode = true;
+    this.projectId = data.id;
+
+    // helper to parse API date strings into Date objects for datepickers
+    const parseDate = (d?: string | null): Date | null => {
+      if (!d) return null;
+      const iso = new Date(d);
+      if (!isNaN(iso.getTime())) return iso;
+      const parts = String(d).split(/[\/\-\.]/);
+      if (parts.length === 3) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1;
+        const year = parseInt(parts[2], 10);
+        return new Date(year, month, day);
+      }
+      return null;
+    };
+
+    // Basic scalar values
+    this.form.patchValue({
+      id:data.id,
+      name: data.name || '',
+      brief: data.brief || '',
+      overview: data.overview || '',
+      start_date: parseDate(data.startDate),
+      end_date: parseDate(data.endDate),
+      status: data.status ? 1 : 0,
+      // toggles
+      enableResults: !!(data.results && data.results.length),
+      enableMetrics: !!(data.metrics && data.metrics.length),
+      isCurrentlyActive: !data.endDate,
+    });
+
+    // Services (ids)
+    const serviceIds = (data.services || []).map((s: any) => s.id);
+    this.form.get('service_ids')?.setValue(serviceIds);
+
+    // Images & gallery (keep existing objects so backend can accept ids)
+    this.form.get('image_before')?.setValue(data.imageBefore || null);
+    this.form.get('image_after')?.setValue(data.imageAfter || null);
+    this.form.get('gallery')?.setValue(data.gallery || []);
+
+    // Countries & cities: load cities then set city id
+    if (data.country && data.country.id) {
+      this.form.get('country_id')?.setValue(data.country.id);
+      this.service.getCitiesByCountry(data.country.id).subscribe({
+        next: (res) => {
+          this.cities = res.result;
+          if (this.cities && this.cities.length) {
+            this.form.get('city_id')?.enable();
+            this.form.get('city_id')?.setValue(data.city?.id || null);
+          } else {
+            this.form.get('city_id')?.disable();
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+    } else {
+      this.form.get('country_id')?.setValue('');
+      this.form.get('city_id')?.disable();
+    }
+
+    // Results: clear and populate
+    this.results.clear();
+    if (data.results && data.results.length) {
+      data.results.forEach((r) => {
+        this.results.push(
+          this.createResult({
+            section_title: r.sectionTitle || '',
+            section_body: r.sectionBody || '',
+          }),
+        );
+      });
+    }
+
+    // Metrics: clear and populate
+    this.metrics.clear();
+    if (data.metrics && data.metrics.length) {
+      data.metrics.forEach((m) => {
+        this.metrics.push(
+          this.createMetric({
+            metric_title: m.metricTitle || '',
+            metric_number: m.metricNumber ?? '',
+            metric_case: m.metricCase || '',
+          }),
+        );
+      });
+    }
+
+    // cache current arrays in case toggles are used
+    this.cachedResults = this.results.value || [];
+    this.cachedMetrics = this.metrics.value || [];
   }
   getCitiesByCountry(countryId: string) {
     this.service.getCitiesByCountry(countryId).subscribe({
@@ -306,45 +423,65 @@ export class ProjectFormComponent implements OnInit {
     console.log(event);
   }
   onSave() {
-    console.log(this.form.value);
+    this.submitForm(true,localStorage.getItem('app_lang')!);
+  }
+  submitForm(isNavigateOut:boolean = false,culture?:string){
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    this.service.create(this.buildFormData()).subscribe({
+    this.service.create(this.buildFormData(),culture).subscribe({
       next: (res) => {
-        this.router.navigate(['/projects']);
+        this.projectId = res.result.id;
+        this.isEditMode = true;
+        if(isNavigateOut) {
+          this.router.navigate(['/projects']);
+        }else{
+          this.getProjectById(this.projectId,culture!)
+        }
+        console.log(res);
       },
       error: (err) => {
         console.log(err);
       },
     });
   }
-  showConfirmDialog() {
+  showConfirmDialog(lang:string) {
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
         header: 'Select a Product',
         width: '40vw',
         modal:true,
         data:{
             title:'projects.form.language_dialog.header',
-            subtitle: 'projects.form.language_dialog.header',
+            subtitle: 'projects.form.language_dialog.desc',
             confirmText: 'projects.form.btns.save',
-            cancelText: 'general.text',
+            cancelText: 'general.cancel',
             confirmSeverity: 'success',
             cancelSeverity: 'cancel',
             showCancel: true,
             showExtraButton: false,
+            data: { lang }
         }
     });
+    this.ref.onClose.subscribe((product: {action:string,data:{lang:string}}) => {
+            if (product) {
+              if(product.action === 'confirm'){
+                this.submitForm(false,product.data.lang);
+              }
+            }
+        });
   }
   onLanguageChange(event: {newLang: string; oldLang: string;}) {
-    this.showConfirmDialog();
-    console.log(event);
+    if(this.form.invalid){
+      setTimeout(() => {
+        this.formActionsComponent.displayLanguage = event.oldLang
+        this.form.markAllAsTouched()
+      }, 0);
+    }else{
+      this.showConfirmDialog(event.oldLang);
+    }
   }
   onFileSelected(event: File | File[]) {
     console.log(event);
-  }
-  submitForm() {
-    console.log(this.form.value);
   }
 }

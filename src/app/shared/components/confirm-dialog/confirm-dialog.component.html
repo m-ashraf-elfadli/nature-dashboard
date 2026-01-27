@@ -8,24 +8,24 @@
   }
   <!-- TEXT -->
   <div class="popup-text">
-    <h2 class="title">{{ data?.title }}</h2>
+    <h2 class="title">{{ data?.title | translate }}</h2>
 
     @if (data?.subtitle) {
-    <p class="subtitle">{{ data?.subtitle }}</p>
+    <p class="subtitle">{{ data?.subtitle | translate }}</p>
     }
   </div>
   <!-- ACTIONS -->
   <div class="actions">
     <button class="popup-button confirm-{{ data?.cancelSeverity ?? 'cancel' }}" (click)="close()">
-      {{ data?.cancelText ?? "Cancel" }}
+      {{ (data?.cancelText ? data?.cancelText: "general.cancel") | translate }}
     </button>
     @if (data?.showExtraButton === true) {
     <button class="popup-button confirm-{{ data?.extraButtonSeverity }}" (click)="elseAction()">
-      {{ data?.extraButtonText }}
+      {{ data?.extraButtonText | translate }}
     </button>
     }
     <button class="popup-button confirm-{{ data?.confirmSeverity }}" (click)="confirm()">
-      {{ data?.confirmText }}
+      {{ data?.confirmText | translate }}
     </button>
   </div>
 </div>

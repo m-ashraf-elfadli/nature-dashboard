@@ -47,7 +47,8 @@ export class ProjectsService {
     }
     return this.apiService.get(this.endpoint, params);
   }
-  getById(id:string):Observable<GetByIdResponse<ProjectById>>{
+  getById(id:string,culture:string):Observable<GetByIdResponse<ProjectById>>{
+    this.apiService.setCulture(culture || 'en')
     return this.apiService.get(`${this.endpoint}/${id}`)
   }
   getCountries(): Observable<PaginationResponse<DropDownOption>> {
