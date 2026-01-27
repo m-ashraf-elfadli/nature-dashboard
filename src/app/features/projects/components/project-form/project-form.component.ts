@@ -55,12 +55,12 @@ import { environment } from '../../../../../environments/environment.prod';
   styleUrl: './project-form.component.scss',
 })
 export class ProjectFormComponent implements OnInit {
-  @ViewChild(FormActionsComponent)formActionsComponent!:FormActionsComponent
-  private readonly dialogService = inject(DialogService)
+  @ViewChild(FormActionsComponent) formActionsComponent!: FormActionsComponent;
+  private readonly dialogService = inject(DialogService);
   private readonly service = inject(ProjectsService);
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
-  private readonly router = inject(Router)
+  private readonly router = inject(Router);
   private cachedResults: any[] = [];
   private cachedMetrics: any[] = [];
   services: DropDownOption[] = [];
@@ -70,20 +70,20 @@ export class ProjectFormComponent implements OnInit {
     { name: 'general.down', id: 'down' },
     { name: 'general.stable', id: 'stable' },
   ];
-  cities:DropDownOption[] = [];
-  ref:DynamicDialogRef | undefined
-  
-  form!: FormGroup;
-  projectId:string = '';
-  isEditMode:boolean = false;
-  projectData:ProjectById = {} as ProjectById
+  cities: DropDownOption[] = [];
+  ref: DynamicDialogRef | undefined;
 
-  mediaUrl:string = environment.mediaUrl;
+  form!: FormGroup;
+  projectId: string = '';
+  isEditMode: boolean = false;
+  projectData: ProjectById = {} as ProjectById;
+
+  mediaUrl: string = environment.mediaUrl;
 
   ngOnInit() {
-    this.getDropDowns()
+    this.getDropDowns();
     this.initForm();
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const id = params['id'];
       if (id) {
         this.isEditMode = true;
@@ -129,24 +129,26 @@ export class ProjectFormComponent implements OnInit {
       },
     });
   }
-  getProjectById(id:string,culture:string){
-    this.service.getById(id,culture).subscribe({
-      next:(res)=>{
+  getProjectById(id: string, culture: string) {
+    this.service.getById(id, culture).subscribe({
+      next: (res) => {
         if (!res.result) return;
         this.projectData = res.result;
-        this.patchValues(this.projectData)
+        this.patchValues(this.projectData);
       },
-      error:(err)=>{
-        console.error('Failed to load project',err)
-      }
-    })
+      error: (err) => {
+        console.error('Failed to load project', err);
+      },
+    });
   }
-  patchValues(data:ProjectById){
+  patchValues(data: ProjectById) {
     if (!data) return;
     this.projectData = data;
     this.isEditMode = true;
     this.projectId = data.id;
-    const galleryImages:string[] = data.gallery.map(g => this.mediaUrl + g.url)
+    const galleryImages: string[] = data.gallery.map(
+      (g) => this.mediaUrl + g.url,
+    );
 
     // helper to parse API date strings into Date objects for datepickers
     const parseDate = (d?: string | null): Date | null => {
@@ -165,7 +167,7 @@ export class ProjectFormComponent implements OnInit {
 
     // Basic scalar values
     this.form.patchValue({
-      id:data.id,
+      id: data.id,
       name: data.name || '',
       brief: data.brief || '',
       overview: data.overview || '',
@@ -183,8 +185,12 @@ export class ProjectFormComponent implements OnInit {
     this.form.get('service_ids')?.setValue(serviceIds);
 
     // Images & gallery (keep existing objects so backend can accept ids)
-    this.form.get('image_before')?.setValue(this.mediaUrl + data.imageBefore || null);
-    this.form.get('image_after')?.setValue(this.mediaUrl + data.imageAfter || null);
+    this.form
+      .get('image_before')
+      ?.setValue(this.mediaUrl + data.imageBefore || null);
+    this.form
+      .get('image_after')
+      ?.setValue(this.mediaUrl + data.imageAfter || null);
     this.form.get('gallery')?.setValue(galleryImages || []);
 
     // Countries & cities: load cities then set city id
@@ -377,7 +383,7 @@ export class ProjectFormComponent implements OnInit {
           formData.append(`gallery[${index}]`, file);
         } else if (file?.id) {
           formData.append(`gallery_ids[${index}]`, file.id);
-        }else if (typeof file == 'string'){
+        } else if (typeof file == 'string') {
           formData.append(`gallery[${index}]`, file);
         }
       });
@@ -433,25 +439,27 @@ export class ProjectFormComponent implements OnInit {
     console.log(event);
   }
   onSave() {
-    this.submitForm(true,localStorage.getItem('app_lang')!);
+    this.submitForm(true, localStorage.getItem('app_lang')!);
   }
-  submitForm(isNavigateOut:boolean = false,culture?:string){
+  submitForm(isNavigateOut: boolean = false, culture?: string) {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
     const formData = this.buildFormData();
-    const observable = this.isEditMode ? this.service.update(this.projectId, formData, culture) : this.service.create(formData, culture);
+    const observable = this.isEditMode
+      ? this.service.update(this.projectId, formData, culture)
+      : this.service.create(formData, culture);
     observable.subscribe({
       next: (res) => {
         if (!this.isEditMode) {
           this.projectId = res.result.id;
           this.isEditMode = true;
         }
-        if(isNavigateOut) {
+        if (isNavigateOut) {
           this.router.navigate(['/projects']);
-        }else{
-          this.getProjectById(this.projectId,culture!)
+        } else {
+          this.getProjectById(this.projectId, culture!);
         }
       },
       error: (err) => {
@@ -459,38 +467,40 @@ export class ProjectFormComponent implements OnInit {
       },
     });
   }
-  showConfirmDialog(lang:string) {
+  showConfirmDialog(lang: string) {
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
-        header: 'Select a Product',
-        width: '40vw',
-        modal:true,
-        data:{
-            title:'projects.form.language_dialog.header',
-            subtitle: 'projects.form.language_dialog.desc',
-            confirmText: 'projects.form.btns.save',
-            cancelText: 'general.cancel',
-            confirmSeverity: 'success',
-            cancelSeverity: 'cancel',
-            showCancel: true,
-            showExtraButton: false,
-            data: { lang }
-        }
+      header: 'Select a Product',
+      width: '40vw',
+      modal: true,
+      data: {
+        title: 'projects.form.language_dialog.header',
+        subtitle: 'projects.form.language_dialog.desc',
+        confirmText: 'projects.form.btns.save',
+        cancelText: 'general.cancel',
+        confirmSeverity: 'success',
+        cancelSeverity: 'cancel',
+        showCancel: true,
+        showExtraButton: false,
+        data: { lang },
+      },
     });
-    this.ref.onClose.subscribe((product: {action:string,data:{lang:string}}) => {
-            if (product) {
-              if(product.action === 'confirm'){
-                this.submitForm(false,product.data.lang);
-              }
-            }
-        });
+    this.ref.onClose.subscribe(
+      (product: { action: string; data: { lang: string } }) => {
+        if (product) {
+          if (product.action === 'confirm') {
+            this.submitForm(false, product.data.lang);
+          }
+        }
+      },
+    );
   }
-  onLanguageChange(event: {newLang: string; oldLang: string;}) {
-    if(this.form.invalid){
+  onLanguageChange(event: { newLang: string; oldLang: string }) {
+    if (this.form.invalid) {
       setTimeout(() => {
-        this.formActionsComponent.displayLanguage = event.oldLang
-        this.form.markAllAsTouched()
+        this.formActionsComponent.displayLanguage = event.oldLang;
+        this.form.markAllAsTouched();
       }, 0);
-    }else{
+    } else {
       this.showConfirmDialog(event.oldLang);
     }
   }
