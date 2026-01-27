@@ -10,7 +10,6 @@
             .p-iconfield{
                 ::ng-deep{
                     .p-inputtext{
-                        // padding: 8px 16px;
                         font-size: var(--Font-Size-2Xs, 14px);
                         border-radius: 8px;
                         &::placeholder{
@@ -23,6 +22,19 @@
         }
     }
 }
-.filter-overlay.filter-overlay{
-
+::ng-deep .filter-overlay{
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .filter-body{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .filter-footer{
+        display: flex;
+        justify-content: end;
+        padding-top: 10px;
+    }
 }

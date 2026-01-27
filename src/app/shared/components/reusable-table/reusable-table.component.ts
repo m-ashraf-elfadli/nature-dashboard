@@ -49,6 +49,7 @@ export class ReusableTableComponent<T> implements OnChanges {
   @Output() paginationChange = new EventEmitter<{page: number, size: number}>();
   @Output() sortChange = new EventEmitter<{field: string, order: number}>();
   @Output() selectionChange = new EventEmitter<T[] | T>();
+  @Output() onServerSideFilterChange = new EventEmitter<any>()
 
   page = 0;
   filteredData: T[] = [];
@@ -103,7 +104,9 @@ export class ReusableTableComponent<T> implements OnChanges {
   }
 
   onFilterChange(filters: any) {
-    this.applyClientSideFilters(filters);
+    if(this.config.serverSideFilter){
+      this.onServerSideFilterChange.emit(filters)
+    }else this.applyClientSideFilters(filters);
   }
 
   private applyClientSideFilters(filters: any) {

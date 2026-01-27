@@ -7,6 +7,7 @@
     [actions]="actions"
     [totalRecords]="totalRecords()"
     [filterItems]="filterItems"
+    (onServerSideFilterChange)="onFilterChange($event)"
     (paginationChange)="onPaginationChange($event)"
     (selectionChange)="selectionChange($event)"
   >

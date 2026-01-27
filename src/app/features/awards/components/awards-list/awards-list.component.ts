@@ -6,6 +6,7 @@ import { FilterItems } from '../../../../shared/components/filters/filters.compo
 import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
 import { PageHeaderComponent } from "../../../../shared/components/page-header/page-header.component";
 import { TranslateModule } from '@ngx-translate/core';
+import { PaginationObj } from '../../../../core/models/global.interface';
 
 export interface Award {
   id: number;
@@ -116,7 +117,7 @@ export class AwardsListComponent {
     console.log('Action clicked:', event);
   }
 
-  onPaginationChange(event: {page: number, perPage: number}) {
+  onPaginationChange(event: PaginationObj) {
     console.log('Pagination changed:', event);
   }
   selectionChange(e:Award[] | Award){

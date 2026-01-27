@@ -8,7 +8,9 @@
     "search_input_table_placeholder":"Search by name ...",
     "up":"Up",
     "down":"Down",
-    "stable":"Stable"
+    "stable":"Stable",
+    "reset":"Reset",
+    "apply":"Apply"
   },
   "projects": {
     "list": {

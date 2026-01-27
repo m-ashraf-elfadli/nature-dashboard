@@ -7,6 +7,7 @@ import { FilterItems } from '../../../../shared/components/filters/filters.compo
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TestimonialsFormComponent } from "../testimonials-form/testimonials-form.component";
+import { PaginationObj } from '../../../../core/models/global.interface';
 
 export interface Testimonial {
   id: number;
@@ -118,7 +119,7 @@ export class TestimonialsComponent {
     console.log('Action clicked:', event);
   }
 
-  onPaginationChange(event: { page: number, perPage: number }) {
+  onPaginationChange(event: PaginationObj) {
     console.log('Pagination changed:', event);
   }
 

@@ -37,7 +37,7 @@ export class ProjectsService {
         if (Array.isArray(value)) {
           value.forEach(v => {
             if (v !== null && v !== undefined) {
-              params = params.append(filterKey, v);
+              params = params.append(`${filterKey}[]`, v);
             }
           });
         } else {
@@ -49,6 +49,9 @@ export class ProjectsService {
   }
   getCountries(): Observable<PaginationResponse<DropDownOption>> {
     return this.apiService.get('countries')
+  }
+  getAllCities():Observable<PaginationResponse<DropDownOption>>{
+    return this.apiService.get('cities')
   }
   getCitiesByCountry(countryId: string): Observable<PaginationResponse<DropDownOption>> {
     return this.apiService.get(`cities/country/${countryId}`)
