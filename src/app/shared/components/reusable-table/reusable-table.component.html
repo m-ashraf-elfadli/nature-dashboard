@@ -10,7 +10,7 @@
       [value]="displayedData"
       [rows]="rows"
       [paginator]="false"
-      [lazy]="config.serverSidePagination || config.serverSideSort || config.serverSideSearch"
+      [lazy]="config.serverSidePagination || config.serverSideSort || config.serverSideFilter"
       [selection]="selection"
       (selectionChange)="onSelectionChange($event)"
       (onSort)="onSort($event)">
@@ -53,7 +53,7 @@
 
             @case ('avatar-and-name') {
             <div class="avatar-and-name-cell">
-              <img [src]="col.avatarField ? row[col.avatarField] : ''"
+              <img [src]="baseMediaUrl+(col.avatarField ? row[col.avatarField] : '')"
                 alt="avatar" />
               <span>{{ row[col.field] }}</span>
             </div>
@@ -61,7 +61,7 @@
 
             @case ('country-chip') {
             <div class="country-chip-cell">
-              <img [src]="col.avatarField ? row[col.avatarField] : ''" />
+              <img [src]="baseMediaUrl+(col.avatarField ? row[col.avatarField] : '')" />
               <span>{{ row[col.field] }}</span>
             </div>
             }
@@ -135,6 +135,7 @@
       [totalRecords]="totalRecords"
       [rowsOptions]="config.rowsPerPageOptions"
       [page]="page"
+      [rows]="config.rowsPerPage!"
       (paginationChange)="onPaginationChange($event)"></app-reusable-pagination>
   </div>
 

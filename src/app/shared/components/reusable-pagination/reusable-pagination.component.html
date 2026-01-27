@@ -31,7 +31,7 @@
     <p-select 
       [options]="rowsOptions"
       [(ngModel)]="rows"
-      (ngModelChange)="onPaginationChange({ perPage: $event })"
+      (ngModelChange)="onPaginationChange({ size: $event })"
       styleClass="rows-dropdown"
     />
     entries

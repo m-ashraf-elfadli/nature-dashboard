@@ -10,6 +10,8 @@ import { TableAction, TableConfig } from './reusable-table.types';
 import { FormsModule } from '@angular/forms';
 import { FilterItems, FiltersComponent } from '../filters/filters.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { environment } from '../../../../environments/environment.prod';
+import { PaginationObj } from '../../../core/models/global.interface';
 
 @Component({
   selector: 'app-reusable-table',
@@ -37,12 +39,13 @@ export class ReusableTableComponent<T> implements OnChanges {
   @Input() selection: T[] | T | null = null;
   @Input() filterItems: FilterItems[] = [];
 
-  @Output() paginationChange = new EventEmitter<{page: number, perPage: number}>();
+  @Output() paginationChange = new EventEmitter<{page: number, size: number}>();
   @Output() sortChange = new EventEmitter<{field: string, order: number}>();
   @Output() selectionChange = new EventEmitter<T[] | T>();
 
   page = 0;
   filteredData: T[] = [];
+  baseMediaUrl = environment.mediaUrl;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
@@ -66,12 +69,12 @@ export class ReusableTableComponent<T> implements OnChanges {
     }
   }
 
-  onPaginationChange(event: {page: number, perPage: number}) {
+  onPaginationChange(event: PaginationObj) {
     this.page = event.page;
     // this.rowsPerPage = event.perPage;
     this.config = {
       ...this.config,
-      rowsPerPage : event.perPage,
+      rowsPerPage : event.size,
     }
 
     if (this.config?.serverSidePagination) {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
@@ -7,18 +7,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FilterItems } from '../../../../shared/components/filters/filters.component';
 import { Client } from '../../../clients/components/clients/clients.component';
 import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
-export interface Project {
-  id: number;
-  name: string;
-  image: string;
-  country: string;
-  countryCode: string;
-  countryFlag: string;
-  city: string;
-  services: string[];
-  locales: { code: string; flag: string; status: boolean }[];
-  status: boolean;
-}
+import { ProjectsService } from '../../services/projects.service';
+import { PaginationObj } from '../../../../core/models/global.interface';
+import { Project } from '../../models/projects.interface';
+
 @Component({
   selector: 'app-projects',
   standalone: true,
@@ -26,31 +18,19 @@ export interface Project {
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements OnInit{
+  private readonly service = inject(ProjectsService)
   private readonly router = inject(Router);
 
-  data:Project[] = [
-    {
-      id: 1,
-      name: `Plantation UAE Project ${1}`,
-      image: `https://picsum.photos/seed/${50}/100/100`,
-      country: 'UAE',
-      countryCode: 'AE',
-      countryFlag: 'https://flagcdn.com/w40/ae.png', // Flag URL property
-      city: 'Sohag',
-      services: ['Service 1','Service 2','Service 3','Service 4'],
-      locales: [
-        { code: 'EN', flag: '🇬🇧', status: true },
-        { code: 'AR', flag: '🇦🇪', status: false } // AR only for some
-      ],
-      status: Math.random() > 0.2 // 80% active
-    }
-  ]
-  totalRecords = this.data.length;
-  
+  data:WritableSignal<Project[]> = signal([])
+  totalRecords = signal(this.data().length);
+  paginationObj:PaginationObj = {
+    page:1,
+    size:10,
+  }
   columns: TableColumn<Project>[] = [
     { field: 'name',header: 'projects.list.table_headers.project', type: 'avatar-and-name', avatarField: 'image' },
-    { field: 'country', header: 'projects.list.table_headers.country', type: 'country-chip',avatarField: 'countryFlag' },
+    { field: 'countryName', header: 'projects.list.table_headers.country', type: 'country-chip',avatarField: 'countryLogo' },
     { field: 'city', header: 'projects.list.table_headers.city', type: 'text' },
     { field: 'services', header: 'projects.list.table_headers.services', type: 'chips-group' },
     { field: 'locales', header: 'projects.list.table_headers.locale', type: 'languages-chips' },
@@ -105,20 +85,37 @@ export class ProjectsComponent {
   ];
   config: TableConfig<Project> = {
     columns: this.columns,
-    serverSidePagination: false,
+    rowsPerPage:10,
+    serverSidePagination: true,
     rowsPerPageOptions: [5 , 10 , 20],
     selectionMode: 'multiple',
     sortable: true,
     serverSideSort: true,
+    serverSideFilter:true,
   };
-
+  ngOnInit(): void {
+    this.fetchData(this.paginationObj)
+  }
+  fetchData(pagination:PaginationObj){
+    this.service.getAll(pagination).subscribe({
+      next:(res)=>{
+        this.data.set(res.result)
+        this.totalRecords.set(res.total!)
+      },
+      error:(err)=>{
+        console.error('Failed to load projects',err);
+      }
+    })
+  }
 
   onAction(event: { action: string; row: Project }) {
     console.log('Action clicked:', event);
   }
 
-  onPaginationChange(event: {page: number, perPage: number}) {
+  onPaginationChange(event: PaginationObj) {
     console.log('Pagination changed:', event);
+    this.paginationObj = event
+    this.fetchData(this.paginationObj)
   }
   selectionChange(e:Project[] | Project){
     console.log('selected items',e)

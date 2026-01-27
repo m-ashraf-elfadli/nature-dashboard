@@ -54,6 +54,6 @@ export interface TableConfig<T> {
   actionsColumnWidth?: () => string;
   sortable?: boolean;
   serverSidePagination?: boolean;
-  serverSideSearch?: boolean;
+  serverSideFilter?: boolean;
   serverSideSort?: boolean;
 }
