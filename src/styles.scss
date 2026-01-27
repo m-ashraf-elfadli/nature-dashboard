@@ -373,7 +373,6 @@ a {
       line,
       polyline {
         stroke-width: 1px;
-        
       }
     }
   }
@@ -399,22 +398,21 @@ a {
   .p-textarea:disabled,
   .p-multiselect.p-disabled,
   .p-select.p-disabled,
-  .p-datepicker.p-disabled
-   {
+  .p-datepicker.p-disabled {
     border: 1.261px solid var(--Color-Neutral-300, #efeff0);
     background: var(--Color-Neutral-200, #f4f4f5);
     color: var(--Color-Neutral-600, #8e8f91);
     cursor: not-allowed;
     opacity: 1; // prevent PrimeNG opacity dimming
   }
-  .p-disabled{
+  .p-disabled {
     opacity: 1 !important;
     border: 1.261px solid var(--Color-Neutral-300, #efeff0);
     background: var(--Color-Neutral-200, #f4f4f5);
     border-radius: 14px;
-    *{
+    * {
       background-color: transparent;
-      border:none !important;
+      border: none !important;
     }
   }
 
@@ -552,7 +550,7 @@ input[type="number"] {
   width: 14px !important;
   height: 14px !important;
   border: 1px solid var(--Color-Neutral-500, #939598) !important;
-  background-color: red ;
+  background-color: red;
   .p-iconwrapper {
     display: flex !important;
     svg {
@@ -561,7 +559,7 @@ input[type="number"] {
     }
   }
 }
-.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider::before{
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider::before {
   display: flex !important;
 }
 .p-toggleswitch-slider {
