@@ -5,13 +5,15 @@ import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 export interface ConfirmationDialogConfig<T> {
   title: string;
   subtitle?: string;
-  icon?: string;               
-  iconBgColor?: string;        
+  icon?: string;
+  iconBgColor?: string;
   iconBorderColor?: string;
   confirmText?: string;
+  extraButtonText?: string;
+  extraButtonSeverity?: 'delete' | 'cancel' | 'success' | 'warning';
   cancelText?: string;
-  confirmSeverity?: 'delete' | 'cancel' | 'extra' | 'warning';
-  cancelSeverity?: 'delete' | 'cancel' | 'extra' | 'warning';
+  confirmSeverity?: 'delete' | 'cancel' | 'success' | 'warning';
+  cancelSeverity?: 'delete' | 'cancel' | 'success' | 'warning';
   showCancel?: boolean;
   showExtraButton?: boolean;
   data?: T;
@@ -20,18 +22,19 @@ export interface ConfirmationDialogConfig<T> {
   selector: 'app-confirm-dialog',
   imports: [CommonModule, ButtonModule],
   templateUrl: './confirm-dialog.component.html',
-  styleUrl: './confirm-dialog.component.scss'
+  styleUrl: './confirm-dialog.component.scss',
 })
 export class ConfirmDialogComponent {
   product = { name: 'Sample Product' };
   data: any = null;
 
-  constructor(public ref: DynamicDialogRef, public configs: DynamicDialogConfig) {}
+  constructor(
+    public ref: DynamicDialogRef,
+    public configs: DynamicDialogConfig,
+  ) {}
 
   ngOnInit(): void {
-    // this.data = this.configs?.data ?? null;
     this.data = this.configs?.data ?? null;
-    console.log('data name:', this.data);
     if (this.data) {
       if (this.data.name) {
         this.product.name = this.data.name;
@@ -42,15 +45,14 @@ export class ConfirmDialogComponent {
   }
 
   confirm() {
-    this.ref.close(this.data);
+    this.ref.close({ action: 'confirm', data: this.data.data });
   }
 
   elseAction() {
-    this.ref.close({ name: 'Else Action' });
+    this.ref.close({ action: 'else', data: this.data.data });
   }
 
   close() {
     this.ref.close();
   }
-
 }
