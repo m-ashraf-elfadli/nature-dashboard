@@ -26,4 +26,7 @@ export class ServicesService {
     this.apiService.setCulture(lang);
     return this.apiService.post(`${this.endpoint}/${id}`, body);
   }
+  deleteService(id: string): Observable<any> {
+    return this.apiService.delete(`${this.endpoint}/${id}`);
+  }
 }

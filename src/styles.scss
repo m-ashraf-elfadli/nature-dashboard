@@ -247,10 +247,6 @@ a {
     font-style: normal;
     font-weight: var(--Font-Weight-Regular, 500);
     line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
-
-    .required {
-      color: var(--Alert-Error-100, #df1c41);
-    }
   }
   .p-inputtext,
   .p-textarea,
