@@ -7,31 +7,23 @@
   </div>
 
   <form [formGroup]="serviceForm" (ngSubmit)="onSave()" class="service-form">
+    <!-- Service Details -->
     <div class="fieldsets-container">
       <div class="fieldset">
         <legend>Service Details</legend>
+
         <div class="our-field">
-          <label for="serviceName">
-            Service Name
-            <span class="required">*</span>
-          </label>
+          <label for="serviceName">Service Name <span class="required">*</span></label>
           <input type="text" id="serviceName" placeholder="Enter service Name...." formControlName="name" pInputText
             [class.error]="isFieldInvalid('name')" />
-          <small class="error-message" *ngIf="isFieldInvalid('name')">
-            {{ getFieldError('name') }}
-          </small>
+          <small class="error-message" *ngIf="isFieldInvalid('name')">{{ getFieldError('name') }}</small>
         </div>
 
         <div class="our-field">
-          <label for="serviceTagline">
-            Service Tagline
-            <span class="required">*</span>
-          </label>
+          <label for="serviceTagline">Service Tagline <span class="required">*</span></label>
           <input type="text" id="serviceTagline" placeholder="Enter Service Tagline...." formControlName="tagline"
             pInputText [class.error]="isFieldInvalid('tagline')" />
-          <small class="error-message" *ngIf="isFieldInvalid('tagline')">
-            {{ getFieldError('tagline') }}
-          </small>
+          <small class="error-message" *ngIf="isFieldInvalid('tagline')">{{ getFieldError('tagline') }}</small>
         </div>
       </div>
 
@@ -41,10 +33,10 @@
       </app-settings>
     </div>
 
+    <!-- Service Stages -->
     <div class="fieldset">
       <legend>
-        Service Stages
-        <span>(Maximum 3 allowed)</span>
+        Service Stages <span>(Maximum 3 allowed)</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path
             d="M8.66666 13.9999H14M10 3.33326L12.6667 5.99993M14.116 4.54126C14.4685 4.18888 14.6665 3.71091 14.6666 3.2125C14.6666 2.71409 14.4687 2.23607 14.1163 1.8836C13.7639 1.53112 13.286 1.33307 12.7876 1.33301C12.2892 1.33295 11.8111 1.53088 11.4587 1.88326L2.56133 10.7826C2.40654 10.9369 2.29207 11.127 2.228 11.3359L1.34733 14.2373C1.3301 14.2949 1.3288 14.3562 1.34356 14.4145C1.35833 14.4728 1.38861 14.5261 1.43119 14.5686C1.47378 14.6111 1.52708 14.6413 1.58544 14.656C1.64379 14.6707 1.70504 14.6693 1.76266 14.6519L4.66466 13.7719C4.87344 13.7084 5.06345 13.5947 5.218 13.4406L14.116 4.54126Z"
@@ -55,8 +47,7 @@
       @if(stages.length > 0) {
       <app-mini-table [data]="stages" [columns]="cols" [reorderable]="true" [showImage]="true" imageField="imagePreview"
         [editComponent]="StageFormComponent" [editDialogConfig]="{ header: 'Edit Stage', width: '600px' }"
-        (rowDeleted)="onDeleteStage($event)" (rowEdited)="onEditStage($event)" (reordered)="onReorder($event)"
-        style="width: 100%">
+        (rowDeleted)="onDeleteStage($event)" (rowEdited)="onEditStage($event)" (reordered)="onReorder($event)">
       </app-mini-table>
 
       <button class="add-another" type="button" (click)="openStagePopup()" *ngIf="stages.length < 3">
@@ -68,12 +59,12 @@
       </button>
       } @else {
       <app-empty-state-action title="Start Adding stages to appear here"
-        subtitle="Start adding the first service stage." buttonLabel="Add New Stage" (action)="openStagePopup()"
-        style="width: 100%">
+        subtitle="Start adding the first service stage." buttonLabel="Add New Stage" (action)="openStagePopup()">
       </app-empty-state-action>
       }
     </div>
 
+    <!-- Service Benefits -->
     <div class="fieldset">
       <div class="legend-with-toggle">
         <legend>Service Benefits</legend>
@@ -82,46 +73,31 @@
 
       <div class="benefits-fields" [class.disabled]="!benefitEnabledControl.value">
         <div class="our-field">
-          <label for="benefitTitle">
-            Benefits Title
-            <span class="required">*</span>
-          </label>
+          <label for="benefitTitle">Benefits Title <span class="required">*</span></label>
           <input type="text" id="benefitTitle" placeholder="Please enter benefits title" formControlName="benefitTitle"
             pInputText [class.error]="isFieldInvalid('benefitTitle')" />
-          <small class="error-message" *ngIf="isFieldInvalid('benefitTitle')">
-            {{ getFieldError('benefitTitle') }}
-          </small>
+          <small class="error-message" *ngIf="isFieldInvalid('benefitTitle')">{{ getFieldError('benefitTitle')
+            }}</small>
         </div>
 
         <div class="our-field">
-          <label for="benefitTagline">
-            Benefits Tagline
-            <span class="required">*</span>
-          </label>
+          <label for="benefitTagline">Benefits Tagline <span class="required">*</span></label>
           <input type="text" id="benefitTagline" placeholder="Please enter benefits tagline"
             formControlName="benefitTagline" pInputText [class.error]="isFieldInvalid('benefitTagline')" />
-          <small class="error-message" *ngIf="isFieldInvalid('benefitTagline')">
-            {{ getFieldError('benefitTagline') }}
-          </small>
+          <small class="error-message" *ngIf="isFieldInvalid('benefitTagline')">{{ getFieldError('benefitTagline')
+            }}</small>
         </div>
 
         <div class="our-field">
-          <label for="benefitBody">
-            Benefits Body
-            <span class="required">*</span>
-          </label>
+          <label for="benefitBody">Benefits Body <span class="required">*</span></label>
           <input type="text" id="benefitBody" placeholder="Please enter benefits body" formControlName="benefitBody"
             pInputText [class.error]="isFieldInvalid('benefitBody')" />
-          <small class="error-message" *ngIf="isFieldInvalid('benefitBody')">
-            {{ getFieldError('benefitBody') }}
-          </small>
+          <small class="error-message" *ngIf="isFieldInvalid('benefitBody')">{{ getFieldError('benefitBody') }}</small>
         </div>
 
+        <!-- Benefits Insights -->
         <div class="fieldset">
-          <legend>
-            Benefits Insights
-            <span>(Maximum 3 Insights)</span>
-          </legend>
+          <legend>Benefits Insights <span>(Maximum 3 Insights)</span></legend>
 
           <div class="insights-container">
             <div class="insight-row" *ngFor="let control of benefitInsightsArray.controls; let i = index">
@@ -140,16 +116,9 @@
                 <button type="button" class="delete-btn" (click)="onDeleteBenefitsInsight(i)"
                   *ngIf="benefitInsightsArray.length > 1" title="Delete">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <g clip-path="url(#clip0_9916_20048)">
-                      <path
-                        d="M8.71281 3.26727V2.83164C8.71281 2.2217 8.71281 1.91673 8.5941 1.68376C8.48969 1.47884 8.32308 1.31223 8.11816 1.20781C7.88519 1.08911 7.58022 1.08911 6.97028 1.08911H6.09901C5.48907 1.08911 5.1841 1.08911 4.95114 1.20781C4.74621 1.31223 4.5796 1.47884 4.47519 1.68376C4.35649 1.91673 4.35649 2.2217 4.35649 2.83164V3.26727M5.44557 6.26224V8.98494M7.62373 6.26224V8.98494M1.63379 3.26727H11.4355M10.3464 3.26727V9.36612C10.3464 10.281 10.3464 10.7385 10.1684 11.0879C10.0117 11.3953 9.76184 11.6452 9.45445 11.8019C9.105 11.9799 8.64755 11.9799 7.73263 11.9799H5.33666C4.42175 11.9799 3.96429 11.9799 3.61484 11.8019C3.30745 11.6452 3.05754 11.3953 2.90092 11.0879C2.72287 10.7385 2.72287 10.281 2.72287 9.36612V3.26727"
-                        stroke="#F96C4D" stroke-width="0.980172" stroke-linecap="round" stroke-linejoin="round" />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_9916_20048">
-                        <rect width="13.069" height="13.069" fill="white" />
-                      </clipPath>
-                    </defs>
+                    <path
+                      d="M8.71281 3.26727V2.83164C8.71281 2.2217 8.71281 1.91673 8.5941 1.68376C8.48969 1.47884 8.32308 1.31223 8.11816 1.20781C7.88519 1.08911 7.58022 1.08911 6.97028 1.08911H6.09901C5.48907 1.08911 5.1841 1.08911 4.95114 1.20781C4.74621 1.31223 4.5796 1.47884 4.47519 1.68376C4.35649 1.91673 4.35649 2.2217 4.35649 2.83164V3.26727M5.44557 6.26224V8.98494M7.62373 6.26224V8.98494M1.63379 3.26727H11.4355M10.3464 3.26727V9.36612C10.3464 10.281 10.3464 10.7385 10.1684 11.0879C10.0117 11.3953 9.76184 11.6452 9.45445 11.8019C9.105 11.9799 8.64755 11.9799 7.73263 11.9799H5.33666C4.42175 11.9799 3.96429 11.9799 3.61484 11.8019C3.30745 11.6452 3.05754 11.3953 2.90092 11.0879C2.72287 10.7385 2.72287 10.281 2.72287 9.36612V3.26727"
+                      stroke="#F96C4D" stroke-width="0.980172" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </button>
               </div>
@@ -168,11 +137,12 @@
       </div>
     </div>
 
+    <!-- Service Values & Results -->
     <div class="fieldsets-container">
+      <!-- Service Values -->
       <div class="fieldset">
         <legend>
-          Service Values
-          <span>(Maximum 3 allowed)</span>
+          Service Values <span>(Maximum 3 allowed)</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
               d="M8.66666 13.9999H14M10 3.33326L12.6667 5.99993M14.116 4.54126C14.4685 4.18888 14.6665 3.71091 14.6666 3.2125C14.6666 2.71409 14.4687 2.23607 14.1163 1.8836C13.7639 1.53112 13.286 1.33307 12.7876 1.33301C12.2892 1.33295 11.8111 1.53088 11.4587 1.88326L2.56133 10.7826C2.40654 10.9369 2.29207 11.127 2.228 11.3359L1.34733 14.2373C1.3301 14.2949 1.3288 14.3562 1.34356 14.4145C1.35833 14.4728 1.38861 14.5261 1.43119 14.5686C1.47378 14.6111 1.52708 14.6413 1.58544 14.656C1.64379 14.6707 1.70504 14.6693 1.76266 14.6519L4.66466 13.7719C4.87344 13.7084 5.06345 13.5947 5.218 13.4406L14.116 4.54126Z"
@@ -184,7 +154,7 @@
         <app-mini-table [data]="serviceValuesArray.value" [columns]="cols" [reorderable]="true" [showImage]="false"
           [editComponent]="ValueFormComponent" [editDialogConfig]="{ header: 'Edit Value', width: '600px' }"
           (rowDeleted)="onDeleteServiceValue($event)" (rowEdited)="onEditServiceValue($event)"
-          (reordered)="onReorderServiceValues($event)" style="width: 100%">
+          (reordered)="onReorderServiceValues($event)">
         </app-mini-table>
 
         <button class="add-another" type="button" (click)="openServiceValuePopup()"
@@ -198,15 +168,15 @@
         } @else {
         <app-empty-state-action title="Start Adding values to appear here"
           subtitle="Start adding the first service value." buttonLabel="Add New Value"
-          (action)="openServiceValuePopup()" style="width: 100%">
+          (action)="openServiceValuePopup()">
         </app-empty-state-action>
         }
       </div>
 
+      <!-- Results & Impacts -->
       <div class="fieldset">
         <legend>
-          Results & Impacts
-          <span>(Maximum 3 allowed)</span>
+          Results & Impacts <span>(Maximum 3 allowed)</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
               d="M8.66666 13.9999H14M10 3.33326L12.6667 5.99993M14.116 4.54126C14.4685 4.18888 14.6665 3.71091 14.6666 3.2125C14.6666 2.71409 14.4687 2.23607 14.1163 1.8836C13.7639 1.53112 13.286 1.33307 12.7876 1.33301C12.2892 1.33295 11.8111 1.53088 11.4587 1.88326L2.56133 10.7826C2.40654 10.9369 2.29207 11.127 2.228 11.3359L1.34733 14.2373C1.3301 14.2949 1.3288 14.3562 1.34356 14.4145C1.35833 14.4728 1.38861 14.5261 1.43119 14.5686C1.47378 14.6111 1.52708 14.6413 1.58544 14.656C1.64379 14.6707 1.70504 14.6693 1.76266 14.6519L4.66466 13.7719C4.87344 13.7084 5.06345 13.5947 5.218 13.4406L14.116 4.54126Z"
@@ -218,7 +188,7 @@
         <app-mini-table [data]="serviceResultsArray.value" [columns]="cols" [reorderable]="true" [showImage]="false"
           [editComponent]="ResultsFormComponent" [editDialogConfig]="{ header: 'Edit Result & Impact', width: '600px' }"
           (rowDeleted)="onDeleteServiceResult($event)" (rowEdited)="onEditServiceResult($event)"
-          (reordered)="onReorderServiceResults($event)" style="width: 100%">
+          (reordered)="onReorderServiceResults($event)">
         </app-mini-table>
 
         <button class="add-another" type="button" (click)="openServiceResultPopup()"
@@ -232,7 +202,7 @@
         } @else {
         <app-empty-state-action title="Start Adding results & impacts to appear here"
           subtitle="Start adding the first result & impact." buttonLabel="Add New Result & Impact"
-          (action)="openServiceResultPopup()" style="width: 100%">
+          (action)="openServiceResultPopup()">
         </app-empty-state-action>
         }
       </div>
