@@ -12,6 +12,8 @@ import { ReusableTableComponent } from '../../shared/components/reusable-table/r
 import { TranslateModule } from '@ngx-translate/core';
 import { ServicesService } from '../../services/services.service';
 import { Project } from '../../features/projects/components/projects/projects.component';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { AppDialogService } from '../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-services',
@@ -24,10 +26,12 @@ import { Project } from '../../features/projects/components/projects/projects.co
   ],
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss',
+  providers: [AppDialogService],
 })
 export class ServicesComponent {
   private router = inject(Router);
   private servicesService = inject(ServicesService);
+  private dialogService = inject(AppDialogService);
 
   data: any[] = [];
   totalRecords = this.data.length;
@@ -64,7 +68,7 @@ export class ServicesComponent {
       class: 'p-2',
     },
     {
-      callback: (row, event) => this.delete(row, event),
+      callback: (row) => this.showDeleteConfirmationPopup(row),
       icon: 'pi pi-trash',
       severity: 'white',
       class: 'p-2',
@@ -73,8 +77,16 @@ export class ServicesComponent {
   edit(row: any) {
     this.router.navigate(['/services/edit', row.id]);
   }
-  delete(row: Project, event?: Event) {
-    console.log('Delete action triggered', row, event);
+  delete(id: string) {
+    this.servicesService.deleteService(id).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.getAllServices();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
   filterItems: FilterItems[] = [
     {
@@ -134,12 +146,37 @@ export class ServicesComponent {
   getAllServices() {
     this.servicesService.getAllServices().subscribe({
       next: (res: any) => {
-        console.log(res);
         this.data = res.result;
       },
       error: (err) => {
         console.log(err);
       },
+    });
+  }
+  showDeleteConfirmationPopup(row: any): void {
+    const ref = this.dialogService.open(ConfirmDialogComponent, {
+      header: 'Delete Confirmation',
+      width: '500px',
+      data: {
+        title: 'Delete Service?',
+        subtitle:
+          'Are you sure want to delete this service? This action can’t be undone.',
+        confirmText: 'Delete',
+        cancelText: 'Cancel',
+        confirmSeverity: 'delete',
+        cancelSeverity: 'cancel',
+        showCancel: true,
+      },
+    });
+
+    ref.onClose.subscribe((result: any) => {
+      if (!result) {
+        return;
+      }
+
+      if (result.action === 'confirm') {
+        this.delete(row?.id);
+      }
     });
   }
 }

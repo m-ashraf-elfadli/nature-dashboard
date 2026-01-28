@@ -2,19 +2,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
-
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
-
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../shared/components/form-actions/form-actions.component';
 import { EmptyStateActionComponent } from '../../../shared/components/empty-state-action/empty-state-action.component';
@@ -23,7 +23,6 @@ import {
   MiniTableColumn,
   MiniTableComponent,
 } from '../../../shared/components/mini-table/mini-table.component';
-
 import { StageFormComponent } from '../stage-form/stage-form.component';
 import { ValueFormComponent } from '../value-form/value-form.component';
 import { ResultsFormComponent } from '../results-form/results-form.component';
@@ -135,7 +134,7 @@ export class ServiceFormComponent implements OnInit {
       name: ['', Validators.required],
       tagline: ['', Validators.required],
       status: [1],
-      steps: this.fb.array([]),
+      steps: this.fb.array([], this.atLeastOneStepValidator()),
       values: this.fb.array([]),
       impacts: this.fb.array([]),
       benefitEnabled: [true],
@@ -150,6 +149,32 @@ export class ServiceFormComponent implements OnInit {
       ?.valueChanges.subscribe((enabled: boolean) => {
         this.toggleBenefitsFields(enabled);
       });
+
+    // Track changes in form arrays to mark form as dirty
+    this.subscribeToFormArrayChanges();
+  }
+
+  private atLeastOneStepValidator(): (
+    control: AbstractControl,
+  ) => ValidationErrors | null {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formArray = control as FormArray;
+      return formArray && formArray.length > 0 ? null : { required: true };
+    };
+  }
+
+  private subscribeToFormArrayChanges(): void {
+    // Subscribe to value changes in all form arrays
+    [
+      this.stagesArray,
+      this.serviceValuesArray,
+      this.serviceResultsArray,
+      this.benefitInsightsArray,
+    ].forEach((array) => {
+      array.valueChanges.subscribe(() => {
+        this.serviceForm.markAsDirty();
+      });
+    });
   }
 
   private createInsightGroup(data?: any): FormGroup {
@@ -182,15 +207,21 @@ export class ServiceFormComponent implements OnInit {
 
         if (service.localeComplete) {
           Object.entries(service.localeComplete).forEach(
-            ([lang, isComplete]) => {
+            ([langKey, isComplete]) => {
               const status = isComplete ? 'completed' : 'not-started';
-              this.languageStatuses.set(lang, {
-                code: lang,
+              this.languageStatuses.set(langKey, {
+                code: langKey,
                 status: status as LanguageStatusType,
               });
             },
           );
           this.updateSettingsComponent();
+        }
+
+        // If current language is not complete but we're loading it, set to ongoing
+        const currentLangStatus = service.localeComplete?.[lang];
+        if (currentLangStatus === false || currentLangStatus === undefined) {
+          this.updateLanguageStatus(lang, 'ongoing');
         }
 
         this.serviceForm.patchValue({
@@ -231,7 +262,7 @@ export class ServiceFormComponent implements OnInit {
       },
       error: () => {
         this.clearFormForNewLanguage();
-        this.updateLanguageStatus(lang, 'not-started');
+        this.updateLanguageStatus(lang, 'ongoing');
       },
     });
   }
@@ -311,6 +342,13 @@ export class ServiceFormComponent implements OnInit {
 
   get isFormValid(): boolean {
     return this.serviceForm.valid;
+  }
+
+  get stepsError(): string {
+    if (this.stagesArray.hasError('required') && this.stagesArray.touched) {
+      return 'At least one service stage is required';
+    }
+    return '';
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -405,7 +443,6 @@ export class ServiceFormComponent implements OnInit {
       if (data.image) {
         processedData.imagePreview = URL.createObjectURL(data.image);
       }
-
       targetArray.push(this.createItemGroup(processedData));
     });
   }
@@ -442,6 +479,7 @@ export class ServiceFormComponent implements OnInit {
 
   private updateArrayItem(array: FormArray, result: any): void {
     if (!result) return;
+
     const { index, rowData } = result;
     if (index !== undefined && array.at(index)) {
       array.at(index).patchValue(rowData || result);
@@ -484,6 +522,7 @@ export class ServiceFormComponent implements OnInit {
   submitForm(lang: string, navigateAway = false): void {
     if (!this.serviceForm.valid) {
       this.serviceForm.markAllAsTouched();
+      this.stagesArray.markAsTouched();
       return;
     }
 
@@ -556,6 +595,7 @@ export class ServiceFormComponent implements OnInit {
 
     if (!this.serviceForm.valid) {
       this.serviceForm.markAllAsTouched();
+      this.stagesArray.markAsTouched();
       this.resetLanguage(event.oldLang);
       return;
     }
@@ -577,7 +617,7 @@ export class ServiceFormComponent implements OnInit {
         confirmText: 'Save Changes',
         cancelText: 'Discard Changes',
         confirmSeverity: 'success',
-        cancelSeverity: 'secondary',
+        cancelSeverity: 'cancel',
         showCancel: true,
       },
     });
@@ -599,6 +639,7 @@ export class ServiceFormComponent implements OnInit {
   private saveAndSwitchLanguage(currentLang: string, newLang: string): void {
     if (!this.serviceForm.valid) {
       this.serviceForm.markAllAsTouched();
+      this.stagesArray.markAsTouched();
       this.resetLanguage(currentLang);
       return;
     }
@@ -633,18 +674,16 @@ export class ServiceFormComponent implements OnInit {
     this.currentLanguage = lang;
     this.commitLanguage(lang);
 
-    const currentStatus = this.languageStatuses.get(lang)?.status;
-    if (currentStatus === 'not-started') {
-      this.updateLanguageStatus(lang, 'ongoing');
-    }
-
     if (this.isEditMode && this.serviceId) {
       this.loadService(this.serviceId, lang);
     } else {
+      const currentStatus = this.languageStatuses.get(lang)?.status;
+      if (currentStatus === 'not-started') {
+        this.updateLanguageStatus(lang, 'ongoing');
+      }
       this.clearFormForNewLanguage();
     }
   }
-
   private clearFormForNewLanguage(): void {
     this.serviceForm.patchValue({
       name: '',

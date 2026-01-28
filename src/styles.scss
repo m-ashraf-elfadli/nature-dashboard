@@ -247,10 +247,6 @@ a {
     font-style: normal;
     font-weight: var(--Font-Weight-Regular, 500);
     line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
-
-    .required {
-      color: var(--Alert-Error-100, #df1c41);
-    }
   }
   .p-inputtext,
   .p-textarea,
@@ -519,4 +515,8 @@ input[type="number"] {
   &:hover {
     background-color: rgba(240, 249, 238, 0.8);
   }
+}
+span.required {
+  color: var(--Alert-Error-100, #df1c41) !important;
+  font-size: var(--Font-Size-S, 18px) !important;
 }
