@@ -138,9 +138,9 @@ export class ServiceFormComponent implements OnInit {
       values: this.fb.array([]),
       impacts: this.fb.array([]),
       benefitEnabled: [true],
-      benefitTitle: [''],
-      benefitTagline: [''],
-      benefitBody: [''],
+      benefitTitle: ['', Validators.required],
+      benefitTagline: ['', Validators.required],
+      benefitBody: ['', Validators.required],
       benefitInsights: this.fb.array([this.createInsightGroup()]),
     });
 
@@ -234,6 +234,9 @@ export class ServiceFormComponent implements OnInit {
           benefitEnabled: service.benefitEnabled ?? true,
         });
 
+        // Trigger benefit fields validation after patching values
+        this.toggleBenefitsFields(service.benefitEnabled ?? true);
+
         this.populateArray(this.stagesArray, service.steps, (step: any) => ({
           ...step,
           imagePreview: step.image ? this.getImageUrl(step.image) : null,
@@ -298,7 +301,13 @@ export class ServiceFormComponent implements OnInit {
     const fields = ['benefitTitle', 'benefitTagline', 'benefitBody'];
     fields.forEach((field) => {
       const control = this.serviceForm.get(field);
-      enabled ? control?.enable() : control?.disable();
+      if (enabled) {
+        control?.setValidators([Validators.required]);
+        control?.enable();
+      } else {
+        control?.clearValidators();
+        control?.disable();
+      }
       control?.updateValueAndValidity();
     });
 
@@ -353,6 +362,16 @@ export class ServiceFormComponent implements OnInit {
 
   isFieldInvalid(fieldName: string): boolean {
     const field = this.serviceForm.get(fieldName);
+
+    // For benefit fields, only show invalid if benefits are enabled
+    const benefitFields = ['benefitTitle', 'benefitTagline', 'benefitBody'];
+    if (benefitFields.includes(fieldName)) {
+      const benefitEnabled = this.benefitEnabledControl?.value;
+      if (!benefitEnabled) {
+        return false;
+      }
+    }
+
     return !!(field?.invalid && (field.dirty || field.touched));
   }
 
