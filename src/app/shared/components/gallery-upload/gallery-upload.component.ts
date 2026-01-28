@@ -127,6 +127,9 @@ export class GalleryUploadComponent implements ControlValueAccessor {
         };
         reader.readAsDataURL(obj);
       }
+    } else {
+      // Clear images when obj is null/undefined
+      this.images = [];
     }
   }
 

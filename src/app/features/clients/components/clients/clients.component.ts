@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import { PageHeaderComponent } from "../../../../shared/components/page-header/page-header.component";
 import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
 import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
@@ -8,152 +7,258 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ClientFormComponent } from "../client-form/client-form.component";
 import { PaginationObj } from '../../../../core/models/global.interface';
+import { ClientsService } from '../../services/clients.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmDialogComponent, ConfirmationDialogConfig } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+
 export interface Client {
-  id: number;
-  clientName: string;
-  clientImage: string; // URL to the logo/image
-  dateAdded: string;   // Formatted as MM/DD/YYYY or DD/MM/YYYY
-  status: boolean;     // true = active, false = inactive
+  id: string;
+  name: string;
+  image: string | null;
+  status: number;
+  createdAt: string;
+  updatedAt: string;
 }
+
 @Component({
   selector: 'app-clients',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, ReusableTableComponent, DialogModule, ButtonModule, ClientFormComponent],
+  imports: [
+    PageHeaderComponent, 
+    ReusableTableComponent, 
+    DialogModule, 
+    ButtonModule, 
+    ClientFormComponent
+  ],
+  providers: [DialogService],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss',
 })
-export class ClientsComponent {
+export class ClientsComponent implements OnInit {
 
-  visible: boolean = false;
+  private clientsService = inject(ClientsService);
+  private dialogService = inject(DialogService);
 
-    showDialog() {
-        this.visible = true;
-    }
-  // ========================= example table data ============================
-  data: Client[] = [
-  { "id": 1, "clientName": "Ministry of Climate Change & Environment", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=MC", "dateAdded": "12/12/2024", "status": true },
-  { "id": 2, "clientName": "Global Tech Solutions", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=GT", "dateAdded": "01/05/2025", "status": true },
-  { "id": 3, "clientName": "Summit Finance Group", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=SF", "dateAdded": "15/01/2025", "status": false },
-  { "id": 4, "clientName": "Green Earth Initiative", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=GE", "dateAdded": "22/02/2025", "status": true },
-  { "id": 5, "clientName": "Nova Healthcare", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=NH", "dateAdded": "10/03/2025", "status": true },
-  { "id": 6, "clientName": "Apex Logistics", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=AL", "dateAdded": "18/03/2025", "status": false },
-  { "id": 7, "clientName": "Horizon Education", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=HE", "dateAdded": "04/04/2025", "status": true },
-  { "id": 8, "clientName": "Pinnacle Real Estate", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=PR", "dateAdded": "12/04/2025", "status": true },
-  { "id": 9, "clientName": "Starlight Media", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=SM", "dateAdded": "25/04/2025", "status": true },
-  { "id": 10, "clientName": "Oceanic Shipping", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=OS", "dateAdded": "02/05/2025", "status": false },
-  { "id": 11, "clientName": "Swift Retail Corp", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=SR", "dateAdded": "15/05/2025", "status": true },
-  { "id": 12, "clientName": "Terra Energy Partners", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=TE", "dateAdded": "28/05/2025", "status": true },
-  { "id": 13, "clientName": "Velocity Automotive", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=VA", "dateAdded": "05/06/2025", "status": true },
-  { "id": 14, "clientName": "Quantum AI Labs", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=QA", "dateAdded": "14/06/2025", "status": false },
-  { "id": 15, "clientName": "Beacon Consulting", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=BC", "dateAdded": "22/06/2025", "status": true },
-  { "id": 16, "clientName": "Elysian Hospitality", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=EH", "dateAdded": "30/06/2025", "status": true },
-  { "id": 17, "clientName": "Ironclad Security", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=IS", "dateAdded": "07/07/2025", "status": true },
-  { "id": 18, "clientName": "Zenith Architecture", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=ZA", "dateAdded": "15/07/2025", "status": false },
-  { "id": 19, "clientName": "Aura Wellness", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=AW", "dateAdded": "23/07/2025", "status": true },
-  { "id": 20, "clientName": "Titan Manufacturing", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=TM", "dateAdded": "01/08/2025", "status": true },
-  { "id": 21, "clientName": "Pulse Marketing", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=PM", "dateAdded": "10/08/2025", "status": true },
-  { "id": 22, "clientName": "Vanguard Law Firm", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=VL", "dateAdded": "18/08/2025", "status": false },
-  { "id": 23, "clientName": "Solaris Tech", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=ST", "dateAdded": "26/08/2025", "status": true },
-  { "id": 24, "clientName": "Nimbus Cloud Services", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=NC", "dateAdded": "03/09/2025", "status": true },
-  { "id": 25, "clientName": "Evolve Fitness", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=EF", "dateAdded": "11/09/2025", "status": true },
-  { "id": 26, "clientName": "Oracle Data Systems", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=OD", "dateAdded": "19/09/2025", "status": false },
-  { "id": 27, "clientName": "Primrose Florals", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=PF", "dateAdded": "27/09/2025", "status": true },
-  { "id": 28, "clientName": "Galactic Aerospace", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=GA", "dateAdded": "05/10/2025", "status": true },
-  { "id": 29, "clientName": "Harbor Port Authority", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=HP", "dateAdded": "13/10/2025", "status": true },
-  { "id": 30, "clientName": "Crestview Banking", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=CB", "dateAdded": "21/10/2025", "status": false },
-  { "id": 31, "clientName": "Urban Planning Dept", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=UP", "dateAdded": "29/10/2025", "status": true },
-  { "id": 32, "clientName": "Midnight Software", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=MS", "dateAdded": "06/11/2025", "status": true },
-  { "id": 33, "clientName": "Sovereign Wealth", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=SW", "dateAdded": "14/11/2025", "status": true },
-  { "id": 34, "clientName": "Tidal Wave Designs", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=TW", "dateAdded": "22/11/2025", "status": false },
-  { "id": 35, "clientName": "Evergreen Landscaping", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=EL", "dateAdded": "30/11/2025", "status": true },
-  { "id": 36, "clientName": "Focus Pharma", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=FP", "dateAdded": "08/12/2025", "status": true },
-  { "id": 37, "clientName": "Gentry Fashion", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=GF", "dateAdded": "16/12/2025", "status": true },
-  { "id": 38, "clientName": "Atlas Construction", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=AC", "dateAdded": "24/12/2025", "status": false },
-  { "id": 39, "clientName": "Blue Sky Aviation", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=BA", "dateAdded": "01/01/2026", "status": true },
-  { "id": 40, "clientName": "Unity Nonprofit", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=UN", "dateAdded": "09/01/2026", "status": true },
-  { "id": 41, "clientName": "Spark Electronics", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=SE", "dateAdded": "17/01/2026", "status": true },
-  { "id": 42, "clientName": "Visionary Arts", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=VA", "dateAdded": "25/01/2026", "status": false },
-  { "id": 43, "clientName": "North Star Insurance", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=NI", "dateAdded": "02/02/2026", "status": true },
-  { "id": 44, "clientName": "Emerald City Cafe", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=EC", "dateAdded": "10/02/2026", "status": true },
-  { "id": 45, "clientName": "Shield Cyber Defense", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=SC", "dateAdded": "18/02/2026", "status": true },
-  { "id": 46, "clientName": "Pathfinder Travel", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=PT", "dateAdded": "26/02/2026", "status": false },
-  { "id": 47, "clientName": "Lumina Research", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=LR", "dateAdded": "06/03/2026", "status": true },
-  { "id": 48, "clientName": "Apex Media Agency", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=AM", "dateAdded": "14/03/2026", "status": true },
-  { "id": 49, "clientName": "Summit Peak Ventures", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=SP", "dateAdded": "22/03/2026", "status": true },
-  { "id": 50, "clientName": "Origin Coffee Co", "clientImage": "https://api.dicebear.com/7.x/initials/svg?seed=OC", "dateAdded": "30/03/2026", "status": false }
-]
-  totalRecords = this.data.length;
+  visible = false;
+  data: Client[] = [];
+  totalRecords = 0;
+  currentClientId?: string;
+  confirmDialogRef?: DynamicDialogRef;
+  paginationObj: PaginationObj = {
+    page: 1,
+    size: 10,
+  };
+
+  ngOnInit() {
+    console.log('🟢 ClientsComponent initialized');
+    this.loadClients();
+  }
+
+  loadClients(pagination?: PaginationObj) {
+    const pag = pagination || this.paginationObj;
+    console.log('🔵 Loading clients with pagination:', pag);
+    
+    this.clientsService.getAll(pag, '').subscribe({
+      next: (res) => {
+        console.log('✅ Clients loaded successfully:', res);
+        this.data = res.result || [];
+        this.totalRecords = res.total || 0;
+      },
+      error: (err) => {
+        console.error('❌ Clients fetch error:', err);
+        console.error('❌ Status:', err.status);
+        console.error('❌ Error details:', err.error);
+      }
+    });
+  }
 
   columns: TableColumn<Client>[] = [
-    { field: 'clientName',header: 'Client name', type: 'text', avatarField: 'image' },
-    { field: 'clientImage', header: 'Client image', type: 'image',avatarField: 'countryFlag' },
-    { field: 'dateAdded', header: 'Date added', type: 'date',class:"max-w-4rem overflow-auto custom-scrollbar" },
+    { field: 'name', header: 'Client name', type: 'text' },
+    { field: 'image', header: 'Client image', type: 'image' },
+    { field: 'createdAt', header: 'Date added', type: 'date' },
     { field: 'status', header: 'Status', type: 'status' },
   ];
 
   actions: TableAction<Client>[] = [
     {
-      callback:(row)=> this.showDialog(), 
-      icon: 'pi pi-pencil', 
-      severity: 'white' ,
+      callback: (row) => this.edit(row),
+      icon: 'pi pi-pencil',
+      severity: 'white',
       class: 'p-2'
     },
     {
-      callback:(row,event)=> this.delete(row,event), 
-      icon: 'pi pi-trash', 
-      severity: 'white', 
-      visibleWhen: (row:Client) => (row.status),
+      callback: (row) => this.delete(row),
+      icon: 'pi pi-trash',
+      severity: 'white',
       class: 'p-2'
     }
   ];
-  edit(row: Client,event?:Event){
-    console.log("Edit action triggered",row,event);
-  }
-  delete( row: Client,event?:Event){
-    console.log("Delete action triggered",row,event);
-  }
+
+  config: TableConfig<Client> = {
+    columns: this.columns,
+    serverSidePagination: true,
+    rowsPerPageOptions: [5, 10, 20],
+    selectionMode: 'multiple',
+    sortable: true
+  };
+
   filterItems: FilterItems[] = [
     {
       type: 'search',
-      name: 'keyword',
+      name: 'key',
       placeholder: 'Search by name ...'
     },
     {
       type: 'btn',
-      label:"Add New Client",
-      btnIcon:"pi pi-plus",
-      btnSeverity:"primary",
-      btnCallback:(e:Event) => this.addNewProject(e)
+      label: "Add New Client",
+      btnIcon: "pi pi-plus",
+      btnSeverity: "primary",
+      btnCallback: () => this.showDialog()
     },
     {
       type: 'btn',
-      label:"Import CSV",
-      btnIcon:"pi pi-download",
-      btnSeverity:"white",
-      btnCallback:(e:Event) => this.addNewProject(e)
+      label: "Import CSV",
+      btnIcon: "pi pi-download",
+      btnSeverity: "white",
+      btnCallback: () => this.importCSV()
     },
   ];
-  config: TableConfig<Client> = {
-    columns: this.columns,
-    serverSidePagination: false,
-    rowsPerPageOptions: [5 , 10 , 20],
-    selectionMode: 'multiple',
-    sortable: true,
-    serverSideSort: true,
-  };
 
+  showDialog() {
+    this.currentClientId = undefined;
+    this.visible = true;
+  }
 
-  onAction(event: { action: string; row: Client }) {
-    console.log('Action clicked:', event);
+  edit(row: Client) {
+    this.currentClientId = row.id;
+    this.visible = true;
+  }
+
+  delete(row: Client) {
+    console.log('Delete called with row:', row);
+    
+    const dialogConfig: ConfirmationDialogConfig<Client> = {
+      title: 'Delete Client',
+      subtitle: `Are you sure you want to delete "${row.name}"? This action cannot be undone.`,
+      icon: 'images/delete.svg',
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      confirmSeverity: 'delete',
+      cancelSeverity: 'cancel',
+      data: row
+    };
+
+    this.confirmDialogRef = this.dialogService.open(ConfirmDialogComponent, {
+      modal: true,
+      data: dialogConfig,
+      header: '',
+      width: '505px',
+      closable: false,
+      styleClass: 'confirm-dialog'
+    });
+
+    this.confirmDialogRef.onClose.subscribe((result: any) => {
+      console.log('Dialog closed with result:', result);
+      
+      if (result && result.action === 'confirm' && result.data && result.data.id) {
+        this.performDelete(result.data.id);
+      }
+    });
+  }
+
+  private performDelete(id: string) {
+    console.log('Performing delete for ID:', id);
+    
+    this.clientsService.delete(id).subscribe({
+      next: () => {
+        console.log('Deleted successfully');
+        this.loadClients();
+      },
+      error: (err) => {
+        console.error('Delete error:', err);
+        alert('Failed to delete client');
+      }
+    });
   }
 
   onPaginationChange(event: PaginationObj) {
-    console.log('Pagination changed:', event);
+    console.log('📄 Pagination changed:', event);
+    this.paginationObj = event;
+    this.loadClients(event);
   }
-  selectionChange(e:Client[] | Client){
-    console.log('selected items',e)
+
+  selectionChange(e: Client[] | Client) {
+    console.log('✔️ Selected items:', e);
   }
-  addNewProject(e:Event){
-    console.log("Add New Project button clicked",e);
+
+  importCSV() {
+    console.log("📥 Import CSV button clicked");
+  }
+
+  handleSave(payload: FormData) {
+    console.log('💾 handleSave called');
+    
+    // Check if it's "Save and Create New"
+    const createNew = payload.get('createNew') === 'true';
+    payload.delete('createNew');
+    
+    if (this.currentClientId) {
+      // Update existing
+      console.log('✏️ Updating client:', this.currentClientId);
+      this.clientsService.update(this.currentClientId, payload).subscribe({
+        next: (res) => {
+          console.log('✅ Update success:', res);
+          this.visible = false;
+          this.loadClients();
+        },
+        error: (err) => {
+          console.error('❌ Update error:', err);
+          this.showErrorMessage(err);
+        }
+      });
+    } else {
+      // Create new
+      console.log('➕ Creating new client');
+      this.clientsService.create(payload).subscribe({
+        next: (res) => {
+          console.log('✅ Create success:', res);
+          if (createNew) {
+            this.loadClients();
+          } else {
+            this.visible = false;
+            this.loadClients();
+          }
+        },
+        error: (err) => {
+          console.error('❌ Create error:', err);
+          this.showErrorMessage(err);
+        }
+      });
+    }
+  }
+
+  private showErrorMessage(err: any) {
+    let errorMessage = 'An error occurred';
+    
+    if (err.error) {
+      if (err.error.errors) {
+        const errors = err.error.errors;
+        const errorMessages = Object.keys(errors).map(key => {
+          return `${key}: ${Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key]}`;
+        });
+        errorMessage = errorMessages.join('\n');
+      } else if (err.error.message) {
+        errorMessage = err.error.message;
+      }
+    }
+    
+    console.log('Full error message:', errorMessage);
+    alert(`Failed to save client:\n${errorMessage}`);
+  }
+
+  ngOnDestroy() {
+    if (this.confirmDialogRef) {
+      this.confirmDialogRef.close();
+    }
   }
 }

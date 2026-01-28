@@ -14,7 +14,6 @@
 </div>
 
 <!-- client form dialog -->
-
 <p-dialog
   styleClass="form-dialog"
   [modal]="true"
@@ -22,7 +21,15 @@
   [style]="{ width: '35rem' }"
 >
   <ng-template pTemplate="header">
-    <h2>Add new client</h2>
+    @if (currentClientId) {
+      <h2>Edit Client</h2>
+    } @else {
+      <h2>Add New Client</h2>
+    }
   </ng-template>
-  <app-client-form></app-client-form>
+
+  <app-client-form
+    [clientId]="currentClientId"
+    (save)="handleSave($event)"
+  ></app-client-form>
 </p-dialog>
