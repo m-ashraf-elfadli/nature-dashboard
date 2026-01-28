@@ -75,7 +75,8 @@
 
       <div class="benefits-fields" [class.disabled]="!benefitEnabledControl.value">
         <div class="our-field">
-          <label for="benefitTitle">Benefits Title <span class="required">*</span></label>
+          <label for="benefitTitle">Benefits Title <span class="required"
+              *ngIf="benefitEnabledControl.value">*</span></label>
           <input type="text" id="benefitTitle" placeholder="Please enter benefits title" formControlName="benefitTitle"
             pInputText [class.error]="isFieldInvalid('benefitTitle')" />
           <small class="error-message" *ngIf="isFieldInvalid('benefitTitle')">{{ getFieldError('benefitTitle')
@@ -83,7 +84,8 @@
         </div>
 
         <div class="our-field">
-          <label for="benefitTagline">Benefits Tagline <span class="required">*</span></label>
+          <label for="benefitTagline">Benefits Tagline <span class="required"
+              *ngIf="benefitEnabledControl.value">*</span></label>
           <input type="text" id="benefitTagline" placeholder="Please enter benefits tagline"
             formControlName="benefitTagline" pInputText [class.error]="isFieldInvalid('benefitTagline')" />
           <small class="error-message" *ngIf="isFieldInvalid('benefitTagline')">{{ getFieldError('benefitTagline')
@@ -91,7 +93,8 @@
         </div>
 
         <div class="our-field">
-          <label for="benefitBody">Benefits Body <span class="required">*</span></label>
+          <label for="benefitBody">Benefits Body <span class="required"
+              *ngIf="benefitEnabledControl.value">*</span></label>
           <input type="text" id="benefitBody" placeholder="Please enter benefits body" formControlName="benefitBody"
             pInputText [class.error]="isFieldInvalid('benefitBody')" />
           <small class="error-message" *ngIf="isFieldInvalid('benefitBody')">{{ getFieldError('benefitBody') }}</small>
