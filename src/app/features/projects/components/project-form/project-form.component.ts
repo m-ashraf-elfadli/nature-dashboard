@@ -28,6 +28,7 @@ import { forkJoin } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ProjectById } from '../../models/projects.interface';
+import { environment } from '../../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-project-form',
@@ -57,7 +58,6 @@ export class ProjectFormComponent implements OnInit {
   @ViewChild(FormActionsComponent)formActionsComponent!:FormActionsComponent
   private readonly dialogService = inject(DialogService)
   private readonly service = inject(ProjectsService);
-  private readonly translateService = inject(TranslateService)
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router)
@@ -78,9 +78,19 @@ export class ProjectFormComponent implements OnInit {
   isEditMode:boolean = false;
   projectData:ProjectById = {} as ProjectById
 
+  mediaUrl:string = environment.mediaUrl;
+
   ngOnInit() {
     this.getDropDowns()
     this.initForm();
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.isEditMode = true;
+        this.projectId = id;
+        this.getProjectById(id, localStorage.getItem('app_lang')!);
+      }
+    });
   }
   initForm() {
     this.form = this.fb.group({
@@ -133,10 +143,11 @@ export class ProjectFormComponent implements OnInit {
   }
   patchValues(data:ProjectById){
     if (!data) return;
-
+    debugger
     this.projectData = data;
     this.isEditMode = true;
     this.projectId = data.id;
+    const galleryImages:string[] = data.gallery.map(g => this.mediaUrl + g.url)
 
     // helper to parse API date strings into Date objects for datepickers
     const parseDate = (d?: string | null): Date | null => {
@@ -173,9 +184,9 @@ export class ProjectFormComponent implements OnInit {
     this.form.get('service_ids')?.setValue(serviceIds);
 
     // Images & gallery (keep existing objects so backend can accept ids)
-    this.form.get('image_before')?.setValue(data.imageBefore || null);
-    this.form.get('image_after')?.setValue(data.imageAfter || null);
-    this.form.get('gallery')?.setValue(data.gallery || []);
+    this.form.get('image_before')?.setValue(this.mediaUrl + data.imageBefore || null);
+    this.form.get('image_after')?.setValue(this.mediaUrl + data.imageAfter || null);
+    this.form.get('gallery')?.setValue(galleryImages || []);
 
     // Countries & cities: load cities then set city id
     if (data.country && data.country.id) {
@@ -304,7 +315,6 @@ export class ProjectFormComponent implements OnInit {
     const isActive = this.form.get('isCurrentlyActive')?.value;
     const endDateControl = this.form.get('end_date');
 
-    console.log(this.form.value);
     if (!endDateControl) return;
 
     if (isActive) {
@@ -368,6 +378,8 @@ export class ProjectFormComponent implements OnInit {
           formData.append(`gallery[${index}]`, file);
         } else if (file?.id) {
           formData.append(`gallery_ids[${index}]`, file.id);
+        }else if (typeof file == 'string'){
+          formData.append(`gallery[${index}]`, file);
         }
       });
     }
@@ -429,16 +441,19 @@ export class ProjectFormComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this.service.create(this.buildFormData(),culture).subscribe({
+    const formData = this.buildFormData();
+    const observable = this.isEditMode ? this.service.update(this.projectId, formData, culture) : this.service.create(formData, culture);
+    observable.subscribe({
       next: (res) => {
-        this.projectId = res.result.id;
-        this.isEditMode = true;
+        if (!this.isEditMode) {
+          this.projectId = res.result.id;
+          this.isEditMode = true;
+        }
         if(isNavigateOut) {
           this.router.navigate(['/projects']);
         }else{
           this.getProjectById(this.projectId,culture!)
         }
-        console.log(res);
       },
       error: (err) => {
         console.log(err);

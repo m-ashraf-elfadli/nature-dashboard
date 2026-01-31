@@ -16,6 +16,10 @@ export class ProjectsService {
     this.apiService.setCulture(culture || 'en')
     return this.apiService.post(this.endpoint, body)
   }
+  update(id: string, body: any, culture = localStorage.getItem('app_lang')): Observable<any> {
+    this.apiService.setCulture(culture || 'en')
+    return this.apiService.put(`${this.endpoint}/${id}`, body)
+  }
   getAll(
     pagination: PaginationObj,
     search?: string,

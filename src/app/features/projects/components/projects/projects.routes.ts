@@ -13,7 +13,7 @@ export const projectsRoutes: Routes = [
         (m) => m.ProjectFormComponent
       ),
     data: {
-      title: 'Add New Project',
+      title: 'projects.form.title',
     },
   },
   {
@@ -23,7 +23,7 @@ export const projectsRoutes: Routes = [
         (m) => m.ProjectFormComponent
       ),
     data: {
-      title: 'Edit Project',
+      title: 'projects.form.breadcrumb_edit',
     },
   },
 ];

@@ -142,7 +142,7 @@ export class ProjectsComponent implements OnInit {
       {
         type: 'search',
         name: 'name',
-        placeholder: 'Search by name ...'
+        placeholder: 'general.search_input_table_placeholder'
       },
       {
         type: 'filter',
@@ -152,14 +152,14 @@ export class ProjectsComponent implements OnInit {
           {
             type: 'select',
             multiple: true,
-            label: 'country',
+            label: 'projects.list.filter.country',
             inputName: 'country_ids',
             options: this.countriesDD,
           },
           {
             type: 'select',
             multiple: true,
-            label: 'city',
+            label: 'projects.list.filter.city',
             inputName: 'city_ids',
             options: this.citiesDD,
           },
@@ -167,7 +167,7 @@ export class ProjectsComponent implements OnInit {
       },
       {
         type: 'btn',
-        label: "Import CSV",
+        label: "general.import",
         btnIcon: "pi pi-download",
         btnSeverity: "white",
         btnCallback: (e: Event) => this.addNewProject(e)

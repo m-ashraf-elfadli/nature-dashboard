@@ -6,6 +6,7 @@
     "filter":"Filter",
     "text_editor_header":"Section body",
     "search_input_table_placeholder":"Search by name ...",
+    "import":"Import CSV",
     "up":"Up",
     "down":"Down",
     "stable":"Stable",
@@ -31,10 +32,15 @@
       },
       "btns": {
         "add_new": "Add new project"
+      },
+      "filter":{
+        "country":"Country",
+        "city":"City"
       }
     },
     "form": {
       "title": "Add New Project",
+      "breadcrumb_edit":"Edit project",
       "english": "(English)",
       "arabic": "(Arabic)",
       "titles": {

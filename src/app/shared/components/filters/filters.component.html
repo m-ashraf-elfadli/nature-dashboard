@@ -39,9 +39,13 @@
                         }
                     </div>
                     <div class="filter-footer">
-                        <button class="custom-btn btn-primary" (click)="applyOrResetFilter($event)">
-                            {{ (isFilterApplied?'general.reset':'general.apply') | translate }}
+                        <button class="custom-btn btn-white" (click)="resetFilter($event)" [disabled]="isResetDisabled">
+                            {{ 'general.reset' | translate }}
                         </button>
+                        <button class="custom-btn btn-primary" (click)="applyFilter($event)">
+                            {{ 'general.apply' | translate }}
+                        </button>
+                        
                     </div>
                 </p-popover >
             </div>
