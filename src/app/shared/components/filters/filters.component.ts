@@ -59,7 +59,6 @@ export class FiltersComponent implements OnInit {
     @ViewChild('op') op!:Popover;
     private readonly fb = inject(FormBuilder);
     formFilter!: FormGroup;
-    isFilterHasValues:boolean = false;
     @Input() filterConfig: FilterItems[] = [];
     @Output() filterChange = new EventEmitter<any>();
 
