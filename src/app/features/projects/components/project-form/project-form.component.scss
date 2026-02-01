@@ -105,5 +105,22 @@
         background-color: rgba(240, 249, 238, 0.8);
       }
     }
+    .results-form-group{
+      position: relative;
+      border-radius: 12px;
+      border: 1px solid var(--Color-Neutral-300, #EFEFF0);
+      background: var(--Color-Neutral-100, #FEFEFE);
+      padding: 12px;
+      .delete-results-form-array-btn{
+        position: absolute;
+        top: 0%;
+        right: 0;
+        transform: translateX(25%) translateY(-25%);
+      }
+    }
+    .result-form-group-seperator{
+      background: var(--Color-Neutral-400, #DEDEDF);
+      height: 1px;
+    }
   }
 }
