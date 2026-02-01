@@ -388,7 +388,7 @@ export class ProjectFormComponent implements OnInit {
         } else if (file?.id) {
           formData.append(`gallery_ids[${index}]`, file.id);
         } else if (typeof file == 'string') {
-          formData.append(`gallery[${index}]`, file);
+          formData.append(`gallery[${index}]`, file.replace(this.mediaUrl,''));
         }
       });
     }

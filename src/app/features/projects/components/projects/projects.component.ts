@@ -110,6 +110,7 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.initFilterConfig()
     this.getDropDowns()
+    this.fetchData(this.paginationObj)
     this.translate.onLangChange.subscribe(_ =>{
       this.fetchData(this.paginationObj)
     })
