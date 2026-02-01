@@ -10,10 +10,11 @@ export const projectsRoutes: Routes = [
     path: 'add',
     loadComponent: () =>
       import('../project-form/project-form.component').then(
-        (m) => m.ProjectFormComponent
+        (m) => m.ProjectFormComponent,
       ),
     data: {
       title: 'Add New Project',
+      breadcrumb: 'Add',
     },
   },
 ];
