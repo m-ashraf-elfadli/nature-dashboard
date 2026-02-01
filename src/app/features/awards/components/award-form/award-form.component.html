@@ -1,10 +1,10 @@
 <div class="form-content">
     <div class="form-header">
         <app-page-header [title]="'awards.form.title' | translate"></app-page-header>
-        <app-form-actions (discard)="onDiscard($event)" (save)="onSave($event)"
+        <app-form-actions (discard)="onDiscard($event)" (save)="onSave()"
             (languageChange)="onLanguageChange($event)"></app-form-actions>
     </div>
-    <form class="award-form">
+    <form [formGroup]="form" (ngSubmit)="submitForm()" class="award-form">
         <div class="form-left-section">
             <div class="details-section">
                 <div class="header-section gap-2">
@@ -15,6 +15,9 @@
                     <div class="our-field">
                         <label for="name">{{ 'awards.form.labels.name' | translate }} <span class="required">*</span></label>
                         <input pInputText id="name" [placeholder]="'awards.form.placeholders.name' | translate" type="text" formControlName="name" />
+                        @if(hasError('name')){
+                            <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.name' | translate}}</p-message>
+                        }
                     </div>
                     <div class="our-field">
                         <label for="date">{{ 'awards.form.labels.date' | translate }} <span class="required">*</span></label>
@@ -34,6 +37,9 @@
                                 </svg>
                             </ng-template>
                         </p-datepicker>
+                        @if(hasError('date')){
+                            <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.date' | translate}}</p-message>
+                        }
                     </div>
                     <div class="our-field">
                         <label for="description">{{ 'awards.form.labels.description' | translate }} <span class="required">*</span></label>
@@ -63,6 +69,9 @@
                                 </div>
                             </ng-template>
                         </p-editor>
+                        @if(hasError('description')){
+                            <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.description' | translate}}</p-message>
+                        }
                     </div>
                 </div>
             </div>
@@ -82,7 +91,7 @@
                         <div class="header-section">
                             <h3>{{ 'awards.form.titles.settings' | translate }}</h3>
                         </div>
-                        <app-settings></app-settings>
+                        <app-settings formControlName="status"></app-settings>
                     </div>
                 </div>
             </div>
