@@ -221,11 +221,13 @@
                                             </ng-template>
                                         </p-select>
                                     </div>
-                                    <div class="delete-btn">
-                                        <button type="button" (click)="removeMetric($index)" class="custom-btn btn-white ml-2">
-                                            <i class="pi pi-trash"></i>
-                                        </button>
-                                    </div>
+                                    @if($index != 0){
+                                        <div class="delete-metrics-form-group-btn">
+                                            <button type="button" (click)="removeMetric($index)" class="custom-btn btn-white p-2">
+                                                <i class="pi pi-trash"></i>
+                                            </button>
+                                        </div>
+                                    }
                                 </div>
                             </div>
 
