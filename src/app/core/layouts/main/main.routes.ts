@@ -6,6 +6,7 @@ import { ServicesComponent } from '../../../pages/services/services.component';
 import { TestimonialsComponent } from '../../../features/testimonials/components/testimonials/testimonials.component';
 import { AwardFormComponent } from '../../../features/awards/components/award-form/award-form.component';
 import { AwardsListComponent } from '../../../features/awards/components/awards-list/awards-list.component';
+import { CustomizeAwardSectionFormComponent } from '../../../features/awards/components/customize-award-section-form/customize-award-section-form.component';
 
 export const dashboardRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -45,6 +46,13 @@ export const dashboardRoutes: Routes = [
       {
         path: 'add',
         component: AwardFormComponent,
+      },
+      {
+        path: 'customize',
+        component: CustomizeAwardSectionFormComponent,
+        data: {
+          breadcrumb: 'Add New Award',
+        },
       },
     ],
   },

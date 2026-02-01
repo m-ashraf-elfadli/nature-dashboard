@@ -2,18 +2,18 @@
   "general": {
     "save": "Save",
     "discard": "Discard",
-    "actions":"Actions",
-    "filter":"Filter",
-    "text_editor_header":"Section body",
-    "search_input_table_placeholder":"Search by name ...",
-    "import":"Import CSV",
-    "up":"Up",
-    "down":"Down",
-    "stable":"Stable",
-    "reset":"Reset",
-    "apply":"Apply",
-    "cancel":"Cancel",
-    "delete":"Delete"
+    "actions": "Actions",
+    "filter": "Filter",
+    "text_editor_header": "Section body",
+    "search_input_table_placeholder": "Search by name ...",
+    "import": "Import CSV",
+    "up": "Up",
+    "down": "Down",
+    "stable": "Stable",
+    "reset": "Reset",
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "delete": "Delete"
   },
   "projects": {
     "list": {
@@ -26,21 +26,21 @@
         "locale": "Locale",
         "status": "Status"
       },
-      "delete_dialog":{
-        "header":"Delete Project?",
-        "desc":"Are you sure want to delete this project? This action can’t be undone."
+      "delete_dialog": {
+        "header": "Delete Project?",
+        "desc": "Are you sure want to delete this project? This action can’t be undone."
       },
       "btns": {
         "add_new": "Add new project"
       },
-      "filter":{
-        "country":"Country",
-        "city":"City"
+      "filter": {
+        "country": "Country",
+        "city": "City"
       }
     },
     "form": {
       "title": "Add New Project",
-      "breadcrumb_edit":"Edit project",
+      "breadcrumb_edit": "Edit project",
       "english": "(English)",
       "arabic": "(Arabic)",
       "titles": {
@@ -52,29 +52,29 @@
         "metrics": "Metrics indicators",
         "metrics_desc": "(Maximum 3 allowed)"
       },
-      "labels":{
-        "name":"Project Name",
-        "overview":"Overview",
-        "brief":"Brief",
-        "location":"Project Location",
-        "start_date":"Project Start Date",
-        "end_date":"Project End Date",
-        "services":"Project Services",
-        "status":"Project Status",
-        "images":"Project Images",
-        "country":"Country",
-        "city":"City",
-        "before_image":"Before Image",
-        "after_image":"After Image",
-        "additional_images":"Additional Images",
-        "timeline":"Project Timeline",
-        "section_title":"Section title",
-        "section_body":"Section body",
-        "metrics":"Metrics ({{count}})",
-        "gallery":"Project Gallery",
-        "image_before":"Project Before Image",
-        "image_after":"Project After Image",
-        "is_currently_active":"Is Currently Active"
+      "labels": {
+        "name": "Project Name",
+        "overview": "Overview",
+        "brief": "Brief",
+        "location": "Project Location",
+        "start_date": "Project Start Date",
+        "end_date": "Project End Date",
+        "services": "Project Services",
+        "status": "Project Status",
+        "images": "Project Images",
+        "country": "Country",
+        "city": "City",
+        "before_image": "Before Image",
+        "after_image": "After Image",
+        "additional_images": "Additional Images",
+        "timeline": "Project Timeline",
+        "section_title": "Section title",
+        "section_body": "Section body",
+        "metrics": "Metrics ({{count}})",
+        "gallery": "Project Gallery",
+        "image_before": "Project Before Image",
+        "image_after": "Project After Image",
+        "is_currently_active": "Is Currently Active"
       },
       "placeholders": {
         "name": "Write project name ...",
@@ -91,24 +91,24 @@
         "metric_number": "Number",
         "metric_case": "Icon"
       },
-      "validation":{
-        "name":"Name is required",
-        "overview":"Overview is required",
-        "brief":"Brief is required",
-        "services":"Project Services is required",
-        "from":"From date is required",
-        "to":"To date is required",
-        "country":"Country is required",
-        "city":"City is required"
+      "validation": {
+        "name": "Name is required",
+        "overview": "Overview is required",
+        "brief": "Brief is required",
+        "services": "Project Services is required",
+        "from": "From date is required",
+        "to": "To date is required",
+        "country": "Country is required",
+        "city": "City is required"
       },
-      "btns":{
-        "add_result":"Add another section",
-        "add_metrics":"Add another metrics",
-        "save":"Save changes"
+      "btns": {
+        "add_result": "Add another section",
+        "add_metrics": "Add another metrics",
+        "save": "Save changes"
       },
-      "language_dialog":{
-        "header":"Unsaved Changes?",
-        "desc":"You have unsaved changes in the current language. Do you want to save them before switching to Arabic?"
+      "language_dialog": {
+        "header": "Unsaved Changes?",
+        "desc": "You have unsaved changes in the current language. Do you want to save them before switching to Arabic?"
       }
     }
   },
@@ -122,7 +122,8 @@
         "status": "Status"
       },
       "btns": {
-        "add_new": "Add new award"
+        "add_new": "Add new award",
+        "customize": "Customize Awards Section"
       }
     },
     "form": {
@@ -146,6 +147,29 @@
         "description": "Write section description here ..."
       }
     }
+  },
+  "awards_section": {
+    "form": {
+      "title": "Customize Award Section"
+    },
+    "section_details": "Section Details",
+    "name": "Section Name",
+    "name_placeholder": "Enter section name...",
+    "tagline": "Section Tagline",
+    "tagline_placeholder": "Enter section tagline...",
+    "subsections": "Sub Section Detail",
+    "max_subsections": "Maximum 3 allowed",
+    "subsection": "Subsection",
+    "subsection_title": "Title",
+    "subsection_title_placeholder": "Enter subsection title...",
+    "subsection_subtitle": "Subtitle",
+    "subsection_subtitle_placeholder": "Enter subsection subtitle...",
+    "add_subsection": "Add Sub Section"
+  },
+  "common": {
+    "delete": "Delete",
+    "save": "Save",
+    "discard": "Discard"
   },
   "services": {
     "list": {
