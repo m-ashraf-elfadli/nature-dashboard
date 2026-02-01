@@ -68,7 +68,7 @@ export class ProjectsService {
     culture: string,
   ): Observable<GetByIdResponse<ProjectById>> {
     this.apiService.setCulture(culture || 'en');
-    return this.apiService.get(`${this.endpoint}/${id}`);
+    return this.apiService.get(`${this.endpoint}/show/${id}`);
   }
   delete(id: string): Observable<any> {
     return this.apiService.delete(`${this.endpoint}/${id}`);

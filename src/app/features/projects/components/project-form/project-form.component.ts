@@ -135,6 +135,7 @@ export class ProjectFormComponent implements OnInit {
         if (!res.result) return;
         this.projectData = res.result;
         this.patchValues(this.projectData);
+        this.form.markAsPristine();
       },
       error: (err) => {
         console.error('Failed to load project', err);
@@ -352,6 +353,9 @@ export class ProjectFormComponent implements OnInit {
     const value = this.form.getRawValue(); // includes disabled fields
 
     // 🔹 Basic fields
+    if(this.projectId){
+      formData.append('id',this.projectId)
+    }
     formData.append('name', value.name);
     formData.append('brief', value.brief);
     formData.append('overview', value.overview);
@@ -459,7 +463,8 @@ export class ProjectFormComponent implements OnInit {
         if (isNavigateOut) {
           this.router.navigate(['/projects']);
         } else {
-          this.getProjectById(this.projectId, culture!);
+          const projectCluture:'en' | 'ar' =culture === 'en' ? 'ar' :'en'
+          this.getProjectById(this.projectId, projectCluture!);
         }
       },
       error: (err) => {
@@ -497,11 +502,16 @@ export class ProjectFormComponent implements OnInit {
   onLanguageChange(event: { newLang: string; oldLang: string }) {
     if (this.form.invalid) {
       setTimeout(() => {
-        this.formActionsComponent.displayLanguage = event.oldLang;
+        this.formActionsComponent.revertLanguage()
         this.form.markAllAsTouched();
       }, 0);
     } else {
-      this.showConfirmDialog(event.oldLang);
+      this.formActionsComponent.confirmLanguage(event.newLang)
+      if(this.form.dirty){
+        this.showConfirmDialog(event.oldLang);
+      }else{
+        this.submitForm(false,event.oldLang)
+      }
     }
   }
   onFileSelected(event: File | File[]) {
