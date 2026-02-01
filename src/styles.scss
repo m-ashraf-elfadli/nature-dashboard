@@ -456,6 +456,7 @@ a {
 .form-content {
   padding: 1rem;
   background: #fafafa;
+  height: 100%;
 }
 // hide the
 input::-webkit-outer-spin-button,
@@ -586,4 +587,11 @@ input[type="number"] {
     line-height: 150%; /* 18px */
     letter-spacing: -0.36px;
   }
+}
+span.required {
+  color: var(--Alert-Error-100, #df1c41);
+  font-size: var(--Font-Size-S, 18px);
+  font-style: normal;
+  font-weight: var(--Font-Weight-Regular, 400);
+  line-height: var(--Font-Line-Height-S, 21.6px);
 }
