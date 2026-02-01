@@ -1,76 +1,29 @@
 import { Component } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { AwardsService } from '../../../services/awards.service';
+import { environment } from '../../../../environments/environment.prod';
+import { CommonModule } from '@angular/common';
 interface AwardSliderItem {
+  id: string;
   name: string;
-  year: string;
+  description: string;
+  awardDate: string;
   image: string;
+  status: boolean;
+  organizationLogos: any[];
 }
 @Component({
   selector: 'app-awards-slider',
-  imports: [CarouselModule],
+  imports: [CarouselModule, CommonModule],
+  standalone: true,
   templateUrl: './awards-slider.component.html',
-  styleUrl: './awards-slider.component.scss'
+  styleUrl: './awards-slider.component.scss',
 })
 export class AwardsSliderComponent {
+  constructor(private awardsService: AwardsService) {}
   hoveredAwardIndex: number | null = null;
-
-  awards: AwardSliderItem[] = [
-    {
-      name: 'Best Nature Project',
-      year: '2021',
-      image: 'images/awards/Award.png',
-    },
-    {
-      name: 'Green Excellence',
-      year: '2022',
-      image: 'images/awards/Award.png',
-    },
-    {
-      name: 'Eco Innovation',
-      year: '2023',
-      image: 'images/awards/Award.png',
-    },
-    {
-      name: 'Sustainability Award',
-      year: '2024',
-      image: 'images/awards/Award.png',
-    },
-        {
-      name: 'Eco Innovation',
-      year: '2023',
-      image: 'images/awards/Award.png',
-    },
-        {
-      name: 'Eco Innovation',
-      year: '2023',
-      image: 'images/awards/Award.png',
-    },
-        {
-      name: 'Eco Innovation',
-      year: '2023',
-      image: 'images/awards/Award.png',
-    },
-        {
-      name: 'Eco Innovation',
-      year: '2023',
-      image: 'images/awards/Award.png',
-    },
-        {
-      name: 'Eco Innovation',
-      year: '2023',
-      image: 'images/awards/Award.png',
-    },
-        {
-      name: 'Eco Innovation',
-      year: '2023',
-      image: 'images/awards/Award.png',
-    },
-        {
-      name: 'Eco Innovation',
-      year: '2023',
-      image: 'images/awards/Award.png',
-    },
-  ];
+  mediaUrl = environment.mediaUrl;
+  awards: any[] = [];
 
   carouselOptions: OwlOptions = {
     loop: true,
@@ -79,7 +32,7 @@ export class AwardsSliderComponent {
     autoplayTimeout: 3000,
     autoplayHoverPause: true,
     dots: false,
-    nav: true,
+    nav: false,
     responsive: {
       0: { items: 2 },
       576: { items: 4 },
@@ -88,11 +41,26 @@ export class AwardsSliderComponent {
     },
   };
 
+  ngOnInit() {
+    this.getAwards();
+  }
+
   onHover(index: number) {
     this.hoveredAwardIndex = index;
   }
 
   onLeave() {
     this.hoveredAwardIndex = null;
+  }
+  getAwards() {
+    this.awardsService.getAllAwards().subscribe({
+      next: (res) => {
+        this.awards = res.result;
+        console.log(this.awards);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

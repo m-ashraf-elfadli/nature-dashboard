@@ -484,6 +484,9 @@ input[type="number"] {
     font-weight: 400;
     line-height: 160%; /* 28.8px */
   }
+  &:disabled {
+    cursor: default;
+  }
 }
 .delete-btn {
   cursor: pointer;
@@ -594,4 +597,7 @@ span.required {
   font-style: normal;
   font-weight: var(--Font-Weight-Regular, 400);
   line-height: var(--Font-Line-Height-S, 21.6px);
+}
+.p-toggleswitch-slider {
+  position: relative;
 }

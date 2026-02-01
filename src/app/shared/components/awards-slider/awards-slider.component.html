@@ -1,85 +1,87 @@
-<div class="container">
+<div class="section-wrapper">
   <div class="header-section">
     <div class="title-wrapper">
-      <img src="images/awards/Award.svg" alt="" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+        <g clip-path="url(#clip0_9953_108028)">
+          <path
+            d="M4.09998 6.1498C4.09998 7.23719 4.53194 8.28004 5.30084 9.04894C6.06974 9.81784 7.11259 10.2498 8.19998 10.2498C9.28736 10.2498 10.3302 9.81784 11.0991 9.04894C11.868 8.28004 12.3 7.23719 12.3 6.1498C12.3 5.06242 11.868 4.01957 11.0991 3.25067C10.3302 2.48177 9.28736 2.0498 8.19998 2.0498C7.11259 2.0498 6.06974 2.48177 5.30084 3.25067C4.53194 4.01957 4.09998 5.06242 4.09998 6.1498Z"
+            stroke="#75B5D8" stroke-width="1.025" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M8.20001 10.2502L10.5233 14.275L11.6153 12.0658L14.0739 12.2243L11.7506 8.2002" stroke="#75B5D8"
+            stroke-width="1.025" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M4.64828 8.2002L2.32495 12.225L4.78358 12.0658L5.87555 14.2743L8.19888 10.2502" stroke="#75B5D8"
+            stroke-width="1.025" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+        <defs>
+          <clipPath id="clip0_9953_108028">
+            <rect width="16.4" height="16.4" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
       <span class="subtitle">Our work has been honored by </span>
     </div>
     <h2 class="main-title">Awards & Recognition</h2>
   </div>
-</div>
-<section class="awards-section">
-  <!-- Header Section -->
+  <section class="awards-section">
+    <div class="overlay"></div>
+    <!-- Header Section -->
 
-  <!-- TOP CURVE -->
-  <div class="curve curve-top">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <ellipse cx="720" cy="-20" rx="900" ry="80" fill="#ffffff" />
-    </svg>
-  </div>
+    <!-- TOP CURVE -->
+    <div class="curve curve-top">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <ellipse cx="720" cy="-20" rx="900" ry="80" fill="#ffffff" />
+      </svg>
+    </div>
 
-  <!-- CAROUSEL -->
-  <owl-carousel-o [options]="carouselOptions">
-    @for (award of awards; track award; let i = $index) {
-    <ng-template carouselSlide>
-      <div
-        class="award-item"
-        (mouseenter)="onHover(i)"
-        (mouseleave)="onLeave()"
-      >
-        <div
-          class="award-image"
-          [style.backgroundImage]="'url(' + award.image + ')'"
-          [class.blurred]="hoveredAwardIndex === i"
-        ></div>
+    <!-- CAROUSEL -->
+    <owl-carousel-o [options]="carouselOptions">
+      <ng-template carouselSlide *ngFor="let award of awards; let i = index">
+        <div class="award-item" (mouseenter)="onHover(i)" (mouseleave)="onLeave()">
+          <div class="award-image" [style.backgroundImage]="'url(' + mediaUrl + award.image + ')'"
+            [class.blurred]="hoveredAwardIndex === i">
+          </div>
 
-        <div class="award-overlay" [class.visible]="hoveredAwardIndex === i">
-          <h3>{{ award.name }}</h3>
-          <span>{{ award.year }}</span>
+          <div class="award-overlay" [class.visible]="hoveredAwardIndex === i">
+            <h3>{{ award.name }}</h3>
+            <span>{{ award.awardDate }}</span>
+          </div>
         </div>
+      </ng-template>
+    </owl-carousel-o>
+
+    <!-- BOTTOM CURVE -->
+    <div class="curve curve-bottom">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <ellipse cx="720" cy="80" rx="900" ry="80" fill="#ffffff" />
+      </svg>
+    </div>
+  </section>
+  <!-- ===== AWARDS INFO SECTION ===== -->
+  <div class="awards-info">
+    <div class="info-grid">
+      <div class="info-item">
+        <h4>Global Recognition</h4>
+        <p>
+          Honored by international bodies<br />
+          for advancing sustainability and innovation.
+        </p>
       </div>
-    </ng-template>
-    }
-  </owl-carousel-o>
 
-  <!-- BOTTOM CURVE -->
-  <div class="curve curve-bottom">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <ellipse cx="720" cy="80" rx="900" ry="80" fill="#ffffff" />
-    </svg>
-  </div>
-</section>
-<!-- ===== AWARDS INFO SECTION ===== -->
-<div class="awards-info">
-  <div class="info-grid">
-    <div class="info-item">
-      <h4>Global Recognition</h4>
-      <p>
-        Honored by international bodies<br />
-        for advancing sustainability and innovation.
-      </p>
-    </div>
+      <div class="info-item bordered">
+        <h4>National Excellence</h4>
+        <p>
+          Endorsed by UAE ministries and<br />
+          institutions for impactful contributions.
+        </p>
+      </div>
 
-    <div class="info-item bordered">
-      <h4>National Excellence</h4>
-      <p>
-        Endorsed by UAE ministries and<br />
-        institutions for impactful contributions.
-      </p>
-    </div>
-
-    <div class="info-item">
-      <h4>Trusted by Leading Organizations</h4>
-      <p>
-        Acknowledged by NGOs, global<br />
-        partners, and industry leaders for measurable results.
-      </p>
+      <div class="info-item">
+        <h4>Trusted by Leading Organizations</h4>
+        <p>
+          Acknowledged by NGOs, global<br />
+          partners, and industry leaders for measurable results.
+        </p>
+      </div>
     </div>
   </div>
 
-  <div class="download-wrapper">
-    <a href="assets/files/awards.pdf" class="download-btn" download>
-      Download Full Awards Portfolio (PDF)
-      <span class="icon">⬇</span>
-    </a>
-  </div>
 </div>
