@@ -12,6 +12,19 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    .fieldsets-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      & > div.slider {
+        max-width: 70%;
+      }
+      & > div.settings {
+        max-width: 30%;
+        width: 30%;
+      }
+    }
     .fieldset {
       border-radius: 20px;
       background: var(--Background-bg-white-card, #fff);
@@ -21,6 +34,12 @@
       align-items: flex-start;
       gap: 12px;
       align-self: stretch;
+      .legend-with-toggle {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        width: 100%;
+      }
       legend {
         color: var(--Text-text-bold, #121212);
         font-size: var(--font-size-heading-heading-6, 20px);

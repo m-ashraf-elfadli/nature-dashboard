@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
 import { SettingsComponent } from '../../../../shared/components/settings/settings.component';
@@ -19,6 +20,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 import { AppDialogService } from '../../../../shared/services/dialog.service';
 import { CustomizeService } from '../../../../services/customize.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { AwardsSliderComponent } from '../../../../shared/components/awards-slider/awards-slider.component';
 
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
@@ -37,10 +39,12 @@ const STATUS_MAP = {
     FormsModule,
     InputTextModule,
     ButtonModule,
+    InputSwitchModule,
     PageHeaderComponent,
     FormActionsComponent,
     SettingsComponent,
     TranslateModule,
+    AwardsSliderComponent,
   ],
   templateUrl: './customize-award-section-form.component.html',
   styleUrl: './customize-award-section-form.component.scss',
@@ -88,8 +92,16 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
       status: [1],
       name: ['', Validators.required],
       tagline: ['', Validators.required],
+      subsection_publish: [true],
       subsections: this.fb.array([]),
     });
+
+    // When subsection_publish changes, toggle validators/enabled on all subsection items
+    this.awardSectionForm
+      .get('subsection_publish')!
+      .valueChanges.subscribe((enabled: boolean) => {
+        this.toggleSubsectionFields(enabled);
+      });
 
     // Track changes in form arrays to mark form as dirty
     this.subscribeToFormArrayChanges();
@@ -102,10 +114,38 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
   }
 
   private createSubsectionGroup(data?: any): FormGroup {
+    const publishEnabled =
+      this.awardSectionForm?.get('subsection_publish')?.value ?? true;
+
     return this.fb.group({
       id: [data?.id || null],
-      title: [data?.title || '', Validators.required],
-      subtitle: [data?.subtitle || '', Validators.required],
+      title: [data?.title || '', publishEnabled ? [Validators.required] : []],
+      subtitle: [
+        data?.subtitle || '',
+        publishEnabled ? [Validators.required] : [],
+      ],
+    });
+  }
+
+  /**
+   * Mirrors toggleBenefitsFields() from ServiceFormComponent.
+   * When subsection_publish is true  → title & subtitle are required + enabled on every item.
+   * When subsection_publish is false → title & subtitle have no validators + disabled on every item.
+   */
+  private toggleSubsectionFields(enabled: boolean): void {
+    const fields = ['title', 'subtitle'];
+    this.subsectionsArray.controls.forEach((group) => {
+      fields.forEach((field) => {
+        const control = group.get(field);
+        if (enabled) {
+          control?.setValidators([Validators.required]);
+          control?.enable();
+        } else {
+          control?.clearValidators();
+          control?.disable();
+        }
+        control?.updateValueAndValidity();
+      });
     });
   }
 
@@ -123,6 +163,13 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
   }
 
   isSubsectionFieldInvalid(index: number, fieldName: string): boolean {
+    // Only show invalid state when the section-level subsection_publish is true
+    const publishEnabled =
+      this.awardSectionForm.get('subsection_publish')?.value;
+    if (!publishEnabled) {
+      return false;
+    }
+
     const field = this.subsectionsArray.at(index)?.get(fieldName);
     return !!(field?.invalid && (field.dirty || field.touched));
   }
@@ -193,6 +240,11 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
           // Add at least one empty subsection
           this.subsectionsArray.push(this.createSubsectionGroup());
         }
+
+        // Apply the current publish state to all freshly populated items
+        this.toggleSubsectionFields(
+          this.awardSectionForm.get('subsection_publish')!.value,
+        );
 
         this.awardSectionForm.markAsPristine();
       },
