@@ -121,8 +121,4 @@ export class FiltersComponent implements OnInit {
     this.op.toggle(e);
   }
 
-  get isResetDisabled(): boolean {
-    const values = Object.values(this.formFilter.value);
-    return values.some(val => val === null || val === '' || val === undefined);
-  }
 }
