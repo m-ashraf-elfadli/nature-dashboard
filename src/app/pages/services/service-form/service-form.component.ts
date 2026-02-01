@@ -83,6 +83,12 @@ export class ServiceFormComponent implements OnInit {
   serviceId!: string;
   isEditMode = false;
   currentLanguage = 'en';
+  previousLanguage = 'en';
+  showLanguageSwitchToast = false;
+  private languageNames: { [key: string]: string } = {
+    en: 'English',
+    ar: 'Arabic',
+  };
 
   languageStatuses = new Map<
     string,
@@ -116,12 +122,13 @@ export class ServiceFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this.previousLanguage = this.currentLanguage;
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
         this.isEditMode = true;
         this.serviceId = id;
-        this.pageTitle = 'Edit Service';
+        this.pageTitle = 'Update Service';
         this.loadService(id, this.currentLanguage);
       } else {
         this.updateLanguageStatus(this.currentLanguage, 'ongoing');
@@ -690,7 +697,11 @@ export class ServiceFormComponent implements OnInit {
   }
 
   private switchLanguage(lang: string): void {
+    // Store the current language as previous before switching
+    this.previousLanguage = this.currentLanguage;
     this.currentLanguage = lang;
+    this.showLanguageSwitchToast = true;
+
     this.commitLanguage(lang);
 
     if (this.isEditMode && this.serviceId) {
@@ -702,6 +713,9 @@ export class ServiceFormComponent implements OnInit {
       }
       this.clearFormForNewLanguage();
     }
+  }
+  hideLanguageSwitchToast(): void {
+    this.showLanguageSwitchToast = false;
   }
   private clearFormForNewLanguage(): void {
     this.serviceForm.patchValue({
@@ -735,5 +749,8 @@ export class ServiceFormComponent implements OnInit {
 
   onSave(): void {
     this.submitForm(this.currentLanguage, true);
+  }
+  getLanguageName(langCode: string): string {
+    return this.languageNames[langCode] || langCode.toUpperCase();
   }
 }
