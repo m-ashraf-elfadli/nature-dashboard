@@ -10,7 +10,7 @@ export const projectsRoutes: Routes = [
     path: 'add',
     loadComponent: () =>
       import('../project-form/project-form.component').then(
-        (m) => m.ProjectFormComponent
+        (m) => m.ProjectFormComponent,
       ),
     data: {
       title: 'projects.form.title',
@@ -20,10 +20,11 @@ export const projectsRoutes: Routes = [
     path: 'edit/:id',
     loadComponent: () =>
       import('../project-form/project-form.component').then(
-        (m) => m.ProjectFormComponent
+        (m) => m.ProjectFormComponent,
       ),
     data: {
       title: 'projects.form.breadcrumb_edit',
+      breadcrumb: 'Add',
     },
   },
 ];

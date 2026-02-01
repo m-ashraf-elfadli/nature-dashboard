@@ -15,30 +15,38 @@ export const dashboardRoutes: Routes = [
     path: 'projects',
     loadChildren: () =>
       import('../../../features/projects/components/projects/projects.routes').then(
-        (m) => m.projectsRoutes
+        (m) => m.projectsRoutes,
       ),
+    data: {
+      breadcrumb: 'Projects',
+    },
   },
   {
     path: 'services',
     loadChildren: () =>
       import('./../../../pages/services/services.routes').then(
-        (m) => m.servicesRoutes
+        (m) => m.servicesRoutes,
       ),
+    data: {
+      breadcrumb: 'Services',
+    },
   },
-  { 
-    path: 'awards', 
+  {
+    path: 'awards',
     component: AwardsComponent,
-    children:[
+    data: {
+      breadcrumb: 'Awards',
+    },
+    children: [
       {
-        path:'',
-        component:AwardsListComponent
+        path: '',
+        component: AwardsListComponent,
       },
       {
-        path:'add',
-        component:AwardFormComponent
+        path: 'add',
+        component: AwardFormComponent,
       },
-    ]
-
+    ],
   },
   { path: 'testimonials', component: TestimonialsComponent },
 ];
