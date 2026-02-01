@@ -1,22 +1,25 @@
-:host{
-    .p-select{
-      border-radius: 12px;
-      border: 1px solid var(--Colors-Neutral-450, #EFF1F5);
-      box-shadow: 0 1px 2px 0 rgba(146, 146, 146, 0.05);
-      padding: 8px 12px;
+:host {
+  .p-select {
+    border-radius: 12px;
+    border: 1px solid var(--Colors-Neutral-450, #EFF1F5);
+    box-shadow: 0 1px 2px 0 rgba(146, 146, 146, 0.05);
+    padding: 8px 12px;
+  }
+
+  ::ng-deep {
+    .p-select-label {
+      color: var(--Color-Neutral-Black, #000);
+      font-size: var(--Font-Size-2Xs, 14px);
+      font-weight: var(--Font-Weight-Medium, 500);
+      padding: 0;
     }
-    ::ng-deep{
-      .p-select-label{
-        color: var(--Color-Neutral-Black, #000);
-        font-size: var(--Font-Size-2Xs, 14px);
-        font-weight: var(--Font-Weight-Medium, 500);
-        padding: 0;
-      }
-      .p-select-dropdown {
-        justify-content: end;
-      }
+
+    .p-select-dropdown {
+      justify-content: end;
     }
+  }
 }
+
 .navbar {
   border-bottom: 1px solid var(--Color-Neutral-400, #DEDEDF);
   background: var(--Color-Neutral-white, #FFF);
@@ -26,7 +29,7 @@
   flex-shrink: 0;
 
   @media(max-width: 768px) {
-    padding: 0  
+    padding: 0
   }
 }
 
@@ -55,7 +58,7 @@
     transition: all 0.3s ease;
   }
 
-  
+
 }
 
 .navbar-logo {
@@ -87,7 +90,8 @@
     font-size: var(--Font-Size-Xl, 26px);
     font-style: normal;
     font-weight: var(--Font-Weight-Regular, 400);
-    line-height: var(--Font-Line-Height-Xl, 31.2px); /* 120% */
+    line-height: var(--Font-Line-Height-Xl, 31.2px);
+    /* 120% */
   }
 }
 
@@ -110,29 +114,31 @@
     .user-name {
       overflow: hidden;
       color: var(--Color-Neutral-Black, #000);
-      text-overflow: ellipsis;  
+      text-overflow: ellipsis;
       font-size: var(--Font-Size-2Xs, 14px);
       font-style: normal;
       font-weight: var(--Font-Weight-Medium, 500);
-      line-height: var(--Font-Line-Height-2Xs, 16.8px); /* 120% */
+      line-height: var(--Font-Line-Height-2Xs, 16.8px);
+      /* 120% */
       display: -webkit-box;
-     -webkit-box-orient: vertical;
-     -webkit-line-clamp: 1;
-     line-clamp: 1;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
     }
 
     .user-role {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
-    overflow: hidden;
-    color: var(--Color-Neutral-Black, #000);
-    text-overflow: ellipsis;
-    font-size: var(--Font-Size-2Xs, 14px);
-    font-style: normal;
-    font-weight: var(--Font-Weight-Light, 300);
-    line-height: var(--Font-Line-Height-2Xs, 16.8px); /* 120% */
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      overflow: hidden;
+      color: var(--Color-Neutral-Black, #000);
+      text-overflow: ellipsis;
+      font-size: var(--Font-Size-2Xs, 14px);
+      font-style: normal;
+      font-weight: var(--Font-Weight-Light, 300);
+      line-height: var(--Font-Line-Height-2Xs, 16.8px);
+      /* 120% */
     }
   }
 
@@ -176,6 +182,7 @@
     font-size: 0.95rem;
     transition: all 0.2s ease;
     border-bottom: 1px solid #E4E7EC;
+    cursor: pointer;
 
     &:last-child {
       border-bottom: none;
@@ -210,7 +217,7 @@
   .navbar-title {
     flex: 1;
     min-width: 0;
-    
+
 
     h1 {
       font-size: 20px;

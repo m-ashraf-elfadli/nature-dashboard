@@ -15,14 +15,21 @@
       </p>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="submit()">
-      <!-- USERNAME -->
+      <!-- Add this error alert for wrong credentials -->
+      @if (loginError) {
+        <div class="login-error">
+          <span>{{ loginError }}</span>
+        </div>
+      }
 
-      <div class="field">
+      <!-- USERNAME -->
+      <div class="our-field">
         <label>Username <span>*</span></label>
         <input
           type="text"
           placeholder="Enter your username"
           formControlName="username"
+          pInputText
         />
         @if (username?.touched && username?.invalid) {
           <div class="error">
@@ -34,7 +41,6 @@
       </div>
 
       <!-- PASSWORD -->
-
       <div class="field password-field">
         <label>Password <span>*</span></label>
         <p-password
@@ -44,7 +50,6 @@
           autocomplete="off"
           placeholder="Enter your password"
         />
-
         @if (password?.touched && password?.invalid) {
           <div class="error">
             @if (password?.errors?.["required"]) {
@@ -54,11 +59,12 @@
         }
       </div>
 
-      <button class="submit" type="submit">Sign In</button>
+      <button class="submit" type="submit" [disabled]="isLoading">
+        {{ isLoading ? "Signing In..." : "Sign In" }}
+      </button>
 
       <p class="support">
-        Have a problem signing in?
-        <a href="#">Call Support</a>
+        Have a problem signing in? <a href="#">Call Support</a>
       </p>
     </form>
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -6,6 +6,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
+  private readonly authService = inject(AuthService); 
+  
   userMenuVisible = false;
   currentPageTitle = 'Dashboard';
   mobileMenuOpen = false;
@@ -74,5 +77,24 @@ export class NavbarComponent implements OnInit {
 
   toggleMobileMenu() {
     this.sidebarService.toggleMobileMenu();
+  }
+
+
+  onLogout(event: Event) {
+    event.preventDefault(); 
+    this.userMenuVisible = false; 
+    
+    this.authService.logout().subscribe({
+      next: () => {
+        console.log('Logout successful');
+        this.router.navigate(['/auth']); 
+      },
+      error: (err) => {
+        console.error('Logout failed', err);
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        this.router.navigate(['/auth']);
+      }
+    });
   }
 }

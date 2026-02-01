@@ -22,21 +22,17 @@
       <!-- Language Selector -->
       <div class="language-selector">
         <p-select
-          [options]="languages" 
-          [(ngModel)]="selectedLanguage" 
+          [options]="languages"
+          [(ngModel)]="selectedLanguage"
           optionLabel="label"
           optionValue="code"
           (onChange)="changeLang(selectedLanguage)"
           placeholder="Select a Language"
-          class="w-full">
+          class="w-full"
+        >
           <ng-template let-lang pTemplate="selectedItem">
             <div class="flex align-items-center gap-2" *ngIf="lang">
-              <img
-                [src]="lang.flag"
-                width="20"
-                height="18"
-                alt=""
-              />
+              <img [src]="lang.flag" width="20" height="18" alt="" />
               <span class="font-medium">{{ lang.label }}</span>
             </div>
           </ng-template>
@@ -72,7 +68,7 @@
       <div class="user-menu" [class.visible]="userMenuVisible">
         <a href="#" class="menu-item">Profile</a>
         <a href="#" class="menu-item">Settings</a>
-        <a href="#" class="menu-item">Logout</a>
+        <a class="menu-item" (click)="onLogout($event)">Logout</a>
       </div>
     </div>
   </div>
