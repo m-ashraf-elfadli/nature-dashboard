@@ -1,5 +1,181 @@
 {
-  "HELLO": "مرحبا",
-  "WELCOME": "مرحبا بك في التطبيق",
-  "SAVE": "حفظ"
+  "general": {
+    "save": "حفظ",
+    "discard": "تجاهل",
+    "actions": "إجراءات",
+    "filter": "تصفية",
+    "text_editor_header": "نص القسم",
+    "search_input_table_placeholder": "البحث بالاسم ...",
+    "import": "استيراد CSV",
+    "up": "أعلى",
+    "down": "أسفل",
+    "stable": "مستقر",
+    "reset": "إعادة تعيين",
+    "apply": "تطبيق",
+    "cancel": "إلغاء",
+    "delete": "حذف"
+  },
+  "projects": {
+    "list": {
+      "page_title": "كافة المشاريع",
+      "table_headers": {
+        "project": "المشروع",
+        "country": "الدولة",
+        "city": "المدينة",
+        "services": "الخدمات",
+        "locale": "اللغة",
+        "status": "الحالة"
+      },
+      "delete_dialog": {
+        "header": "حذف المشروع؟",
+        "desc": "هل أنت متأكد من رغبتك في حذف هذا المشروع؟ لا يمكن التراجع عن هذا الإجراء."
+      },
+      "btns": {
+        "add_new": "إضافة مشروع جديد"
+      },
+      "filter": {
+        "country": "الدولة",
+        "city": "المدينة"
+      }
+    },
+    "form": {
+      "title": "إضافة مشروع جديد",
+      "breadcrumb_edit": "تعديل المشروع",
+      "english": "(الإنجليزية)",
+      "arabic": "(العربية)",
+      "titles": {
+        "deatils": "تفاصيل المشروع",
+        "settings": "إعدادات المشروع",
+        "galary": "معرض صور المشروع",
+        "location": "موقع المشروع",
+        "results": "النتائج والتأثيرات",
+        "metrics": "مؤشرات القياس",
+        "metrics_desc": "(الحد الأقصى المسموح به 3)"
+      },
+      "labels": {
+        "name": "اسم المشروع",
+        "overview": "نظرة عامة",
+        "brief": "نبذة مختصرة",
+        "location": "موقع المشروع",
+        "start_date": "تاريخ بدء المشروع",
+        "end_date": "تاريخ انتهاء المشروع",
+        "services": "خدمات المشروع",
+        "status": "حالة المشروع",
+        "images": "صور المشروع",
+        "country": "الدولة",
+        "city": "المدينة",
+        "before_image": "الصورة قبل",
+        "after_image": "الصورة بعد",
+        "additional_images": "صور إضافية",
+        "timeline": "الجدول الزمني للمشروع",
+        "section_title": "عنوان القسم",
+        "section_body": "نص القسم",
+        "metrics": "المؤشرات ({{count}})",
+        "gallery": "معرض المشروع",
+        "image_before": "صورة المشروع قبل",
+        "image_after": "صورة المشروع بعد",
+        "is_currently_active": "نشط حالياً"
+      },
+      "placeholders": {
+        "name": "اكتب اسم المشروع ...",
+        "overview": "اكتب نظرة عامة عن المشروع ...",
+        "brief": "اكتب نبذة عن المشروع ...",
+        "services": "اختر خدمات المشروع",
+        "country": "اختر دولة المشروع",
+        "city": "اختر مدينة المشروع",
+        "form": "من",
+        "to": "إلى",
+        "section_title": "أدخل عنوان القسم",
+        "section_body": "أدخل نص القسم",
+        "metric_title": "أدخل عنوان القسم",
+        "metric_number": "الرقم",
+        "metric_case": "الأيقونة"
+      },
+      "validation": {
+        "name": "الاسم مطلوب",
+        "overview": "النظرة العامة مطلوبة",
+        "brief": "النبذة المختصرة مطلوبة",
+        "services": "خدمات المشروع مطلوبة",
+        "from": "تاريخ البدء مطلوب",
+        "to": "تاريخ الانتهاء مطلوب",
+        "country": "الدولة مطلوبة",
+        "city": "المدينة مطلوبة"
+      },
+      "btns": {
+        "add_result": "إضافة قسم آخر",
+        "add_metrics": "إضافة مؤشرات أخرى",
+        "save": "حفظ التغييرات"
+      },
+      "language_dialog": {
+        "header": "تغييرات غير محفوظة؟",
+        "desc": "لديك تغييرات غير محفوظة في اللغة الحالية. هل تريد حفظها قبل الانتقال إلى اللغة العربية؟"
+      }
+    }
+  },
+  "awards": {
+    "list": {
+      "page_title": "كافة الجوائز",
+      "table_headers": {
+        "award": "الجائزة",
+        "date": "التاريخ",
+        "description": "الوصف",
+        "status": "الحالة"
+      },
+      "btns": {
+        "add_new": "إضافة جائزة جديدة"
+      }
+    },
+    "form": {
+      "title": "إضافة جائزة جديدة",
+      "english": "(الإنجليزية)",
+      "arabic": "(العربية)",
+      "titles": {
+        "details": "تفاصيل الجائزة",
+        "settings": "إعدادات الجوائز",
+        "organizations": "شعارات المنظمات",
+        "award": "صورة الجائزة"
+      },
+      "labels": {
+        "name": "اسم الجائزة",
+        "date": "تاريخ الجائزة",
+        "description": "الوصف"
+      },
+      "placeholders": {
+        "name": "اكتب اسم الجائزة ...",
+        "date": "أدخل تاريخ الجائزة",
+        "description": "اكتب وصف القسم هنا ..."
+      }
+    }
+  },
+  "services": {
+    "list": {
+      "page_title": "كافة الخدمات",
+      "table_headers": {
+        "service": "الخدمة",
+        "description": "الوصف",
+        "status": "الحالة"
+      },
+      "btns": {
+        "add_new": "إضافة خدمة جديدة"
+      }
+    },
+    "form": {
+      "title": "إضافة خدمة جديدة",
+      "english": "(الإنجليزية)",
+      "arabic": "(العربية)",
+      "titles": {
+        "details": "تفاصيل الخدمة",
+        "settings": "إعدادات الخدمة",
+        "icon": "أيقونة الخدمة"
+      },
+      "labels": {
+        "name": "اسم الخدمة",
+        "description": "الوصف"
+      },
+      "placeholders": {
+        "name": "اكتب اسم الخدمة ...",
+        "description": "اكتب وصف القسم هنا ..."
+      }
+    }
+  }
 }
