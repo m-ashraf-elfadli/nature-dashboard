@@ -431,6 +431,7 @@ a {
     &.p-textarea,
     &.p-multiselect,
     &.p-select,
+    .p-password,
     .p-datepicker {
       border-color: var(--Color-Error-500, #e74c3c) !important;
       background: rgba(231, 76, 60, 0.03);

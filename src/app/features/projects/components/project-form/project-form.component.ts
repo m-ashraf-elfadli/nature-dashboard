@@ -143,7 +143,6 @@ export class ProjectFormComponent implements OnInit {
   }
   patchValues(data:ProjectById){
     if (!data) return;
-    debugger
     this.projectData = data;
     this.isEditMode = true;
     this.projectId = data.id;
