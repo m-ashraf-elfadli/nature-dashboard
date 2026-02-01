@@ -9,6 +9,8 @@ export class ProjectNameResolver implements Resolve<string> {
 
   resolve(route: ActivatedRouteSnapshot) {
     const id = route.paramMap.get('id')!;
-    return this.projectsService.getById(id).pipe(map((res) => res.result.name));
+    return this.projectsService
+      .getById(id, 'en')
+      .pipe(map((res) => res.result.name));
   }
 }

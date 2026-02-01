@@ -57,6 +57,13 @@ export class PageHeaderComponent implements OnInit {
         };
       }
 
+      if (data?.['projectName']) {
+        this.breadcrumbs[this.breadcrumbs.length - 1] = {
+          label: data['projectName'],
+          route: undefined,
+        };
+      }
+
       this.buildBreadcrumbs(child, url);
     }
   }
