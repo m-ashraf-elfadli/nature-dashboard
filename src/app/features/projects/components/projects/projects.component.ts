@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FilterItems } from '../../../../shared/components/filters/filters.component';
 import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
 import { ProjectsService } from '../../services/projects.service';
@@ -23,6 +23,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 export class ProjectsComponent implements OnInit {
   private readonly service = inject(ProjectsService);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
   private readonly dialogService = inject(DialogService)
 
   data: WritableSignal<Project[]> = signal([])
@@ -109,7 +110,9 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.initFilterConfig()
     this.getDropDowns()
-    this.fetchData(this.paginationObj)
+    this.translate.onLangChange.subscribe(_ =>{
+      this.fetchData(this.paginationObj)
+    })
   }
   fetchData(pagination: PaginationObj) {
     this.service.getAll(pagination,this.filterObj?.key || '',this.filterObj).subscribe({
