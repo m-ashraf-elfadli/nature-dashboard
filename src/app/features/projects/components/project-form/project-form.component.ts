@@ -367,11 +367,11 @@ export class ProjectFormComponent implements OnInit {
     });
 
     // 🔹 Single images
-    if (value.image_before) {
+    if (value.image_before instanceof File) {
       formData.append('image_before', value.image_before);
     }
 
-    if (value.image_after) {
+    if (value.image_after instanceof File) {
       formData.append('image_after', value.image_after);
     }
 
