@@ -9,40 +9,86 @@
         }}</span>
       </div> -->
 
-      <div class="upload-area single" [class.drag-over]="isDragOver" (dragover)="onDragOver($event)"
-        (dragleave)="onDragLeave()" (drop)="onDrop($event)">
+      <div
+        class="upload-area single"
+        [class.drag-over]="isDragOver"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()"
+        (drop)="onDrop($event)"
+      >
         <ng-container *ngIf="images.length === 0">
           <div class="upload-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="17" viewBox="0 0 21 17" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="21"
+              height="17"
+              viewBox="0 0 21 17"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
                 d="M0 2.25C0 1.00736 1.00736 0 2.25 0H18.75C19.9926 0 21 1.00736 21 2.25V14.25C21 15.4926 19.9926 16.5 18.75 16.5H2.25C1.00736 16.5 0 15.4926 0 14.25V2.25ZM1.5 12.3107V14.25C1.5 14.6642 1.83579 15 2.25 15H18.75C19.1642 15 19.5 14.6642 19.5 14.25V12.3107L16.8107 9.62132C16.2249 9.03553 15.2751 9.03553 14.6893 9.62132L13.8107 10.5L14.7803 11.4697C15.0732 11.7626 15.0732 12.2374 14.7803 12.5303C14.4874 12.8232 14.0126 12.8232 13.7197 12.5303L8.56066 7.37132C7.97487 6.78553 7.02513 6.78553 6.43934 7.37132L1.5 12.3107ZM11.625 4.5C11.625 3.87868 12.1287 3.375 12.75 3.375C13.3713 3.375 13.875 3.87868 13.875 4.5C13.875 5.12132 13.3713 5.625 12.75 5.625C12.1287 5.625 11.625 5.12132 11.625 4.5Z"
-                fill="#82C672" />
+                fill="#82C672"
+              />
             </svg>
           </div>
           <label class="upload-label">
-            <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
-            <span class="text-upload">Click to upload</span>
-            <span class="text-or">or Drag and Drop files here</span>
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              hidden
+            />
+            <span class="text-upload">
+              {{ "gallery_upload.click" | translate }}
+            </span>
+            <span class="text-or">
+              {{ "gallery_upload.drag_drop" | translate }}
+            </span>
           </label>
-          <p class="file-info">JPG or PNG (max 3MB)</p>
+          <p class="file-info">
+            {{ "gallery_upload.hint" | translate: { max: maxSize } }}
+          </p>
         </ng-container>
 
         <ng-container *ngIf="images.length > 0">
           <div class="image-preview single-preview">
             <img [src]="images[0]" alt="Preview" />
             <button type="button" class="remove-btn" (click)="removeImage(0)">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <path
+                  d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                ></path>
               </svg>
             </button>
             <label class="replace-label">
-              <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                hidden
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" />
                 <path
-                  d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                  d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                />
               </svg>
             </label>
           </div>
@@ -61,17 +107,38 @@
     </ng-container>
 
     <!-- Large Upload Area (only show if no images) -->
-    <div class="upload-area multiple" *ngIf="images.length === 0" [class.drag-over]="isDragOver"
-      (dragover)="onDragOver($event)" (dragleave)="onDragLeave()" (drop)="onDrop($event)">
+    <div
+      class="upload-area multiple"
+      *ngIf="images.length === 0"
+      [class.drag-over]="isDragOver"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave()"
+      (drop)="onDrop($event)"
+    >
       <div class="upload-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 21 17" fill="none">
-          <path fill-rule="evenodd" clip-rule="evenodd"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="40"
+          height="40"
+          viewBox="0 0 21 17"
+          fill="none"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
             d="M0 2.25C0 1.00736 1.00736 0 2.25 0H18.75C19.9926 0 21 1.00736 21 2.25V14.25C21 15.4926 19.9926 16.5 18.75 16.5H2.25C1.00736 16.5 0 15.4926 0 14.25V2.25ZM1.5 12.3107V14.25C1.5 14.6642 1.83579 15 2.25 15H18.75C19.1642 15 19.5 14.6642 19.5 14.25V12.3107L16.8107 9.62132C16.2249 9.03553 15.2751 9.03553 14.6893 9.62132L13.8107 10.5L14.7803 11.4697C15.0732 11.7626 15.0732 12.2374 14.7803 12.5303C14.4874 12.8232 14.0126 12.8232 13.7197 12.5303L8.56066 7.37132C7.97487 6.78553 7.02513 6.78553 6.43934 7.37132L1.5 12.3107ZM11.625 4.5C11.625 3.87868 12.1287 3.375 12.75 3.375C13.3713 3.375 13.875 3.87868 13.875 4.5C13.875 5.12132 13.3713 5.625 12.75 5.625C12.1287 5.625 11.625 5.12132 11.625 4.5Z"
-            fill="#82C672" />
+            fill="#82C672"
+          />
         </svg>
       </div>
       <label class="upload-label">
-        <input type="file" accept="image/*" multiple (change)="onFileSelected($event)" hidden />
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          (change)="onFileSelected($event)"
+          hidden
+        />
         <span class="text-upload">Click to upload</span>
         <span class="text-or">or Drag and Drop files here</span>
       </label>
@@ -81,64 +148,140 @@
     <!-- Gallery Grid (show when images exist) -->
     <div class="gallery-grid" *ngIf="images.length >= 0">
       <!-- First Row: Show up to 4 images -->
-      <div *ngFor="let image of images.slice(0, 4); let i = index" class="gallery-item image-item">
+      <div
+        *ngFor="let image of images.slice(0, 4); let i = index"
+        class="gallery-item image-item"
+      >
         <img [src]="image" alt="Gallery item" />
         <button type="button" class="remove-btn" (click)="removeImage(i)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <polyline points="3 6 5 6 21 6"></polyline>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <path
+              d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+            ></path>
           </svg>
         </button>
       </div>
 
       <!-- Add More Button (in first row if less than 4 images) -->
-      <div class="gallery-item add-more" *ngIf="images.length < 4 && images.length > 0">
+      <div
+        class="gallery-item add-more"
+        *ngIf="images.length < 4 && images.length > 0"
+      >
         <label class="add-label">
-          <input type="file" accept="image/*" multiple (change)="onFileSelected($event)" hidden />
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <path d="M20 7.5V32.5M32.5 20L7.5 20" stroke="#75B267" stroke-width="2.5" stroke-linecap="round"
-              stroke-linejoin="round" />
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            (change)="onFileSelected($event)"
+            hidden
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="40"
+            height="40"
+            viewBox="0 0 40 40"
+            fill="none"
+          >
+            <path
+              d="M20 7.5V32.5M32.5 20L7.5 20"
+              stroke="#75B267"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </label>
-
       </div>
 
       <ng-container *ngIf="images.length == 0">
-        <div class="gallery-item add-more placeholder" *ngFor="let item of [1, 2, 3]">
+        <div
+          class="gallery-item add-more placeholder"
+          *ngFor="let item of [1, 2, 3]"
+        >
           <label class="add-label">
-            <input type="file" accept="image/*" multiple (change)="onFileSelected($event)" hidden />
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              (change)="onFileSelected($event)"
+              hidden
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="40"
+              height="40"
+              viewBox="0 0 40 40"
+              fill="none"
+            >
               <path
                 d="M3.75 26.25L12.3484 17.6516C13.8128 16.1872 16.1872 16.1872 17.6517 17.6517L26.25 26.25M23.75 23.75L26.0984 21.4016C27.5628 19.9372 29.9372 19.9372 31.4017 21.4017L36.25 26.25M6.25 32.5H33.75C35.1307 32.5 36.25 31.3807 36.25 30V10C36.25 8.61929 35.1307 7.5 33.75 7.5H6.25C4.86929 7.5 3.75 8.61929 3.75 10V30C3.75 31.3807 4.86929 32.5 6.25 32.5Z"
-                stroke="#8C8C8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                stroke="#8C8C8C"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </label>
         </div>
         <div class="gallery-item add-more">
           <label class="add-label">
-            <input type="file" accept="image/*" multiple (change)="onFileSelected($event)" hidden />
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <path d="M20 7.5V32.5M32.5 20L7.5 20" stroke="#75B267" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              (change)="onFileSelected($event)"
+              hidden
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="40"
+              height="40"
+              viewBox="0 0 40 40"
+              fill="none"
+            >
+              <path
+                d="M20 7.5V32.5M32.5 20L7.5 20"
+                stroke="#75B267"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </label>
-
         </div>
       </ng-container>
-
-
     </div>
 
     <!-- Second Row (if more than 4 images) -->
     <div class="gallery-grid-second" *ngIf="images.length >= 4">
-      <div *ngFor="let image of images.slice(4); let i = index" class="gallery-item image-item">
+      <div
+        *ngFor="let image of images.slice(4); let i = index"
+        class="gallery-item image-item"
+      >
         <img [src]="image" alt="Gallery item" />
         <button type="button" class="remove-btn" (click)="removeImage(i + 4)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <polyline points="3 6 5 6 21 6"></polyline>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <path
+              d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+            ></path>
           </svg>
         </button>
       </div>
@@ -146,10 +289,27 @@
       <!-- Add More Button (in second row) -->
       <div class="gallery-item add-more">
         <label class="add-label">
-          <input type="file" accept="image/*" multiple (change)="onFileSelected($event)" hidden />
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <path d="M20 7.5V32.5M32.5 20L7.5 20" stroke="#75B267" stroke-width="2.5" stroke-linecap="round"
-              stroke-linejoin="round" />
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            (change)="onFileSelected($event)"
+            hidden
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="40"
+            height="40"
+            viewBox="0 0 40 40"
+            fill="none"
+          >
+            <path
+              d="M20 7.5V32.5M32.5 20L7.5 20"
+              stroke="#75B267"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </label>
       </div>

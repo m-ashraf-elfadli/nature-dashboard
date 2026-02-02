@@ -55,7 +55,10 @@ const STATUS_MAP = {
 } as const;
 
 const DIALOG_CONFIGS = {
-  stage: { header: 'Create New Stage', component: StageFormComponent },
+  stage: {
+    header: 'Create New Stage',
+    component: StageFormComponent,
+  },
   value: { header: 'Create New Value', component: ValueFormComponent },
   result: {
     header: 'Create New Results & Impacts',
@@ -458,15 +461,11 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
   }
 
   openServiceValuePopup(): void {
-    if (this.validateAndMarkFields()) {
-      this.openItemPopup('value');
-    }
+    this.openItemPopup('value');
   }
 
   openServiceResultPopup(): void {
-    if (this.validateAndMarkFields()) {
-      this.openItemPopup('result');
-    }
+    this.openItemPopup('result');
   }
 
   addBenefitsInsight(): void {

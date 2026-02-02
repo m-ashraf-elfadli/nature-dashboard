@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { InputTextModule } from 'primeng/inputtext';
 import { TestimonialsService } from '../../services/testimonials.service';
 import { TestimonialFormAction, TestimonialFormEvent } from '../../models/testimonials.model';
-
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-testimonials-form',
   standalone: true,
-  imports: [InputTextModule, ReactiveFormsModule],
+  imports: [InputTextModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './testimonials-form.component.html',
   styleUrl: './testimonials-form.component.scss'
 })

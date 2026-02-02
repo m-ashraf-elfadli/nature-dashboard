@@ -11,6 +11,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent, ConfirmationDialogConfig } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { PaginationObj } from '../../../../core/models/global.interface';
 import { Testimonial, TestimonialFormEvent } from '../../models/testimonials.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-testimonials',
@@ -20,13 +21,17 @@ import { Testimonial, TestimonialFormEvent } from '../../models/testimonials.mod
     ReusableTableComponent,
     DialogModule,
     ButtonModule,
-    TestimonialsFormComponent
+    TestimonialsFormComponent,
+    TranslateModule
   ],
   providers: [DialogService],
   templateUrl: './testimonials.component.html',
   styleUrl: './testimonials.component.scss'
 })
 export class TestimonialsComponent implements OnInit {
+  importCSV(): void {
+    throw new Error('Method not implemented.');
+  }
   @ViewChild(TestimonialsFormComponent) testimonialForm?: TestimonialsFormComponent;
 
   private testimonialsService = inject(TestimonialsService);
@@ -51,6 +56,7 @@ export class TestimonialsComponent implements OnInit {
     const pag = pagination || this.paginationObj;
     this.testimonialsService.getAll(pag, this.filterObj?.key || '').subscribe({
       next: (res) => {
+        console.log(res.result);
         this.data = res.result || [];
         this.totalRecords = res.total;
       },
@@ -59,11 +65,32 @@ export class TestimonialsComponent implements OnInit {
   }
 
   columns: TableColumn<Testimonial>[] = [
-    { field: 'clientName', header: 'Client name', type: 'text' },
-    { field: 'jobTitle', header: 'Job Title', type: 'text' },
-    { field: 'Testimonial', header: 'Testimonial', type: 'text', class: "max-w-15rem" },
-    { field: 'createdAt', header: 'Date added', type: 'date' },
-    { field: 'status', header: 'Status', type: 'status' },
+    {
+      field: 'clientName',
+      header: 'testimonials.list.table_headers.name',
+      type: 'text'
+    },
+    {
+      field: 'jobTitle',
+      header: 'testimonials.list.table_headers.position',
+      type: 'text'
+    },
+    {
+      field: 'Testimonial',
+      header: 'testimonials.list.table_headers.testimonial',
+      type: 'text',
+      class: 'max-w-15rem'
+    },
+    {
+      field: 'createdAt',
+      header: 'general.date_added',
+      type: 'date'
+    },
+    {
+      field: 'status',
+      header: 'testimonials.list.table_headers.status',
+      type: 'status'
+    }
   ];
 
   actions: TableAction<Testimonial>[] = [
@@ -95,15 +122,22 @@ export class TestimonialsComponent implements OnInit {
     {
       type: 'search',
       name: 'key',
-      placeholder: 'Search by name ...'
+      placeholder: 'general.search_input_table_placeholder'
     },
     {
       type: 'btn',
-      label: "Add New Testimonial",
+      label: 'testimonials.list.btns.add_new',
       btnIcon: "pi pi-plus",
       btnSeverity: "primary",
       btnCallback: () => this.showDialog()
-    }
+    },
+    {
+      type: 'btn',
+      label: 'general.import',
+      btnIcon: "pi pi-download",
+      btnSeverity: "white",
+      btnCallback: () => this.importCSV()
+    },
   ];
 
   showDialog() {

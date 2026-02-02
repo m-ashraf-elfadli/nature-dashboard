@@ -1,6 +1,7 @@
 {
   "general": {
     "save": "Save",
+    "date_added": "Date added",
     "discard": "Discard",
     "actions": "Actions",
     "filter": "Filter",
@@ -206,5 +207,97 @@
         "description": "Write section description here ..."
       }
     }
+  },
+  "testimonials": {
+    "list": {
+      "page_title": "All Testimonials",
+      "table_headers": {
+        "name": "Name",
+        "position": "Position",
+        "testimonial": "Testimonial",
+        "status": "Status"
+      },
+      "btns": {
+        "add_new": "Add New Testimonial"
+      }
+    },
+    "form": {
+      "title": "Add New Testimonial",
+      "labels": {
+        "client_name_en": "Client name (English)",
+        "client_name_ar": "Client name (Arabic)",
+        "job_title_en": "Job title (English)",
+        "job_title_ar": "Job title (Arabic)",
+        "testimonial_en": "Testimonial (English)",
+        "testimonial_ar": "Testimonial (Arabic)"
+      },
+      "placeholders": {
+        "client_name_en": "Enter client name in English",
+        "client_name_ar": "Enter client name in Arabic",
+        "job_title_en": "Enter job title in English",
+        "job_title_ar": "Enter job title in Arabic",
+        "testimonial_en": "Enter testimonial in English",
+        "testimonial_ar": "Enter testimonial in Arabic"
+      },
+      "validation": {
+        "client_name_en": "Client name in English is required",
+        "client_name_ar": "Client name in Arabic is required",
+        "job_title_en": "Job title in English is required",
+        "job_title_ar": "Job title in Arabic is required",
+        "testimonial_en": "Testimonial in English is required",
+        "testimonial_ar": "Testimonial in Arabic is required"
+      },
+      "btns": {
+        "save_create": "Save and create new",
+        "save": "Save",
+        "update": "Update"
+      }
+    }
+  },
+  "clients": {
+    "list": {
+      "page_title": "Clients",
+      "table_headers": {
+        "name": "Client name",
+        "image": "Client image",
+        "status": "Status"
+      },
+      "btns": {
+        "add_new": "Add new client"
+      }
+    },
+    "form": {
+      "add_title": "Add New Client",
+      "edit_title": "Edit Client",
+      "labels": {
+        "name_en": "Client name (English)",
+        "name_ar": "Client name (Arabic)",
+        "image": "Client image"
+      },
+      "placeholders": {
+        "name_en": "Enter client name in English",
+        "name_ar": "Enter client name in Arabic"
+      },
+      "validation": {
+        "name_en": "Client name in English is required",
+        "name_ar": "Client name in Arabic is required",
+        "image": "Client image is required"
+      },
+      "btns": {
+        "save": "Save",
+        "update": "Update",
+        "save_create": "Save and create new"
+      },
+      "load_error": "Failed to load client data"
+    },
+    "confirm": {
+      "delete_title": "Delete Client",
+      "delete_subtitle": "Are you sure you want to delete this client? This action cannot be undone."
+    }
+  },
+  "gallery_upload": {
+    "click": "Click to upload",
+    "drag_drop": "or drag and drop files here",
+    "hint": "JPG or PNG (max {{max}}MB)"
   }
 }

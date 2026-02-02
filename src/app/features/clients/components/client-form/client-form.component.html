@@ -1,54 +1,80 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-inputs">
+    <!-- Client Name EN -->
     <div class="our-field">
-      <label> Client name (English) <span class="text-red-val">*</span> </label>
+      <label>
+        {{ "clients.form.labels.name_en" | translate }}
+        <span class="text-red-val">*</span>
+      </label>
       <input
-        type="text"
         pInputText
         formControlName="clientNameEn"
-        placeholder="Enter client name in English"
+        [placeholder]="'clients.form.placeholders.name_en' | translate"
       />
       @if (isFieldInvalid("clientNameEn")) {
-        <span class="text-red-val">Client name in English is required</span>
+        <span class="text-red-val">
+          {{ "clients.form.validation.name_en" | translate }}
+        </span>
       }
     </div>
 
+    <!-- Client Name AR -->
     <div class="our-field">
-      <label> Client name (Arabic) <span class="text-red-val">*</span> </label>
+      <label>
+        {{ "clients.form.labels.name_ar" | translate }}
+        <span class="text-red-val">*</span>
+      </label>
       <input
-        type="text"
         pInputText
         formControlName="clientNameAr"
-        placeholder="أدخل اسم العميل بالعربية"
+        [placeholder]="'clients.form.placeholders.name_ar' | translate"
       />
       @if (isFieldInvalid("clientNameAr")) {
-        <span class="text-red-val">Client name in Arabic is required</span>
+        <span class="text-red-val">
+          {{ "clients.form.validation.name_ar" | translate }}
+        </span>
       }
     </div>
 
-    <div class="galary-field">
-      <label> Client Image <span class="text-red-val">*</span> </label>
+    <!-- Client Image -->
+    <div class="our-field">
+      <label>
+        {{ "clients.form.labels.image" | translate }}
+        <span class="text-red-val">*</span>
+      </label>
 
       <app-gallery-upload formControlName="clientImage"></app-gallery-upload>
 
       @if (isFieldInvalid("clientImage")) {
-        <span class="text-red-val">Client image is required</span>
+        <span class="text-red-val">
+          {{ "clients.form.validation.image" | translate }}
+        </span>
       }
     </div>
   </div>
 
   <div class="form-footer">
-    <button
-      type="button"
-      class="custom-btn btn-white"
-      (click)="onSaveAndCreateNew()"
-      [disabled]="isLoading"
-    >
-      Save And Create New
-    </button>
+    @if (!isEditMode) {
+      <button
+        type="button"
+        class="custom-btn btn-white"
+        (click)="onSaveAndCreateNew()"
+        [disabled]="form.invalid || isLoading"
+      >
+        {{ "clients.form.btns.save_create" | translate }}
+      </button>
+    }
 
-    <button type="submit" class="custom-btn btn-primary" [disabled]="isLoading">
-      {{ isEditMode ? "Update" : "Save" }}
+    <button
+      type="submit"
+      class="custom-btn btn-primary"
+      [disabled]="form.invalid || isLoading"
+    >
+      @if (isEditMode) {
+        {{ "clients.form.btns.update" | translate }}
+      } @else {
+        {{ "clients.form.btns.save" | translate }}
+      }
     </button>
   </div>
 </form>

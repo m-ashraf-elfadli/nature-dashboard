@@ -19,11 +19,17 @@ import { GalleryUploadComponent } from '../../../../shared/components/gallery-up
 import { ClientsService } from '../../services/clients.service';
 import { ClientFormActions, ClientFormEvent } from '../../models/clients.model';
 import { environment } from '../../../../../environments/environment';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-client-form',
   standalone: true,
-  imports: [InputTextModule, GalleryUploadComponent, ReactiveFormsModule],
+  imports: [
+    InputTextModule,
+    GalleryUploadComponent,
+    ReactiveFormsModule,
+    TranslateModule
+  ],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss'
 })
@@ -33,6 +39,7 @@ export class ClientFormComponent implements OnInit, OnChanges {
 
   private fb = inject(FormBuilder);
   private clientsService = inject(ClientsService);
+  private translate = inject(TranslateService);
 
   form!: FormGroup;
   isEditMode = false;
@@ -49,6 +56,10 @@ export class ClientFormComponent implements OnInit, OnChanges {
     if (changes['clientId']) {
       if (this.clientId) {
         this.isEditMode = true;
+        this.loadClient();
+      } else if (this.form) {
+        this.isEditMode = false;
+        this.resetForm();
       }
     }
   }
@@ -77,8 +88,8 @@ export class ClientFormComponent implements OnInit, OnChanges {
         const data = res.result;
 
         this.form.patchValue({
-          clientNameEn: data.name_en || data.name,
-          clientNameAr: data.name_ar || data.name,
+          clientNameEn: data.name_en || data.name || '',
+          clientNameAr: data.name_ar || data.name || '',
           clientImage: data.image
             ? `${environment.mediaUrl}${data.image}`
             : null
@@ -87,7 +98,7 @@ export class ClientFormComponent implements OnInit, OnChanges {
         this.isLoading = false;
       },
       error: () => {
-        alert('Failed to load client data');
+        alert(this.translate.instant('clients.form.load_error'));
         this.isLoading = false;
       }
     });
@@ -116,7 +127,7 @@ export class ClientFormComponent implements OnInit, OnChanges {
   private emitAction(action: ClientFormActions) {
     const formData = this.prepareFormData();
     this.close.emit({ action, formData });
-    this.resetForm()
+    this.resetForm();
   }
 
   private prepareFormData(): FormData {

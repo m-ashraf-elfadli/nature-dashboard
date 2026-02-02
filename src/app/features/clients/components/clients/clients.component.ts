@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ViewChild } from '@angular/core';
 import { PageHeaderComponent } from "../../../../shared/components/page-header/page-header.component";
 import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
 import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
@@ -11,7 +11,7 @@ import { ClientsService } from '../../services/clients.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent, ConfirmationDialogConfig } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { Client, ClientFormEvent } from '../../models/clients.model';
-import { ViewChild } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-clients',
@@ -21,7 +21,8 @@ import { ViewChild } from '@angular/core';
     ReusableTableComponent,
     DialogModule,
     ButtonModule,
-    ClientFormComponent
+    ClientFormComponent,
+    TranslateModule
   ],
   providers: [DialogService],
   templateUrl: './clients.component.html',
@@ -29,6 +30,7 @@ import { ViewChild } from '@angular/core';
 })
 export class ClientsComponent implements OnInit {
   @ViewChild(ClientFormComponent) clientForm?: ClientFormComponent;
+
   private clientsService = inject(ClientsService);
   private dialogService = inject(DialogService);
 
@@ -37,6 +39,7 @@ export class ClientsComponent implements OnInit {
   totalRecords = 0;
   currentClientId?: string;
   confirmDialogRef?: DynamicDialogRef;
+
   paginationObj: PaginationObj = {
     page: 1,
     size: 10,
@@ -55,18 +58,32 @@ export class ClientsComponent implements OnInit {
         this.totalRecords = res.total || 0;
       },
       error: (err) => {
-        console.error('❌ Clients fetch error:', err);
-        console.error('❌ Status:', err.status);
-        console.error('❌ Error details:', err.error);
+        console.error('Clients fetch error:', err);
       }
     });
   }
 
   columns: TableColumn<Client>[] = [
-    { field: 'name', header: 'Client name', type: 'text' },
-    { field: 'image', header: 'Client image', type: 'image' },
-    { field: 'createdAt', header: 'Date added', type: 'date' },
-    { field: 'status', header: 'Status', type: 'status' },
+    {
+      field: 'name',
+      header: 'clients.list.table_headers.name',
+      type: 'text'
+    },
+    {
+      field: 'image',
+      header: 'clients.list.table_headers.image',
+      type: 'image'
+    },
+    {
+      field: 'createdAt',
+      header: 'general.date_added',
+      type: 'date'
+    },
+    {
+      field: 'status',
+      header: 'clients.list.table_headers.status',
+      type: 'status'
+    },
   ];
 
   actions: TableAction<Client>[] = [
@@ -96,22 +113,22 @@ export class ClientsComponent implements OnInit {
     {
       type: 'search',
       name: 'key',
-      placeholder: 'Search by name ...'
+      placeholder: 'general.search_input_table_placeholder'
     },
     {
       type: 'btn',
-      label: "Add New Client",
-      btnIcon: "pi pi-plus",
-      btnSeverity: "primary",
-      btnCallback: () => this.showDialog()
-    },
-    {
-      type: 'btn',
-      label: "Import CSV",
-      btnIcon: "pi pi-download",
-      btnSeverity: "white",
+      label: 'general.import',
+      btnIcon: 'pi pi-download',
+      btnSeverity: 'white',
       btnCallback: () => this.importCSV()
     },
+    {
+      type: 'btn',
+      label: 'clients.list.btns.add_new',
+      btnIcon: 'pi pi-plus',
+      btnSeverity: 'primary',
+      btnCallback: () => this.showDialog()
+    }
   ];
 
   showDialog() {
@@ -126,11 +143,11 @@ export class ClientsComponent implements OnInit {
 
   delete(row: Client) {
     const dialogConfig: ConfirmationDialogConfig<Client> = {
-      title: 'Delete Client',
-      subtitle: `Are you sure you want to delete "${row.name}"? This action cannot be undone.`,
+      title: 'clients.confirm.delete_title',
+      subtitle: 'clients.confirm.delete_subtitle',
       icon: 'images/delete.svg',
-      confirmText: 'Delete',
-      cancelText: 'Cancel',
+      confirmText: 'general.delete',
+      cancelText: 'general.cancel',
       confirmSeverity: 'delete',
       cancelSeverity: 'cancel',
       data: row
@@ -146,7 +163,7 @@ export class ClientsComponent implements OnInit {
     });
 
     this.confirmDialogRef.onClose.subscribe((result: any) => {
-      if (result && result.action === 'confirm' && result.data && result.data.id) {
+      if (result?.action === 'confirm' && result.data?.id) {
         this.performDelete(result.data.id);
       }
     });
@@ -154,13 +171,8 @@ export class ClientsComponent implements OnInit {
 
   private performDelete(id: string) {
     this.clientsService.delete(id).subscribe({
-      next: () => {
-        this.loadClients();
-      },
-      error: (err) => {
-        console.error('Delete error:', err);
-        alert('Failed to delete client');
-      }
+      next: () => this.loadClients(),
+      error: () => alert('Failed to delete client')
     });
   }
 
@@ -170,25 +182,21 @@ export class ClientsComponent implements OnInit {
   }
 
   selectionChange(e: Client[] | Client) {
-    console.log('✔️ Selected items:', e);
+    console.log('Selected:', e);
   }
 
   importCSV() {
-    console.log("📥 Import CSV button clicked");
+    console.log('Import CSV');
   }
 
   handleFormClose(event: ClientFormEvent) {
-    console.log('Form closed with action:', event.action);
-
     switch (event.action) {
       case 'save':
         this.handleSave(event.formData);
         break;
-
       case 'saveAndCreateNew':
         this.handleSaveAndCreateNew(event.formData);
         break;
-
       case 'cancel':
         this.handleCancel();
         break;
@@ -197,30 +205,18 @@ export class ClientsComponent implements OnInit {
 
   private handleSave(formData: FormData) {
     if (this.currentClientId) {
-      // Update existing
       this.clientsService.update(this.currentClientId, formData).subscribe({
-        next: (res) => {
-          console.log('✅ Update success:', res);
+        next: () => {
           this.visible = false;
           this.currentClientId = undefined;
           this.loadClients();
-        },
-        error: (err) => {
-          console.error('❌ Update error:', err);
-          this.showErrorMessage(err);
         }
       });
     } else {
-      // Create new
       this.clientsService.create(formData).subscribe({
-        next: (res) => {
-          console.log('✅ Create success:', res);
+        next: () => {
           this.visible = false;
           this.loadClients();
-        },
-        error: (err) => {
-          console.error('❌ Create error:', err);
-          this.showErrorMessage(err);
         }
       });
     }
@@ -230,48 +226,22 @@ export class ClientsComponent implements OnInit {
     this.clientsService.create(formData).subscribe({
       next: () => {
         this.loadClients();
-
         this.currentClientId = undefined;
-
         this.clientForm?.resetForm();
-      },
-      error: (err) => {
-        this.showErrorMessage(err);
       }
     });
   }
 
-
   private handleCancel() {
-    console.log('Form cancelled');
     this.visible = false;
     this.currentClientId = undefined;
   }
 
-  private showErrorMessage(err: any) {
-    let errorMessage = 'An error occurred';
-
-    if (err.error) {
-      if (err.error.errors) {
-        const errors = err.error.errors;
-        const errorMessages = Object.keys(errors).map(key => {
-          return `${key}: ${Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key]}`;
-        });
-        errorMessage = errorMessages.join('\n');
-      } else if (err.error.message) {
-        errorMessage = err.error.message;
-      }
-    }
-
-    alert(`Failed to save client:\n${errorMessage}`);
-  }
   onDialogHide() {
     this.currentClientId = undefined;
   }
 
   ngOnDestroy() {
-    if (this.confirmDialogRef) {
-      this.confirmDialogRef.close();
-    }
+    this.confirmDialogRef?.close();
   }
 }

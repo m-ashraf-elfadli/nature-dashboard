@@ -7,11 +7,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-gallery-upload',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './gallery-upload.component.html',
   styleUrl: './gallery-upload.component.scss',
   providers: [
@@ -24,18 +25,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class GalleryUploadComponent implements ControlValueAccessor {
   @Input() multiple: boolean = false;
-  // @Input() label: string = '';
-  // @Input() dimensions: string = '';
   @Input() maxSize: number = 100;
   @Input() formControlName: string = '';
   @Output() fileSelected = new EventEmitter<File | File[]>();
   @Output() removed = new EventEmitter<void>();
 
   images: (string | ArrayBuffer)[] = [];
+  // Track the actual file/URL data separately from display previews
+  private filesData: (File | string)[] = [];
   isDragOver: boolean = false;
 
-  private onChange: (value: File | File[] | null) => void = () => {};
-  private onTouched: () => void = () => {};
+  // ✅ Fix: Accept any type for onChange to handle mixed arrays
+  private onChange: (value: any) => void = () => { };
+  private onTouched: () => void = () => { };
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -83,44 +85,70 @@ export class GalleryUploadComponent implements ControlValueAccessor {
     if (validFiles.length === 0) return;
 
     if (this.multiple) {
-      // Multiple mode: add to existing images
+      // Multiple mode: ADD to existing images (don't replace)
       validFiles.forEach((file) => {
+        // Add to internal data tracking
+        this.filesData.push(file);
+
+        // Add preview
         const reader = new FileReader();
         reader.onload = (e) => {
           this.images.push(e.target?.result as string | ArrayBuffer);
         };
         reader.readAsDataURL(file);
       });
-      this.onChange(validFiles);
+
+      // Emit the complete array (existing URLs + new Files)
+      this.onChange(this.filesData);
       this.fileSelected.emit(validFiles);
     } else {
       // Single mode: replace existing image
       const file = validFiles[0];
+      this.filesData = [file];
+
       const reader = new FileReader();
       reader.onload = (e) => {
         this.images = [e.target?.result as string | ArrayBuffer];
       };
       reader.readAsDataURL(file);
+
       this.onChange(file);
       this.fileSelected.emit(file);
     }
   }
+
   removeImage(index: number) {
     this.images.splice(index, 1);
+    this.filesData.splice(index, 1);
+
     if (this.images.length === 0) {
       this.onChange(null);
+    } else if (this.multiple) {
+      // Emit updated array after removal
+      this.onChange(this.filesData);
+    } else {
+      // Single mode after removal
+      this.onChange(null);
     }
-    this.removed.emit(); // ⬅️ إعلام الأب إن الصورة اتشالت
+    this.removed.emit();
   }
+
   // ControlValueAccessor methods
   writeValue(obj: any): void {
     if (obj) {
-      // Handle both File objects and image preview URLs
-      if (typeof obj === 'string') {
-        // It's a URL/preview string
+      // Handle array of URLs/Files (for multiple mode)
+      if (Array.isArray(obj)) {
+        this.filesData = [...obj];
+        this.images = [...obj];
+      }
+      // Handle single URL string
+      else if (typeof obj === 'string') {
+        this.filesData = [obj];
         this.images = [obj];
-      } else if (obj instanceof File) {
-        // It's a File object, convert to preview
+      }
+      // Handle single File object
+      else if (obj instanceof File) {
+        this.filesData = [obj];
         const reader = new FileReader();
         reader.onload = (e) => {
           this.images = [e.target?.result as string | ArrayBuffer];
@@ -130,6 +158,7 @@ export class GalleryUploadComponent implements ControlValueAccessor {
     } else {
       // Clear images when obj is null/undefined
       this.images = [];
+      this.filesData = [];
     }
   }
 
@@ -139,9 +168,5 @@ export class GalleryUploadComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    // Handle disabled state if needed
   }
 }
