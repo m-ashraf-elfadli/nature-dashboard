@@ -247,10 +247,6 @@ a {
     font-style: normal;
     font-weight: var(--Font-Weight-Regular, 500);
     line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
-
-    .required {
-      color: var(--Alert-Error-100, #df1c41);
-    }
   }
   .p-inputtext,
   .p-textarea,
@@ -373,7 +369,6 @@ a {
       line,
       polyline {
         stroke-width: 1px;
-        stroke: var();
       }
     }
   }
@@ -406,6 +401,16 @@ a {
     cursor: not-allowed;
     opacity: 1; // prevent PrimeNG opacity dimming
   }
+  .p-disabled {
+    opacity: 1 !important;
+    border: 1.261px solid var(--Color-Neutral-300, #efeff0);
+    background: var(--Color-Neutral-200, #f4f4f5);
+    border-radius: 14px;
+    * {
+      background-color: transparent;
+      border: none !important;
+    }
+  }
 
   // Disabled placeholder
   .p-inputtext:disabled::placeholder,
@@ -420,6 +425,7 @@ a {
     &.p-textarea,
     &.p-multiselect,
     &.p-select,
+    .p-password,
     .p-datepicker {
       border-color: var(--Color-Error-500, #e74c3c) !important;
       background: rgba(231, 76, 60, 0.03);
@@ -433,11 +439,7 @@ a {
     line-height: 150%;
   }
 }
-.p-toggleswitch-slider {
-  &::before {
-    display: block !important;
-  }
-}
+
 // main-layout styles
 /* ! important
   I deleted it from main.component.scss and put it here to make it global 
@@ -454,6 +456,7 @@ a {
 .form-content {
   padding: 1rem;
   background: #fafafa;
+  height: 100%;
 }
 // hide the
 input::-webkit-outer-spin-button,
@@ -480,6 +483,9 @@ input[type="number"] {
     font-style: normal;
     font-weight: 400;
     line-height: 160%; /* 28.8px */
+  }
+  &:disabled {
+    cursor: default;
   }
 }
 .delete-btn {
@@ -544,10 +550,54 @@ input[type="number"] {
   width: 14px !important;
   height: 14px !important;
   border: 1px solid var(--Color-Neutral-500, #939598) !important;
+  background-color: red;
   .p-iconwrapper {
+    display: flex !important;
     svg {
       width: 10px;
       height: 10px;
     }
   }
+}
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider::before {
+  display: flex !important;
+}
+.p-toggleswitch-slider {
+  &::before {
+    display: block !important;
+  }
+}
+.pi-trash {
+  color: #b3261e;
+  font-size: 14px !important;
+}
+.form-toaster {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 12px;
+  background: var(--Color-Primary-200, #ecf6ea);
+
+  span {
+    color: var(--Color-Primary-1000, #2e4528);
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 18px */
+    letter-spacing: -0.36px;
+  }
+}
+span.required {
+  color: var(--Alert-Error-100, #df1c41);
+  font-size: var(--Font-Size-S, 18px);
+  font-style: normal;
+  font-weight: var(--Font-Weight-Regular, 400);
+  line-height: var(--Font-Line-Height-S, 21.6px);
+}
+.p-toggleswitch-slider {
+  position: relative;
 }

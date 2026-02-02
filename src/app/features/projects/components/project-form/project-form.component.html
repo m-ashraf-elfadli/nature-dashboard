@@ -2,7 +2,7 @@
     <div class="form-header">
         <app-page-header [title]="'projects.form.title' | translate"></app-page-header>
         <app-form-actions (discard)="onDiscard($event)" (save)="onSave()"
-            (languageChange)="onLanguageChange($event)"></app-form-actions>
+            (languageChange)="onLanguageChange($event)" [isFormValid]="form.valid"></app-form-actions>
     </div>
     <form [formGroup]="form" (ngSubmit)="submitForm()" class="project-form">
         <div class="form-left-section">
@@ -140,7 +140,14 @@
                 </div>
                 <div class="inputs" formArrayName="results">
                     @for (item of results.controls; track $index) {
-                        <div class="inputs" [formGroupName]="$index">
+                        <div class="inputs results-form-group" [formGroupName]="$index">
+                            @if($index != 0){
+                                <div class="delete-results-form-array-btn">
+                                    <button (click)="removeResult($index)" type="button" class="custom-btn btn-white p-2">
+                                        <i class="pi pi-trash"></i>
+                                    </button>
+                                </div>
+                            }
                             <div class="our-field">
                                 <label for="section_title">{{ 'projects.form.labels.section_title' | translate }}</label>
                                 <input pInputText type="text" formControlName="section_title" id="section_title" [placeholder]="'projects.form.placeholders.section_title' | translate">
@@ -175,6 +182,9 @@
                                 </p-editor>
                             </div>
                         </div>
+                        @if(results.controls.length !== $index + 1){
+                            <div class="result-form-group-seperator"></div>
+                        }
                     }
                 </div>
                 @if(form.get('enableResults')?.value){
@@ -211,6 +221,13 @@
                                             </ng-template>
                                         </p-select>
                                     </div>
+                                    @if($index != 0){
+                                        <div class="delete-metrics-form-group-btn">
+                                            <button type="button" (click)="removeMetric($index)" class="custom-btn btn-white p-2">
+                                                <i class="pi pi-trash"></i>
+                                            </button>
+                                        </div>
+                                    }
                                 </div>
                             </div>
 

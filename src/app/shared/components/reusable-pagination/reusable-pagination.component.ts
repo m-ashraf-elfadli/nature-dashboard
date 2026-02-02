@@ -71,7 +71,7 @@ export class ReusablePaginationComponent implements OnInit {
   }
 
   go(page: number) {
-    this.onPaginationChange({ page });
+    this.onPaginationChange({ page:page + 1 });
   }
 
   onPaginationChange(change: { page?: number; size?: number }) {

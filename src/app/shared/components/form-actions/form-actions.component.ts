@@ -27,18 +27,13 @@ export class FormActionsComponent {
     { code: 'ar', label: 'العربية', flag: './images/eg.webp' },
   ];
 
-  // This computed property returns the display value
   get selectedLanguage(): string {
     return this.displayLanguage;
   }
 
   set selectedLanguage(value: string) {
-    // This setter is called by ngModel when user selects
-    // We intercept it here
     const oldLang = this.previousLanguage;
 
-    // Don't update displayLanguage yet - keep it at old value
-    // Just emit the change request
     if (value !== oldLang) {
       this.languageChange.emit({
         newLang: value,
@@ -48,7 +43,15 @@ export class FormActionsComponent {
   }
 
   ngOnInit() {
-    this.displayLanguage = this.languages[0].code;
+    const storedLang = localStorage.getItem('app_lang');
+    const validCodes = this.languages.map((l) => l.code);
+
+    // Use stored value if it exists and is valid, otherwise fall back to first language
+    this.displayLanguage =
+      storedLang && validCodes.includes(storedLang)
+        ? storedLang
+        : this.languages[0].code;
+
     this.previousLanguage = this.displayLanguage;
   }
 
@@ -78,15 +81,10 @@ export class FormActionsComponent {
     this.save.emit(event);
   }
 
-  /**
-   * Called by parent to revert language selection when validation fails
-   */
-
   onLanguageAttempt(event: any) {
     const newLang = event.value;
     const oldLang = this.previousLanguage;
 
-    // Ask parent if switch is allowed
     this.languageChange.emit({
       newLang,
       oldLang,

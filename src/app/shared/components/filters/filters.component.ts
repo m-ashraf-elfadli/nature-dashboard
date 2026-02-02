@@ -59,7 +59,6 @@ export class FiltersComponent implements OnInit {
     @ViewChild('op') op!:Popover;
     private readonly fb = inject(FormBuilder);
     formFilter!: FormGroup;
-    isFilterApplied:boolean = false;
     @Input() filterConfig: FilterItems[] = [];
     @Output() filterChange = new EventEmitter<any>();
 
@@ -112,14 +111,13 @@ export class FiltersComponent implements OnInit {
       // }
     });
   }
-  applyOrResetFilter(e:Event){
-    if(this.isFilterApplied){
-      this.isFilterApplied = false;
-      this.formFilter.reset();
-    }else{
-      this.isFilterApplied = true;
-      this.filterChange.emit(this.formFilter.value);
-    }
+  applyFilter(e:Event){
+    this.filterChange.emit(this.formFilter.value);
     this.op.toggle(e);
   }
+  resetFilter(e:Event){
+    this.formFilter.reset();
+    this.op.toggle(e);
+  }
+
 }

@@ -6,6 +6,7 @@ import { ServicesComponent } from '../../../pages/services/services.component';
 import { TestimonialsComponent } from '../../../features/testimonials/components/testimonials/testimonials.component';
 import { AwardFormComponent } from '../../../features/awards/components/award-form/award-form.component';
 import { AwardsListComponent } from '../../../features/awards/components/awards-list/awards-list.component';
+import { CustomizeAwardSectionFormComponent } from '../../../features/awards/components/customize-award-section-form/customize-award-section-form.component';
 
 export const dashboardRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -15,30 +16,45 @@ export const dashboardRoutes: Routes = [
     path: 'projects',
     loadChildren: () =>
       import('../../../features/projects/components/projects/projects.routes').then(
-        (m) => m.projectsRoutes
+        (m) => m.projectsRoutes,
       ),
+    data: {
+      breadcrumb: 'Projects',
+    },
   },
   {
     path: 'services',
     loadChildren: () =>
       import('./../../../pages/services/services.routes').then(
-        (m) => m.servicesRoutes
+        (m) => m.servicesRoutes,
       ),
+    data: {
+      breadcrumb: 'Services',
+    },
   },
-  { 
-    path: 'awards', 
+  {
+    path: 'awards',
     component: AwardsComponent,
-    children:[
+    data: {
+      breadcrumb: 'Awards',
+    },
+    children: [
       {
-        path:'',
-        component:AwardsListComponent
+        path: '',
+        component: AwardsListComponent,
       },
       {
-        path:'add',
-        component:AwardFormComponent
+        path: 'add',
+        component: AwardFormComponent,
       },
-    ]
-
+      {
+        path: 'customize',
+        component: CustomizeAwardSectionFormComponent,
+        data: {
+          breadcrumb: 'Add New Award',
+        },
+      },
+    ],
   },
   { path: 'testimonials', component: TestimonialsComponent },
 ];

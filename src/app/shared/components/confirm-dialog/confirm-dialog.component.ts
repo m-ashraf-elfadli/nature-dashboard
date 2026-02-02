@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
-
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 export interface ConfirmationDialogConfig<T> {
   title: string;
   subtitle?: string;
@@ -21,8 +22,7 @@ export interface ConfirmationDialogConfig<T> {
 
 @Component({
   selector: 'app-confirm-dialog',
-  standalone: true,
-  imports: [ButtonModule],
+  imports: [CommonModule, ButtonModule, TranslateModule],
   templateUrl: './confirm-dialog.component.html',
   styleUrl: './confirm-dialog.component.scss',
 })
@@ -33,7 +33,7 @@ export class ConfirmDialogComponent implements OnInit {
   constructor(
     public ref: DynamicDialogRef,
     public configs: DynamicDialogConfig,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.data = this.configs?.data ?? null;

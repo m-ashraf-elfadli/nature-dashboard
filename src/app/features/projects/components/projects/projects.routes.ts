@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ProjectsComponent } from './projects.component';
+import { ProjectNameResolver } from './project-name.resolver';
 
 export const projectsRoutes: Routes = [
   {
@@ -10,20 +11,24 @@ export const projectsRoutes: Routes = [
     path: 'add',
     loadComponent: () =>
       import('../project-form/project-form.component').then(
-        (m) => m.ProjectFormComponent
+        (m) => m.ProjectFormComponent,
       ),
     data: {
-      title: 'Add New Project',
+      title: 'projects.form.title',
+      breadcrumb: 'Add',
     },
   },
   {
     path: 'edit/:id',
     loadComponent: () =>
       import('../project-form/project-form.component').then(
-        (m) => m.ProjectFormComponent
+        (m) => m.ProjectFormComponent,
       ),
     data: {
-      title: 'Edit Project',
+      title: 'projects.form.breadcrumb_edit',
+    },
+    resolve: {
+      projectName: ProjectNameResolver,
     },
   },
 ];

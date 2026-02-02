@@ -25,7 +25,7 @@ export function TokenInterceptor(req: HttpRequest<any>, next: HttpHandlerFn) {
   }
 
   // ✔ Only add locale for GET requests
-  if (req.method === 'GET' && !req.url.includes('/show/')) {
+  if (req.method === 'GET' && !req.url.includes('/show')) {
     const locale = localStorage.getItem('app_lang') || 'en';
     headers['locale'] = locale;
   }

@@ -22,31 +22,51 @@ export class PageHeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
-    this.generateBreadcrumbs();
+    this.breadcrumbs = [{ label: 'Dashboard', route: '/' }];
+
+    this.buildBreadcrumbs(this.route.root);
   }
 
-  private generateBreadcrumbs() {
-    const urlSegments = this.router.url.split('/').filter((segment) => segment);
-    this.breadcrumbs = [];
-    this.breadcrumbs.push({ label: 'Dashboard', route: '/' });
+  private buildBreadcrumbs(route: ActivatedRoute, url: string = '') {
+    for (const child of route.children) {
+      const segment = child.snapshot.url.map((s) => s.path).join('/');
 
-    let route = '';
-    urlSegments.forEach((segment, index) => {
-      route += '/' + segment;
-      const label = this.formatLabel(segment, urlSegments[index - 1]);
-      const isLast = index === urlSegments.length - 1;
+      if (segment) {
+        url += `/${segment}`;
+      }
 
-      this.breadcrumbs.push({
-        label,
-        route: isLast ? undefined : route,
-      });
-    });
+      const data = child.snapshot.data;
+
+      // ✅ أضف breadcrumb بس لو في segment حقيقي
+      if (data?.['breadcrumb'] && segment) {
+        this.breadcrumbs.push({
+          label: data['breadcrumb'],
+          route: url,
+        });
+      }
+
+      // ✅ edit → replace last breadcrumb باسم الخدمة
+      if (data?.['serviceName']) {
+        this.breadcrumbs[this.breadcrumbs.length - 1] = {
+          label: data['serviceName'],
+          route: undefined,
+        };
+      }
+
+      if (data?.['projectName']) {
+        this.breadcrumbs[this.breadcrumbs.length - 1] = {
+          label: data['projectName'],
+          route: undefined,
+        };
+      }
+
+      this.buildBreadcrumbs(child, url);
+    }
   }
-
   private formatLabel(segment: string, parentSegment?: string): string {
     if (segment === 'add' && parentSegment) {
       const parentLabel = this.formatLabel(parentSegment);
