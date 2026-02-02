@@ -51,12 +51,15 @@ export class AwardFormComponent implements OnInit {
   mediaUrl: string = environment.mediaUrl;
   ref: DynamicDialogRef | undefined;
 
+  currentLanguage = localStorage.getItem('app_lang') || 'en';
+
+
   ngOnInit(): void {
     this.initForm();
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.awardId = params['id'];
-        this.getAwardById(this.awardId, localStorage.getItem('app_lang')!);
+        this.getAwardById(this.awardId, this.currentLanguage);
       }
     });
   }
@@ -119,7 +122,7 @@ export class AwardFormComponent implements OnInit {
   }
 
   onSave() {
-    this.submitForm(true, localStorage.getItem('app_lang')!);
+    this.submitForm(true, this.currentLanguage);
   }
 
   submitForm(isNavigateOut: boolean = false, culture?: string) {
@@ -134,9 +137,10 @@ export class AwardFormComponent implements OnInit {
           this.isEditMode = true;
         }
         if (isNavigateOut) {
-          this.router.navigate(['/projects']);
+          this.router.navigate(['/awards']);
         } else {
           const projectCluture:'en' | 'ar' =culture === 'en' ? 'ar' :'en'
+          this.form.markAsPristine()
           this.getAwardById(this.awardId, projectCluture!);
         }
       },
@@ -208,6 +212,7 @@ export class AwardFormComponent implements OnInit {
     } else {
       this.formActionsComponent.confirmLanguage(event.newLang)
       if(this.form.dirty){
+        this.currentLanguage = event.newLang
         this.showConfirmDialog(event.oldLang);
       }else{
         this.submitForm(false,event.oldLang)
