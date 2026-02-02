@@ -234,6 +234,7 @@ a {
 }
 
 .our-field {
+  --p-inputtext-invalid-border-color: #ef4444;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -321,7 +322,7 @@ a {
 
   .ng-invalid.ng-touched .p-editor,
   .ng-invalid.ng-dirty .p-editor {
-    border: 1.2px solid var(--Color-Error-500, #e74c3c);
+    border: 1.2px solid var(--Color-Error-500, #e74c3c) !important;
     border-radius: 14px;
   }
 
@@ -444,10 +445,15 @@ a {
     &.p-textarea,
     &.p-multiselect,
     &.p-select,
-    .p-password,
     .p-datepicker {
       border-color: var(--Color-Error-500, #e74c3c) !important;
-      background: rgba(231, 76, 60, 0.03);
+      background: rgba(231, 76, 60, 0.03) !important;
+    }
+
+    .p-password input {
+      border-color: var(--Color-Error-500, #e74c3c) !important;
+      background: rgba(231, 76, 60, 0.03) !important;
+
     }
   }
 

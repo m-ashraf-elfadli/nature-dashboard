@@ -20,44 +20,44 @@
           <span>{{ loginError }}</span>
         </div>
       }
+      <div class="credntials">
+        <!-- USERNAME -->
+        <div class="our-field">
+          <label>Username <span>*</span></label>
+          <input
+            type="text"
+            placeholder="Enter your username"
+            formControlName="username"
+            pInputText
+          />
+          @if (username?.touched && username?.invalid) {
+            <div class="error">
+              @if (username?.errors?.["required"]) {
+                <span>Please enter your username</span>
+              }
+            </div>
+          }
+        </div>
 
-      <!-- USERNAME -->
-      <div class="our-field">
-        <label>Username <span>*</span></label>
-        <input
-          type="text"
-          placeholder="Enter your username"
-          formControlName="username"
-          pInputText
-        />
-        @if (username?.touched && username?.invalid) {
-          <div class="error">
-            @if (username?.errors?.["required"]) {
-              <span>Please enter your username</span>
-            }
-          </div>
-        }
+        <!-- PASSWORD -->
+        <div class="our-field">
+          <label>Password <span>*</span></label>
+          <p-password
+            formControlName="password"
+            [toggleMask]="true"
+            [feedback]="false"
+            autocomplete="off"
+            placeholder="Enter your password"
+          />
+          @if (password?.touched && password?.invalid) {
+            <div class="error">
+              @if (password?.errors?.["required"]) {
+                <span>Please enter your password</span>
+              }
+            </div>
+          }
+        </div>
       </div>
-
-      <!-- PASSWORD -->
-      <div class="our-field password-field">
-        <label>Password <span>*</span></label>
-        <p-password
-          formControlName="password"
-          [toggleMask]="true"
-          [feedback]="false"
-          autocomplete="off"
-          placeholder="Enter your password"
-        />
-        @if (password?.touched && password?.invalid) {
-          <div class="error">
-            @if (password?.errors?.["required"]) {
-              <span>Please enter your password</span>
-            }
-          </div>
-        }
-      </div>
-
       <button class="submit" type="submit" [disabled]="isLoading">
         {{ isLoading ? "Signing In..." : "Sign In" }}
       </button>

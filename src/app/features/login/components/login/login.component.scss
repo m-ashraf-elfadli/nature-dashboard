@@ -1,7 +1,7 @@
 .login-wrapper {
+  position: relative;
   display: flex;
   height: 100vh;
-  font-family: "Inter", sans-serif;
   justify-content: space-between;
   align-items: center;
   padding: 24px;
@@ -62,6 +62,12 @@
     display: flex;
     flex-direction: column;
 
+    .credntials {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
     label {
       margin-bottom: 10px;
       color: var(--Color-Neutral-800, #6E7072);
@@ -101,24 +107,9 @@
     }
   }
 
-  .password-field {
-    position: relative;
-    width: 100%;
-  }
 
-  /* Make sure input always has space for the eye */
-  .password-field input {
-    width: 100%;
-    padding-right: 42px;
-    /* keep space for eye */
-    box-sizing: border-box;
-    /* important! */
-  }
 
-  /* Optional: prevent input padding from collapsing */
-  .password-field input:focus {
-    padding-right: 42px;
-  }
+
 
   .support {
     margin-top: 18px;
@@ -209,7 +200,6 @@
 
   .login-right {
     display: none;
-    width: 100%;
 
   }
 
