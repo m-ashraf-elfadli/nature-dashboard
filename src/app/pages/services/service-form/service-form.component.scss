@@ -174,3 +174,8 @@ app-mini-table,
 app-empty-state-action {
   width: 100%;
 }
+:host ::ng-deep {
+  .p-toggleswitch-slider {
+    position: relative;
+  }
+}
