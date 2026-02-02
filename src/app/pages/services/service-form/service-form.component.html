@@ -61,9 +61,7 @@
         </div>
       </div>
 
-      <app-settings formControlName="status"
-        [englishStatus]="languageStatuses.get('en')?.status === 'not-started' ? 0 : languageStatuses.get('en')?.status === 'ongoing' ? 1 : 2"
-        [arabicStatus]="languageStatuses.get('ar')?.status === 'not-started' ? 0 : languageStatuses.get('ar')?.status === 'ongoing' ? 1 : 2">
+      <app-settings formControlName="status">
       </app-settings>
     </div>
 

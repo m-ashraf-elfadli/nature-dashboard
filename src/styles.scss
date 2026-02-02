@@ -107,9 +107,11 @@ a {
 
 .backBtn {
   border-radius: 19.2px 0;
-  background: linear-gradient(180deg,
-      var(--Color-Primary2-400, #b0d357) 0%,
-      var(--Color-Primary-400, #82c672) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--Color-Primary2-400, #b0d357) 0%,
+    var(--Color-Primary-400, #82c672) 100%
+  );
   width: 32px;
   height: 32px;
   transform: rotate(45deg);
@@ -188,9 +190,11 @@ a {
 
 .action-btn {
   border-radius: 12px;
-  background: linear-gradient(270deg,
-      var(--Color-Primary-400, #82c672) 39.41%,
-      var(--Color-Primary2-400, #b0d357) 98.64%);
+  background: linear-gradient(
+    270deg,
+    var(--Color-Primary-400, #82c672) 39.41%,
+    var(--Color-Primary2-400, #b0d357) 98.64%
+  );
   display: flex;
   height: 42px;
   padding: 4px 24px;
@@ -357,15 +361,21 @@ a {
   .p-editor .p-editor-toolbar.ql-snow {
     border-radius: 14px 14px 0 0;
     background:
-      radial-gradient(183.55% 120.47% at 116.93% -44.32%,
+      radial-gradient(
+        183.55% 120.47% at 116.93% -44.32%,
         rgba(231, 241, 203, 0.5) 0%,
-        rgba(231, 241, 203, 0) 100%),
-      radial-gradient(991.32% 174.48% at 95.31% 50%,
+        rgba(231, 241, 203, 0) 100%
+      ),
+      radial-gradient(
+        991.32% 174.48% at 95.31% 50%,
         rgba(176, 211, 87, 0.5) 0%,
-        rgba(176, 211, 87, 0) 100%),
-      radial-gradient(228.08% 210.57% at 106.77% 135.23%,
+        rgba(176, 211, 87, 0) 100%
+      ),
+      radial-gradient(
+        228.08% 210.57% at 106.77% 135.23%,
         rgba(58, 109, 149, 0.25) 0%,
-        rgba(55, 102, 140, 0) 100%);
+        rgba(55, 102, 140, 0) 100%
+      );
     display: flex;
     justify-content: end;
 
@@ -377,7 +387,6 @@ a {
 
   .ql-snow.ql-toolbar button {
     svg {
-
       path,
       line,
       polyline {
@@ -401,7 +410,7 @@ a {
   }
 
   .p-editor .p-editor-content .ql-editor,
-  .ql-toolbar.ql-snow+.ql-container.ql-snow {
+  .ql-toolbar.ql-snow + .ql-container.ql-snow {
     border-end-end-radius: 14px;
     border-end-start-radius: 14px;
   }
@@ -440,7 +449,6 @@ a {
   // Invalid state
   .ng-invalid.ng-touched,
   .ng-invalid.ng-dirty {
-
     &.p-inputtext,
     &.p-textarea,
     &.p-multiselect,
@@ -453,7 +461,6 @@ a {
     .p-password input {
       border-color: var(--Color-Error-500, #e74c3c) !important;
       background: rgba(231, 76, 60, 0.03) !important;
-
     }
   }
 
@@ -646,7 +653,53 @@ span.required {
   font-weight: var(--Font-Weight-Regular, 400);
   line-height: var(--Font-Line-Height-S, 21.6px);
 }
+.p-dialog.form-dialog {
+  .p-dialog-header {
+    border-bottom: 1px solid var(--Greyscale-100, #dfe1e7);
+    padding: 24px;
 
-.p-toggleswitch-slider {
-  position: relative;
+    h2 {
+      color: var(--Color-Neutral-2000, #333435);
+      text-align: center;
+
+      /* Button/Regular/Semi Bold */
+      font-family: var(--Font-Family-Secondary, Dubai);
+      font-size: var(--Font-Size-S, 18px);
+      font-style: normal;
+      font-weight: var(--Font-Weight-Semi-Bold, 700);
+      line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
+    }
+    .p-dialog-header-actions {
+      .p-dialog-close-button {
+        border-radius: 24px 0;
+        background: linear-gradient(
+          180deg,
+          var(--Color-Primary2-400, #b0d357) 0%,
+          var(--Color-Primary-400, #82c672) 100%
+        );
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s ease;
+
+        svg {
+          path {
+            fill: white;
+          }
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+  .p-dialog-content {
+    padding: 24px;
+  }
 }

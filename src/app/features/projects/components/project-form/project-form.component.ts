@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+  AfterViewInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -29,7 +36,13 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ProjectById } from '../../models/projects.interface';
 import { environment } from '../../../../../environments/environment.prod';
+type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
+const STATUS_MAP = {
+  'not-started': 0,
+  ongoing: 1,
+  completed: 2,
+} as const;
 @Component({
   selector: 'app-project-form',
   standalone: true,
@@ -54,13 +67,14 @@ import { environment } from '../../../../../environments/environment.prod';
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss',
 })
-export class ProjectFormComponent implements OnInit {
+export class ProjectFormComponent implements OnInit, AfterViewInit {
   @ViewChild(FormActionsComponent) formActionsComponent!: FormActionsComponent;
   private readonly dialogService = inject(DialogService);
   private readonly service = inject(ProjectsService);
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
   private cachedResults: any[] = [];
   private cachedMetrics: any[] = [];
   services: DropDownOption[] = [];
@@ -77,20 +91,45 @@ export class ProjectFormComponent implements OnInit {
   projectId: string = '';
   isEditMode: boolean = false;
   projectData: ProjectById = {} as ProjectById;
+  languageStatuses = new Map<
+    string,
+    { code: string; status: LanguageStatusType }
+  >([
+    ['en', { code: 'en', status: 'not-started' }],
+    ['ar', { code: 'ar', status: 'not-started' }],
+  ]);
 
   mediaUrl: string = environment.mediaUrl;
+  currentLanguage = 'en';
+  previousLanguage = 'en';
+  @ViewChild(SettingsComponent) settingsComponent!: SettingsComponent;
 
   ngOnInit() {
     this.getDropDowns();
     this.initForm();
+
+    // Set current language from localStorage
+    const storedLang = localStorage.getItem('app_lang');
+    if (storedLang) {
+      this.currentLanguage = storedLang;
+    }
+
     this.route.params.subscribe((params) => {
       const id = params['id'];
       if (id) {
         this.isEditMode = true;
         this.projectId = id;
-        this.getProjectById(id, localStorage.getItem('app_lang')!);
+        this.getProjectById(id, this.currentLanguage);
+      } else {
+        // In create mode, mark the current language as ongoing
+        this.updateLanguageStatus(this.currentLanguage, 'ongoing');
       }
     });
+  }
+
+  ngAfterViewInit() {
+    // Update settings component after view is initialized
+    this.updateSettingsComponent();
   }
   initForm() {
     this.form = this.fb.group({
@@ -131,14 +170,33 @@ export class ProjectFormComponent implements OnInit {
   }
   getProjectById(id: string, culture: string) {
     this.service.getById(id, culture).subscribe({
-      next: (res) => {
-        if (!res.result) return;
+      next: (res: any) => {
+        if (!res.result) {
+          // No data for this language, mark as ongoing and clear form
+          this.updateLanguageStatus(culture, 'ongoing');
+          this.clearFormForNewLanguage();
+          return;
+        }
         this.projectData = res.result;
         this.patchValues(this.projectData);
         this.form.markAsPristine();
+
+        // After patching, update the current language status based on localeComplete
+        const currentLocaleStatus = res.result.localeComplete?.[culture];
+        if (currentLocaleStatus === false) {
+          this.updateLanguageStatus(culture, 'ongoing');
+        } else if (currentLocaleStatus === true) {
+          this.updateLanguageStatus(culture, 'completed');
+        } else {
+          // If localeComplete doesn't have this language, mark as ongoing
+          this.updateLanguageStatus(culture, 'ongoing');
+        }
       },
       error: (err) => {
         console.error('Failed to load project', err);
+        // If loading fails for this language, mark as ongoing and clear form
+        this.updateLanguageStatus(culture, 'ongoing');
+        this.clearFormForNewLanguage();
       },
     });
   }
@@ -165,6 +223,17 @@ export class ProjectFormComponent implements OnInit {
       }
       return null;
     };
+
+    if (data.localeComplete) {
+      Object.entries(data.localeComplete).forEach(([langKey, isComplete]) => {
+        const status = isComplete ? 'completed' : 'ongoing';
+        this.languageStatuses.set(langKey, {
+          code: langKey,
+          status: status as LanguageStatusType,
+        });
+      });
+      this.updateSettingsComponent();
+    }
 
     // Basic scalar values
     this.form.patchValue({
@@ -247,6 +316,7 @@ export class ProjectFormComponent implements OnInit {
     this.cachedResults = this.results.value || [];
     this.cachedMetrics = this.metrics.value || [];
   }
+
   getCitiesByCountry(countryId: string) {
     this.service.getCitiesByCountry(countryId).subscribe({
       next: (res) => {
@@ -353,8 +423,8 @@ export class ProjectFormComponent implements OnInit {
     const value = this.form.getRawValue(); // includes disabled fields
 
     // 🔹 Basic fields
-    if(this.projectId){
-      formData.append('id',this.projectId)
+    if (this.projectId) {
+      formData.append('id', this.projectId);
     }
     formData.append('name', value.name);
     formData.append('brief', value.brief);
@@ -379,16 +449,16 @@ export class ProjectFormComponent implements OnInit {
       formData.append('image_after', value.image_after);
     }
 
-    // 🔹 Gallery (array of images)
+    // 🔹 Gallery (array of images) - send both new files and existing paths in the same array
     if (value.gallery?.length) {
-      value.gallery.forEach((file: File | any, index: number) => {
-        // support old images (edit mode)
-        if (file instanceof File) {
-          formData.append(`gallery[${index}]`, file);
-        } else if (file?.id) {
-          formData.append(`gallery_ids[${index}]`, file.id);
-        } else if (typeof file == 'string') {
-          formData.append(`gallery[${index}]`, file.replace(this.mediaUrl,''));
+      value.gallery.forEach((item: File | string, index: number) => {
+        if (item instanceof File) {
+          // New file upload
+          formData.append(`gallery[${index}]`, item);
+        } else if (typeof item === 'string') {
+          // Existing file - send as string (relative path)
+          const relativePath = item.replace(this.mediaUrl, '');
+          formData.append(`gallery[${index}]`, relativePath);
         }
       });
     }
@@ -443,7 +513,7 @@ export class ProjectFormComponent implements OnInit {
     console.log(event);
   }
   onSave() {
-    this.submitForm(true, localStorage.getItem('app_lang')!);
+    this.submitForm(true, this.currentLanguage);
   }
   submitForm(isNavigateOut: boolean = false, culture?: string) {
     if (this.form.invalid) {
@@ -460,11 +530,19 @@ export class ProjectFormComponent implements OnInit {
           this.projectId = res.result.id;
           this.isEditMode = true;
         }
+
+        // Update language status to completed after successful save
+        if (culture) {
+          this.updateLanguageStatus(culture, 'completed');
+        }
+        this.form.markAsPristine();
+
         if (isNavigateOut) {
           this.router.navigate(['/projects']);
         } else {
-          const projectCluture:'en' | 'ar' =culture === 'en' ? 'ar' :'en'
-          this.getProjectById(this.projectId, projectCluture!);
+          // Switch to the other language after saving
+          const projectCulture: 'en' | 'ar' = culture === 'en' ? 'ar' : 'en';
+          this.switchLanguage(projectCulture);
         }
       },
       error: (err) => {
@@ -494,27 +572,104 @@ export class ProjectFormComponent implements OnInit {
         if (product) {
           if (product.action === 'confirm') {
             this.submitForm(false, product.data.lang);
+          } else if (product.action === 'cancel') {
+            // Discard changes and switch language
+            this.switchLanguage(this.previousLanguage === 'en' ? 'ar' : 'en');
           }
+        } else {
+          // Dialog was closed without action - reset to previous language
+          this.resetLanguage(this.previousLanguage);
         }
       },
     );
   }
   onLanguageChange(event: { newLang: string; oldLang: string }) {
+    // Store the languages
+    this.previousLanguage = event.oldLang;
+
+    if (this.isEditMode) {
+      if (this.form.dirty) {
+        this.showConfirmDialog(event.oldLang);
+      } else {
+        this.switchLanguage(event.newLang);
+      }
+      return;
+    }
+
+    // For new projects, validate before switching
     if (this.form.invalid) {
       setTimeout(() => {
-        this.formActionsComponent.revertLanguage()
+        this.formActionsComponent.revertLanguage();
         this.form.markAllAsTouched();
       }, 0);
+      return;
+    }
+
+    // Form is valid, show confirmation to save
+    if (this.form.dirty) {
+      this.showConfirmDialog(event.oldLang);
     } else {
-      this.formActionsComponent.confirmLanguage(event.newLang)
-      if(this.form.dirty){
-        this.showConfirmDialog(event.oldLang);
-      }else{
-        this.submitForm(false,event.oldLang)
-      }
+      this.switchLanguage(event.newLang);
     }
   }
+
+  private switchLanguage(lang: string): void {
+    this.currentLanguage = lang;
+    this.commitLanguage(lang);
+
+    // Mark as ongoing when switching to it (unless already completed)
+    const currentStatus = this.languageStatuses.get(lang)?.status;
+    if (currentStatus !== 'completed') {
+      this.updateLanguageStatus(lang, 'ongoing');
+    }
+
+    if (this.isEditMode && this.projectId) {
+      this.getProjectById(this.projectId, lang);
+    } else {
+      this.clearFormForNewLanguage();
+    }
+  }
+
+  private clearFormForNewLanguage(): void {
+    this.form.patchValue({
+      name: '',
+      brief: '',
+      overview: '',
+    });
+
+    this.results.clear();
+    this.metrics.clear();
+
+    this.form.markAsPristine();
+  }
+
+  private resetLanguage(lang: string): void {
+    this.formActionsComponent?.revertLanguage();
+    this.currentLanguage = lang;
+  }
+
+  private commitLanguage(lang: string): void {
+    this.formActionsComponent?.confirmLanguage(lang);
+  }
+
   onFileSelected(event: File | File[]) {
     console.log(event);
+  }
+  private updateSettingsComponent(): void {
+    if (!this.settingsComponent) return;
+
+    const getStatus = (lang: string) =>
+      STATUS_MAP[this.languageStatuses.get(lang)?.status || 'not-started'];
+
+    this.settingsComponent.englishStatus = getStatus('en');
+    this.settingsComponent.arabicStatus = getStatus('ar');
+
+    // Trigger change detection to ensure the view updates
+    this.cdr.detectChanges();
+  }
+
+  private updateLanguageStatus(lang: string, status: LanguageStatusType): void {
+    this.languageStatuses.set(lang, { code: lang, status });
+    this.updateSettingsComponent();
   }
 }

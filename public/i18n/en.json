@@ -126,6 +126,10 @@
       "btns": {
         "add_new": "Add new award",
         "customize": "Customize Awards Section"
+      },
+      "delete_dialog": {
+        "header": "Delete Award?",
+        "desc": "Are you sure want to delete this award? This action can’t be undone."
       }
     },
     "form": {
