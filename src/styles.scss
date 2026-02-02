@@ -107,11 +107,9 @@ a {
 
 .backBtn {
   border-radius: 19.2px 0;
-  background: linear-gradient(
-    180deg,
-    var(--Color-Primary2-400, #b0d357) 0%,
-    var(--Color-Primary-400, #82c672) 100%
-  );
+  background: linear-gradient(180deg,
+      var(--Color-Primary2-400, #b0d357) 0%,
+      var(--Color-Primary-400, #82c672) 100%);
   width: 32px;
   height: 32px;
   transform: rotate(45deg);
@@ -171,6 +169,7 @@ a {
   transition: 0.2s ease;
   cursor: pointer;
   min-width: 200px;
+
   span {
     color: var(--Secondary-500, #232323);
     text-align: center;
@@ -189,11 +188,9 @@ a {
 
 .action-btn {
   border-radius: 12px;
-  background: linear-gradient(
-    270deg,
-    var(--Color-Primary-400, #82c672) 39.41%,
-    var(--Color-Primary2-400, #b0d357) 98.64%
-  );
+  background: linear-gradient(270deg,
+      var(--Color-Primary-400, #82c672) 39.41%,
+      var(--Color-Primary2-400, #b0d357) 98.64%);
   display: flex;
   height: 42px;
   padding: 4px 24px;
@@ -241,13 +238,16 @@ a {
   display: flex;
   flex-direction: column;
   gap: 8px;
+
   label {
     color: var(--Color-Neutral-800, #6e7072);
     font-size: var(--Font-Size-S, 18px);
     font-style: normal;
     font-weight: var(--Font-Weight-Regular, 500);
-    line-height: var(--Font-Line-Height-S, 21.6px); /* 120% */
+    line-height: var(--Font-Line-Height-S, 21.6px);
+    /* 120% */
   }
+
   .p-inputtext,
   .p-textarea,
   .p-multiselect,
@@ -269,6 +269,7 @@ a {
     .p-select-label {
       padding: 0;
     }
+
     .p-placeholder {
       color: var(--Color-Neutral-500, #939598);
       /* Small Text/Light */
@@ -276,16 +277,20 @@ a {
       font-size: var(--Font-Size-Xs, 16px);
       font-style: normal;
       font-weight: var(--Font-Weight-Light, 300);
-      line-height: var(--Font-Line-Height-Xs, 19.2px); /* 120% */
+      line-height: var(--Font-Line-Height-Xs, 19.2px);
+      /* 120% */
     }
+
     .p-multiselect-dropdown,
     .p-select-dropdown {
       justify-content: end;
     }
+
     &:focus {
       outline: none;
       border-color: #8bc34a;
     }
+
     &::placeholder {
       color: var(--Color-Neutral-500, #939598);
       font-size: var(--Font-Size-Xs, 16px);
@@ -293,6 +298,7 @@ a {
       font-weight: var(--Font-Weight-Light, 300);
     }
   }
+
   .p-multiselect,
   .p-select {
     gap: 0;
@@ -302,6 +308,7 @@ a {
   .textarea-container {
     width: 100%;
     position: relative;
+
     span.char-counter {
       position: absolute;
       left: 15.13px;
@@ -311,23 +318,29 @@ a {
       font-weight: var(--Font-Weight-Light, 300);
     }
   }
+
   .ng-invalid.ng-touched .p-editor,
   .ng-invalid.ng-dirty .p-editor {
     border: 1.2px solid var(--Color-Error-500, #e74c3c);
     border-radius: 14px;
   }
+
   .p-datepicker {
     transition: all 0.3s;
+
     &:focus-within {
       border-color: var(--Color-Primary-500, #75b267);
     }
+
     .p-datepicker-dropdown {
       border: none;
       background-color: transparent;
     }
+
     .p-datepicker-dropdown:not(:disabled):hover {
       background-color: transparent;
     }
+
     input {
       border: none;
       padding: 0;
@@ -335,36 +348,35 @@ a {
       box-shadow: none;
     }
   }
+
   .p-datepicker:has(.p-datepicker-dropdown) .p-datepicker-input {
     border-radius: 0 !important;
   }
+
   .p-editor .p-editor-toolbar.ql-snow {
     border-radius: 14px 14px 0 0;
     background:
-      radial-gradient(
-        183.55% 120.47% at 116.93% -44.32%,
+      radial-gradient(183.55% 120.47% at 116.93% -44.32%,
         rgba(231, 241, 203, 0.5) 0%,
-        rgba(231, 241, 203, 0) 100%
-      ),
-      radial-gradient(
-        991.32% 174.48% at 95.31% 50%,
+        rgba(231, 241, 203, 0) 100%),
+      radial-gradient(991.32% 174.48% at 95.31% 50%,
         rgba(176, 211, 87, 0.5) 0%,
-        rgba(176, 211, 87, 0) 100%
-      ),
-      radial-gradient(
-        228.08% 210.57% at 106.77% 135.23%,
+        rgba(176, 211, 87, 0) 100%),
+      radial-gradient(228.08% 210.57% at 106.77% 135.23%,
         rgba(58, 109, 149, 0.25) 0%,
-        rgba(55, 102, 140, 0) 100%
-      );
+        rgba(55, 102, 140, 0) 100%);
     display: flex;
     justify-content: end;
+
     span {
       margin: 0;
       font-weight: 100;
     }
   }
+
   .ql-snow.ql-toolbar button {
     svg {
+
       path,
       line,
       polyline {
@@ -372,6 +384,7 @@ a {
       }
     }
   }
+
   .p-editor {
     .text-editor-header {
       color: var(--Teal-Green-green-300, #609292);
@@ -380,15 +393,18 @@ a {
       letter-spacing: 0.28px;
     }
   }
+
   .p-editor .p-editor-toolbar.ql-snow .ql-stroke {
     stroke-width: 1px;
     stroke: var(--Color-Primary-1000, #2e4528);
   }
+
   .p-editor .p-editor-content .ql-editor,
-  .ql-toolbar.ql-snow + .ql-container.ql-snow {
+  .ql-toolbar.ql-snow+.ql-container.ql-snow {
     border-end-end-radius: 14px;
     border-end-start-radius: 14px;
   }
+
   // Disabled state
   .p-inputtext:disabled,
   .p-textarea:disabled,
@@ -401,11 +417,13 @@ a {
     cursor: not-allowed;
     opacity: 1; // prevent PrimeNG opacity dimming
   }
+
   .p-disabled {
     opacity: 1 !important;
     border: 1.261px solid var(--Color-Neutral-300, #efeff0);
     background: var(--Color-Neutral-200, #f4f4f5);
     border-radius: 14px;
+
     * {
       background-color: transparent;
       border: none !important;
@@ -421,6 +439,7 @@ a {
   // Invalid state
   .ng-invalid.ng-touched,
   .ng-invalid.ng-dirty {
+
     &.p-inputtext,
     &.p-textarea,
     &.p-multiselect,
@@ -431,6 +450,7 @@ a {
       background: rgba(231, 76, 60, 0.03);
     }
   }
+
   .text-red-val {
     color: var(--Color-Error-500, #e74c3c);
     font-size: 12px;
@@ -449,15 +469,18 @@ a {
   flex: 1;
   transition: all 0.3s ease;
 }
+
 .page-content {
   padding: 1rem;
   background: var(--Color-Neutral-100, #fefefe);
 }
+
 .form-content {
   padding: 1rem;
   background: #fafafa;
   height: 100%;
 }
+
 // hide the
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -470,6 +493,7 @@ input[type="number"] {
   appearance: textfield;
   -moz-appearance: textfield;
 }
+
 .add-another {
   display: flex;
   align-items: center;
@@ -477,17 +501,21 @@ input[type="number"] {
   border: none;
   cursor: pointer;
   background: none;
+
   span {
     color: var(--Color-Primary-500, #75b267);
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
-    line-height: 160%; /* 28.8px */
+    line-height: 160%;
+    /* 28.8px */
   }
+
   &:disabled {
     cursor: default;
   }
 }
+
 .delete-btn {
   cursor: pointer;
   border-radius: 8.239px;
@@ -508,6 +536,7 @@ input[type="number"] {
     border-color: oklch(88.5% 0.062 18.334);
   }
 }
+
 .p-inputtext:disabled {
   opacity: 0.6;
 }
@@ -526,14 +555,17 @@ input[type="number"] {
   cursor: pointer;
   padding: 0.5rem;
   width: fit-content;
+
   &:hover {
     background-color: rgba(240, 249, 238, 0.8);
   }
 }
+
 .checkbox-field {
   display: flex;
   align-items: center;
   gap: 10px;
+
   label {
     color: #000;
     font-family: var(--Font-Family-Secondary, Dubai);
@@ -546,31 +578,38 @@ input[type="number"] {
   width: 14px !important;
   height: 14px !important;
 }
+
 .p-checkbox-box {
   width: 14px !important;
   height: 14px !important;
   border: 1px solid var(--Color-Neutral-500, #939598) !important;
   background-color: red;
+
   .p-iconwrapper {
     display: flex !important;
+
     svg {
       width: 10px;
       height: 10px;
     }
   }
 }
+
 .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider::before {
   display: flex !important;
 }
+
 .p-toggleswitch-slider {
   &::before {
     display: block !important;
   }
 }
+
 .pi-trash {
   color: #b3261e;
   font-size: 14px !important;
 }
+
 .form-toaster {
   display: flex;
   padding: 10px;
@@ -587,10 +626,12 @@ input[type="number"] {
     font-size: 12px;
     font-style: normal;
     font-weight: 600;
-    line-height: 150%; /* 18px */
+    line-height: 150%;
+    /* 18px */
     letter-spacing: -0.36px;
   }
 }
+
 span.required {
   color: var(--Alert-Error-100, #df1c41);
   font-size: var(--Font-Size-S, 18px);
@@ -598,6 +639,7 @@ span.required {
   font-weight: var(--Font-Weight-Regular, 400);
   line-height: var(--Font-Line-Height-S, 21.6px);
 }
+
 .p-toggleswitch-slider {
   position: relative;
 }

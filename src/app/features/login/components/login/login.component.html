@@ -15,7 +15,6 @@
       </p>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="submit()">
-      <!-- Add this error alert for wrong credentials -->
       @if (loginError) {
         <div class="login-error">
           <span>{{ loginError }}</span>
@@ -41,7 +40,7 @@
       </div>
 
       <!-- PASSWORD -->
-      <div class="field password-field">
+      <div class="our-field password-field">
         <label>Password <span>*</span></label>
         <p-password
           formControlName="password"

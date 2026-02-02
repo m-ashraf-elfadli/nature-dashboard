@@ -16,10 +16,10 @@ import { InputText } from "primeng/inputtext";
 export class LoginComponent {
   private readonly authService = inject(AuthService)
   private readonly router = inject(Router)
-  
+
   loginForm: FormGroup;
-  loginError: string = ''; // Add this property to store error message
-  isLoading: boolean = false; // Optional: for loading state
+  loginError: string = '';
+  isLoading: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -45,7 +45,7 @@ export class LoginComponent {
   submit() {
     // Clear previous error
     this.loginError = '';
-    
+
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -62,7 +62,7 @@ export class LoginComponent {
       error: (err) => {
         console.error('Login failed', err);
         this.isLoading = false;
-        
+
         // Set error message based on status code or error response
         if (err.status === 401 || err.status === 403) {
           this.loginError = 'Invalid username or password. Please try again.';

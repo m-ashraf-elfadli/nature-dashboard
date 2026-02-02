@@ -41,11 +41,8 @@ export class ClientFormComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.initForm();
     if (this.isEditMode) {
-      debugger
       this.loadClient();
     }
-
-
   }
 
   ngOnChanges(changes: SimpleChanges) {

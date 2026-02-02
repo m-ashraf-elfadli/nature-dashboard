@@ -231,13 +231,15 @@
   background-color: #fee2e2;
   border: 1px solid #fca5a5;
 
-  span {
-    color: #dc2626;
-    font-family: var(--Font-Family-Secondary, Dubai);
-    font-size: var(--Font-Size-S, 16px);
-    font-weight: var(--Font-Weight-Medium, 500);
-    line-height: var(--Font-Line-Height-S, 19.2px);
-  }
+}
+
+span,
+.error {
+  color: #dc2626;
+  font-family: var(--Font-Family-Secondary, Dubai);
+  font-size: var(--Font-Size-S, 16px);
+  font-weight: var(--Font-Weight-Medium, 500);
+  line-height: var(--Font-Line-Height-S, 19.2px);
 }
 
 button.submit:disabled {
