@@ -11,6 +11,7 @@ export class AppDialogService {
       modal: true,
       closable: true,
       dismissableMask: true,
+      styleClass: 'form-dialog',
       ...config,
     });
   }
