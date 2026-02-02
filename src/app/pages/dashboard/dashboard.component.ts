@@ -28,6 +28,7 @@ import { ProjectsService } from '../../features/projects/services/projects.servi
 import { forkJoin } from 'rxjs';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,6 +38,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
     PageHeaderComponent,
     CardTotalComponent,
     ReusableTableComponent,
+    EmptyStateComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -54,7 +56,10 @@ export class DashboardComponent implements OnInit {
     JSON.parse(localStorage.getItem('user') || '{}')?.username ??
     'Nature Admin';
 
-  /* ===================== CARDS ===================== */
+  emptyStateDescription: string =
+    'No Date to preview, start create your first project to appear here!';
+  emptyStateBtnLabel: string = 'Create New Project';
+
   cards: any[] = [];
 
   private cardConfig = [
@@ -299,5 +304,8 @@ export class DashboardComponent implements OnInit {
     this.fetchProjects(this.paginationObj);
 
     console.log(filter);
+  }
+  addNewProject() {
+    this.router.navigate(['/projects/add']);
   }
 }

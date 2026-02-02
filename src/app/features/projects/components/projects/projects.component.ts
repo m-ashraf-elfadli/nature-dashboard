@@ -25,6 +25,7 @@ import { Project } from '../../models/projects.interface';
 import { forkJoin } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-projects',
@@ -34,6 +35,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
     PageHeaderComponent,
     ReusableTableComponent,
     TranslateModule,
+    EmptyStateComponent,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
@@ -43,7 +45,9 @@ export class ProjectsComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
   private readonly dialogService = inject(DialogService);
-
+  emptyStateDescription: string =
+    'No Date to preview, start create your first project to appear here!';
+  emptyStateBtnLabel: string = 'Create New Project';
   data: WritableSignal<Project[]> = signal([]);
   totalRecords = signal(0);
   countriesDD: DropDownOption[] = [];
