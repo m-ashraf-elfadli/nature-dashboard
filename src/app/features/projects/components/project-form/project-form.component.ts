@@ -449,16 +449,16 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
       formData.append('image_after', value.image_after);
     }
 
-    // 🔹 Gallery (array of images)
+    // 🔹 Gallery (array of images) - send both new files and existing paths in the same array
     if (value.gallery?.length) {
-      value.gallery.forEach((file: File | any, index: number) => {
-        // support old images (edit mode)
-        if (file instanceof File) {
-          formData.append(`gallery[${index}]`, file);
-        } else if (file?.id) {
-          formData.append(`gallery_ids[${index}]`, file.id);
-        } else if (typeof file == 'string') {
-          formData.append(`gallery[${index}]`, file.replace(this.mediaUrl, ''));
+      value.gallery.forEach((item: File | string, index: number) => {
+        if (item instanceof File) {
+          // New file upload
+          formData.append(`gallery[${index}]`, item);
+        } else if (typeof item === 'string') {
+          // Existing file - send as string (relative path)
+          const relativePath = item.replace(this.mediaUrl, '');
+          formData.append(`gallery[${index}]`, relativePath);
         }
       });
     }
