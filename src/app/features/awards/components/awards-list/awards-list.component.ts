@@ -64,6 +64,13 @@ export class AwardsListComponent implements OnInit {
     },
     {
       type: 'btn',
+      label:"awards.list.btns.customize",
+      btnIcon:"pi pi-cog",
+      btnSeverity:"white",
+      btnCallback:(e:Event) => this.customize()
+    },
+    {
+      type: 'btn',
       label:"general.import",
       btnIcon:"pi pi-download",
       btnSeverity:"white",
@@ -152,5 +159,7 @@ export class AwardsListComponent implements OnInit {
         }
     });
   }
-  
+  customize(){
+    this.router.navigate(['/awards/customize'])
+  }
 }
