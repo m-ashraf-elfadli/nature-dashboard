@@ -1,6 +1,7 @@
 <div class="page-content">
   <app-page-header></app-page-header>
-  <h1>Clients</h1>
+
+  <h1>{{ "clients.list.page_title" | translate }}</h1>
 
   <app-reusable-table
     [data]="data"
@@ -14,7 +15,6 @@
   </app-reusable-table>
 </div>
 
-<!-- client form dialog -->
 <p-dialog
   styleClass="form-dialog"
   [modal]="true"
@@ -24,9 +24,9 @@
 >
   <ng-template pTemplate="header">
     @if (currentClientId) {
-      <h2>Edit Client</h2>
+      <h2>{{ "clients.form.edit_title" | translate }}</h2>
     } @else {
-      <h2>Add New Client</h2>
+      <h2>{{ "clients.form.add_title" | translate }}</h2>
     }
   </ng-template>
 

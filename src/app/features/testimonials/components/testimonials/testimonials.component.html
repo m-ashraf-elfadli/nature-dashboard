@@ -1,6 +1,6 @@
 <div class="page-content">
   <app-page-header></app-page-header>
-  <h1>Testimonials</h1>
+  <h1>{{ "testimonials.list.page_title" | translate }}</h1>
   <app-reusable-table
     [data]="data"
     [config]="config"
@@ -22,9 +22,9 @@
 >
   <ng-template pTemplate="header">
     @if (currentTestimonialId) {
-      <h2>Edit Testimonial</h2>
+      <h2>{{ "testimonials.form.title" | translate }}</h2>
     } @else {
-      <h2>Add New Testimonial</h2>
+      <h2>{{ "testimonials.form.title" | translate }}</h2>
     }
   </ng-template>
 

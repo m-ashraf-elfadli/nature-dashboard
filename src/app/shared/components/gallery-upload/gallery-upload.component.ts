@@ -7,11 +7,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-gallery-upload',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './gallery-upload.component.html',
   styleUrl: './gallery-upload.component.scss',
   providers: [
@@ -34,8 +35,8 @@ export class GalleryUploadComponent implements ControlValueAccessor {
   images: (string | ArrayBuffer)[] = [];
   isDragOver: boolean = false;
 
-  private onChange: (value: File | File[] | null) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: File | File[] | null) => void = () => { };
+  private onTouched: () => void = () => { };
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
