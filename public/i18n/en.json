@@ -31,7 +31,8 @@
         "desc": "Are you sure want to delete this project? This action can’t be undone."
       },
       "btns": {
-        "add_new": "Add new project"
+        "add_new": "Add new project",
+        "view_all": "View All Projects"
       },
       "filter": {
         "country": "Country",

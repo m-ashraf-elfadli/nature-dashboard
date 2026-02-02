@@ -15,6 +15,7 @@ import { Project } from '../../features/projects/models/projects.interface';
 import { PaginationObj } from '../../core/models/global.interface';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AppDialogService } from '../../shared/services/dialog.service';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-services',
@@ -24,6 +25,7 @@ import { AppDialogService } from '../../shared/services/dialog.service';
     PageHeaderComponent,
     ReusableTableComponent,
     TranslateModule,
+    EmptyStateComponent,
   ],
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss',
@@ -36,7 +38,9 @@ export class ServicesComponent {
 
   data: any[] = [];
   totalRecords = this.data.length;
-
+  emptyStateDescription: string =
+    'No Data to preview, start create your first service to appear here!';
+  emptyStateBtnLabel: string = `Create New Service`;
   columns: TableColumn<any>[] = [
     {
       field: 'name',

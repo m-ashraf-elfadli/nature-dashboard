@@ -1,4 +1,29 @@
-<div class="page-container">
-  <h1>Dashboard</h1>
-  <p>Welcome to the Dashboard page</p>
+<div class="page-content">
+  <app-page-header></app-page-header>
+  <div class="content-wrapper">
+    <div class="page-title">
+      <h2>Welcome back, {{userName}}</h2>
+      <p>Here's what's happening with your projects today.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card" *ngFor="let card of cards">
+        <app-card-total [icon]="card.icon" [title]="card.title" [count]="card.count"></app-card-total>
+      </div>
+    </div>
+    <h2 class="table-title">Latest Projects</h2>
+    @if(data().length > 0)
+    {
+    <app-reusable-table [data]="data()" [config]="config" [actions]="actions" [totalRecords]="totalRecords()"
+      [filterItems]="filterItems" (onServerSideFilterChange)="onFilterChange($event)"
+      (paginationChange)="onPaginationChange($event)">
+    </app-reusable-table>
+    }
+
+    @else
+    {
+    <app-empty-state [description]="emptyStateDescription" [buttonLabel]="emptyStateBtnLabel"
+      (buttonAction)="addNewProject()"></app-empty-state>
+    }
+  </div>
 </div>

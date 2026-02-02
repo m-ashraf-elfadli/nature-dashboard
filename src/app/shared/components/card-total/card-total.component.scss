@@ -1,0 +1,49 @@
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-icon {
+  border-radius: 12px;
+  background: rgba(130, 198, 114, 0.08);
+  display: flex;
+  width: 48px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  &.projects {
+    background: rgba(130, 198, 114, 0.08);
+  }
+  &.clients {
+    background: rgba(107, 154, 232, 0.08);
+  }
+  &.services {
+    background: rgba(245, 158, 11, 0.08);
+  }
+  &.testimonials {
+    background: rgba(239, 68, 68, 0.08);
+  }
+}
+.data-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .card-title {
+    color: var(--Color-Neutral-700, #76777a);
+    font-size: var(--Font-Size-2Xs, 14px);
+    font-style: normal;
+    font-weight: var(--Font-Weight-Regular, 400);
+    line-height: var(--Font-Line-Height-2Xs, 16.8px); /* 120% */
+  }
+  .card-number {
+    color: var(--Color-Neutral-Black, #000);
+    font-size: var(--Font-Size-2Xl, 29px);
+    font-style: normal;
+    font-weight: var(--Font-Weight-Bold, 700);
+    line-height: var(--Font-Line-Height-2Xl, 34.8px); /* 120% */
+  }
+}
