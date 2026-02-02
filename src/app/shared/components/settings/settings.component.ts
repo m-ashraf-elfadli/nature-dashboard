@@ -50,8 +50,24 @@ export class SettingsComponent {
   value: number = 1;
 
   // Language statuses: 0 = not-started, 1 = ongoing, 2 = completed
-  @Input() englishStatus: number = 0;
-  @Input() arabicStatus: number = 0;
+  private _englishStatus: number = 0;
+  private _arabicStatus: number = 0;
+
+  @Input()
+  set englishStatus(value: number) {
+    this._englishStatus = value;
+  }
+  get englishStatus(): number {
+    return this._englishStatus;
+  }
+
+  @Input()
+  set arabicStatus(value: number) {
+    this._arabicStatus = value;
+  }
+  get arabicStatus(): number {
+    return this._arabicStatus;
+  }
 
   onChange = (_: any) => {};
   onTouched = () => {};
@@ -73,6 +89,6 @@ export class SettingsComponent {
   readonly STATUS_MAP = STATUS_MAP;
 
   statusView(value: number): StatusConfig {
-    return this.STATUS_MAP[value] ?? this.STATUS_MAP[0];
+    return this.STATUS_MAP[value] ?? this.STATUS_MAP[1];
   }
 }
