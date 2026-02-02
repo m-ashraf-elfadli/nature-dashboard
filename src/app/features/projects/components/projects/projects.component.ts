@@ -117,20 +117,19 @@ export class ProjectsComponent implements OnInit {
   }
   showConfirmDialog(row: Project) {
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
-      header: 'Select a Product',
-      width: '40vw',
-      modal: true,
-      data: {
-        title: 'projects.list.delete_dialog.header',
-        subtitle: 'projects.list.delete_dialog.desc',
-        confirmText: 'general.delete',
-        cancelText: 'general.cancel',
-        confirmSeverity: 'delete',
-        cancelSeverity: 'cancel',
-        showCancel: true,
-        showExtraButton: false,
-        data: row,
-      },
+        width: '40vw',
+        modal:true,
+        data:{
+            title:'projects.list.delete_dialog.header',
+            subtitle: 'projects.list.delete_dialog.desc',
+            confirmText: 'general.delete',
+            cancelText: 'general.cancel',
+            confirmSeverity: 'delete',
+            cancelSeverity: 'cancel',
+            showCancel: true,
+            showExtraButton: false,
+            data: row
+        }
     });
     this.ref.onClose.subscribe((product: { action: string; data: Project }) => {
       if (product) {
@@ -234,9 +233,6 @@ export class ProjectsComponent implements OnInit {
         btnCallback: (e: Event) => this.addNew(),
       },
     ];
-  }
-  onAction(event: { action: string; row: Project }) {
-    console.log('Action clicked:', event);
   }
 
   onPaginationChange(event: PaginationObj) {
