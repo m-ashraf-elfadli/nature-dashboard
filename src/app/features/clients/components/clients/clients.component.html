@@ -1,6 +1,7 @@
 <div class="page-content">
   <app-page-header></app-page-header>
   <h1>Clients</h1>
+
   <app-reusable-table
     [data]="data"
     [config]="config"
@@ -19,6 +20,7 @@
   [modal]="true"
   [(visible)]="visible"
   [style]="{ width: '35rem' }"
+  (onHide)="onDialogHide()"
 >
   <ng-template pTemplate="header">
     @if (currentClientId) {
@@ -28,8 +30,10 @@
     }
   </ng-template>
 
-  <app-client-form
-    [clientId]="currentClientId"
-    (save)="handleSave($event)"
-  ></app-client-form>
+  @if (visible) {
+    <app-client-form
+      [clientId]="currentClientId"
+      (close)="handleFormClose($event)"
+    ></app-client-form>
+  }
 </p-dialog>

@@ -8,7 +8,6 @@
     [totalRecords]="totalRecords"
     [filterItems]="filterItems"
     (paginationChange)="onPaginationChange($event)"
-    (filterChange)="onFilterChange($event)"
   >
   </app-reusable-table>
 </div>
@@ -19,17 +18,18 @@
   [modal]="true"
   [(visible)]="visible"
   [style]="{ width: '35rem' }"
+  (onHide)="onDialogHide()"
 >
   <ng-template pTemplate="header">
     @if (currentTestimonialId) {
-    <h2>Edit Testimonial</h2>
+      <h2>Edit Testimonial</h2>
     } @else {
-    <h2>Add New Testimonial</h2>
+      <h2>Add New Testimonial</h2>
     }
   </ng-template>
 
   <app-testimonials-form
     [testimonialId]="currentTestimonialId"
-    (save)="handleSave($event)"
+    (close)="handleFormClose($event)"
   ></app-testimonials-form>
 </p-dialog>

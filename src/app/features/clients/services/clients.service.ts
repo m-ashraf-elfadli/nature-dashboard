@@ -27,11 +27,11 @@ export class ClientsService {
     return this.api.get(`clients/${id}`);
   }
 
-  create(payload: any): Observable<any> {
+  create(payload: FormData): Observable<any> {
     return this.api.post('clients', payload);
   }
 
-  update(id: string, payload: any): Observable<any> {
+  update(id: string, payload: FormData): Observable<any> {
     return this.api.post(`clients/${id}`, payload);
   }
 

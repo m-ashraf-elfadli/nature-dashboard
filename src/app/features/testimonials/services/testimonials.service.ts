@@ -36,7 +36,7 @@ export class TestimonialsService {
       testimonial_en: payload.testimonialEn,
       testimonial_ar: payload.testimonialAr
     };
-    
+
     return this.api.post('testimonials', body);
   }
 
@@ -49,7 +49,7 @@ export class TestimonialsService {
       testimonial_en: payload.testimonialEn,
       testimonial_ar: payload.testimonialAr
     };
-    
+
     return this.api.post(`testimonials/${id}`, body);
   }
 

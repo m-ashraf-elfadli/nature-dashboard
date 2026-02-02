@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { TestimonialsService } from '../../services/testimonials.service';
+import { TestimonialFormAction, TestimonialFormEvent } from '../../models/testimonials.model';
 
 @Component({
   selector: 'app-testimonials-form',
@@ -10,10 +11,9 @@ import { TestimonialsService } from '../../services/testimonials.service';
   templateUrl: './testimonials-form.component.html',
   styleUrl: './testimonials-form.component.scss'
 })
-export class TestimonialsFormComponent implements OnInit {
+export class TestimonialsFormComponent implements OnInit, OnChanges {
   @Input() testimonialId?: string;
-  @Output() save = new EventEmitter<any>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() close = new EventEmitter<TestimonialFormEvent>();
 
   private fb = inject(FormBuilder);
   private testimonialsService = inject(TestimonialsService);
@@ -24,25 +24,33 @@ export class TestimonialsFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    
+
     if (this.testimonialId) {
       this.isEditMode = true;
       this.loadTestimonial();
     }
   }
 
-  ngOnChanges() {
-    // Reset form when testimonialId changes or becomes undefined
-    if (!this.testimonialId && this.form) {
-      this.isEditMode = false;
-      this.form.reset();
-    } else if (this.testimonialId && this.form) {
-      this.isEditMode = true;
-      this.loadTestimonial();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['testimonialId']) {
+      const currentValue = changes['testimonialId'].currentValue;
+      const previousValue = changes['testimonialId'].previousValue;
+
+
+      // EDIT MODE
+      if (currentValue) {
+        this.isEditMode = true;
+        this.loadTestimonial();
+      }
+      // CREATE MODE
+      else if (this.form) {
+        this.isEditMode = false;
+        this.resetForm();
+      }
     }
   }
 
-  initForm() {
+  private initForm() {
     this.form = this.fb.group({
       clientNameEn: ['', Validators.required],
       clientNameAr: ['', Validators.required],
@@ -53,26 +61,37 @@ export class TestimonialsFormComponent implements OnInit {
     });
   }
 
-  loadTestimonial() {
-    if (!this.testimonialId) return;
-    
+  resetForm() {
+    this.form.reset();
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+  }
+
+  private loadTestimonial() {
+    if (!this.testimonialId) {
+      return;
+    }
+
     this.isLoading = true;
+
     this.testimonialsService.getById(this.testimonialId).subscribe({
       next: (res) => {
-        console.log('Loaded testimonial data:', res);
+
         const data = res.result;
         this.form.patchValue({
-          clientNameEn: data.client_name_en,
-          clientNameAr: data.client_name_ar,
-          jobTitleEn: data.job_title_en,
-          jobTitleAr: data.job_title_ar,
-          testimonialEn: data.testimonial_en,
-          testimonialAr: data.testimonial_ar
+          clientNameEn: data.client_name_en || data.clientName || '',
+          clientNameAr: data.client_name_ar || '',
+          jobTitleEn: data.job_title_en || data.jobTitle || '',
+          jobTitleAr: data.job_title_ar || '',
+          testimonialEn: data.testimonial_en || data.Testimonial || data.testimonial || '',
+          testimonialAr: data.testimonial_ar || ''
         });
+
         this.isLoading = false;
       },
       error: (err) => {
         console.error('Load testimonial error:', err);
+        console.error('Error details:', err.error);
         alert('Failed to load testimonial data');
         this.isLoading = false;
       }
@@ -80,53 +99,39 @@ export class TestimonialsFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Form submitted');
-    console.log('Form valid:', this.form.valid);
-    console.log('Form value:', this.form.value);
-    
     if (this.form.valid) {
-      this.save.emit(this.form.value);
-      
-      // Reset form only if not in edit mode
-      if (!this.isEditMode) {
-        this.form.reset();
-      }
+      this.emitAction('save');
     } else {
-      this.markFormGroupTouched(this.form);
-      console.log('Form errors:', this.getFormValidationErrors());
+      this.form.markAllAsTouched();
     }
   }
 
   onSaveAndCreateNew() {
-    console.log('Save and create new clicked');
-    
     if (this.form.valid) {
-      this.save.emit({ ...this.form.value, createNew: true });
-      
-      // Reset form for new entry
-      this.form.reset();
+      this.emitAction('saveAndCreateNew');
     } else {
-      this.markFormGroupTouched(this.form);
-      console.log('Form errors:', this.getFormValidationErrors());
+      this.form.markAllAsTouched();
     }
   }
 
-  private markFormGroupTouched(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(key => {
-      const control = formGroup.get(key);
-      control?.markAsTouched();
-    });
+  onCancel() {
+    this.emitAction('cancel');
   }
 
-  private getFormValidationErrors() {
-    const errors: any = {};
-    Object.keys(this.form.controls).forEach(key => {
-      const control = this.form.get(key);
-      if (control && control.errors) {
-        errors[key] = control.errors;
-      }
-    });
-    return errors;
+  private emitAction(action: TestimonialFormAction) {
+    const formData = this.prepareFormData();
+    this.close.emit({ action, formData });
+  }
+
+  private prepareFormData(): any {
+    return {
+      clientNameEn: this.form.value.clientNameEn,
+      clientNameAr: this.form.value.clientNameAr,
+      jobTitleEn: this.form.value.jobTitleEn,
+      jobTitleAr: this.form.value.jobTitleAr,
+      testimonialEn: this.form.value.testimonialEn,
+      testimonialAr: this.form.value.testimonialAr
+    };
   }
 
   isFieldInvalid(fieldName: string): boolean {

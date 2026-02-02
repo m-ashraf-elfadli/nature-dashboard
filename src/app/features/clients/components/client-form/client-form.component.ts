@@ -1,8 +1,24 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject, OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { GalleryUploadComponent } from "../../../../shared/components/gallery-upload/gallery-upload.component";
+import { GalleryUploadComponent } from '../../../../shared/components/gallery-upload/gallery-upload.component';
 import { ClientsService } from '../../services/clients.service';
+import { ClientFormActions, ClientFormEvent } from '../../models/clients.model';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-client-form',
@@ -13,8 +29,7 @@ import { ClientsService } from '../../services/clients.service';
 })
 export class ClientFormComponent implements OnInit, OnChanges {
   @Input() clientId?: string;
-  @Output() save = new EventEmitter<any>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() close = new EventEmitter<ClientFormEvent>();
 
   private fb = inject(FormBuilder);
   private clientsService = inject(ClientsService);
@@ -22,178 +37,106 @@ export class ClientFormComponent implements OnInit, OnChanges {
   form!: FormGroup;
   isEditMode = false;
   isLoading = false;
-  uploadedImage: File | null = null;
 
   ngOnInit() {
     this.initForm();
-    
-    if (this.clientId) {
-      this.isEditMode = true;
-      this.loadClient();
-    }
+    this.loadClient();
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // When clientId input changes
     if (changes['clientId']) {
-      const currentValue = changes['clientId'].currentValue;
-      
-      // Switching to create mode (clientId is falsy)
-      if (!currentValue && this.form) {
-        console.log('Switching to Create Mode');
-        this.isEditMode = false;
-        this.uploadedImage = null;
-        // Reset all form fields explicitly
-        this.form.get('clientNameEn')?.setValue('');
-        this.form.get('clientNameAr')?.setValue('');
-        this.form.get('clientImage')?.setValue(null);
-        this.form.markAsUntouched();
-        this.form.markAsPristine();
-      }
-      // Switching to edit mode (clientId has a value)
-      else if (currentValue && this.form) {
-        console.log('Switching to Edit Mode:', currentValue);
+
+      // EDIT MODE
+      if (this.clientId) {
         this.isEditMode = true;
-        this.loadClient();
+      }
+
+      // CREATE MODE
+      else {
+        this.isEditMode = false;
+        this.resetForm();
       }
     }
   }
 
-  initForm() {
+  private initForm() {
     this.form = this.fb.group({
       clientNameEn: ['', Validators.required],
       clientNameAr: ['', Validators.required],
-      clientImage: [null]
+      clientImage: [null, Validators.required]
     });
   }
 
-  loadClient() {
+  resetForm() {
+    this.form.reset();
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+  }
+
+  private loadClient() {
     if (!this.clientId) return;
-    
+
     this.isLoading = true;
+
     this.clientsService.getById(this.clientId).subscribe({
       next: (res) => {
-        console.log('Loaded client data:', res);
         const data = res.result;
-        
-        // Build image URL if image exists
-        let imageUrl = null;
-        if (data.image) {
-          imageUrl = 'https://lavenderblush-reindeer-325183.hostingersite.com/api/media/' + data.image;
-        }
-        
+
         this.form.patchValue({
           clientNameEn: data.name_en || data.name,
           clientNameAr: data.name_ar || data.name,
-          clientImage: imageUrl
+          clientImage: data.image
+            ? `${environment.mediaUrl}${data.image}`
+            : null
         });
+
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error('Load client error:', err);
+      error: () => {
         alert('Failed to load client data');
         this.isLoading = false;
       }
     });
   }
 
-  // Fixed: Handle different types of events from gallery-upload
-  onImageUpload(event: any) {
-    console.log('Image upload event:', event);
-    
-    // Check if it's a File object
-    if (event instanceof File) {
-      this.uploadedImage = event;
-      console.log('Single file uploaded:', event);
-    }
-    // Check if it's an array of files
-    else if (Array.isArray(event) && event.length > 0) {
-      this.uploadedImage = event[0]; // Take the first file
-      console.log('Array of files, taking first:', event[0]);
-    }
-    // Check if it's an event object with a file property
-    else if (event?.file) {
-      this.uploadedImage = event.file;
-      console.log('Event with file property:', event.file);
-    }
-    // Check if it's an event object with files array
-    else if (event?.files && Array.isArray(event.files) && event.files.length > 0) {
-      this.uploadedImage = event.files[0];
-      console.log('Event with files array:', event.files[0]);
-    }
-    // Check if it's a FileList
-    else if (event instanceof FileList && event.length > 0) {
-      this.uploadedImage = event[0];
-      console.log('FileList, taking first:', event[0]);
-    }
-    else {
-      console.warn('Unknown event format:', event);
-    }
-  }
-
   onSubmit() {
-    console.log('Form submitted');
-    console.log('Form valid:', this.form.valid);
-    console.log('Form value:', this.form.value);
-    
     if (this.form.valid) {
-      const formData = this.prepareFormData();
-      this.save.emit(formData);
-      
-      if (!this.isEditMode) {
-        this.form.reset();
-        this.uploadedImage = null;
-      }
+      this.emitAction('save');
     } else {
-      this.markFormGroupTouched(this.form);
-      console.log('Form errors:', this.getFormValidationErrors());
+      this.form.markAllAsTouched();
     }
   }
 
   onSaveAndCreateNew() {
-    console.log('Save and create new clicked');
-    
     if (this.form.valid) {
-      const formData = this.prepareFormData();
-      formData.append('createNew', 'true');
-      this.save.emit(formData);
-      
-      this.form.reset();
-      this.uploadedImage = null;
+      this.emitAction('saveAndCreateNew');
     } else {
-      this.markFormGroupTouched(this.form);
-      console.log('Form errors:', this.getFormValidationErrors());
+      this.form.markAllAsTouched();
     }
+  }
+
+  onCancel() {
+    this.emitAction('cancel');
+  }
+
+  private emitAction(action: ClientFormActions) {
+    const formData = this.prepareFormData();
+    this.close.emit({ action, formData });
   }
 
   private prepareFormData(): FormData {
     const formData = new FormData();
+
     formData.append('name_en', this.form.value.clientNameEn);
     formData.append('name_ar', this.form.value.clientNameAr);
-    
-    if (this.uploadedImage) {
-      formData.append('image', this.uploadedImage);
+
+    const imageValue = this.form.value.clientImage;
+    if (imageValue instanceof File) {
+      formData.append('image', imageValue);
     }
-    
+
     return formData;
-  }
-
-  private markFormGroupTouched(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(key => {
-      const control = formGroup.get(key);
-      control?.markAsTouched();
-    });
-  }
-
-  private getFormValidationErrors() {
-    const errors: any = {};
-    Object.keys(this.form.controls).forEach(key => {
-      const control = this.form.get(key);
-      if (control && control.errors) {
-        errors[key] = control.errors;
-      }
-    });
-    return errors;
   }
 
   isFieldInvalid(fieldName: string): boolean {

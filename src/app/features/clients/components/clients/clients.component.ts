@@ -10,24 +10,17 @@ import { PaginationObj } from '../../../../core/models/global.interface';
 import { ClientsService } from '../../services/clients.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent, ConfirmationDialogConfig } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
-
-export interface Client {
-  id: string;
-  name: string;
-  image: string | null;
-  status: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Client, ClientFormEvent } from '../../models/clients.model';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-clients',
   standalone: true,
   imports: [
-    PageHeaderComponent, 
-    ReusableTableComponent, 
-    DialogModule, 
-    ButtonModule, 
+    PageHeaderComponent,
+    ReusableTableComponent,
+    DialogModule,
+    ButtonModule,
     ClientFormComponent
   ],
   providers: [DialogService],
@@ -35,7 +28,7 @@ export interface Client {
   styleUrl: './clients.component.scss',
 })
 export class ClientsComponent implements OnInit {
-
+  @ViewChild(ClientFormComponent) clientForm?: ClientFormComponent;
   private clientsService = inject(ClientsService);
   private dialogService = inject(DialogService);
 
@@ -50,17 +43,14 @@ export class ClientsComponent implements OnInit {
   };
 
   ngOnInit() {
-    console.log('🟢 ClientsComponent initialized');
     this.loadClients();
   }
 
   loadClients(pagination?: PaginationObj) {
     const pag = pagination || this.paginationObj;
-    console.log('🔵 Loading clients with pagination:', pag);
-    
+
     this.clientsService.getAll(pag, '').subscribe({
       next: (res) => {
-        console.log('✅ Clients loaded successfully:', res);
         this.data = res.result || [];
         this.totalRecords = res.total || 0;
       },
@@ -135,8 +125,6 @@ export class ClientsComponent implements OnInit {
   }
 
   delete(row: Client) {
-    console.log('Delete called with row:', row);
-    
     const dialogConfig: ConfirmationDialogConfig<Client> = {
       title: 'Delete Client',
       subtitle: `Are you sure you want to delete "${row.name}"? This action cannot be undone.`,
@@ -158,8 +146,6 @@ export class ClientsComponent implements OnInit {
     });
 
     this.confirmDialogRef.onClose.subscribe((result: any) => {
-      console.log('Dialog closed with result:', result);
-      
       if (result && result.action === 'confirm' && result.data && result.data.id) {
         this.performDelete(result.data.id);
       }
@@ -167,11 +153,8 @@ export class ClientsComponent implements OnInit {
   }
 
   private performDelete(id: string) {
-    console.log('Performing delete for ID:', id);
-    
     this.clientsService.delete(id).subscribe({
       next: () => {
-        console.log('Deleted successfully');
         this.loadClients();
       },
       error: (err) => {
@@ -182,7 +165,6 @@ export class ClientsComponent implements OnInit {
   }
 
   onPaginationChange(event: PaginationObj) {
-    console.log('📄 Pagination changed:', event);
     this.paginationObj = event;
     this.loadClients(event);
   }
@@ -195,20 +177,32 @@ export class ClientsComponent implements OnInit {
     console.log("📥 Import CSV button clicked");
   }
 
-  handleSave(payload: FormData) {
-    console.log('💾 handleSave called');
-    
-    // Check if it's "Save and Create New"
-    const createNew = payload.get('createNew') === 'true';
-    payload.delete('createNew');
-    
+  handleFormClose(event: ClientFormEvent) {
+    console.log('Form closed with action:', event.action);
+
+    switch (event.action) {
+      case 'save':
+        this.handleSave(event.formData);
+        break;
+
+      case 'saveAndCreateNew':
+        this.handleSaveAndCreateNew(event.formData);
+        break;
+
+      case 'cancel':
+        this.handleCancel();
+        break;
+    }
+  }
+
+  private handleSave(formData: FormData) {
     if (this.currentClientId) {
       // Update existing
-      console.log('✏️ Updating client:', this.currentClientId);
-      this.clientsService.update(this.currentClientId, payload).subscribe({
+      this.clientsService.update(this.currentClientId, formData).subscribe({
         next: (res) => {
           console.log('✅ Update success:', res);
           this.visible = false;
+          this.currentClientId = undefined;
           this.loadClients();
         },
         error: (err) => {
@@ -218,16 +212,11 @@ export class ClientsComponent implements OnInit {
       });
     } else {
       // Create new
-      console.log('➕ Creating new client');
-      this.clientsService.create(payload).subscribe({
+      this.clientsService.create(formData).subscribe({
         next: (res) => {
           console.log('✅ Create success:', res);
-          if (createNew) {
-            this.loadClients();
-          } else {
-            this.visible = false;
-            this.loadClients();
-          }
+          this.visible = false;
+          this.loadClients();
         },
         error: (err) => {
           console.error('❌ Create error:', err);
@@ -237,9 +226,31 @@ export class ClientsComponent implements OnInit {
     }
   }
 
+  private handleSaveAndCreateNew(formData: FormData) {
+    this.clientsService.create(formData).subscribe({
+      next: () => {
+        this.loadClients();
+
+        this.currentClientId = undefined;
+
+        this.clientForm?.resetForm();
+      },
+      error: (err) => {
+        this.showErrorMessage(err);
+      }
+    });
+  }
+
+
+  private handleCancel() {
+    console.log('Form cancelled');
+    this.visible = false;
+    this.currentClientId = undefined;
+  }
+
   private showErrorMessage(err: any) {
     let errorMessage = 'An error occurred';
-    
+
     if (err.error) {
       if (err.error.errors) {
         const errors = err.error.errors;
@@ -251,9 +262,11 @@ export class ClientsComponent implements OnInit {
         errorMessage = err.error.message;
       }
     }
-    
-    console.log('Full error message:', errorMessage);
+
     alert(`Failed to save client:\n${errorMessage}`);
+  }
+  onDialogHide() {
+    this.currentClientId = undefined;
   }
 
   ngOnDestroy() {
