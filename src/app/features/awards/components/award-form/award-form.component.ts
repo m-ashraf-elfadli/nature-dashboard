@@ -15,6 +15,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AwardsService } from '../../../../services/awards.service';
 import { environment } from '../../../../../environments/environment';
+import { Award } from '../../models/awards.interface';
 
 @Component({
   selector: 'app-award-form',
@@ -46,7 +47,7 @@ export class AwardFormComponent implements OnInit {
   form!: FormGroup;
   awardId: string = '';
   isEditMode: boolean = false;
-  awardData: any = {};
+  awardData: Award = {} as Award;
   mediaUrl: string = environment.mediaUrl;
   ref: DynamicDialogRef | undefined;
 
@@ -65,7 +66,7 @@ export class AwardFormComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       image: [null],
-      date: [null, Validators.required],
+      award_date: [null, Validators.required],
       organizations_logos: [null],
       status: [1, Validators.required],
     });
@@ -74,7 +75,8 @@ export class AwardFormComponent implements OnInit {
   getAwardById(id: string, culture: string) {
     this.service.getById(id, culture).subscribe({
       next: (res) => {
-        this.patchValues(res.result);
+        this.awardData = res.result
+        this.patchValues(this.awardData);
       },
       error: (err) => {
         console.error(err);
@@ -82,12 +84,10 @@ export class AwardFormComponent implements OnInit {
     });
   }
 
-  patchValues(data: any) {
+  patchValues(data: Award) {
     if (!data) return;
     this.awardData = data;
     this.isEditMode = true;
-    this.awardId = data.id;
-
     const parseDate = (d?: string | null): Date | null => {
       if (!d) return null;
       const parts = d.split('/');
@@ -100,7 +100,7 @@ export class AwardFormComponent implements OnInit {
     this.form.patchValue({
       name: data.name || '',
       description: data.description || '',
-      date: parseDate(data.date),
+      award_date: parseDate(data.awardDate),
       status: data.status ? 1 : 0,
     });
 
@@ -108,8 +108,8 @@ export class AwardFormComponent implements OnInit {
     if (data.image) {
       this.form.get('image')?.setValue(this.mediaUrl + data.image);
     }
-    if (data.organizations_logos && data.organizations_logos.length) {
-      const logos = data.organizations_logos.map((logo: any) => this.mediaUrl + logo.url);
+    if (data.organizationLogos && data.organizationLogos.length) {
+      const logos = data.organizationLogos.map((logo: any) => this.mediaUrl + logo.url);
       this.form.get('organizations_logos')?.setValue(logos);
     }
   }
@@ -127,16 +127,24 @@ export class AwardFormComponent implements OnInit {
     const request = this.isEditMode
       ? this.service.update(this.awardId, formData, culture)
       : this.service.create(formData, culture);
-
     request.subscribe({
       next: (res) => {
-        console.log('Success', res);
+        if (!this.isEditMode) {
+          this.awardId = res.result.id;
+          this.isEditMode = true;
+        }
         if (isNavigateOut) {
-          this.router.navigate(['/awards']);
+          this.router.navigate(['/projects']);
+        } else {
+          const projectCluture:'en' | 'ar' =culture === 'en' ? 'ar' :'en'
+          this.getAwardById(this.awardId, projectCluture!);
         }
       },
       error: (err) => {
         console.error(err);
+        setTimeout(() => {
+          this.formActionsComponent.revertLanguage()
+        }, 0);
       },
     });
   }
@@ -145,12 +153,12 @@ export class AwardFormComponent implements OnInit {
     const formData = new FormData();
     const value = this.form.value;
 
-    if (this.awardId) {
+    if (this.isEditMode) {
       formData.append('id', this.awardId);
     }
     formData.append('name', value.name);
     formData.append('description', value.description);
-    formData.append('date', this.formatDate(value.date));
+    formData.append('award_date', this.formatDate(value.award_date));
     formData.append('status', value.status);
 
     // Single image

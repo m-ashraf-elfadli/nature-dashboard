@@ -48,6 +48,10 @@ export const dashboardRoutes: Routes = [
         component: AwardFormComponent,
       },
       {
+        path: 'edit/:id',
+        component: AwardFormComponent,
+      },
+      {
         path: 'customize',
         component: CustomizeAwardSectionFormComponent,
         data: {

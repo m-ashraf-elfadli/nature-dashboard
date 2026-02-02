@@ -13,7 +13,7 @@ import { PaginationObj } from '../../../core/models/global.interface';
 })
 export class ReusablePaginationComponent implements OnInit {
   @Input() totalRecords = 0;
-  @Input() page = 0;
+  page = 0;
   @Input() rows!: number;
   @Input() rowsOptions: number[] = [5, 10, 20, 50];
 
@@ -71,7 +71,7 @@ export class ReusablePaginationComponent implements OnInit {
   }
 
   go(page: number) {
-    this.onPaginationChange({ page:page + 1 });
+    this.onPaginationChange({ page });
   }
 
   onPaginationChange(change: { page?: number; size?: number }) {
@@ -80,9 +80,9 @@ export class ReusablePaginationComponent implements OnInit {
     }
     if (change.size !== undefined) {
       this.rows = change.size;
-      this.page = 1;
+      this.page = 0;
     }
-    this.paginationChange.emit({ page: this.page, size: this.rows });
+    this.paginationChange.emit({ page: this.page + 1, size: this.rows });
   }
 
   /** Returns the index of the last item shown on the current page */

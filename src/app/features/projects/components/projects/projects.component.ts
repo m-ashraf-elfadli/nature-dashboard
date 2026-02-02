@@ -69,7 +69,6 @@ export class ProjectsComponent implements OnInit {
   }
   showConfirmDialog(row:Project) {
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
-        header: 'Select a Product',
         width: '40vw',
         modal:true,
         data:{
@@ -184,9 +183,6 @@ export class ProjectsComponent implements OnInit {
         btnCallback: (e: Event) => this.addNew()
       },
     ];
-  }
-  onAction(event: { action: string; row: Project }) {
-    console.log('Action clicked:', event);
   }
 
   onPaginationChange(event: PaginationObj) {

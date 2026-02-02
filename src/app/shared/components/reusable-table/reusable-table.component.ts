@@ -17,8 +17,8 @@ import { LocaleChip, TableAction, TableConfig } from './reusable-table.types';
 import { FormsModule } from '@angular/forms';
 import { FilterItems, FiltersComponent } from '../filters/filters.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { environment } from '../../../../environments/environment.prod';
 import { PaginationObj } from '../../../core/models/global.interface';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-reusable-table',
@@ -58,8 +58,7 @@ export class ReusableTableComponent<T> implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
       this.filteredData = this.data;
-      this.totalRecords = this.data.length;
-      this.page = 0; // Reset page on data change
+      this.page = 1; // Reset page on data change
     }
   }
 
@@ -80,6 +79,7 @@ export class ReusableTableComponent<T> implements OnChanges {
   }
 
   onPaginationChange(event: PaginationObj) {
+    console.log(event)
     this.page = event.page;
     // this.rowsPerPage = event.perPage;
     this.config = {
@@ -133,7 +133,7 @@ export class ReusableTableComponent<T> implements OnChanges {
       return true;
     });
     this.totalRecords = this.filteredData.length;
-    this.page = 0; // Reset to first page
+    this.page = 1; // Reset to first page
   }
 
   getVisibleRowActions(row: T): TableAction<T>[] {

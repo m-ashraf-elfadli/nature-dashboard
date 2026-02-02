@@ -103,6 +103,10 @@
             <img [src]="row[col.field]" alt="image" class="table-image" />
             }
 
+            @case ('text-editor') {
+              <div [innerHTML]="row[col.field]"></div>
+            }
+
             @default {
             <span>{{ row[col.field] }}</span>
             }
@@ -129,7 +133,6 @@
     <app-reusable-pagination
       [totalRecords]="totalRecords"
       [rowsOptions]="config.rowsPerPageOptions"
-      [page]="page"
       [rows]="config.rowsPerPage!"
       (paginationChange)="onPaginationChange($event)"></app-reusable-pagination>
   </div>

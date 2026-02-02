@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../core/services/api.service';
 import { Observable } from 'rxjs';
-import { GetByIdResponse } from '../core/models/global.interface';
+import { GetByIdResponse, PaginationObj, PaginationResponse } from '../core/models/global.interface';
+import { Award } from '../features/awards/models/awards.interface';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +16,16 @@ export class AwardsService {
 
   getAllAwards(): Observable<any> {
     return this.apiService.get(this.endpoint);
+  }
+  
+  getAll(pagination: PaginationObj, search: string = ''): Observable<PaginationResponse<Award>> {
+    let params = new HttpParams()
+      .set('page', pagination.page)
+      .set('size', pagination.size);
+    if (search) {
+      params = params.set('value', search);
+    }
+    return this.apiService.get(this.endpoint,params);
   }
 
   create(
@@ -36,8 +48,12 @@ export class AwardsService {
   getById(
     id: string,
     culture: string,
-  ): Observable<GetByIdResponse<any>> {
+  ): Observable<GetByIdResponse<Award>> {
     this.apiService.setCulture(culture || 'en');
     return this.apiService.get(`${this.endpoint}/show/${id}`);
+  }
+
+  delete(id: string): Observable<any> {
+    return this.apiService.delete(`${this.endpoint}/${id}`);
   }
 }
