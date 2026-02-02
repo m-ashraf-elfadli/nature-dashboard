@@ -5,13 +5,14 @@ import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confi
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DialogModule } from 'primeng/dialog';
 import { LoaderComponent } from './core/components/loader/loader.component';
-
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ButtonModule, DialogModule, LoaderComponent],
+  imports: [RouterOutlet, ButtonModule, DialogModule, LoaderComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [DialogService],
+  providers: [DialogService, MessageService],
 })
 export class AppComponent {
   showDialog: any;
