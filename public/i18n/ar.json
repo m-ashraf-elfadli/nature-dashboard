@@ -18,7 +18,7 @@
   },
   "projects": {
     "list": {
-      "page_title": "كافة المشاريع",
+      "page_title": " المشاريع",
       "table_headers": {
         "project": "المشروع",
         "country": "الدولة",
@@ -115,7 +115,7 @@
   },
   "awards": {
     "list": {
-      "page_title": "كافة الجوائز",
+      "page_title": " الجوائز",
       "table_headers": {
         "award": "الجائزة",
         "date": "التاريخ",
@@ -154,7 +154,7 @@
   },
   "services": {
     "list": {
-      "page_title": "كافة الخدمات",
+      "page_title": " الخدمات",
       "table_headers": {
         "service": "الخدمة",
         "description": "الوصف",
@@ -185,7 +185,7 @@
   },
   "testimonials": {
     "list": {
-      "page_title": "كافة الشهادات",
+      "page_title": " الشهادات",
       "table_headers": {
         "name": "الاسم",
         "position": "المنصب",
