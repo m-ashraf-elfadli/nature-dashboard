@@ -33,8 +33,7 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['testimonialId']) {
-      const currentValue = changes['testimonialId'].currentValue;
-      const previousValue = changes['testimonialId'].previousValue;
+      const currentValue = changes['testimonialId'].currentValue
 
 
       // EDIT MODE

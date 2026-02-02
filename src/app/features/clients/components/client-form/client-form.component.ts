@@ -40,22 +40,18 @@ export class ClientFormComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.initForm();
-    this.loadClient();
+    if (this.isEditMode) {
+      debugger
+      this.loadClient();
+    }
+
 
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clientId']) {
-
-      // EDIT MODE
       if (this.clientId) {
         this.isEditMode = true;
-      }
-
-      // CREATE MODE
-      else {
-        this.isEditMode = false;
-        this.resetForm();
       }
     }
   }
@@ -123,6 +119,7 @@ export class ClientFormComponent implements OnInit, OnChanges {
   private emitAction(action: ClientFormActions) {
     const formData = this.prepareFormData();
     this.close.emit({ action, formData });
+    this.resetForm()
   }
 
   private prepareFormData(): FormData {

@@ -84,6 +84,7 @@ export class TestimonialsComponent implements OnInit {
   config: TableConfig<Testimonial> = {
     columns: this.columns,
     serverSidePagination: true,
+    rowsPerPage: 10,
     rowsPerPageOptions: [5, 10, 20],
     selectionMode: 'multiple',
     sortable: true,
