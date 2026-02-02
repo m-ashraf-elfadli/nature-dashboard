@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -50,7 +56,9 @@ const STATUS_MAP = {
   styleUrl: './customize-award-section-form.component.scss',
   providers: [AppDialogService],
 })
-export class CustomizeAwardSectionFormComponent implements OnInit {
+export class CustomizeAwardSectionFormComponent
+  implements OnInit, AfterViewInit
+{
   pageTitle = 'Customize Award Section';
   awardSectionForm!: FormGroup;
   currentLanguage = 'en';
@@ -79,12 +87,25 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
     private customizeService: CustomizeService,
     private router: Router,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.previousLanguage = this.currentLanguage;
+
+    // Set current language from localStorage
+    const storedLang = localStorage.getItem('app_lang');
+    if (storedLang) {
+      this.currentLanguage = storedLang;
+    }
+
     this.loadSection(this.currentLanguage);
+  }
+
+  ngAfterViewInit() {
+    // Update settings component after view is initialized
+    this.updateSettingsComponent();
   }
 
   initForm(): void {
@@ -208,7 +229,7 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
         if (section?.localeComplete) {
           Object.entries(section.localeComplete).forEach(
             ([langKey, isComplete]) => {
-              const status = isComplete ? 'completed' : 'not-started';
+              const status = isComplete ? 'completed' : 'ongoing';
               this.languageStatuses.set(langKey, {
                 code: langKey,
                 status: status as LanguageStatusType,
@@ -218,9 +239,14 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
           this.updateSettingsComponent();
         }
 
-        // If current language is not complete but we're loading it, set to ongoing
-        const currentLangStatus = section?.localeComplete?.[lang];
-        if (currentLangStatus === false || currentLangStatus === undefined) {
+        // After patching, update the current language status based on localeComplete
+        const currentLocaleStatus = section?.localeComplete?.[lang];
+        if (currentLocaleStatus === false) {
+          this.updateLanguageStatus(lang, 'ongoing');
+        } else if (currentLocaleStatus === true) {
+          this.updateLanguageStatus(lang, 'completed');
+        } else {
+          // If localeComplete doesn't have this language, mark as ongoing
           this.updateLanguageStatus(lang, 'ongoing');
         }
 
@@ -268,6 +294,9 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
 
     this.settingsComponent.englishStatus = getStatus('en');
     this.settingsComponent.arabicStatus = getStatus('ar');
+
+    // Trigger change detection to ensure the view updates
+    this.cdr.detectChanges();
   }
 
   submitForm(lang: string, navigateAway = false): void {
@@ -328,7 +357,9 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
         return;
       }
 
-      if (result.action === 'confirm') {
+      if (result.action === 'cancel') {
+        this.switchLanguage(event.newLang);
+      } else if (result.action === 'confirm') {
         this.saveAndSwitchLanguage(event.oldLang, event.newLang);
       }
     });
@@ -356,12 +387,20 @@ export class CustomizeAwardSectionFormComponent implements OnInit {
   }
 
   private switchLanguage(lang: string): void {
+    // Store the current language as previous before switching
     this.previousLanguage = this.currentLanguage;
     this.currentLanguage = lang;
     this.showLanguageSwitchToast = true;
 
-    this.loadSection(lang);
     this.commitLanguage(lang);
+
+    // Mark as ongoing when switching to it (unless already completed)
+    const currentStatus = this.languageStatuses.get(lang)?.status;
+    if (currentStatus !== 'completed') {
+      this.updateLanguageStatus(lang, 'ongoing');
+    }
+
+    this.loadSection(lang);
   }
 
   hideLanguageSwitchToast(): void {

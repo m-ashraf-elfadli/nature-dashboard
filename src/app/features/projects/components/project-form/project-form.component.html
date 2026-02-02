@@ -1,8 +1,8 @@
 <div class="form-content">
     <div class="form-header">
         <app-page-header [title]="'projects.form.title' | translate"></app-page-header>
-        <app-form-actions (discard)="onDiscard($event)" (save)="onSave()"
-            (languageChange)="onLanguageChange($event)" [isFormValid]="form.valid"></app-form-actions>
+        <app-form-actions (discard)="onDiscard($event)" (save)="onSave()" (languageChange)="onLanguageChange($event)"
+            [isFormValid]="form.valid"></app-form-actions>
     </div>
     <form [formGroup]="form" (ngSubmit)="submitForm()" class="project-form">
         <div class="form-left-section">
@@ -13,30 +13,40 @@
                 </div>
                 <div class="inputs">
                     <div class="our-field">
-                        <label for="name">{{ 'projects.form.labels.name' | translate }} <span class="text-red-val">*</span></label>
-                        <input pInputText id="name" [placeholder]="'projects.form.placeholders.name' | translate" type="text" formControlName="name" />
+                        <label for="name">{{ 'projects.form.labels.name' | translate }} <span
+                                class="text-red-val">*</span></label>
+                        <input pInputText id="name" [placeholder]="'projects.form.placeholders.name' | translate"
+                            type="text" formControlName="name" />
                         @if(hasError('name')){
-                            <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.name' | translate}}</p-message>
+                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.name' |
+                            translate}}</p-message>
                         }
                     </div>
                     <div class="our-field">
-                        <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span class="text-red-val">*</span></label>
+                        <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span
+                                class="text-red-val">*</span></label>
                         <div class="textarea-container">
-                            <textarea pTextarea [placeholder]="'projects.form.placeholders.overview' | translate" id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
+                            <textarea pTextarea [placeholder]="'projects.form.placeholders.overview' | translate"
+                                id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
                             <span class="char-counter">{{ form.get('overview')?.value?.length || 0 }}/200</span>
                         </div>
                         @if(hasError('overview')){
-                            <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview' | translate}}</p-message>
+                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview'
+                            | translate}}</p-message>
                         }
                     </div>
                     <div class="our-field">
-                        <label for="brief">{{ 'projects.form.labels.brief' | translate }} <span class="text-red-val">*</span></label>
+                        <label for="brief">{{ 'projects.form.labels.brief' | translate }} <span
+                                class="text-red-val">*</span></label>
                         <div class="textarea-container">
-                            <textarea pTextarea [disabled]="true" [placeholder]="'projects.form.placeholders.brief' | translate" id="brief" [autoResize]="true" formControlName="brief" rows="4"></textarea>
+                            <textarea pTextarea [disabled]="true"
+                                [placeholder]="'projects.form.placeholders.brief' | translate" id="brief"
+                                [autoResize]="true" formControlName="brief" rows="4"></textarea>
                             <span class="char-counter">{{ form.get('brief')?.value?.length || 0 }}/200</span>
                         </div>
                         @if(hasError('brief')){
-                            <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.brief' | translate}}</p-message>
+                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.brief' |
+                            translate}}</p-message>
                         }
                     </div>
                 </div>
@@ -49,63 +59,114 @@
                     <div class="inputs">
                         <!-- Settings inputs go here -->
                         <div class="our-field">
-                            <label for="service_ids">{{ 'projects.form.labels.services' | translate }} <span class="text-red-val">*</span></label>
-                            <p-multiselect [options]="services" formControlName="service_ids" optionValue="id" optionLabel="name" [placeholder]="'projects.form.placeholders.services' | translate" [maxSelectedLabels]="3" [showHeader]="false"/>
+                            <label for="service_ids">{{ 'projects.form.labels.services' | translate }} <span
+                                    class="text-red-val">*</span></label>
+                            <p-multiselect [options]="services" formControlName="service_ids" optionValue="id"
+                                optionLabel="name" [placeholder]="'projects.form.placeholders.services' | translate"
+                                [maxSelectedLabels]="3" [showHeader]="false" />
                             @if(hasError('service_ids')){
-                                <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.services' | translate}}</p-message>
+                            <p-message severity="error" variant="simple"
+                                size="small">{{'projects.form.validation.services' | translate}}</p-message>
                             }
                         </div>
                         <div class="our-field">
-                            <label>{{'projects.form.labels.timeline' | translate}} <span class="text-red-val">*</span></label>
+                            <label>{{'projects.form.labels.timeline' | translate}} <span
+                                    class="text-red-val">*</span></label>
                             <div class="flex align-items-center gap-2">
                                 <div class="flex flex-column w-full">
-                                    <p-datepicker class="w-full" appendTo="body" [showIcon]="true" formControlName="start_date" [placeholder]="'projects.form.placeholders.form' | translate" dateFormat="dd.mm.yy">
+                                    <p-datepicker class="w-full" appendTo="body" [showIcon]="true"
+                                        formControlName="start_date"
+                                        [placeholder]="'projects.form.placeholders.form' | translate"
+                                        dateFormat="dd.mm.yy">
                                         <ng-template pTemplate="triggericon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z" stroke="#818898" stroke-width="1.5"/>
-                                                <path d="M7 4V2.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
-                                                <path d="M17 4V2.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
-                                                <path d="M2.5 9H21.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
-                                                <path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z" fill="#818898"/>
-                                                <path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z" fill="#818898"/>
-                                                <path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z" fill="#818898"/>
-                                                <path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z" fill="#818898"/>
-                                                <path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z" fill="#818898"/>
-                                                <path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z" fill="#818898"/>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z"
+                                                    stroke="#818898" stroke-width="1.5" />
+                                                <path d="M7 4V2.5" stroke="#818898" stroke-width="1.5"
+                                                    stroke-linecap="round" />
+                                                <path d="M17 4V2.5" stroke="#818898" stroke-width="1.5"
+                                                    stroke-linecap="round" />
+                                                <path d="M2.5 9H21.5" stroke="#818898" stroke-width="1.5"
+                                                    stroke-linecap="round" />
+                                                <path
+                                                    d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z"
+                                                    fill="#818898" />
                                             </svg>
                                         </ng-template>
                                     </p-datepicker>
                                     @if(hasError('start_date')){
-                                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.from' | translate}}</p-message>
+                                    <p-message severity="error" variant="simple"
+                                        size="small">{{'projects.form.validation.from' | translate}}</p-message>
                                     }
                                 </div>
                                 <div class="flex flex-column w-full">
-                                    <p-datepicker class="w-full {{form.get('isCurrentlyActive')?.value ? 'p-disabled':''}}" appendTo="body" [showIcon]="true" formControlName="end_date" [placeholder]="'projects.form.placeholders.to' | translate" dateFormat="dd.mm.yy">
+                                    <p-datepicker
+                                        class="w-full {{form.get('isCurrentlyActive')?.value ? 'p-disabled':''}}"
+                                        appendTo="body" [showIcon]="true" formControlName="end_date"
+                                        [placeholder]="'projects.form.placeholders.to' | translate"
+                                        dateFormat="dd.mm.yy">
                                         <ng-template pTemplate="triggericon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z" stroke="#818898" stroke-width="1.5"/>
-                                                <path d="M7 4V2.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
-                                                <path d="M17 4V2.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
-                                                <path d="M2.5 9H21.5" stroke="#818898" stroke-width="1.5" stroke-linecap="round"/>
-                                                <path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z" fill="#818898"/>
-                                                <path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z" fill="#818898"/>
-                                                <path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z" fill="#818898"/>
-                                                <path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z" fill="#818898"/>
-                                                <path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z" fill="#818898"/>
-                                                <path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z" fill="#818898"/>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z"
+                                                    stroke="#818898" stroke-width="1.5" />
+                                                <path d="M7 4V2.5" stroke="#818898" stroke-width="1.5"
+                                                    stroke-linecap="round" />
+                                                <path d="M17 4V2.5" stroke="#818898" stroke-width="1.5"
+                                                    stroke-linecap="round" />
+                                                <path d="M2.5 9H21.5" stroke="#818898" stroke-width="1.5"
+                                                    stroke-linecap="round" />
+                                                <path
+                                                    d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z"
+                                                    fill="#818898" />
+                                                <path
+                                                    d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z"
+                                                    fill="#818898" />
                                             </svg>
                                         </ng-template>
                                     </p-datepicker>
                                     @if(hasError('end_date')){
-                                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.to' | translate}}</p-message>
+                                    <p-message severity="error" variant="simple"
+                                        size="small">{{'projects.form.validation.to' | translate}}</p-message>
                                     }
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class="checkbox-field">
-                            <p-checkbox (onChange)="toggleCurrentlyActive()" class="flex align-items-center" formControlName="isCurrentlyActive" [binary]="true" inputId="ny"></p-checkbox>
+                            <p-checkbox (onChange)="toggleCurrentlyActive()" class="flex align-items-center"
+                                formControlName="isCurrentlyActive" [binary]="true" inputId="ny"></p-checkbox>
                             <label for="ny">{{ 'projects.form.labels.is_currently_active' | translate }}</label>
                         </div>
                     </div>
@@ -116,131 +177,147 @@
                     </div>
                     <div class="inputs">
                         <!-- Location inputs go here -->
-                         <div class="our-field">
-                            <label for="country_id">{{ 'projects.form.labels.country' | translate }} <span class="text-red-val">*</span></label>
-                            <p-select [options]="countries" formControlName="country_id" optionValue="id" optionLabel="name" (onChange)="getCitiesByCountry($event.value)" [placeholder]="'projects.form.placeholders.country' | translate"/>
+                        <div class="our-field">
+                            <label for="country_id">{{ 'projects.form.labels.country' | translate }} <span
+                                    class="text-red-val">*</span></label>
+                            <p-select [options]="countries" formControlName="country_id" optionValue="id"
+                                optionLabel="name" (onChange)="getCitiesByCountry($event.value)"
+                                [placeholder]="'projects.form.placeholders.country' | translate" />
                             @if(hasError('country_id')){
-                                <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.country' | translate}}</p-message>
+                            <p-message severity="error" variant="simple"
+                                size="small">{{'projects.form.validation.country' | translate}}</p-message>
                             }
-                         </div>
-                         <div class="our-field">
-                            <label for="city_id">{{ 'projects.form.labels.city' | translate }} <span class="text-red-val">*</span></label>
-                            <p-select [options]="cities" formControlName="city_id" optionValue="id" optionLabel="name" [disabled]="true" [placeholder]="'projects.form.placeholders.city' | translate"/>
+                        </div>
+                        <div class="our-field">
+                            <label for="city_id">{{ 'projects.form.labels.city' | translate }} <span
+                                    class="text-red-val">*</span></label>
+                            <p-select [options]="cities" formControlName="city_id" optionValue="id" optionLabel="name"
+                                [disabled]="true" [placeholder]="'projects.form.placeholders.city' | translate" />
                             @if(hasError('city_id')){
-                                <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.city' | translate}}</p-message>
+                            <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.city'
+                                | translate}}</p-message>
                             }
-                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="results-section">
                 <div class="header-section justify-content-between">
                     <h3>{{ 'projects.form.titles.results' | translate }}</h3>
-                    <p-toggleswitch class="flex align-items-center justify-content-center" formControlName="enableResults" (onChange)="toggleResults()" />
+                    <p-toggleswitch class="flex align-items-center justify-content-center"
+                        formControlName="enableResults" (onChange)="toggleResults()" />
                 </div>
                 <div class="inputs" formArrayName="results">
                     @for (item of results.controls; track $index) {
-                        <div class="inputs results-form-group" [formGroupName]="$index">
-                            @if($index != 0){
-                                <div class="delete-results-form-array-btn">
-                                    <button (click)="removeResult($index)" type="button" class="custom-btn btn-white p-2">
-                                        <i class="pi pi-trash"></i>
-                                    </button>
-                                </div>
-                            }
-                            <div class="our-field">
-                                <label for="section_title">{{ 'projects.form.labels.section_title' | translate }}</label>
-                                <input pInputText type="text" formControlName="section_title" id="section_title" [placeholder]="'projects.form.placeholders.section_title' | translate">
-                            </div>
-                            <div class="our-field">
-                                <label for="section_body">{{ 'projects.form.labels.section_body' | translate }}</label>
-                                <p-editor formControlName="section_body" [style]="{ height: '100px' }">
-                                    <ng-template #header>
-                                        <div class="w-full flex align-items-center justify-content-between">
-                                            <h6 class="text-editor-header">
-                                                {{ 'general.text_editor_header' | translate }}
-                                            </h6>
-                                            <div class="btns">
-                                                <!-- Text formatting -->
-                                                <span class="ql-formats">
-                                                    <button class="ql-bold"></button>
-                                                    <button class="ql-italic"></button>
-                                                    <button class="ql-underline"></button>
-                                                </span>
-                                                <!-- Text color -->
-                                                <span class="ql-formats">
-                                                    <select class="ql-color"></select>
-                                                </span>
-                                                <!-- Lists -->
-                                                <span class="ql-formats">
-                                                    <button class="ql-list" value="ordered"></button>
-                                                    <button class="ql-list" value="bullet"></button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </p-editor>
-                            </div>
+                    <div class="inputs results-form-group" [formGroupName]="$index">
+                        @if($index != 0){
+                        <div class="delete-results-form-array-btn">
+                            <button (click)="removeResult($index)" type="button" class="custom-btn btn-white p-2">
+                                <i class="pi pi-trash"></i>
+                            </button>
                         </div>
-                        @if(results.controls.length !== $index + 1){
-                            <div class="result-form-group-seperator"></div>
                         }
+                        <div class="our-field">
+                            <label for="section_title">{{ 'projects.form.labels.section_title' | translate }}</label>
+                            <input pInputText type="text" formControlName="section_title" id="section_title"
+                                [placeholder]="'projects.form.placeholders.section_title' | translate">
+                        </div>
+                        <div class="our-field">
+                            <label for="section_body">{{ 'projects.form.labels.section_body' | translate }}</label>
+                            <p-editor formControlName="section_body" [style]="{ height: '100px' }">
+                                <ng-template #header>
+                                    <div class="w-full flex align-items-center justify-content-between">
+                                        <h6 class="text-editor-header">
+                                            {{ 'general.text_editor_header' | translate }}
+                                        </h6>
+                                        <div class="btns">
+                                            <!-- Text formatting -->
+                                            <span class="ql-formats">
+                                                <button class="ql-bold"></button>
+                                                <button class="ql-italic"></button>
+                                                <button class="ql-underline"></button>
+                                            </span>
+                                            <!-- Text color -->
+                                            <span class="ql-formats">
+                                                <select class="ql-color"></select>
+                                            </span>
+                                            <!-- Lists -->
+                                            <span class="ql-formats">
+                                                <button class="ql-list" value="ordered"></button>
+                                                <button class="ql-list" value="bullet"></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-editor>
+                        </div>
+                    </div>
+                    @if(results.controls.length !== $index + 1){
+                    <div class="result-form-group-seperator"></div>
+                    }
                     }
                 </div>
                 @if(form.get('enableResults')?.value){
-                    <button type="button" (click)="addResult()" class="add-form-group-btn">
-                        <i class="pi pi-plus"></i>
-                        {{ 'projects.form.btns.add_result' | translate }}
-                    </button>
+                <button type="button" (click)="addResult()" class="add-form-group-btn">
+                    <i class="pi pi-plus"></i>
+                    {{ 'projects.form.btns.add_result' | translate }}
+                </button>
                 }
             </div>
             <div class="metrics-section">
                 <div class="header-section justify-content-between">
-                    <h3>{{ 'projects.form.titles.metrics' | translate }} <span>{{ 'projects.form.titles.metrics_desc' | translate }}</span></h3>
-                    <p-toggleswitch class="flex align-items-center justify-content-center" formControlName="enableMetrics" (onChange)="toggleMetrics()" />
+                    <h3>{{ 'projects.form.titles.metrics' | translate }} <span>{{ 'projects.form.titles.metrics_desc' |
+                            translate }}</span></h3>
+                    <p-toggleswitch class="flex align-items-center justify-content-center"
+                        formControlName="enableMetrics" (onChange)="toggleMetrics()" />
                 </div>
                 <div class="inputs" formArrayName="metrics">
                     @for (item of metrics.controls; track $index) {
-                        <div [formGroupName]="$index">
-                            <div class="our-field">
-                                <label>{{'projects.form.labels.metrics' | translate:{count:$index + 1} }}</label>
-                                <div class="metrics-form-group-fields">
-                                    <div class="title-field">
-                                        <input pInputText type="text" formControlName="metric_title" id="metric_title" [placeholder]="'projects.form.placeholders.metric_title' | translate">
-                                    </div>
-                                    <div class="number-field">
-                                        <input type="number" formControlName="metric_number" id="metric_number" pInputText [placeholder]="'projects.form.placeholders.metric_number' | translate">
-                                    </div>
-                                    <div class="case-field">
-                                        <p-select [options]="metricCases" formControlName="metric_case" optionValue="id" optionLabel="name" [placeholder]="'projects.form.placeholders.metric_case' | translate">
-                                            <ng-template let-item #item>
-                                                {{item.name | translate}}
-                                            </ng-template>
-                                            <ng-template let-item #selectedItem>
-                                                {{item.name | translate}}
-                                            </ng-template>
-                                        </p-select>
-                                    </div>
-                                    @if($index != 0){
-                                        <div class="delete-metrics-form-group-btn">
-                                            <button type="button" (click)="removeMetric($index)" class="custom-btn btn-white p-2">
-                                                <i class="pi pi-trash"></i>
-                                            </button>
-                                        </div>
-                                    }
+                    <div [formGroupName]="$index">
+                        <div class="our-field">
+                            <label>{{'projects.form.labels.metrics' | translate:{count:$index + 1} }}</label>
+                            <div class="metrics-form-group-fields">
+                                <div class="title-field">
+                                    <input pInputText type="text" formControlName="metric_title" id="metric_title"
+                                        [placeholder]="'projects.form.placeholders.metric_title' | translate">
                                 </div>
+                                <div class="number-field">
+                                    <input type="number" formControlName="metric_number" id="metric_number" pInputText
+                                        [placeholder]="'projects.form.placeholders.metric_number' | translate">
+                                </div>
+                                <div class="case-field">
+                                    <p-select [options]="metricCases" formControlName="metric_case" optionValue="id"
+                                        optionLabel="name"
+                                        [placeholder]="'projects.form.placeholders.metric_case' | translate">
+                                        <ng-template let-item #item>
+                                            {{item.name | translate}}
+                                        </ng-template>
+                                        <ng-template let-item #selectedItem>
+                                            {{item.name | translate}}
+                                        </ng-template>
+                                    </p-select>
+                                </div>
+                                @if($index != 0){
+                                <div class="delete-metrics-form-group-btn">
+                                    <button type="button" (click)="removeMetric($index)"
+                                        class="custom-btn btn-white p-2">
+                                        <i class="pi pi-trash"></i>
+                                    </button>
+                                </div>
+                                }
                             </div>
-
                         </div>
+
+                    </div>
 
                     }
                 </div>
-                @if(form.get('enableMetrics')?.value && metrics.controls.length < 3){
-                    <button type="button" (click)="addMetric()" class="add-form-group-btn">
-                        <i class="pi pi-plus"></i>
-                        {{ 'projects.form.btns.add_metrics' | translate }}
+                @if(form.get('enableMetrics')?.value && metrics.controls.length < 3){ <button type="button"
+                    (click)="addMetric()" class="add-form-group-btn">
+                    <i class="pi pi-plus"></i>
+                    {{ 'projects.form.btns.add_metrics' | translate }}
                     </button>
-                }
+                    }
             </div>
         </div>
         <div class="form-right-section">
@@ -251,19 +328,21 @@
                 <app-gallery-upload formControlName="gallery" [multiple]="true"></app-gallery-upload>
             </div>
             <div class="image-before-and-after-section">
-                
+
                 <div class="inputs">
                     <div class="gallery-field flex flex-column gap-3">
                         <h3 class="header-section">
                             {{'projects.form.labels.image_before' | translate}}
-                         </h3>
-                        <app-gallery-upload formControlName="image_before" class="image_before" [multiple]="false"></app-gallery-upload>
+                        </h3>
+                        <app-gallery-upload formControlName="image_before" class="image_before"
+                            [multiple]="false"></app-gallery-upload>
                     </div>
                     <div class="gallery-field flex flex-column gap-3">
                         <h3 class="header-section">
                             {{'projects.form.labels.image_after' | translate}}
-                         </h3>
-                        <app-gallery-upload formControlName="image_after" class="image_after" [multiple]="false"></app-gallery-upload>
+                        </h3>
+                        <app-gallery-upload formControlName="image_after" class="image_after"
+                            [multiple]="false"></app-gallery-upload>
                     </div>
                     <app-settings formControlName="status"></app-settings>
                 </div>

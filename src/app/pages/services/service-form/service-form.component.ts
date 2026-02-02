@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+  AfterViewInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -77,7 +83,7 @@ const DIALOG_CONFIGS = {
   styleUrl: './service-form.component.scss',
   providers: [AppDialogService],
 })
-export class ServiceFormComponent implements OnInit {
+export class ServiceFormComponent implements OnInit, AfterViewInit {
   pageTitle = 'Add New Service';
   serviceForm!: FormGroup;
   serviceId!: string;
@@ -118,11 +124,19 @@ export class ServiceFormComponent implements OnInit {
     private servicesService: ServicesService,
     private router: Router,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
     this.previousLanguage = this.currentLanguage;
+
+    // Set current language from localStorage
+    const storedLang = localStorage.getItem('app_lang');
+    if (storedLang) {
+      this.currentLanguage = storedLang;
+    }
+
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -134,6 +148,11 @@ export class ServiceFormComponent implements OnInit {
         this.updateLanguageStatus(this.currentLanguage, 'ongoing');
       }
     });
+  }
+
+  ngAfterViewInit() {
+    // Update settings component after view is initialized
+    this.updateSettingsComponent();
   }
 
   buildForm(): void {
@@ -205,6 +224,9 @@ export class ServiceFormComponent implements OnInit {
 
     this.settingsComponent.englishStatus = getStatus('en');
     this.settingsComponent.arabicStatus = getStatus('ar');
+
+    // Trigger change detection to ensure the view updates
+    this.cdr.detectChanges();
   }
 
   loadService(id: string, lang: string): void {
@@ -215,7 +237,7 @@ export class ServiceFormComponent implements OnInit {
         if (service.localeComplete) {
           Object.entries(service.localeComplete).forEach(
             ([langKey, isComplete]) => {
-              const status = isComplete ? 'completed' : 'not-started';
+              const status = isComplete ? 'completed' : 'ongoing';
               this.languageStatuses.set(langKey, {
                 code: langKey,
                 status: status as LanguageStatusType,
@@ -225,9 +247,14 @@ export class ServiceFormComponent implements OnInit {
           this.updateSettingsComponent();
         }
 
-        // If current language is not complete but we're loading it, set to ongoing
-        const currentLangStatus = service.localeComplete?.[lang];
-        if (currentLangStatus === false || currentLangStatus === undefined) {
+        // After patching, update the current language status based on localeComplete
+        const currentLocaleStatus = service.localeComplete?.[lang];
+        if (currentLocaleStatus === false) {
+          this.updateLanguageStatus(lang, 'ongoing');
+        } else if (currentLocaleStatus === true) {
+          this.updateLanguageStatus(lang, 'completed');
+        } else {
+          // If localeComplete doesn't have this language, mark as ongoing
           this.updateLanguageStatus(lang, 'ongoing');
         }
 
@@ -704,19 +731,23 @@ export class ServiceFormComponent implements OnInit {
 
     this.commitLanguage(lang);
 
+    // Mark as ongoing when switching to it (unless already completed)
+    const currentStatus = this.languageStatuses.get(lang)?.status;
+    if (currentStatus !== 'completed') {
+      this.updateLanguageStatus(lang, 'ongoing');
+    }
+
     if (this.isEditMode && this.serviceId) {
       this.loadService(this.serviceId, lang);
     } else {
-      const currentStatus = this.languageStatuses.get(lang)?.status;
-      if (currentStatus === 'not-started') {
-        this.updateLanguageStatus(lang, 'ongoing');
-      }
       this.clearFormForNewLanguage();
     }
   }
+
   hideLanguageSwitchToast(): void {
     this.showLanguageSwitchToast = false;
   }
+
   private clearFormForNewLanguage(): void {
     this.serviceForm.patchValue({
       name: '',
@@ -750,6 +781,7 @@ export class ServiceFormComponent implements OnInit {
   onSave(): void {
     this.submitForm(this.currentLanguage, true);
   }
+
   getLanguageName(langCode: string): string {
     return this.languageNames[langCode] || langCode.toUpperCase();
   }
