@@ -32,6 +32,7 @@ export class AwardsListComponent implements OnInit {
     size: 10,
   }
   filterObj:any;
+  
   ref:DynamicDialogRef | undefined
 
   columns: TableColumn<Award>[] = [

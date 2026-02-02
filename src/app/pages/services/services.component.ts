@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
@@ -11,12 +11,22 @@ import {
 import { ReusableTableComponent } from '../../shared/components/reusable-table/reusable-table.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ServicesService } from '../../services/services.service';
-import { Project } from '../../features/projects/models/projects.interface';
+import { LocaleComplete, Project } from '../../features/projects/models/projects.interface';
 import { PaginationObj } from '../../core/models/global.interface';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AppDialogService } from '../../shared/services/dialog.service';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
+export interface Service{
+  id: string
+  name: string
+  tagline: string
+  status: boolean
+  localeComplete: LocaleComplete
+  createdAt: string
+  updatedAt: string
+}
 @Component({
   selector: 'app-services',
   standalone: true,
@@ -33,11 +43,20 @@ import { EmptyStateComponent } from '../../shared/components/empty-state/empty-s
 })
 export class ServicesComponent {
   private router = inject(Router);
-  private servicesService = inject(ServicesService);
+  private service = inject(ServicesService);
   private dialogService = inject(AppDialogService);
 
-  data: any[] = [];
-  totalRecords = this.data.length;
+  data: WritableSignal<Service[]> = signal([]);
+  totalRecords:WritableSignal<number> = signal(0);
+
+  paginationObj: PaginationObj = {
+    page: 1,
+    size: 10,
+  }
+  filterObj:any;
+
+  ref:DynamicDialogRef | undefined
+
   emptyStateDescription: string =
     'No Data to preview, start create your first service to appear here!';
   emptyStateBtnLabel: string = `Create New Service`;
@@ -65,7 +84,7 @@ export class ServicesComponent {
     },
   ];
 
-  actions: TableAction<Project>[] = [
+  actions: TableAction<Service>[] = [
     {
       callback: (row) => this.edit(row),
       icon: 'pi pi-pencil',
@@ -73,43 +92,24 @@ export class ServicesComponent {
       class: 'p-2',
     },
     {
-      callback: (row) => this.showDeleteConfirmationPopup(row),
+      callback: (row) => this.delete(row),
       icon: 'pi pi-trash',
       severity: 'white',
       class: 'p-2',
     },
   ];
-  edit(row: any) {
-    this.router.navigate(['/services/edit', row.id]);
-  }
-  delete(id: string) {
-    this.servicesService.deleteService(id).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.getAllServices();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+
   filterItems: FilterItems[] = [
     {
       type: 'search',
-      name: 'keyword',
+      name: 'key',
       placeholder: 'Search by name ...',
     },
-    // {
-    //   type: 'filter',
-    //   btnIcon:"pi pi-download",
-    //   btnSeverity:"white",
-    // },
     {
       type: 'btn',
       label: 'Import CSV',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
-      btnCallback: (e: Event) => this.addNewService(e),
     },
     {
       type: 'btn',
@@ -119,9 +119,11 @@ export class ServicesComponent {
       btnCallback: (e: Event) => this.addNew(),
     },
   ];
-  config: TableConfig<Project> = {
+  config: TableConfig<Service> = {
     columns: this.columns,
-    serverSidePagination: false,
+    serverSidePagination: true,
+    serverSideFilter:true,
+    rowsPerPage:10,
     rowsPerPageOptions: [5, 10, 20],
     selectionMode: 'multiple',
     sortable: true,
@@ -129,17 +131,29 @@ export class ServicesComponent {
   };
 
   ngOnInit() {
-    this.getAllServices();
+    this.fetchData(this.paginationObj);
   }
 
-  onAction(event: { action: string; row: Project }) {
-    console.log('Action clicked:', event);
+  fetchData(pagination: PaginationObj) {
+    this.service.getAll(pagination,this.filterObj?.key || '').subscribe({
+      next: (res) => {
+        this.data.set(res.result)
+        this.totalRecords.set(res.total!)
+      },
+      error: (err) => {
+        console.error('Failed to load projects', err);
+      }
+    })
   }
-
+  onFilterChange(filter:any){
+    this.filterObj = filter
+    this.fetchData(this.paginationObj)
+  }
   onPaginationChange(event: PaginationObj) {
-    console.log('Pagination changed:', event);
+    this.paginationObj = event
+    this.fetchData(this.paginationObj)
   }
-  selectionChange(e: Project[] | Project) {
+  selectionChange(e: Service[] | Service) {
     console.log('selected items', e);
   }
   addNewService(e: Event) {
@@ -148,40 +162,38 @@ export class ServicesComponent {
   addNew() {
     this.router.navigate(['/services/add']);
   }
-  getAllServices() {
-    this.servicesService.getAllServices().subscribe({
-      next: (res: any) => {
-        this.data = res.result;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+  edit(row: any) {
+    this.router.navigate(['/services/edit', row.id]);
   }
-  showDeleteConfirmationPopup(row: any): void {
-    const ref = this.dialogService.open(ConfirmDialogComponent, {
-      header: 'Delete Confirmation',
-      width: '500px',
-      data: {
-        title: 'Delete Service?',
-        subtitle:
-          'Are you sure want to delete this service? This action can’t be undone.',
-        confirmText: 'Delete',
-        cancelText: 'Cancel',
-        confirmSeverity: 'delete',
-        cancelSeverity: 'cancel',
-        showCancel: true,
-      },
+  delete(row: Service, event?: Event) {
+    this.showConfirmDialog(row)
+  }
+  showConfirmDialog(row:Service) {
+    this.ref = this.dialogService.open(ConfirmDialogComponent, {
+        width: '40vw',
+        modal:true,
+        data:{
+          title:'services.list.delete_dialog.header',
+          subtitle: 'services.list.delete_dialog.desc',
+          confirmText: 'general.delete',
+          cancelText: 'general.cancel',
+          confirmSeverity: 'delete',
+          cancelSeverity: 'cancel',
+          showCancel: true,
+          showExtraButton: false,
+          data: row
+        }
     });
-
-    ref.onClose.subscribe((result: any) => {
-      if (!result) {
-        return;
-      }
-
-      if (result.action === 'confirm') {
-        this.delete(row?.id);
-      }
+    this.ref.onClose.subscribe((product:{action:string,data:Service}) => {
+        if (product) {
+          if(product.action === 'confirm'){
+            this.service.delete(product.data.id).subscribe({
+              next:()=>{
+                this.fetchData(this.paginationObj);
+              }
+            })
+          }
+        }
     });
   }
 }
