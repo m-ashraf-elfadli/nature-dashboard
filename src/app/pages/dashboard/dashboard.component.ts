@@ -141,7 +141,7 @@ export class DashboardComponent implements OnInit {
   filterItems: FilterItems[] = [
     {
       type: 'search',
-      name: 'name',
+      name: 'value',
       placeholder: 'Search projects...',
     },
     {
