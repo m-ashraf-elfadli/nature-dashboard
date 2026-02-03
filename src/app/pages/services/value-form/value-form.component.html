@@ -47,7 +47,14 @@
     </div>
   </div>
 
-  <button label="Save" class="action-btn" (click)="submit()">
-    <span>Save</span>
-  </button>
+  <div class="custom-btns-container">
+    <button type="button" (click)="cancel()" class="custom-btn btn-white">
+      <span>Cancel</span>
+    </button>
+    <button class="action-btn" [disabled]="form.invalid" (click)="submit()">
+      <span>{{ isEditMode ? 'Update' : 'Save' }}</span>
+    </button>
+
+
+  </div>
 </form>

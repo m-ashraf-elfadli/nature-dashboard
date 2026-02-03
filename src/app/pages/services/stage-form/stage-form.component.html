@@ -16,7 +16,13 @@
   <app-gallery-upload [multiple]="false" (removed)="onImageRemoved()" formControlName="image"
     style="width: 100%"></app-gallery-upload>
 
-  <button pButton class="action-btn" (click)="submit()">
-    <span>{{ isEditMode ? 'Update' : 'Save' }}</span>
-  </button>
+
+  <div class="custom-btns-container">
+    <button type="button" (click)="cancel()" class="custom-btn btn-white">
+      <span>Cancel</span>
+    </button>
+    <button pButton class="action-btn" [disabled]="form.invalid" (click)="submit()">
+      <span>{{ isEditMode ? 'Update' : 'Save' }}</span>
+    </button>
+  </div>
 </form>
