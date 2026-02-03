@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { AwardsComponent } from '../../../pages/awards/awards.component';
 import { ClientsComponent } from '../../../features/clients/components/clients/clients.component';
 import { DashboardComponent } from '../../../pages/dashboard/dashboard.component';
-import { ServicesComponent } from '../../../pages/services/services.component';
 import { TestimonialsComponent } from '../../../features/testimonials/components/testimonials/testimonials.component';
 import { AwardFormComponent } from '../../../features/awards/components/award-form/award-form.component';
 import { AwardsListComponent } from '../../../features/awards/components/awards-list/awards-list.component';
@@ -46,6 +45,9 @@ export const dashboardRoutes: Routes = [
       {
         path: 'add',
         component: AwardFormComponent,
+        data: {
+          breadcrumb: 'general.add',
+        },
       },
       {
         path: 'edit/:id',
@@ -60,5 +62,11 @@ export const dashboardRoutes: Routes = [
       },
     ],
   },
-  { path: 'testimonials', component: TestimonialsComponent },
+  { 
+    path: 'testimonials', 
+    component: TestimonialsComponent,
+    data: {
+      breadcrumb: 'testimonials.list.breadcurmb',
+    },
+  },
 ];

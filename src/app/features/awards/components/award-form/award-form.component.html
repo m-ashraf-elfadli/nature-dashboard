@@ -59,7 +59,7 @@
                                 </svg>
                             </ng-template>
                         </p-datepicker>
-                        @if(hasError('date')){
+                        @if(hasError('award_date')){
                             <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.date' | translate}}</p-message>
                         }
                     </div>
@@ -92,7 +92,7 @@
                             </ng-template>
                         </p-editor>
                         @if(hasError('description')){
-                            <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.description' | translate}}</p-message>
+                            <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.desc' | translate}}</p-message>
                         }
                     </div>
                 </div>

@@ -1,37 +1,23 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-@Component({
-  selector: 'app-testimonials-form',
-  standalone: true,
-  imports: [InputTextModule, ReactiveFormsModule],
-  templateUrl: './testimonials-form.component.html',
-  styleUrl: './testimonials-form.component.scss'
-})
-export class TestimonialsFormComponent {
+import { TestimonialsFormComponent } from './testimonials-form.component';
 
-  @Output() save = new EventEmitter<any>();
+describe('TestimonialsFormComponent', () => {
+  let component: TestimonialsFormComponent;
+  let fixture: ComponentFixture<TestimonialsFormComponent>;
 
-  form: FormGroup;
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestimonialsFormComponent]
+    })
+    .compileComponents();
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      clientName: ['', Validators.required],
-      jobTitle: ['', Validators.required],
-      testimonial: ['', Validators.required],
-      status: true
-    });
-  }
+    fixture = TestBed.createComponent(TestimonialsFormComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  submit() {
-    if (this.form.valid) {
-      this.save.emit({
-        clientName: this.form.value.clientName,
-        jobTitle: this.form.value.jobTitle,
-        Testimonial: this.form.value.testimonial,
-        status: this.form.value.status ? 1 : 0
-      });
-    }
-  }
-}
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

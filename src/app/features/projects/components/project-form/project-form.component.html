@@ -348,9 +348,11 @@
                     {{'projects.form.labels.gallery' | translate}}
                 </h3>
                 <app-gallery-upload formControlName="gallery" [multiple]="true"></app-gallery-upload>
+                @if(hasError('gallery')){
+                    <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.gallery' | translate}}</p-message>
+                }
             </div>
             <div class="image-before-and-after-section">
-
                 <div class="inputs">
                     <div class="gallery-field flex flex-column gap-3">
                         <h3 class="header-section">
@@ -358,6 +360,9 @@
                         </h3>
                         <app-gallery-upload formControlName="image_before" class="image_before"
                             [multiple]="false"></app-gallery-upload>
+                        @if(hasError('image_before')){
+                            <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.image_before' | translate}}</p-message>
+                        }
                     </div>
                     <div class="gallery-field flex flex-column gap-3">
                         <h3 class="header-section">
@@ -365,6 +370,9 @@
                         </h3>
                         <app-gallery-upload formControlName="image_after" class="image_after"
                             [multiple]="false"></app-gallery-upload>
+                            @if(hasError('gallery')){
+                                <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.image_after' | translate}}</p-message>
+                            }
                     </div>
                     <app-settings formControlName="status"></app-settings>
                 </div>

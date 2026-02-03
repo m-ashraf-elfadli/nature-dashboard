@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface BreadcrumbItem {
   label: string;
@@ -11,7 +12,7 @@ export interface BreadcrumbItem {
 @Component({
   selector: 'app-page-header',
   standalone: true,
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule,TranslateModule],
   templateUrl: './page-header.component.html',
   styleUrl: './page-header.component.scss',
 })

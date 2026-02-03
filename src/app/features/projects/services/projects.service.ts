@@ -87,4 +87,10 @@ export class ProjectsService {
   getServicesDropDown(): Observable<PaginationResponse<DropDownOption>> {
     return this.apiService.get(`services/names`);
   }
+  changeStatus(id:string,value:boolean){
+    this.apiService.setCulture(localStorage.getItem('app_lang') || 'en');
+    let formData:FormData = new FormData();
+    formData.append('status',value?'1':'0')
+    return this.apiService.post(`${this.endpoint}/${id}`, formData);
+  }
 }

@@ -36,16 +36,11 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
       const currentValue = changes['testimonialId'].currentValue
 
 
-      // EDIT MODE
       if (currentValue) {
         this.isEditMode = true;
         this.loadTestimonial();
       }
-      // CREATE MODE
-      else if (this.form) {
-        this.isEditMode = false;
-        this.resetForm();
-      }
+
     }
   }
 
@@ -91,7 +86,6 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
       error: (err) => {
         console.error('Load testimonial error:', err);
         console.error('Error details:', err.error);
-        alert('Failed to load testimonial data');
         this.isLoading = false;
       }
     });

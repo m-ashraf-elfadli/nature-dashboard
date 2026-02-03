@@ -25,7 +25,6 @@ import { Project } from '../../models/projects.interface';
 import { forkJoin } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-projects',
@@ -35,7 +34,6 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
     PageHeaderComponent,
     ReusableTableComponent,
     TranslateModule,
-    EmptyStateComponent,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
@@ -88,6 +86,7 @@ export class ProjectsComponent implements OnInit {
       field: 'status',
       header: 'projects.list.table_headers.status',
       type: 'status',
+      statusCallback:(row:Project,value:boolean,e:Event) => this.changeStatus(row,value,e)
     },
   ];
   emptyStateInfo = {
@@ -193,6 +192,9 @@ export class ProjectsComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+  changeStatus(row:Project,value:boolean,e:Event){
+    this.service.changeStatus(row.id,value).subscribe()
   }
   initFilterConfig() {
     this.filterItems = [

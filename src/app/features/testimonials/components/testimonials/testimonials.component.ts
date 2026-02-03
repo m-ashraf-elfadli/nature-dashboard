@@ -22,6 +22,7 @@ import {
   TestimonialFormEvent,
 } from '../../models/testimonials.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { ClientFormActions } from '../../../clients/models/clients.model';
 
 @Component({
   selector: 'app-testimonials',
@@ -39,13 +40,11 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './testimonials.component.scss',
 })
 export class TestimonialsComponent implements OnInit {
-  importCSV(): void {
-    throw new Error('Method not implemented.');
-  }
+
   @ViewChild(TestimonialsFormComponent)
   testimonialForm?: TestimonialsFormComponent;
 
-  private testimonialsService = inject(TestimonialsService);
+  private service = inject(TestimonialsService);
   private dialogService = inject(DialogService);
 
   visible = false;
@@ -71,7 +70,7 @@ export class TestimonialsComponent implements OnInit {
 
   loadTestimonials(pagination?: PaginationObj) {
     const pag = pagination || this.paginationObj;
-    this.testimonialsService.getAll(pag, this.filterObj?.key || '').subscribe({
+    this.service.getAll(pag, this.filterObj?.key || '').subscribe({
       next: (res) => {
         console.log(res.result);
         this.data = res.result || [];
@@ -153,7 +152,6 @@ export class TestimonialsComponent implements OnInit {
       label: 'general.import',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
-      btnCallback: () => this.importCSV(),
     },
   ];
 
@@ -201,7 +199,7 @@ export class TestimonialsComponent implements OnInit {
   }
 
   private performDelete(id: string) {
-    this.testimonialsService.delete(id).subscribe({
+    this.service.delete(id).subscribe({
       next: () => {
         this.loadTestimonials();
       },
@@ -234,89 +232,55 @@ export class TestimonialsComponent implements OnInit {
         this.handleSaveAndCreateNew(event.formData);
         break;
 
-      case 'cancel':
-        this.handleCancel();
-        break;
+      default: return
+
     }
   }
-
-  private handleSave(payload: any) {
-    if (this.currentTestimonialId) {
-      // Update existing
-      this.testimonialsService
-        .update(this.currentTestimonialId, payload)
+  submitForm(payload:any,isEditMode:boolean,action:ClientFormActions){
+    if (isEditMode) {
+      this.service
+        .update(this.currentTestimonialId!, payload)
         .subscribe({
-          next: (res) => {
-            console.log('✅ Update success:', res);
-            this.visible = false;
+          next: () => {
+            if(action === 'save'){
+              this.visible = false;
+            }
             this.currentTestimonialId = undefined;
+            this.testimonialForm?.resetForm();
             this.loadTestimonials();
           },
           error: (err) => {
             console.error('❌ Update error:', err);
-            this.showErrorMessage(err);
           },
         });
     } else {
       // Create new
-      this.testimonialsService.create(payload).subscribe({
+      this.service.create(payload).subscribe({
         next: (res) => {
-          console.log('✅ Create success:', res);
-          this.visible = false;
+          if(action === 'save'){
+            this.visible = false;
+          }
+          this.currentTestimonialId = undefined;
+          this.testimonialForm?.resetForm();
           this.loadTestimonials();
         },
         error: (err) => {
           console.error('❌ Create error:', err);
-          this.showErrorMessage(err);
         },
       });
     }
   }
+  private handleSave(payload: any) {
+    this.submitForm(payload,!!this.currentTestimonialId,'save');
+  }
 
   private handleSaveAndCreateNew(payload: any) {
-    this.testimonialsService.create(payload).subscribe({
-      next: () => {
-        this.loadTestimonials();
-        this.currentTestimonialId = undefined;
-        this.testimonialForm?.resetForm();
-      },
-      error: (err) => {
-        this.showErrorMessage(err);
-      },
-    });
-  }
-
-  private handleCancel() {
-    console.log('Form cancelled');
-    this.visible = false;
-    this.currentTestimonialId = undefined;
-  }
-
-  private showErrorMessage(err: any) {
-    let errorMessage = 'An error occurred';
-
-    if (err.error) {
-      if (err.error.errors) {
-        const errors = err.error.errors;
-        const errorMessages = Object.keys(errors).map((key) => {
-          return `${key}: ${Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key]}`;
-        });
-        errorMessage = errorMessages.join('\n');
-      } else if (err.error.message) {
-        errorMessage = err.error.message;
-      }
-    }
-
-    alert(`Failed to save testimonial:\n${errorMessage}`);
+    this.submitForm(payload,!!this.currentTestimonialId,'saveAndCreateNew');
   }
 
   onDialogHide() {
+    this.visible = false;
     this.currentTestimonialId = undefined;
-  }
-
-  ngOnDestroy() {
-    if (this.confirmDialogRef) {
-      this.confirmDialogRef.close();
-    }
+    this.testimonialForm?.resetForm()
   }
 }

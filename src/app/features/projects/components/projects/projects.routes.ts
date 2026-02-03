@@ -14,8 +14,8 @@ export const projectsRoutes: Routes = [
         (m) => m.ProjectFormComponent,
       ),
     data: {
-      title: 'projects.form.title',
-      breadcrumb: 'Add',
+      title: 'general.add',
+      breadcrumb: 'general.add',
     },
   },
   {

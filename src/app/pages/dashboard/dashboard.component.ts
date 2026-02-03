@@ -38,7 +38,6 @@ import { EmptyStateComponent } from '../../shared/components/empty-state/empty-s
     PageHeaderComponent,
     CardTotalComponent,
     ReusableTableComponent,
-    EmptyStateComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

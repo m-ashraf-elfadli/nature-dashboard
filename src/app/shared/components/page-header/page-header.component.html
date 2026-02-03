@@ -4,7 +4,7 @@
             <ng-container *ngFor="let item of breadcrumbs; let last = last">
                 <span class="breadcrumb-item" [class.active]="last" [class.clickable]="item.route"
                     (click)="navigateToBreadcrumb(item.route)">
-                    {{ item.label }}
+                    {{ item.label | translate }}
                 </span>
                 <span class="breadcrumb-separator" *ngIf="!last">/</span>
             </ng-container>
@@ -25,6 +25,6 @@
                 </defs>
             </svg>
         </button>
-        <span>{{ title }}</span>
+        <span>{{ title | translate }}</span>
     </div>
 </div>

@@ -38,7 +38,6 @@ export interface Service {
     PageHeaderComponent,
     ReusableTableComponent,
     TranslateModule,
-    EmptyStateComponent,
   ],
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss',

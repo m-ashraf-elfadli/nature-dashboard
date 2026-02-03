@@ -671,7 +671,7 @@ span.required {
     }
     .p-dialog-header-actions {
       .p-dialog-close-button {
-        border-radius: 24px 0;
+        border-radius: 0 24px;
         background: linear-gradient(
           180deg,
           var(--Color-Primary2-400, #b0d357) 0%,

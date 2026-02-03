@@ -17,6 +17,7 @@
     "delete": "Delete",
     "arabic":"Arabic",
     "english":"English",
+    "add":"Add",
     "form_toast_msg":"You are currently editing Website {{currentContent}} content. Changes here do not affect the {{previousContent}} version."
   },
   "projects": {
@@ -104,7 +105,10 @@
         "from": "From date is required",
         "to": "To date is required",
         "country": "Country is required",
-        "city": "City is required"
+        "city": "City is required",
+        "gallery":"You have to add at least 1 image to gallery",
+        "image_after":"Image after is required",
+        "image_before":"Image before is required"
       },
       "btns": {
         "add_result": "Add another section",
@@ -144,6 +148,11 @@
         "settings": "Awards Settings",
         "organizations": "Organizations Logos",
         "award": "Award Image"
+      },
+      "validation":{
+        "name":"Name is required",
+        "date":"Date is Required",
+        "desc":"Description is Required"
       },
       "labels": {
         "name": "Award name",
@@ -213,6 +222,7 @@
   },
   "testimonials": {
     "list": {
+      "breadcurmb":"Testimonials",
       "page_title": "All Testimonials",
       "table_headers": {
         "name": "Name",
@@ -226,6 +236,7 @@
     },
     "form": {
       "title": "Add New Testimonial",
+      "edit_title":"Edit Testimonial",
       "labels": {
         "client_name_en": "Client name (English)",
         "client_name_ar": "Client name (Arabic)",
