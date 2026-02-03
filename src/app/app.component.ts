@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
@@ -12,13 +12,22 @@ import { MessageService } from 'primeng/api';
   imports: [RouterOutlet, ButtonModule, DialogModule, LoaderComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [DialogService, MessageService],
+  providers: [DialogService],
 })
 export class AppComponent {
   showDialog: any;
+  private readonly messageService = inject(MessageService);
   onDeleteConfirmed() {
     throw new Error('Method not implemented.');
   }
 
   title = 'nature-dashboard';
+  test() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Operation completed successfully',
+      life: 3000,
+    });
+  }
 }

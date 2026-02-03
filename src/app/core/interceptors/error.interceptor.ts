@@ -10,7 +10,6 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
         catchError((error: HttpErrorResponse) => {
             let message = 'Something went wrong';
 
-            // رسالة جاية من الـ backend
             if (error.error?.message) {
                 message = error.error.message;
             }
@@ -20,7 +19,6 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
                     .flat()
                     .join(', ');
             }
-
             messageService.add({
                 severity: 'error',
                 summary: 'Error',

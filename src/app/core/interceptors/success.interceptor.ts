@@ -8,7 +8,6 @@ export const SuccessInterceptor: HttpInterceptorFn = (req, next) => {
 
     return next(req).pipe(
         tap((event) => {
-            // نشتغل بس على requests اللي بتعدل داتا
             if (
                 event instanceof HttpResponse &&
                 ['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)
