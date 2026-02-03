@@ -36,6 +36,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 import { AppDialogService } from '../../../shared/services/dialog.service';
 import { ServicesService } from '../../../services/services.service';
 import { environment } from '../../../../environments/environment';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface ServiceItemFormValue {
   title: string;
@@ -81,6 +82,7 @@ const DIALOG_CONFIGS = {
     EmptyStateActionComponent,
     SettingsComponent,
     MiniTableComponent,
+    TranslateModule,
   ],
   templateUrl: './service-form.component.html',
   styleUrl: './service-form.component.scss',

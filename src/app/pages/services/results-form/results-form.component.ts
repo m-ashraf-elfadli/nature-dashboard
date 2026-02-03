@@ -106,4 +106,7 @@ export class ResultsFormComponent implements OnInit {
       this.ref.close(formValue);
     }
   }
+  cancel() {
+    this.ref.close();
+  }
 }
