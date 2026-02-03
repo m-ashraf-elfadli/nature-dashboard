@@ -1,28 +1,44 @@
 <form [formGroup]="form">
   <div class="our-field">
-    <label for="stageTitle">Title
+    <label for="stageTitle">
+      {{ 'services.stage_form.title_label' | translate }}
       <span class="required">*</span>
     </label>
-    <input id="stageTitle" pInputText formControlName="title" placeholder="Enter stage title.." />
+    <input id="stageTitle" pInputText formControlName="title"
+      [placeholder]="'services.stage_form.title_placeholder' | translate" [class.error]="isFieldInvalid('title')" />
+    <small class="error-message" *ngIf="isFieldInvalid('title')">
+      {{ getErrorMessage('title') }}
+    </small>
   </div>
 
   <div class="our-field">
-    <label for="stageDescription">Description
+    <label for="stageDescription">
+      {{ 'services.stage_form.description_label' | translate }}
       <span class="required">*</span>
     </label>
-    <input id="stageDescription" pInputText formControlName="description" placeholder="Enter stage description" />
+    <input id="stageDescription" pInputText formControlName="description"
+      [placeholder]="'services.stage_form.description_placeholder' | translate"
+      [class.error]="isFieldInvalid('description')" />
+    <small class="error-message" *ngIf="isFieldInvalid('description')">
+      {{ getErrorMessage('description') }}
+    </small>
   </div>
 
-  <app-gallery-upload [multiple]="false" (removed)="onImageRemoved()" formControlName="image"
-    style="width: 100%"></app-gallery-upload>
-
+  <div class="our-field">
+    <app-gallery-upload [multiple]="false" (removed)="onImageRemoved()" formControlName="image"
+      style="width: 100%"></app-gallery-upload>
+    <small class="error-message" *ngIf="isFieldInvalid('image')">
+      {{ 'services.stage_form.image_required' | translate }}
+    </small>
+  </div>
 
   <div class="custom-btns-container">
     <button type="button" (click)="cancel()" class="custom-btn btn-white">
-      <span>Cancel</span>
+      <span>{{ 'services.stage_form.cancel' | translate }}</span>
     </button>
     <button pButton class="action-btn" [disabled]="form.invalid" (click)="submit()">
-      <span>{{ isEditMode ? 'Update' : 'Save' }}</span>
+      <span>{{ isEditMode ? ('services.stage_form.update' | translate) : ('services.stage_form.save' | translate)
+        }}</span>
     </button>
   </div>
 </form>
