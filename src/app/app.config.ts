@@ -17,9 +17,12 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
-
+import { SuccessInterceptor } from './core/interceptors/success.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { MessageService } from 'primeng/api';
 export const appConfig: ApplicationConfig = {
   providers: [
+    MessageService,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
@@ -35,8 +38,14 @@ export const appConfig: ApplicationConfig = {
 
     provideHttpClient(
       withFetch(),
-      withInterceptors([LoaderInterceptor, TokenInterceptor]),
+      withInterceptors([
+        LoaderInterceptor,
+        TokenInterceptor,
+        SuccessInterceptor,
+        ErrorInterceptor
+      ]),
     ),
+
 
     provideTranslateService({
       defaultLanguage: 'en',
