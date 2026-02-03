@@ -60,9 +60,12 @@ export class ServicesComponent {
 
   ref: DynamicDialogRef | undefined;
 
-  emptyStateDescription: string =
-    'No Data to preview, start create your first service to appear here!';
-  emptyStateBtnLabel: string = `Create New Service`;
+  emptyStateInfo = {
+    label: 'Create New Service',
+    description:
+      'No Data to preview, start create your first service to appear here!',
+    callback: () => this.addNew(),
+  };
   columns: TableColumn<any>[] = [
     {
       field: 'name',
