@@ -91,6 +91,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   projectId: string = '';
   isEditMode: boolean = false;
   projectData: ProjectById = {} as ProjectById;
+  isFirstTimeToSend:boolean = false
   languageStatuses = new Map<
     string,
     { code: string; status: LanguageStatusType }
@@ -513,6 +514,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
     console.log(event);
   }
   onSave() {
+    this.isFirstTimeToSend = false
     this.submitForm(true, this.currentLanguage);
   }
   submitForm(isNavigateOut: boolean = false, culture?: string) {
@@ -614,10 +616,10 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   }
 
   private switchLanguage(lang: string): void {
+    this.isFirstTimeToSend = true
     this.currentLanguage = lang;
     this.commitLanguage(lang);
 
-    // Mark as ongoing when switching to it (unless already completed)
     const currentStatus = this.languageStatuses.get(lang)?.status;
     if (currentStatus !== 'completed') {
       this.updateLanguageStatus(lang, 'ongoing');

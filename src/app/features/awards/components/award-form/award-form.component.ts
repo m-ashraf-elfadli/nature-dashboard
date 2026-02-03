@@ -75,7 +75,7 @@ export class AwardFormComponent implements OnInit, AfterViewInit {
   currentLanguage = 'en';
   previousLanguage = 'en';
   showLanguageSwitchToast = false;
-
+  isFirstTimeToSend:boolean = false
   private languageNames: { [key: string]: string } = {
     en: 'English',
     ar: 'Arabic',
@@ -236,6 +236,7 @@ export class AwardFormComponent implements OnInit, AfterViewInit {
   }
 
   onSave() {
+    this.isFirstTimeToSend = false
     this.submitForm(true, this.currentLanguage);
   }
 
@@ -419,7 +420,7 @@ export class AwardFormComponent implements OnInit, AfterViewInit {
   }
 
   private switchLanguage(lang: string): void {
-    // Store the current language as previous before switching
+    this.isFirstTimeToSend = true
     this.previousLanguage = this.currentLanguage;
     this.currentLanguage = lang;
     this.showLanguageSwitchToast = true;

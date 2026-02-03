@@ -11,7 +11,7 @@ import {
 import { ReusableTableComponent } from '../../shared/components/reusable-table/reusable-table.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ServicesService } from '../../services/services.service';
-import { LocaleComplete, Project } from '../../features/projects/models/projects.interface';
+import { LocaleComplete } from '../../features/projects/models/projects.interface';
 import { PaginationObj } from '../../core/models/global.interface';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AppDialogService } from '../../shared/services/dialog.service';

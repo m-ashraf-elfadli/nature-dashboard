@@ -14,7 +14,10 @@
     "reset": "Reset",
     "apply": "Apply",
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "arabic":"Arabic",
+    "english":"English",
+    "form_toast_msg":"You are currently editing Website {{currentContent}} content. Changes here do not affect the {{previousContent}} version."
   },
   "projects": {
     "list": {
