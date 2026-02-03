@@ -56,11 +56,14 @@ export class DashboardComponent implements OnInit {
     JSON.parse(localStorage.getItem('user') || '{}')?.username ??
     'Nature Admin';
 
-  emptyStateDescription: string =
-    'No Date to preview, start create your first project to appear here!';
-  emptyStateBtnLabel: string = 'Create New Project';
-
   cards: any[] = [];
+
+  emptyStateInfo = {
+    label: 'Create New Project',
+    description:
+      'No Date to preview, start create your first project to appear here!',
+    callback: () => this.addNewProject(),
+  };
 
   private cardConfig = [
     {

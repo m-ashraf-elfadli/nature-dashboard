@@ -45,9 +45,7 @@ export class ProjectsComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
   private readonly dialogService = inject(DialogService);
-  emptyStateDescription: string =
-    'No Date to preview, start create your first project to appear here!';
-  emptyStateBtnLabel: string = 'Create New Project';
+
   data: WritableSignal<Project[]> = signal([]);
   totalRecords = signal(0);
   countriesDD: DropDownOption[] = [];
@@ -92,6 +90,12 @@ export class ProjectsComponent implements OnInit {
       type: 'status',
     },
   ];
+  emptyStateInfo = {
+    label: 'Create New Project',
+    description:
+      'No Date to preview, start create your first project to appear here!',
+    callback: () => this.addNew(),
+  };
 
   actions: TableAction<Project>[] = [
     {
@@ -117,19 +121,19 @@ export class ProjectsComponent implements OnInit {
   }
   showConfirmDialog(row: Project) {
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
-        width: '40vw',
-        modal:true,
-        data:{
-            title:'projects.list.delete_dialog.header',
-            subtitle: 'projects.list.delete_dialog.desc',
-            confirmText: 'general.delete',
-            cancelText: 'general.cancel',
-            confirmSeverity: 'delete',
-            cancelSeverity: 'cancel',
-            showCancel: true,
-            showExtraButton: false,
-            data: row
-        }
+      width: '40vw',
+      modal: true,
+      data: {
+        title: 'projects.list.delete_dialog.header',
+        subtitle: 'projects.list.delete_dialog.desc',
+        confirmText: 'general.delete',
+        cancelText: 'general.cancel',
+        confirmSeverity: 'delete',
+        cancelSeverity: 'cancel',
+        showCancel: true,
+        showExtraButton: false,
+        data: row,
+      },
     });
     this.ref.onClose.subscribe((product: { action: string; data: Project }) => {
       if (product) {

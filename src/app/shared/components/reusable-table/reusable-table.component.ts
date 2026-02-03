@@ -13,12 +13,18 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ReusablePaginationComponent } from '../reusable-pagination/reusable-pagination.component';
-import { LocaleChip, TableAction, TableConfig } from './reusable-table.types';
+import {
+  EmptyStateInfo,
+  LocaleChip,
+  TableAction,
+  TableConfig,
+} from './reusable-table.types';
 import { FormsModule } from '@angular/forms';
 import { FilterItems, FiltersComponent } from '../filters/filters.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PaginationObj } from '../../../core/models/global.interface';
 import { environment } from '../../../../environments/environment';
+import { EmptyStateComponent } from '../empty-state/empty-state.component';
 
 @Component({
   selector: 'app-reusable-table',
@@ -34,6 +40,7 @@ import { environment } from '../../../../environments/environment';
     ReusablePaginationComponent,
     FiltersComponent,
     TranslateModule,
+    EmptyStateComponent,
   ],
   templateUrl: './reusable-table.component.html',
   styleUrls: ['./reusable-table.component.scss'], // ❌ fix typo: styleUrls not styleUrl
@@ -45,11 +52,19 @@ export class ReusableTableComponent<T> implements OnChanges {
   @Input() actions: TableAction<T>[] = [];
   @Input() selection: T[] | T | null = null;
   @Input() filterItems: FilterItems[] = [];
+  @Input() emptyStateInfo: EmptyStateInfo = {
+    label: 'Create New Project',
+    description:
+      'No Date to preview, start create your first project to appear here!',
+  };
 
-  @Output() paginationChange = new EventEmitter<{page: number, size: number}>();
-  @Output() sortChange = new EventEmitter<{field: string, order: number}>();
+  @Output() paginationChange = new EventEmitter<{
+    page: number;
+    size: number;
+  }>();
+  @Output() sortChange = new EventEmitter<{ field: string; order: number }>();
   @Output() selectionChange = new EventEmitter<T[] | T>();
-  @Output() onServerSideFilterChange = new EventEmitter<any>()
+  @Output() onServerSideFilterChange = new EventEmitter<any>();
 
   page = 0;
   filteredData: T[] = [];
@@ -79,13 +94,13 @@ export class ReusableTableComponent<T> implements OnChanges {
   }
 
   onPaginationChange(event: PaginationObj) {
-    console.log(event)
+    console.log(event);
     this.page = event.page;
     // this.rowsPerPage = event.perPage;
     this.config = {
       ...this.config,
-      rowsPerPage : event.size,
-    }
+      rowsPerPage: event.size,
+    };
 
     if (this.config?.serverSidePagination) {
       this.paginationChange.emit(event);
@@ -104,9 +119,9 @@ export class ReusableTableComponent<T> implements OnChanges {
   }
 
   onFilterChange(filters: any) {
-    if(this.config.serverSideFilter){
-      this.onServerSideFilterChange.emit(filters)
-    }else this.applyClientSideFilters(filters);
+    if (this.config.serverSideFilter) {
+      this.onServerSideFilterChange.emit(filters);
+    } else this.applyClientSideFilters(filters);
   }
 
   private applyClientSideFilters(filters: any) {
@@ -164,5 +179,8 @@ export class ReusableTableComponent<T> implements OnChanges {
     }
 
     return [];
+  }
+  onEmptyStateAction() {
+    this.emptyStateInfo.callback?.();
   }
 }

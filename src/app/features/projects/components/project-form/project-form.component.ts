@@ -122,7 +122,6 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
         this.projectId = id;
         this.getProjectById(id, this.currentLanguage);
       } else {
-        // In create mode, mark the current language as ongoing
         this.updateLanguageStatus(this.currentLanguage, 'ongoing');
       }
     });

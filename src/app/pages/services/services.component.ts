@@ -11,21 +11,24 @@ import {
 import { ReusableTableComponent } from '../../shared/components/reusable-table/reusable-table.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ServicesService } from '../../services/services.service';
-import { LocaleComplete } from '../../features/projects/models/projects.interface';
+import {
+  LocaleComplete,
+  Project,
+} from '../../features/projects/models/projects.interface';
 import { PaginationObj } from '../../core/models/global.interface';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AppDialogService } from '../../shared/services/dialog.service';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
-export interface Service{
-  id: string
-  name: string
-  tagline: string
-  status: boolean
-  localeComplete: LocaleComplete
-  createdAt: string
-  updatedAt: string
+export interface Service {
+  id: string;
+  name: string;
+  tagline: string;
+  status: boolean;
+  localeComplete: LocaleComplete;
+  createdAt: string;
+  updatedAt: string;
 }
 @Component({
   selector: 'app-services',
@@ -47,19 +50,22 @@ export class ServicesComponent {
   private dialogService = inject(AppDialogService);
 
   data: WritableSignal<Service[]> = signal([]);
-  totalRecords:WritableSignal<number> = signal(0);
+  totalRecords: WritableSignal<number> = signal(0);
 
   paginationObj: PaginationObj = {
     page: 1,
     size: 10,
-  }
-  filterObj:any;
+  };
+  filterObj: any;
 
-  ref:DynamicDialogRef | undefined
+  ref: DynamicDialogRef | undefined;
 
-  emptyStateDescription: string =
-    'No Data to preview, start create your first service to appear here!';
-  emptyStateBtnLabel: string = `Create New Service`;
+  emptyStateInfo = {
+    label: 'Create New Service',
+    description:
+      'No Data to preview, start create your first service to appear here!',
+    callback: () => this.addNew(),
+  };
   columns: TableColumn<any>[] = [
     {
       field: 'name',
@@ -122,8 +128,8 @@ export class ServicesComponent {
   config: TableConfig<Service> = {
     columns: this.columns,
     serverSidePagination: true,
-    serverSideFilter:true,
-    rowsPerPage:10,
+    serverSideFilter: true,
+    rowsPerPage: 10,
     rowsPerPageOptions: [5, 10, 20],
     selectionMode: 'multiple',
     sortable: true,
@@ -135,23 +141,23 @@ export class ServicesComponent {
   }
 
   fetchData(pagination: PaginationObj) {
-    this.service.getAll(pagination,this.filterObj?.key || '').subscribe({
+    this.service.getAll(pagination, this.filterObj?.key || '').subscribe({
       next: (res) => {
-        this.data.set(res.result)
-        this.totalRecords.set(res.total!)
+        this.data.set(res.result);
+        this.totalRecords.set(res.total!);
       },
       error: (err) => {
         console.error('Failed to load projects', err);
-      }
-    })
+      },
+    });
   }
-  onFilterChange(filter:any){
-    this.filterObj = filter
-    this.fetchData(this.paginationObj)
+  onFilterChange(filter: any) {
+    this.filterObj = filter;
+    this.fetchData(this.paginationObj);
   }
   onPaginationChange(event: PaginationObj) {
-    this.paginationObj = event
-    this.fetchData(this.paginationObj)
+    this.paginationObj = event;
+    this.fetchData(this.paginationObj);
   }
   selectionChange(e: Service[] | Service) {
     console.log('selected items', e);
@@ -166,34 +172,34 @@ export class ServicesComponent {
     this.router.navigate(['/services/edit', row.id]);
   }
   delete(row: Service, event?: Event) {
-    this.showConfirmDialog(row)
+    this.showConfirmDialog(row);
   }
-  showConfirmDialog(row:Service) {
+  showConfirmDialog(row: Service) {
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
-        width: '40vw',
-        modal:true,
-        data:{
-          title:'services.list.delete_dialog.header',
-          subtitle: 'services.list.delete_dialog.desc',
-          confirmText: 'general.delete',
-          cancelText: 'general.cancel',
-          confirmSeverity: 'delete',
-          cancelSeverity: 'cancel',
-          showCancel: true,
-          showExtraButton: false,
-          data: row
-        }
+      width: '40vw',
+      modal: true,
+      data: {
+        title: 'services.list.delete_dialog.header',
+        subtitle: 'services.list.delete_dialog.desc',
+        confirmText: 'general.delete',
+        cancelText: 'general.cancel',
+        confirmSeverity: 'delete',
+        cancelSeverity: 'cancel',
+        showCancel: true,
+        showExtraButton: false,
+        data: row,
+      },
     });
-    this.ref.onClose.subscribe((product:{action:string,data:Service}) => {
-        if (product) {
-          if(product.action === 'confirm'){
-            this.service.delete(product.data.id).subscribe({
-              next:()=>{
-                this.fetchData(this.paginationObj);
-              }
-            })
-          }
+    this.ref.onClose.subscribe((product: { action: string; data: Service }) => {
+      if (product) {
+        if (product.action === 'confirm') {
+          this.service.delete(product.data.id).subscribe({
+            next: () => {
+              this.fetchData(this.paginationObj);
+            },
+          });
         }
+      }
     });
   }
 }

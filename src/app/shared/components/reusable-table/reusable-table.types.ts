@@ -78,3 +78,8 @@ export interface LocaleChip {
   code: string;
   flag?: string;
 }
+export interface EmptyStateInfo {
+  label?: string;
+  description?: string;
+  callback?: () => void;
+}
