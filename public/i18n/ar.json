@@ -16,6 +16,14 @@
     "cancel": "إلغاء",
     "delete": "حذف"
   },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "min_length": "الحد الأدنى {{min}} أحرف مطلوبة",
+    "max_length": "الحد الأقصى {{max}} حرف مسموح",
+    "min_value": "الحد الأدنى للقيمة هو {{min}}",
+    "only_numbers": "الأرقام فقط مسموحة",
+    "image_required": "الصورة مطلوبة"
+  },
   "projects": {
     "list": {
       "page_title": " المشاريع",
@@ -32,7 +40,8 @@
         "desc": "هل أنت متأكد من رغبتك في حذف هذا المشروع؟ لا يمكن التراجع عن هذا الإجراء."
       },
       "btns": {
-        "add_new": "إضافة مشروع جديد"
+        "add_new": "إضافة مشروع جديد",
+        "view_all": "عرض جميع المشاريع"
       },
       "filter": {
         "country": "الدولة",
@@ -123,7 +132,8 @@
         "status": "الحالة"
       },
       "btns": {
-        "add_new": "إضافة جائزة جديدة"
+        "add_new": "إضافة جائزة جديدة",
+        "customize": "تخصيص قسم الجوائز"
       },
       "delete_dialog": {
         "header": "حذف الجائزة",
@@ -152,6 +162,31 @@
       }
     }
   },
+  "awards_section": {
+    "form": {
+      "title": "تخصيص قسم الجوائز"
+    },
+    "section_details": "تفاصيل القسم",
+    "name": "اسم القسم",
+    "name_placeholder": "أدخل اسم القسم...",
+    "tagline": "شعار القسم",
+    "tagline_placeholder": "أدخل شعار القسم...",
+    "subsections": "تفاصيل القسم الفرعي",
+    "max_subsections": "الحد الأقصى 3 مسموح",
+    "subsection": "قسم فرعي",
+    "subsection_title": "العنوان",
+    "subsection_title_placeholder": "أدخل عنوان القسم الفرعي...",
+    "subsection_subtitle": "العنوان الفرعي",
+    "subsection_subtitle_placeholder": "أدخل العنوان الفرعي للقسم الفرعي...",
+    "add_subsection": "إضافة قسم فرعي"
+  },
+  "common": {
+    "delete": "حذف",
+    "save": "حفظ",
+    "discard": "تجاهل",
+    "update": "تحديث",
+    "cancel": "إلغاء"
+  },
   "services": {
     "list": {
       "page_title": " الخدمات",
@@ -162,10 +197,15 @@
       },
       "btns": {
         "add_new": "إضافة خدمة جديدة"
+      },
+      "delete_dialog": {
+        "header": "حذف الخدمة ؟",
+        "desc": "هل أنت متأكد من رغبتك في حذف هذه الخدمة؟ لا يمكن التراجع عن هذا الإجراء."
       }
     },
     "form": {
       "title": "إضافة خدمة جديدة",
+      "update_title": "تحديث الخدمة",
       "english": "(الإنجليزية)",
       "arabic": "(العربية)",
       "titles": {
@@ -175,12 +215,145 @@
       },
       "labels": {
         "name": "اسم الخدمة",
+        "tagline": "شعار الخدمة",
         "description": "الوصف"
       },
       "placeholders": {
         "name": "اكتب اسم الخدمة ...",
+        "tagline": "أدخل شعار الخدمة...",
         "description": "اكتب وصف القسم هنا ..."
+      },
+      "validation": {
+        "name_required": "اسم الخدمة مطلوب",
+        "name_min": "اسم الخدمة يجب أن يكون على الأقل 3 أحرف",
+        "name_max": "اسم الخدمة لا يمكن أن يتجاوز 50 حرفًا",
+        "tagline_required": "شعار الخدمة مطلوب",
+        "tagline_min": "شعار الخدمة يجب أن يكون على الأقل 3 أحرف",
+        "tagline_max": "شعار الخدمة لا يمكن أن يتجاوز 50 حرفًا",
+        "benefitTitle_required": "عنوان مميزات الخدمة مطلوب",
+        "benefitTitle_min": "عنوان مميزات الخدمة يجب أن يكون على الأقل 3 أحرف",
+        "benefitTitle_max": "عنوان مميزات الخدمة لا يمكن أن يتجاوز 50 حرفًا",
+        "benefitTagline_required": "وصف مميزات الخدمة مطلوب",
+        "benefitTagline_min": "وصف مميزات الخدمة يجب أن يكون على الأقل 3 أحرف",
+        "benefitTagline_max": "وصف مميزات الخدمة لا يمكن أن يتجاوز 50 حرفًا",
+        "benefitBody_required": "محتوى مميزات الخدمة مطلوب",
+        "benefitBody_min": "محتوى مميزات الخدمة يجب أن يكون على الأقل 3 أحرف",
+        "benefitBody_max": "محتوى مميزات الخدمة لا يمكن أن يتجاوز 50 حرفًا"
+      },
+      "stages": {
+        "title": "مراحل الخدمة",
+        "max_allowed": "(الحد الأقصى المسموح به 3)",
+        "required": "*",
+        "add_new": "إضافة مرحلة جديدة",
+        "add_another": "إضافة أخرى",
+        "edit": "تعديل المرحلة",
+        "empty_title": "ابدأ بإضافة المراحل لتظهر هنا",
+        "empty_subtitle": "ابدأ بإضافة أول مرحلة للخدمة.",
+        "error_required": "مرحلة واحدة على الأقل مطلوبة للخدمة"
+      },
+      "benefits": {
+        "title": "فوائد الخدمة",
+        "title_label": "عنوان الفوائد",
+        "title_placeholder": "الرجاء إدخال عنوان الفوائد",
+        "title_required": "عنوان الفوائد مطلوب",
+        "title_min": "عنوان الفوائد يجب أن يكون على الأقل 3 أحرف",
+        "title_max": "عنوان الفوائد لا يمكن أن يتجاوز 50 حرفاً",
+        "tagline_label": "شعار الفوائد",
+        "tagline_placeholder": "الرجاء إدخال شعار الفوائد",
+        "tagline_required": "شعار الفوائد مطلوب",
+        "tagline_min": "شعار الفوائد يجب أن يكون على الأقل 3 أحرف",
+        "tagline_max": "شعار الفوائد لا يمكن أن يتجاوز 50 حرفاً",
+        "body_label": "نص الفوائد",
+        "body_placeholder": "الرجاء إدخال نص الفوائد",
+        "body_required": "نص الفوائد مطلوب",
+        "body_min": "نص الفوائد يجب أن يكون على الأقل 3 أحرف",
+        "body_max": "نص الفوائد لا يمكن أن يتجاوز 50 حرفاً",
+        "insights": {
+          "title": "رؤى الفوائد",
+          "max_allowed": "(الحد الأقصى 3 رؤى)",
+          "label": "رؤية",
+          "title_placeholder": "الرجاء إدخال عنوان الرؤية",
+          "title_min": "عنوان الرؤية يجب أن يكون على الأقل 3 أحرف",
+          "title_max": "عنوان الرؤية لا يمكن أن يتجاوز 50 حرفاً",
+          "number_placeholder": "الرقم",
+          "number_min": "الحد الأدنى للقيمة هو 0",
+          "number_invalid": "الأرقام فقط مسموحة",
+          "add_new": "إضافة رؤية جديدة"
+        }
+      },
+      "values": {
+        "title": "قيم الخدمة",
+        "max_allowed": "(الحد الأقصى المسموح به 3)",
+        "add_new": "إضافة قيمة جديدة",
+        "add_another": "إضافة أخرى",
+        "edit": "تعديل القيمة",
+        "empty_title": "ابدأ بإضافة القيم لتظهر هنا",
+        "empty_subtitle": "ابدأ بإضافة أول قيمة للخدمة."
+      },
+      "results": {
+        "title": "النتائج والتأثيرات",
+        "max_allowed": "(الحد الأقصى المسموح به 3)",
+        "add_new": "إضافة نتيجة وتأثير جديد",
+        "add_another": "إضافة أخرى",
+        "edit": "تعديل النتيجة والتأثير",
+        "empty_title": "ابدأ بإضافة النتائج والتأثيرات لتظهر هنا",
+        "empty_subtitle": "ابدأ بإضافة أول نتيجة وتأثير."
       }
+    },
+    "stage_form": {
+      "create_title": "إنشاء مرحلة جديدة",
+      "edit_title": "تعديل المرحلة",
+      "title_label": "العنوان",
+      "title_placeholder": "أدخل عنوان المرحلة..",
+      "title_required": "العنوان مطلوب",
+      "title_min": "العنوان يجب أن يكون على الأقل 3 أحرف",
+      "title_max": "العنوان لا يمكن أن يتجاوز 50 حرفاً",
+      "description_label": "الوصف",
+      "description_placeholder": "أدخل وصف المرحلة",
+      "description_required": "الوصف مطلوب",
+      "description_min": "الوصف يجب أن يكون على الأقل 3 أحرف",
+      "description_max": "الوصف لا يمكن أن يتجاوز 50 حرفاً",
+      "image_required": "صورة المرحلة مطلوبة",
+      "cancel": "إلغاء",
+      "save": "حفظ",
+      "update": "تحديث"
+    },
+    "value_form": {
+      "create_title": "إنشاء قيمة جديدة",
+      "edit_title": "تعديل القيمة",
+      "title_label": "العنوان",
+      "title_placeholder": "أدخل عنوان القيمة..",
+      "title_required": "العنوان مطلوب",
+      "title_min": "العنوان يجب أن يكون على الأقل 3 أحرف",
+      "title_max": "العنوان لا يمكن أن يتجاوز 50 حرفاً",
+      "description_label": "الوصف",
+      "description_placeholder": "أدخل وصف القيمة",
+      "description_required": "الوصف مطلوب",
+      "description_min": "الوصف يجب أن يكون على الأقل 3 أحرف",
+      "description_max": "الوصف لا يمكن أن يتجاوز 50 حرفاً",
+      "tools_label": "الأدوات المستخدمة",
+      "tools_placeholder": "أدخل اسم الأداة",
+      "tools_add": "إضافة",
+      "cancel": "إلغاء",
+      "save": "حفظ",
+      "update": "تحديث"
+    },
+    "result_form": {
+      "create_title": "إنشاء نتائج وتأثيرات جديدة",
+      "edit_title": "تعديل النتيجة والتأثير",
+      "title_label": "العنوان",
+      "title_placeholder": "أدخل عنوان النتيجة..",
+      "title_required": "العنوان مطلوب",
+      "title_min": "العنوان يجب أن يكون على الأقل 3 أحرف",
+      "title_max": "العنوان لا يمكن أن يتجاوز 50 حرفاً",
+      "description_label": "الوصف",
+      "description_placeholder": "أدخل وصف النتيجة",
+      "description_required": "الوصف مطلوب",
+      "description_min": "الوصف يجب أن يكون على الأقل 3 أحرف",
+      "description_max": "الوصف لا يمكن أن يتجاوز 50 حرفاً",
+      "cancel": "إلغاء",
+      "save": "حفظ",
+      "update": "تحديث"
     }
   },
   "testimonials": {
@@ -274,5 +447,70 @@
     "click": "اضغط للرفع",
     "drag_drop": "أو اسحب وأفلت الملفات هنا",
     "hint": "JPG أو PNG (الحد الأقصى {{max}} ميجابايت)"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "projects": "المشاريع",
+    "services": "الخدمات",
+    "clients": "العملاء",
+    "awards": "الجوائز",
+    "testimonials": "الشهادات"
+  },
+  "Projects": "المشاريع",
+  "Services": "الخدمات",
+  "Clients": "العملاء",
+  "Awards": "الجوائز",
+  "Testimonials": "الشهادات",
+  "dashboard": {
+    "welcome": "مرحباً بعودتك، {{name}}",
+    "subtitle": "إليك ما يحدث مع مشاريعك اليوم.",
+    "total_projects": "إجمالي المشاريع",
+    "total_clients": "إجمالي العملاء",
+    "total_services": "إجمالي الخدمات",
+    "total_testimonials": "الشهادات",
+    "latest_projects": "أحدث المشاريع"
+  },
+  "sidebar": {
+    "main": "الرئيسية",
+    "show_menu": "إظهار القائمة",
+    "hide_menu": "إخفاء القائمة",
+    "powered_by": "مدعوم بواسطة"
+  },
+  "navbar": {
+    "select_language": "اختر اللغة"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "status": "الحالة",
+    "required": "*",
+    "select_status": "اختر الحالة",
+    "published": "منشور",
+    "unpublished": "غير منشور",
+    "localization": "حالة الترجمة",
+    "english": "الإنجليزية",
+    "arabic": "العربية",
+    "status_not_started": "لم تبدأ",
+    "status_ongoing": "قيد التنفيذ",
+    "status_completed": "مكتمل"
+  },
+  "user_menu": {
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    "superadmin": "مدير عام",
+    "admin_name": "مدير الطبيعة"
+  },
+  "empty_state": {
+    "title": "لا توجد بيانات للمعاينة حتى الآن!",
+    "create_btn": "إنشاء مشروع جديد",
+    "no_data": "لا توجد بيانات للمعاينة، ابدأ بإنشاء مشروعك الأول ليظهر هنا!"
+  },
+  "breadcrumb": {
+    "dashboard": "لوحة التحكم"
+  },
+  "form_actions": {
+    "discard": "تجاهل",
+    "save": "حفظ",
+    "localization": "الترجمة ({{language}})"
   }
 }

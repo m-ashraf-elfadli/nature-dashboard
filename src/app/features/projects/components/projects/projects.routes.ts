@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { ProjectsComponent } from './projects.component';
-import { ProjectNameResolver } from './project-name.resolver';
 
 export const projectsRoutes: Routes = [
   {
     path: '',
     component: ProjectsComponent,
+    data: {
+      breadcrumb: 'navigation.projects', // Translation key
+    },
   },
   {
     path: 'add',
@@ -14,8 +16,8 @@ export const projectsRoutes: Routes = [
         (m) => m.ProjectFormComponent,
       ),
     data: {
-      title: 'general.add',
-      breadcrumb: 'general.add',
+      title: 'projects.form.title',
+      breadcrumb: 'projects.form.title', // Translation key
     },
   },
   {
@@ -26,9 +28,7 @@ export const projectsRoutes: Routes = [
       ),
     data: {
       title: 'projects.form.breadcrumb_edit',
-    },
-    resolve: {
-      projectName: ProjectNameResolver,
+      breadcrumb: 'projects.form.breadcrumb_edit', // Translation key
     },
   },
 ];

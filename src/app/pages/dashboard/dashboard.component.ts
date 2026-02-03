@@ -12,6 +12,7 @@ import { PageHeaderComponent } from '../../shared/components/page-header/page-he
 import { CardTotalComponent } from '../../shared/components/card-total/card-total.component';
 import { ReusableTableComponent } from '../../shared/components/reusable-table/reusable-table.component';
 import { DashboardService } from '../../services/dashboard.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import {
   TableAction,
@@ -28,7 +29,6 @@ import { ProjectsService } from '../../features/projects/services/projects.servi
 import { forkJoin } from 'rxjs';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,6 +38,7 @@ import { EmptyStateComponent } from '../../shared/components/empty-state/empty-s
     PageHeaderComponent,
     CardTotalComponent,
     ReusableTableComponent,
+    TranslateModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -47,42 +48,42 @@ export class DashboardComponent implements OnInit {
   private projectsService = inject(ProjectsService);
   private router = inject(Router);
   private readonly dialogService = inject(DialogService);
+  private readonly translate = inject(TranslateService);
   ref: DynamicDialogRef | undefined;
   countriesDD: DropDownOption[] = [];
   citiesDD: DropDownOption[] = [];
 
   userName =
     JSON.parse(localStorage.getItem('user') || '{}')?.username ??
-    'Nature Admin';
+    this.translate.instant('user_menu.admin_name');
 
   cards: any[] = [];
 
   emptyStateInfo = {
-    label: 'Create New Project',
-    description:
-      'No Date to preview, start create your first project to appear here!',
+    label: 'empty_state.create_project',
+    description: 'empty_state.no_data',
     callback: () => this.addNewProject(),
   };
 
   private cardConfig = [
     {
       key: 'totalProjects',
-      title: 'Total Projects',
+      title: 'dashboard.total_projects',
       icon: 'images/projects-icon.svg',
     },
     {
       key: 'totalClients',
-      title: 'Total Clients',
+      title: 'dashboard.total_clients',
       icon: 'images/clients-icon.svg',
     },
     {
       key: 'totalServices',
-      title: 'Total Services',
+      title: 'dashboard.total_services',
       icon: 'images/services-icon.svg',
     },
     {
       key: 'totalTestimonials',
-      title: 'Testimonials',
+      title: 'dashboard.total_testimonials',
       icon: 'images/testImonials-icon.svg',
     },
   ] as const;
@@ -99,23 +100,23 @@ export class DashboardComponent implements OnInit {
   columns: TableColumn<Project>[] = [
     {
       field: 'name',
-      header: 'Project',
+      header: 'projects.list.table_headers.project',
       type: 'avatar-and-name',
       avatarField: 'image',
     },
     {
       field: 'countryName',
-      header: 'Country',
+      header: 'projects.list.table_headers.country',
       type: 'text',
     },
     {
       field: 'cityName',
-      header: 'City',
+      header: 'projects.list.table_headers.city',
       type: 'text',
     },
     {
       field: 'status',
-      header: 'Status',
+      header: 'projects.list.table_headers.status',
       type: 'status',
     },
   ];
@@ -194,7 +195,7 @@ export class DashboardComponent implements OnInit {
       next: (res) => {
         const stats = res.result;
         this.cards = this.cardConfig.map((c) => ({
-          title: c.title,
+          title: this.translate.instant(c.title),
           icon: c.icon,
           count: stats[c.key],
         }));

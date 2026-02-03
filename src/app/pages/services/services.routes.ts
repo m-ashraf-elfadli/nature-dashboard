@@ -6,6 +6,9 @@ export const servicesRoutes: Routes = [
   {
     path: '',
     component: ServicesComponent,
+    data: {
+      breadcrumb: 'navigation.services', // Translation key for "Services"
+    },
   },
   {
     path: 'add',
@@ -14,8 +17,8 @@ export const servicesRoutes: Routes = [
         (m) => m.ServiceFormComponent,
       ),
     data: {
-      title: 'Add New Service',
-      breadcrumb: 'Add',
+      title: 'services.form.title', // Translation key: "Add New Service"
+      breadcrumb: 'services.form.title', // Translation key
     },
   },
   {
@@ -28,7 +31,8 @@ export const servicesRoutes: Routes = [
       serviceName: ServiceNameResolver,
     },
     data: {
-      title: 'Edit Service',
+      title: 'services.form.update_title',
+      breadcrumb: 'services.form.update_title',
     },
   },
 ];

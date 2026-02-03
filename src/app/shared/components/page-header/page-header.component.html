@@ -4,7 +4,13 @@
             <ng-container *ngFor="let item of breadcrumbs; let last = last">
                 <span class="breadcrumb-item" [class.active]="last" [class.clickable]="item.route"
                     (click)="navigateToBreadcrumb(item.route)">
-                    {{ item.label | translate }}
+                    <!-- Use translate pipe for translation keys, raw value for resolved names -->
+                    <ng-container *ngIf="item.isTranslationKey; else rawLabel">
+                        {{ item.label | translate }}
+                    </ng-container>
+                    <ng-template #rawLabel>
+                        {{ item.label }}
+                    </ng-template>
                 </span>
                 <span class="breadcrumb-separator" *ngIf="!last">/</span>
             </ng-container>

@@ -1,53 +1,24 @@
-<aside
-  class="sidebar"
-  [class.collapsed]="isSidebarCollapsed"
-  [class.show-mobile]="mobileMenuOpen" 
->
+<aside class="sidebar" [class.collapsed]="isSidebarCollapsed" [class.show-mobile]="mobileMenuOpen">
   <!-- Collapse Button -->
-  <button
-    class="collapse-btn"
-    (click)="toggleSidebar()"
-    [title]="getCollapseTitle()"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-    >
+  <button class="collapse-btn" (click)="toggleSidebar()" [title]="getCollapseTitle()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path
         d="M10.5 13.5C10.3721 13.5 10.2441 13.4511 10.1465 13.3535L5.14647 8.35347C4.9511 8.1581 4.9511 7.84172 5.14647 7.64647L10.1465 2.64647C10.3418 2.4511 10.6582 2.4511 10.8535 2.64647C11.0487 2.84185 11.0488 3.15822 10.8535 3.35347L6.20697 7.99997L10.8535 12.6465C11.0488 12.8418 11.0488 13.1582 10.8535 13.3535C10.7558 13.4511 10.6278 13.5 10.5 13.5Z"
-        fill="#667085"
-      />
+        fill="#667085" />
     </svg>
   </button>
   <div class="sidebar-content">
     <!-- Logo Section -->
     <div class="sidebar-logo">
-      <img
-        src="images/nature-logo.png"
-        class="logo-img w-full"
-        alt="Nature Logo"
-      />
+      <img src="images/nature-logo.png" class="logo-img w-full" alt="Nature Logo" />
     </div>
 
     <nav class="nav-menu">
-      <div class="text-main">MAIN</div>
-      <a
-        *ngFor="let item of navItems"
-        [routerLink]="item.route"
-        routerLinkActive="active"
-        #rla="routerLinkActive"
-        [routerLinkActiveOptions]="{ exact: false }"
-        class="nav-item"
-        [title]="item.label"
-        (click)="onNavItemClick()"
-      >
-        <span
-          [innerHTML]="rla.isActive ? item.iconActive : item.icon"
-          class="nav-icon"
-        ></span>
+      <div class="text-main">{{ 'sidebar.main' | translate }}</div>
+      <a *ngFor="let item of translatedNavItems" [routerLink]="item.route" routerLinkActive="active"
+        #rla="routerLinkActive" [routerLinkActiveOptions]="{ exact: false }" class="nav-item" [title]="item.label"
+        (click)="onNavItemClick()">
+        <span [innerHTML]="rla.isActive ? item.iconActive : item.icon" class="nav-icon"></span>
         <p class="nav-label">{{ item.label }}</p>
       </a>
     </nav>
@@ -55,55 +26,27 @@
 
   <div class="sidebar-footer">
     <div class="footer-section">
-      <p class="footer-text">Powered By</p>
+      <p class="footer-text">{{ 'sidebar.powered_by' | translate }}</p>
       <div class="powered-by">
-        <svg
-          width="41"
-          height="24"
-          viewBox="0 0 41 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg width="41" height="24" viewBox="0 0 41 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_10113_2087)">
-            <mask
-              id="mask0_10113_2087"
-              style="mask-type: luminance"
-              maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="41"
-              height="24"
-            >
+            <mask id="mask0_10113_2087" style="mask-type: luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="41"
+              height="24">
               <path d="M40.4706 0H0V23.5751H40.4706V0Z" fill="white" />
             </mask>
             <g mask="url(#mask0_10113_2087)">
-              <mask
-                id="mask1_10113_2087"
-                style="mask-type: luminance"
-                maskUnits="userSpaceOnUse"
-                x="-19"
-                y="-11"
-                width="77"
-                height="48"
-              >
-                <path
-                  d="M57.5159 -10.7656H-18.0742V36.0176H57.5159V-10.7656Z"
-                  fill="white"
-                />
+              <mask id="mask1_10113_2087" style="mask-type: luminance" maskUnits="userSpaceOnUse" x="-19" y="-11"
+                width="77" height="48">
+                <path d="M57.5159 -10.7656H-18.0742V36.0176H57.5159V-10.7656Z" fill="white" />
               </mask>
               <g mask="url(#mask1_10113_2087)">
                 <path
                   d="M19.0989 3.90796V13.1767H4.2648V14.858H19.0989V18.6511H0.47168V9.38237H15.3058V7.70105H0.47168V3.90796H19.0989Z"
-                  fill="black"
-                />
+                  fill="black" />
                 <path
                   d="M36.0995 3.90796H20.5068V18.6499H37.2456L39.0117 16.7519V6.82298L36.0995 3.90796ZM33.4777 7.70105V9.38237H24.3004V7.70105H33.4777ZM35.305 14.8563H24.3033V13.1767H35.305V14.8563Z"
-                  fill="#F37021"
-                />
-                <path
-                  d="M34.0665 21.3323H0.34082V19.6212H36.2412L34.0665 21.3323Z"
-                  fill="black"
-                />
+                  fill="#F37021" />
+                <path d="M34.0665 21.3323H0.34082V19.6212H36.2412L34.0665 21.3323Z" fill="black" />
               </g>
             </g>
           </g>
@@ -119,8 +62,4 @@
 </aside>
 
 <!-- Mobile Overlay -->
-<div
-  class="sidebar-overlay"
-  *ngIf="mobileMenuOpen"
-  (click)="closeMobileMenu()"
-></div>
+<div class="sidebar-overlay" *ngIf="mobileMenuOpen" (click)="closeMobileMenu()"></div>

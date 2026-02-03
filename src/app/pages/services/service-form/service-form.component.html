@@ -6,7 +6,6 @@
     </app-form-actions>
   </div>
 
-
   <div class="form-toaster" *ngIf="showLanguageSwitchToast">
     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
       <path
@@ -22,8 +21,8 @@
         d="M9.86397 9.08593C10.0203 9.23357 10.1749 9.38296 10.3293 9.5327C10.373 9.57398 10.4168 9.61525 10.4619 9.65778C10.9422 10.1273 11.1485 10.6078 11.1638 11.2747C11.1509 11.8641 10.9645 12.3677 10.544 12.7837C10.5043 12.8231 10.4647 12.8625 10.4239 12.9031C10.3622 12.9639 10.3622 12.9639 10.2992 13.0259C10.2574 13.0673 10.2157 13.1087 10.1727 13.1513C10.07 13.2532 9.96705 13.3549 9.86397 13.4565C9.15747 12.7876 8.62264 12.2165 8.58152 11.1971C8.60554 10.2667 9.2383 9.68836 9.86397 9.08593Z"
         fill="#FEFEFE" />
     </svg>
-    <span>You are currently editing {{getLanguageName(currentLanguage)}} content. Changes here do not affect the
-      {{getLanguageName(previousLanguage)}} version.</span>
+    <span>{{ 'You are currently editing ' + getLanguageName(currentLanguage) + ' content. Changes here do not affect the
+      ' + getLanguageName(previousLanguage) + ' version.' }}</span>
     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
       <path
         d="M19.1976 5.0118C19.2537 5.16204 19.2807 5.28519 19.2791 5.44536C19.2788 5.48659 19.2786 5.52782 19.2784 5.5703C19.2775 5.63733 19.2775 5.63733 19.2765 5.70571C19.2762 5.75319 19.2758 5.80067 19.2755 5.84959C19.2747 5.95254 19.2738 6.05549 19.2727 6.15843C19.2711 6.32123 19.27 6.48403 19.2692 6.64683C19.2667 7.10966 19.2636 7.57248 19.259 8.03529C19.2562 8.31845 19.2545 8.60159 19.2534 8.88476C19.2529 8.99277 19.2518 9.10079 19.2504 9.20879C19.2485 9.35954 19.2479 9.51024 19.2476 9.66101C19.2467 9.70584 19.2458 9.75067 19.2448 9.79687C19.2429 9.93456 19.2429 9.93456 19.2716 10.1231C19.4347 10.2813 19.6545 10.336 19.8643 10.4194C20.1757 10.5659 20.3877 10.7754 20.6272 11.0197C20.667 11.0597 20.7068 11.0997 20.7478 11.141C20.8742 11.2682 21 11.3959 21.1259 11.5236C21.2118 11.6102 21.2977 11.6968 21.3836 11.7834C21.5936 11.995 21.8032 12.2071 22.0125 12.4195C21.7772 12.6586 21.5412 12.8971 21.3049 13.1352C21.2247 13.2162 21.1446 13.2973 21.0646 13.3786C20.9493 13.4957 20.8335 13.6123 20.7176 13.7288C20.6822 13.765 20.6469 13.8011 20.6105 13.8383C20.2056 14.2433 19.6721 14.5624 19.0957 14.6418C18.934 14.6653 18.934 14.6653 18.8364 14.7807C18.7682 14.9096 18.7115 15.0351 18.6559 15.1696C18.005 16.7361 16.6565 18.0056 15.1095 18.6743C14.2155 19.0387 13.324 19.223 12.3604 19.2554C12.3146 19.257 12.2688 19.2585 12.2217 19.2601C11.5805 19.2793 10.9391 19.2763 10.2977 19.2753C10.1137 19.2751 9.92974 19.2751 9.74575 19.275C9.39922 19.2749 9.0527 19.2746 8.70617 19.2743C8.31086 19.2738 7.91556 19.2736 7.52026 19.2735C6.70882 19.2731 5.89738 19.2724 5.08594 19.2716C5.04914 18.8729 5.04295 18.4777 5.04234 18.0775C5.04211 18.0067 5.04186 17.936 5.0416 17.8652C5.04083 17.6344 5.04044 17.4035 5.04007 17.1727C5.03992 17.0926 5.03977 17.0126 5.03962 16.9325C5.03891 16.556 5.03838 16.1794 5.03807 15.8029C5.03771 15.371 5.03674 14.9392 5.03524 14.5073C5.03411 14.1717 5.03357 13.8361 5.03345 13.5005C5.03337 13.3009 5.03304 13.1013 5.0321 12.9017C5.0276 11.8984 5.03097 10.916 5.34521 9.9518C5.35918 9.90774 5.37316 9.86368 5.38756 9.81829C5.52635 9.39948 5.71314 9.00807 5.92502 8.62167C5.9693 8.54062 6.01131 8.45835 6.05299 8.37593C6.34741 7.88417 6.71721 7.46484 7.12305 7.0628C7.17023 7.01604 7.21741 6.96927 7.26602 6.92109C9.00344 5.22795 11.1732 4.99795 13.4941 5.00429C13.6952 5.00476 13.8963 5.00479 14.0973 5.00488C14.4767 5.00511 14.856 5.00572 15.2353 5.00646C15.6678 5.0073 16.1003 5.0077 16.5327 5.00807C17.421 5.00884 18.3093 5.01014 19.1976 5.0118Z"
@@ -44,36 +43,47 @@
     <!-- Service Details -->
     <div class="fieldsets-container">
       <div class="fieldset">
-        <legend>Service Details</legend>
+        <legend>{{ 'services.form.titles.details' | translate }}</legend>
 
         <div class="our-field">
-          <label for="serviceName">Service Name <span class="required">*</span></label>
-          <input type="text" id="serviceName" placeholder="Enter service Name...." formControlName="name" pInputText
-            [class.error]="isFieldInvalid('name')" />
-          <small class="error-message" *ngIf="isFieldInvalid('name')">{{ getFieldError('name') }}</small>
+          <label for="serviceName">
+            {{ 'services.form.labels.name' | translate }}
+            <span class="required">*</span>
+          </label>
+          <input type="text" id="serviceName" [placeholder]="'services.form.placeholders.name' | translate"
+            formControlName="name" pInputText [class.error]="isFieldInvalid('name')" />
+          <small class="error-message" *ngIf="isFieldInvalid('name')">
+            {{ getFieldError('name') }}
+          </small>
         </div>
 
         <div class="our-field">
-          <label for="serviceTagline">Service Tagline <span class="required">*</span></label>
-          <input type="text" id="serviceTagline" placeholder="Enter Service Tagline...." formControlName="tagline"
-            pInputText [class.error]="isFieldInvalid('tagline')" />
-          <small class="error-message" *ngIf="isFieldInvalid('tagline')">{{ getFieldError('tagline') }}</small>
+          <label for="serviceTagline">
+            {{ 'services.form.labels.tagline' | translate }}
+            <span class="required">*</span>
+          </label>
+          <input type="text" id="serviceTagline" [placeholder]="'services.form.placeholders.tagline' | translate"
+            formControlName="tagline" pInputText [class.error]="isFieldInvalid('tagline')" />
+          <small class="error-message" *ngIf="isFieldInvalid('tagline')">
+            {{ getFieldError('tagline') }}
+          </small>
         </div>
       </div>
 
-      <app-settings formControlName="status">
-      </app-settings>
+      <app-settings formControlName="status"></app-settings>
     </div>
-
     <!-- Service Stages -->
     <div class="fieldset">
       <legend>
-        Service Stages <span>(Maximum 3 allowed)</span> <span class="required">*</span>
+        {{ 'services.form.stages.title' | translate }}
+        <span>{{ 'services.form.stages.max_allowed' | translate }}</span>
+        <span class="required">{{ 'services.form.stages.required' | translate }}</span>
       </legend>
 
       @if(stages.length > 0) {
       <app-mini-table [data]="stages" [columns]="cols" [reorderable]="true" [showImage]="true" imageField="imagePreview"
-        [editComponent]="StageFormComponent" [editDialogConfig]="{ header: 'Edit Stage', width: '600px' }"
+        [editComponent]="StageFormComponent"
+        [editDialogConfig]="{ header: ('services.form.stages.edit' | translate), width: '600px' }"
         (rowDeleted)="onDeleteStage($event)" (rowEdited)="onEditStage($event)" (reordered)="onReorder($event)">
       </app-mini-table>
 
@@ -82,11 +92,12 @@
           <path d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192" stroke="#75B267" stroke-width="1.5913"
             stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span>Add Another</span>
+        <span>{{ 'services.form.stages.add_another' | translate }}</span>
       </button>
       } @else {
-      <app-empty-state-action title="Start Adding stages to appear here"
-        subtitle="Start adding the first service stage." buttonLabel="Add New Stage" (action)="openStagePopup()">
+      <app-empty-state-action [title]="'services.form.stages.empty_title' | translate"
+        [subtitle]="'services.form.stages.empty_subtitle' | translate"
+        [buttonLabel]="'services.form.stages.add_new' | translate" (action)="openStagePopup()">
       </app-empty-state-action>
       }
 
@@ -96,54 +107,76 @@
     <!-- Service Benefits -->
     <div class="fieldset">
       <div class="legend-with-toggle">
-        <legend>Service Benefits</legend>
+        <legend>{{ 'services.form.benefits.title' | translate }}</legend>
         <p-inputSwitch [formControl]="benefitEnabledControl"></p-inputSwitch>
       </div>
 
       <div class="benefits-fields" [class.disabled]="!benefitEnabledControl.value">
         <div class="our-field">
-          <label for="benefitTitle">Benefits Title <span class="required"
-              *ngIf="benefitEnabledControl.value">*</span></label>
-          <input type="text" id="benefitTitle" placeholder="Please enter benefits title" formControlName="benefitTitle"
-            pInputText [class.error]="isFieldInvalid('benefitTitle')" />
-          <small class="error-message" *ngIf="isFieldInvalid('benefitTitle')">{{ getFieldError('benefitTitle')
-            }}</small>
+          <label for="benefitTitle">
+            {{ 'services.form.benefits.title_label' | translate }}
+            <span class="required" *ngIf="benefitEnabledControl.value">*</span>
+          </label>
+          <input type="text" id="benefitTitle" [placeholder]="'services.form.benefits.title_placeholder' | translate"
+            formControlName="benefitTitle" pInputText [class.error]="isFieldInvalid('benefitTitle')" />
+          <small class="error-message" *ngIf="isFieldInvalid('benefitTitle')">
+            {{ getFieldError('benefitTitle') }}
+          </small>
         </div>
 
         <div class="our-field">
-          <label for="benefitTagline">Benefits Tagline <span class="required"
-              *ngIf="benefitEnabledControl.value">*</span></label>
-          <input type="text" id="benefitTagline" placeholder="Please enter benefits tagline"
-            formControlName="benefitTagline" pInputText [class.error]="isFieldInvalid('benefitTagline')" />
-          <small class="error-message" *ngIf="isFieldInvalid('benefitTagline')">{{ getFieldError('benefitTagline')
-            }}</small>
+          <label for="benefitTagline">
+            {{ 'services.form.benefits.tagline_label' | translate }}
+            <span class="required" *ngIf="benefitEnabledControl.value">*</span>
+          </label>
+          <input type="text" id="benefitTagline"
+            [placeholder]="'services.form.benefits.tagline_placeholder' | translate" formControlName="benefitTagline"
+            pInputText [class.error]="isFieldInvalid('benefitTagline')" />
+          <small class="error-message" *ngIf="isFieldInvalid('benefitTagline')">
+            {{ getFieldError('benefitTagline') }}
+          </small>
         </div>
 
         <div class="our-field">
-          <label for="benefitBody">Benefits Body <span class="required"
-              *ngIf="benefitEnabledControl.value">*</span></label>
-          <input type="text" id="benefitBody" placeholder="Please enter benefits body" formControlName="benefitBody"
-            pInputText [class.error]="isFieldInvalid('benefitBody')" />
-          <small class="error-message" *ngIf="isFieldInvalid('benefitBody')">{{ getFieldError('benefitBody') }}</small>
+          <label for="benefitBody">
+            {{ 'services.form.benefits.body_label' | translate }}
+            <span class="required" *ngIf="benefitEnabledControl.value">*</span>
+          </label>
+          <input type="text" id="benefitBody" [placeholder]="'services.form.benefits.body_placeholder' | translate"
+            formControlName="benefitBody" pInputText [class.error]="isFieldInvalid('benefitBody')" />
+          <small class="error-message" *ngIf="isFieldInvalid('benefitBody')">
+            {{ getFieldError('benefitBody') }}
+          </small>
         </div>
 
         <!-- Benefits Insights -->
         <div class="fieldset">
-          <legend>Benefits Insights <span>(Maximum 3 Insights)</span></legend>
+          <legend>
+            {{ 'services.form.benefits.insights.title' | translate }}
+            <span>{{ 'services.form.benefits.insights.max_allowed' | translate }}</span>
+          </legend>
 
           <div class="insights-container">
             <div class="insight-row" *ngFor="let control of benefitInsightsArray.controls; let i = index">
               <div class="insight-label">
-                <label>Insight ({{ i + 1 }})</label>
+                <label>{{ 'services.form.benefits.insights.label' | translate }} ({{ i + 1 }})</label>
               </div>
               <div class="insight-inputs">
                 <div class="our-field">
-                  <input type="text" placeholder="Please enter Insight title"
-                    [formControl]="$any(control.get('metricTitle'))" pInputText />
+                  <input type="text" [placeholder]="'services.form.benefits.insights.title_placeholder' | translate"
+                    [formControl]="$any(control.get('metricTitle'))" pInputText
+                    [class.error]="isInsightFieldInvalid(i, 'metricTitle')" />
+                  <small class="error-message" *ngIf="isInsightFieldInvalid(i, 'metricTitle')">
+                    {{ getInsightFieldError(i, 'metricTitle') }}
+                  </small>
                 </div>
                 <div class="our-field insight-input">
-                  <input type="text" placeholder="Number" [formControl]="$any(control.get('metricNumber'))"
-                    pInputText />
+                  <input type="number" [placeholder]="'services.form.benefits.insights.number_placeholder' | translate"
+                    [formControl]="$any(control.get('metricNumber'))" pInputText min="0"
+                    [class.error]="isInsightFieldInvalid(i, 'metricNumber')" />
+                  <small class="error-message" *ngIf="isInsightFieldInvalid(i, 'metricNumber')">
+                    {{ getInsightFieldError(i, 'metricNumber') }}
+                  </small>
                 </div>
                 <button type="button" class="delete-btn" (click)="onDeleteBenefitsInsight(i)"
                   *ngIf="benefitInsightsArray.length > 1" title="Delete">
@@ -163,7 +196,7 @@
               <path d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192" stroke="#75B267" stroke-width="1.5913"
                 stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <span>Add New Insight</span>
+            <span>{{ 'services.form.benefits.insights.add_new' | translate }}</span>
           </button>
         </div>
       </div>
@@ -174,12 +207,14 @@
       <!-- Service Values -->
       <div class="fieldset">
         <legend>
-          Service Values <span>(Maximum 3 allowed)</span>
+          {{ 'services.form.values.title' | translate }}
+          <span>{{ 'services.form.values.max_allowed' | translate }}</span>
         </legend>
 
         @if(serviceValuesArray.length > 0) {
         <app-mini-table [data]="serviceValuesArray.value" [columns]="cols" [reorderable]="true" [showImage]="false"
-          [editComponent]="ValueFormComponent" [editDialogConfig]="{ header: 'Edit Value', width: '600px' }"
+          [editComponent]="ValueFormComponent"
+          [editDialogConfig]="{ header: ('services.form.values.edit' | translate), width: '600px' }"
           (rowDeleted)="onDeleteServiceValue($event)" (rowEdited)="onEditServiceValue($event)"
           (reordered)="onReorderServiceValues($event)">
         </app-mini-table>
@@ -190,12 +225,12 @@
             <path d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192" stroke="#75B267" stroke-width="1.5913"
               stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span>Add Another</span>
+          <span>{{ 'services.form.values.add_another' | translate }}</span>
         </button>
         } @else {
-        <app-empty-state-action title="Start Adding values to appear here"
-          subtitle="Start adding the first service value." buttonLabel="Add New Value"
-          (action)="openServiceValuePopup()">
+        <app-empty-state-action [title]="'services.form.values.empty_title' | translate"
+          [subtitle]="'services.form.values.empty_subtitle' | translate"
+          [buttonLabel]="'services.form.values.add_new' | translate" (action)="openServiceValuePopup()">
         </app-empty-state-action>
         }
       </div>
@@ -203,12 +238,14 @@
       <!-- Results & Impacts -->
       <div class="fieldset">
         <legend>
-          Results & Impacts <span>(Maximum 3 allowed)</span>
+          {{ 'services.form.results.title' | translate }}
+          <span>{{ 'services.form.results.max_allowed' | translate }}</span>
         </legend>
 
         @if(serviceResultsArray.length > 0) {
         <app-mini-table [data]="serviceResultsArray.value" [columns]="cols" [reorderable]="true" [showImage]="false"
-          [editComponent]="ResultsFormComponent" [editDialogConfig]="{ header: 'Edit Result & Impact', width: '600px' }"
+          [editComponent]="ResultsFormComponent"
+          [editDialogConfig]="{ header: ('services.form.results.edit' | translate), width: '600px' }"
           (rowDeleted)="onDeleteServiceResult($event)" (rowEdited)="onEditServiceResult($event)"
           (reordered)="onReorderServiceResults($event)">
         </app-mini-table>
@@ -219,12 +256,12 @@
             <path d="M8.75217 0.79541V16.7084M16.7087 8.75192L0.795654 8.75192" stroke="#75B267" stroke-width="1.5913"
               stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span>Add Another</span>
+          <span>{{ 'services.form.results.add_another' | translate }}</span>
         </button>
         } @else {
-        <app-empty-state-action title="Start Adding results & impacts to appear here"
-          subtitle="Start adding the first result & impact." buttonLabel="Add New Result & Impact"
-          (action)="openServiceResultPopup()">
+        <app-empty-state-action [title]="'services.form.results.empty_title' | translate"
+          [subtitle]="'services.form.results.empty_subtitle' | translate"
+          [buttonLabel]="'services.form.results.add_new' | translate" (action)="openServiceResultPopup()">
         </app-empty-state-action>
         }
       </div>

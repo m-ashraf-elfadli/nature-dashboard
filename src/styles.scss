@@ -105,33 +105,6 @@ a {
   --background-light: #fefefe;
 }
 
-.backBtn {
-  border-radius: 19.2px 0;
-  background: linear-gradient(
-    180deg,
-    var(--Color-Primary2-400, #b0d357) 0%,
-    var(--Color-Primary-400, #82c672) 100%
-  );
-  width: 32px;
-  height: 32px;
-  transform: rotate(45deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border: none;
-  cursor: pointer;
-  transition: 0.2s ease;
-
-  svg {
-    transform: rotate(-45deg);
-  }
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
-
 .page-container {
   h1 {
     font-size: 2rem;
@@ -571,4 +544,18 @@ span.required {
   align-items: center;
   gap: 8px;
   justify-content: end;
+}
+html:lang(ar) {
+  .tools-input-wrapper button {
+    right: auto !important;
+    left: 16px;
+  }
+}
+.error-message {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #dc2626;
+  font-weight: 500;
 }

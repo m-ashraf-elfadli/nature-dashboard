@@ -1,22 +1,22 @@
 <div class="settings-container">
-  <h4>Settings</h4>
+  <h4>{{ 'settings.title' | translate }}</h4>
   <div class="our-field">
     <label for="">
-      Status
-      <span class="required">*</span>
+      {{ 'settings.status' | translate }}
+      <span class="required">{{ 'settings.required' | translate }}</span>
     </label>
     <p-select [options]="statusOptions" [(ngModel)]="value" (ngModelChange)="onChange($event)"
-      placeholder="Select Status">
+      [placeholder]="'settings.select_status' | translate">
     </p-select>
   </div>
 
   <div class="localization">
-    <h4>Localization Status</h4>
+    <h4>{{ 'settings.localization' | translate }}</h4>
     <div class="languages">
       <div class="language-item">
         <div class="language-info">
-          <img src="./images/usa.webp" alt="English" />
-          <span>English</span>
+          <img src="./images/usa.webp" [alt]="'settings.english' | translate" />
+          <span>{{ 'settings.english' | translate }}</span>
         </div>
         <div class="status-pill" [ngClass]="statusView(englishStatus).class">
           {{ statusView(englishStatus).text }}
@@ -25,8 +25,8 @@
 
       <div class="language-item">
         <div class="language-info">
-          <img src="./images/eg.webp" alt="Arabic" />
-          <span>Arabic</span>
+          <img src="./images/eg.webp" [alt]="'settings.arabic' | translate" />
+          <span>{{ 'settings.arabic' | translate }}</span>
         </div>
         <div class="status-pill" [ngClass]="statusView(arabicStatus).class">
           {{ statusView(arabicStatus).text }}

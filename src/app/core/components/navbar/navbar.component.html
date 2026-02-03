@@ -1,12 +1,7 @@
 <nav class="navbar">
   <div class="navbar-container">
     <!-- Hamburger Menu (Mobile Only) -->
-    <button
-      class="hamburger-menu"
-      (click)="toggleMobileMenu()"
-      [class.open]="mobileMenuOpen"
-      title="Toggle Menu"
-    >
+    <button class="hamburger-menu" (click)="toggleMobileMenu()" [class.open]="mobileMenuOpen" [title]="'Toggle Menu'">
       <span></span>
       <span></span>
       <span></span>
@@ -21,15 +16,8 @@
     <div class="navbar-right">
       <!-- Language Selector -->
       <div class="language-selector">
-        <p-select
-          [options]="languages"
-          [(ngModel)]="selectedLanguage"
-          optionLabel="label"
-          optionValue="code"
-          (onChange)="changeLang(selectedLanguage)"
-          placeholder="Select a Language"
-          class="w-full"
-        >
+        <p-select [options]="languages" [(ngModel)]="selectedLanguage" optionLabel="label" optionValue="code"
+          (onChange)="changeLang(selectedLanguage)" [placeholder]="'navbar.select_language' | translate" class="w-full">
           <ng-template let-lang pTemplate="selectedItem">
             <div class="flex align-items-center gap-2" *ngIf="lang">
               <img [src]="lang.flag" width="20" height="18" alt="" />
@@ -41,34 +29,23 @@
 
       <!-- User Profile Section -->
       <div class="user-profile" (click)="toggleUserMenu()">
-        <img src="images/user.png" alt="User" class="user-avatar" />
+        <img src="images/user.png" [alt]="'user_menu.admin_name' | translate" class="user-avatar" />
         <div class="user-info">
-          <div class="user-name">Nature Admin</div>
-          <div class="user-role">Superadmin</div>
+          <div class="user-name">{{ 'user_menu.admin_name' | translate }}</div>
+          <div class="user-role">{{ 'user_menu.superadmin' | translate }}</div>
         </div>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-        >
-          <path
-            d="M5 7.5L10 12.5L15 7.5"
-            stroke="black"
-            stroke-width="1.66666"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.66666" stroke-linecap="round"
+            stroke-linejoin="round" />
         </svg>
       </div>
 
       <!-- User Menu Dropdown -->
       <div class="user-menu" [class.visible]="userMenuVisible">
-        <a href="#" class="menu-item">Profile</a>
-        <a href="#" class="menu-item">Settings</a>
-        <a class="menu-item" (click)="onLogout($event)">Logout</a>
+        <a class="menu-item">{{ 'user_menu.profile' | translate }}</a>
+        <a class="menu-item">{{ 'user_menu.settings' | translate }}</a>
+        <a class="menu-item" (click)="onLogout($event)">{{ 'user_menu.logout' | translate }}</a>
       </div>
     </div>
   </div>

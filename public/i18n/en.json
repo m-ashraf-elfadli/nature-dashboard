@@ -20,6 +20,14 @@
     "add":"Add",
     "form_toast_msg":"You are currently editing Website {{currentContent}} content. Changes here do not affect the {{previousContent}} version."
   },
+  "validation": {
+    "required": "This field is required",
+    "min_length": "Minimum {{min}} characters required",
+    "max_length": "Maximum {{max}} characters allowed",
+    "min_value": "Minimum value is {{min}}",
+    "only_numbers": "Only numbers are allowed",
+    "image_required": "Image is required"
+  },
   "projects": {
     "list": {
       "page_title": "All Projects",
@@ -33,7 +41,7 @@
       },
       "delete_dialog": {
         "header": "Delete Project?",
-        "desc": "Are you sure want to delete this project? This action can’t be undone."
+        "desc": "Are you sure want to delete this project? This action can't be undone."
       },
       "btns": {
         "add_new": "Add new project",
@@ -117,7 +125,7 @@
       },
       "language_dialog": {
         "header": "Unsaved Changes?",
-        "desc": "You have unsaved changes in the current language. Do you want to save them before switching to Arabic?"
+        "desc": "You have unsaved changes in the current language. Do you want to save them before switching to Arabic?"
       }
     }
   },
@@ -136,7 +144,7 @@
       },
       "delete_dialog": {
         "header": "Delete Award?",
-        "desc": "Are you sure want to delete this award? This action can’t be undone."
+        "desc": "Are you sure want to delete this award? This action can't be undone."
       }
     },
     "form": {
@@ -187,7 +195,9 @@
   "common": {
     "delete": "Delete",
     "save": "Save",
-    "discard": "Discard"
+    "discard": "Discard",
+    "update": "Update",
+    "cancel": "Cancel"
   },
   "services": {
     "list": {
@@ -199,10 +209,15 @@
       },
       "btns": {
         "add_new": "Add new service"
+      },
+      "delete_dialog": {
+        "header": "Delete Service",
+        "desc": "Are you sure want to delete this service? This action can't be undone."
       }
     },
     "form": {
       "title": "Add New Service",
+      "update_title": "Update Service",
       "english": "(English)",
       "arabic": "(Arabic)",
       "titles": {
@@ -212,12 +227,145 @@
       },
       "labels": {
         "name": "Service name",
+        "tagline": "Service Tagline",
         "description": "Description"
       },
       "placeholders": {
         "name": "Write service name ...",
+        "tagline": "Enter Service Tagline...",
         "description": "Write section description here ..."
+      },
+      "validation": {
+        "name_required": "Service name is required",
+        "name_min": "Service name must be at least 3 characters",
+        "name_max": "Service name cannot exceed 50 characters",
+        "tagline_required": "Service tagline is required",
+        "tagline_min": "Service tagline must be at least 3 characters",
+        "tagline_max": "Service tagline cannot exceed 50 characters",
+        "benefitTitle_min": "Service Benefits Title must be at least 3 characters",
+        "benefitTagline_min": "Service Benefits Tagline  must be at least 3 characters",
+        "benefitBody_min": "Service Benefits Body must be at least 3 characters",
+        "benefitTitle_max": "Service Benefits Title cannot exceed 50 characters",
+        "benefitTagline_max": "Service Benefits Tagline cannot exceed 50 characters",
+        "benefitBody_max": "Service Benefits Body cannot exceed 50 characters",
+        "benefitTitle_required": "Service Benefits Title is required",
+        "benefitTagline_required": "Service Benefits Tagline is required",
+        "benefitBody_required": "Service Benefits Body is required"
+      },
+      "stages": {
+        "title": "Service Stages",
+        "max_allowed": "(Maximum 3 allowed)",
+        "required": "*",
+        "add_new": "Add New Stage",
+        "add_another": "Add Another",
+        "edit": "Edit Stage",
+        "empty_title": "Start Adding stages to appear here",
+        "empty_subtitle": "Start adding the first service stage.",
+        "error_required": "At least one service stage is required"
+      },
+      "benefits": {
+        "title": "Service Benefits",
+        "title_label": "Benefits Title",
+        "title_placeholder": "Please enter benefits title",
+        "title_required": "Benefits title is required",
+        "title_min": "Benefits title must be at least 3 characters",
+        "title_max": "Benefits title cannot exceed 50 characters",
+        "tagline_label": "Benefits Tagline",
+        "tagline_placeholder": "Please enter benefits tagline",
+        "tagline_required": "Benefits tagline is required",
+        "tagline_min": "Benefits tagline must be at least 3 characters",
+        "tagline_max": "Benefits tagline cannot exceed 50 characters",
+        "body_label": "Benefits Body",
+        "body_placeholder": "Please enter benefits body",
+        "body_required": "Benefits body is required",
+        "body_min": "Benefits body must be at least 3 characters",
+        "body_max": "Benefits body cannot exceed 50 characters",
+        "insights": {
+          "title": "Benefits Insights",
+          "max_allowed": "(Maximum 3 Insights)",
+          "label": "Insight",
+          "title_placeholder": "Please enter Insight title",
+          "title_min": "Insight title must be at least 3 characters",
+          "title_max": "Insight title cannot exceed 50 characters",
+          "number_placeholder": "Number",
+          "number_min": "Minimum value is 0",
+          "number_invalid": "Only numbers are allowed",
+          "add_new": "Add New Insight"
+        }
+      },
+      "values": {
+        "title": "Service Values",
+        "max_allowed": "(Maximum 3 allowed)",
+        "add_new": "Add New Value",
+        "add_another": "Add Another",
+        "edit": "Edit Value",
+        "empty_title": "Start Adding values to appear here",
+        "empty_subtitle": "Start adding the first service value."
+      },
+      "results": {
+        "title": "Results & Impacts",
+        "max_allowed": "(Maximum 3 allowed)",
+        "add_new": "Add New Result & Impact",
+        "add_another": "Add Another",
+        "edit": "Edit Result & Impact",
+        "empty_title": "Start Adding results & impacts to appear here",
+        "empty_subtitle": "Start adding the first result & impact."
       }
+    },
+    "stage_form": {
+      "create_title": "Create New Stage",
+      "edit_title": "Edit Stage",
+      "title_label": "Title",
+      "title_placeholder": "Enter stage title..",
+      "title_required": "Title is required",
+      "title_min": "Title must be at least 3 characters",
+      "title_max": "Title cannot exceed 50 characters",
+      "description_label": "Description",
+      "description_placeholder": "Enter stage description",
+      "description_required": "Description is required",
+      "description_min": "Description must be at least 3 characters",
+      "description_max": "Description cannot exceed 50 characters",
+      "image_required": "Stage image is required",
+      "cancel": "Cancel",
+      "save": "Save",
+      "update": "Update"
+    },
+    "value_form": {
+      "create_title": "Create New Value",
+      "edit_title": "Edit Value",
+      "title_label": "Title",
+      "title_placeholder": "Enter value title..",
+      "title_required": "Title is required",
+      "title_min": "Title must be at least 3 characters",
+      "title_max": "Title cannot exceed 50 characters",
+      "description_label": "Description",
+      "description_placeholder": "Enter value description",
+      "description_required": "Description is required",
+      "description_min": "Description must be at least 3 characters",
+      "description_max": "Description cannot exceed 50 characters",
+      "tools_label": "Tools Used",
+      "tools_placeholder": "Enter tool name",
+      "tools_add": "Add",
+      "cancel": "Cancel",
+      "save": "Save",
+      "update": "Update"
+    },
+    "result_form": {
+      "create_title": "Create New Results & Impacts",
+      "edit_title": "Edit Result & Impact",
+      "title_label": "Title",
+      "title_placeholder": "Enter result title..",
+      "title_required": "Title is required",
+      "title_min": "Title must be at least 3 characters",
+      "title_max": "Title cannot exceed 50 characters",
+      "description_label": "Description",
+      "description_placeholder": "Enter result description",
+      "description_required": "Description is required",
+      "description_min": "Description must be at least 3 characters",
+      "description_max": "Description cannot exceed 50 characters",
+      "cancel": "Cancel",
+      "save": "Save",
+      "update": "Update"
     }
   },
   "testimonials": {
@@ -313,5 +461,70 @@
     "click": "Click to upload",
     "drag_drop": "or drag and drop files here",
     "hint": "JPG or PNG (max {{max}}MB)"
-  }
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "services": "Services",
+    "clients": "Clients",
+    "awards": "Awards",
+    "testimonials": "Testimonials"
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {{name}}",
+    "subtitle": "Here's what's happening with your projects today.",
+    "total_projects": "Total Projects",
+    "total_clients": "Total Clients",
+    "total_services": "Total Services",
+    "total_testimonials": "Testimonials",
+    "latest_projects": "Latest Projects"
+  },
+  "sidebar": {
+    "main": "MAIN",
+    "show_menu": "Show Menu",
+    "hide_menu": "Hide Menu",
+    "powered_by": "Powered By"
+  },
+  "navbar": {
+    "select_language": "Select a Language"
+  },
+  "settings": {
+    "title": "Settings",
+    "status": "Status",
+    "required": "*",
+    "select_status": "Select Status",
+    "published": "Published",
+    "unpublished": "Unpublished",
+    "localization": "Localization Status",
+    "english": "English",
+    "arabic": "Arabic",
+    "status_not_started": "Not Started",
+    "status_ongoing": "Ongoing",
+    "status_completed": "Completed"
+  },
+  "user_menu": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "superadmin": "Superadmin",
+    "admin_name": "Nature Admin"
+  },
+  "empty_state": {
+    "title": "No Data to preview yet!",
+    "create_btn": "Create New Project",
+    "no_data": "No Date to preview, start create your first project to appear here!"
+  },
+  "breadcrumb": {
+    "dashboard": "Dashboard"
+  },
+  "form_actions": {
+    "discard": "Discard",
+    "save": "Save",
+    "localization": "Localization ({{language}})"
+  },
+  "Projects": "Projects",
+  "Services": "Services",
+  "Clients": "Clients",
+  "Awards": "Awards",
+  "Testimonials": "Testimonials"
 }
