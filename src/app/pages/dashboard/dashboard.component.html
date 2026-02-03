@@ -12,18 +12,11 @@
       </div>
     </div>
     <h2 class="table-title">Latest Projects</h2>
-    @if(data().length > 0)
-    {
     <app-reusable-table [data]="data()" [config]="config" [actions]="actions" [totalRecords]="totalRecords()"
-      [filterItems]="filterItems" (onServerSideFilterChange)="onFilterChange($event)"
+      [filterItems]="filterItems" [emptyStateInfo]="emptyStateInfo" (onServerSideFilterChange)="onFilterChange($event)"
       (paginationChange)="onPaginationChange($event)">
     </app-reusable-table>
-    }
 
-    @else
-    {
-    <app-empty-state [description]="emptyStateDescription" [buttonLabel]="emptyStateBtnLabel"
-      (buttonAction)="addNewProject()"></app-empty-state>
-    }
+
   </div>
 </div>

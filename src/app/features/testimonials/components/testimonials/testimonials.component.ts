@@ -1,16 +1,26 @@
 import { Component, OnInit, inject, ViewChild } from '@angular/core';
-import { PageHeaderComponent } from "../../../../shared/components/page-header/page-header.component";
-import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
-import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { ReusableTableComponent } from '../../../../shared/components/reusable-table/reusable-table.component';
+import {
+  TableAction,
+  TableColumn,
+  TableConfig,
+} from '../../../../shared/components/reusable-table/reusable-table.types';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { TestimonialsFormComponent } from "../testimonials-form/testimonials-form.component";
+import { TestimonialsFormComponent } from '../testimonials-form/testimonials-form.component';
 import { FilterItems } from '../../../../shared/components/filters/filters.component';
 import { TestimonialsService } from '../../services/testimonials.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ConfirmDialogComponent, ConfirmationDialogConfig } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import {
+  ConfirmDialogComponent,
+  ConfirmationDialogConfig,
+} from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { PaginationObj } from '../../../../core/models/global.interface';
-import { Testimonial, TestimonialFormEvent } from '../../models/testimonials.model';
+import {
+  Testimonial,
+  TestimonialFormEvent,
+} from '../../models/testimonials.model';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -22,17 +32,18 @@ import { TranslateModule } from '@ngx-translate/core';
     DialogModule,
     ButtonModule,
     TestimonialsFormComponent,
-    TranslateModule
+    TranslateModule,
   ],
   providers: [DialogService],
   templateUrl: './testimonials.component.html',
-  styleUrl: './testimonials.component.scss'
+  styleUrl: './testimonials.component.scss',
 })
 export class TestimonialsComponent implements OnInit {
   importCSV(): void {
     throw new Error('Method not implemented.');
   }
-  @ViewChild(TestimonialsFormComponent) testimonialForm?: TestimonialsFormComponent;
+  @ViewChild(TestimonialsFormComponent)
+  testimonialForm?: TestimonialsFormComponent;
 
   private testimonialsService = inject(TestimonialsService);
   private dialogService = inject(DialogService);
@@ -47,6 +58,12 @@ export class TestimonialsComponent implements OnInit {
     size: 10,
   };
   filterObj: any;
+  emptyStateInfo = {
+    label: 'Create New Testimonial',
+    description:
+      'No Data to preview, start create your first testimonial to appear here!',
+    callback: () => this.showDialog(),
+  };
 
   ngOnInit() {
     this.loadTestimonials();
@@ -60,7 +77,7 @@ export class TestimonialsComponent implements OnInit {
         this.data = res.result || [];
         this.totalRecords = res.total;
       },
-      error: (err) => console.error('Testimonials fetch error:', err)
+      error: (err) => console.error('Testimonials fetch error:', err),
     });
   }
 
@@ -68,29 +85,29 @@ export class TestimonialsComponent implements OnInit {
     {
       field: 'clientName',
       header: 'testimonials.list.table_headers.name',
-      type: 'text'
+      type: 'text',
     },
     {
       field: 'jobTitle',
       header: 'testimonials.list.table_headers.position',
-      type: 'text'
+      type: 'text',
     },
     {
       field: 'Testimonial',
       header: 'testimonials.list.table_headers.testimonial',
       type: 'text',
-      class: 'max-w-15rem'
+      class: 'max-w-15rem',
     },
     {
       field: 'createdAt',
       header: 'general.date_added',
-      type: 'date'
+      type: 'date',
     },
     {
       field: 'status',
       header: 'testimonials.list.table_headers.status',
-      type: 'status'
-    }
+      type: 'status',
+    },
   ];
 
   actions: TableAction<Testimonial>[] = [
@@ -98,14 +115,14 @@ export class TestimonialsComponent implements OnInit {
       icon: 'pi pi-pencil',
       callback: (row) => this.edit(row),
       severity: 'white',
-      class: 'p-2'
+      class: 'p-2',
     },
     {
       icon: 'pi pi-trash',
       callback: (row) => this.delete(row),
       severity: 'white',
-      class: 'p-2'
-    }
+      class: 'p-2',
+    },
   ];
 
   config: TableConfig<Testimonial> = {
@@ -115,28 +132,28 @@ export class TestimonialsComponent implements OnInit {
     rowsPerPageOptions: [5, 10, 20],
     selectionMode: 'multiple',
     sortable: true,
-    serverSideFilter: true
+    serverSideFilter: true,
   };
 
   filterItems: FilterItems[] = [
     {
       type: 'search',
       name: 'key',
-      placeholder: 'general.search_input_table_placeholder'
+      placeholder: 'general.search_input_table_placeholder',
     },
     {
       type: 'btn',
       label: 'testimonials.list.btns.add_new',
-      btnIcon: "pi pi-plus",
-      btnSeverity: "primary",
-      btnCallback: () => this.showDialog()
+      btnIcon: 'pi pi-plus',
+      btnSeverity: 'primary',
+      btnCallback: () => this.showDialog(),
     },
     {
       type: 'btn',
       label: 'general.import',
-      btnIcon: "pi pi-download",
-      btnSeverity: "white",
-      btnCallback: () => this.importCSV()
+      btnIcon: 'pi pi-download',
+      btnSeverity: 'white',
+      btnCallback: () => this.importCSV(),
     },
   ];
 
@@ -159,7 +176,7 @@ export class TestimonialsComponent implements OnInit {
       cancelText: 'Cancel',
       confirmSeverity: 'delete',
       cancelSeverity: 'cancel',
-      data: row
+      data: row,
     };
 
     this.confirmDialogRef = this.dialogService.open(ConfirmDialogComponent, {
@@ -168,11 +185,16 @@ export class TestimonialsComponent implements OnInit {
       header: '',
       width: '505px',
       closable: false,
-      styleClass: 'confirm-dialog'
+      styleClass: 'confirm-dialog',
     });
 
     this.confirmDialogRef.onClose.subscribe((result: any) => {
-      if (result && result.action === 'confirm' && result.data && result.data.id) {
+      if (
+        result &&
+        result.action === 'confirm' &&
+        result.data &&
+        result.data.id
+      ) {
         this.performDelete(result.data.id);
       }
     });
@@ -186,7 +208,7 @@ export class TestimonialsComponent implements OnInit {
       error: (err) => {
         console.error('Delete error:', err);
         alert('Failed to delete testimonial');
-      }
+      },
     });
   }
 
@@ -221,18 +243,20 @@ export class TestimonialsComponent implements OnInit {
   private handleSave(payload: any) {
     if (this.currentTestimonialId) {
       // Update existing
-      this.testimonialsService.update(this.currentTestimonialId, payload).subscribe({
-        next: (res) => {
-          console.log('✅ Update success:', res);
-          this.visible = false;
-          this.currentTestimonialId = undefined;
-          this.loadTestimonials();
-        },
-        error: (err) => {
-          console.error('❌ Update error:', err);
-          this.showErrorMessage(err);
-        }
-      });
+      this.testimonialsService
+        .update(this.currentTestimonialId, payload)
+        .subscribe({
+          next: (res) => {
+            console.log('✅ Update success:', res);
+            this.visible = false;
+            this.currentTestimonialId = undefined;
+            this.loadTestimonials();
+          },
+          error: (err) => {
+            console.error('❌ Update error:', err);
+            this.showErrorMessage(err);
+          },
+        });
     } else {
       // Create new
       this.testimonialsService.create(payload).subscribe({
@@ -244,7 +268,7 @@ export class TestimonialsComponent implements OnInit {
         error: (err) => {
           console.error('❌ Create error:', err);
           this.showErrorMessage(err);
-        }
+        },
       });
     }
   }
@@ -258,7 +282,7 @@ export class TestimonialsComponent implements OnInit {
       },
       error: (err) => {
         this.showErrorMessage(err);
-      }
+      },
     });
   }
 
@@ -274,7 +298,7 @@ export class TestimonialsComponent implements OnInit {
     if (err.error) {
       if (err.error.errors) {
         const errors = err.error.errors;
-        const errorMessages = Object.keys(errors).map(key => {
+        const errorMessages = Object.keys(errors).map((key) => {
           return `${key}: ${Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key]}`;
         });
         errorMessage = errorMessages.join('\n');

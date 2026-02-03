@@ -1,15 +1,22 @@
 import { Component, OnInit, inject, ViewChild } from '@angular/core';
-import { PageHeaderComponent } from "../../../../shared/components/page-header/page-header.component";
-import { ReusableTableComponent } from "../../../../shared/components/reusable-table/reusable-table.component";
-import { TableAction, TableColumn, TableConfig } from '../../../../shared/components/reusable-table/reusable-table.types';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { ReusableTableComponent } from '../../../../shared/components/reusable-table/reusable-table.component';
+import {
+  TableAction,
+  TableColumn,
+  TableConfig,
+} from '../../../../shared/components/reusable-table/reusable-table.types';
 import { FilterItems } from '../../../../shared/components/filters/filters.component';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { ClientFormComponent } from "../client-form/client-form.component";
+import { ClientFormComponent } from '../client-form/client-form.component';
 import { PaginationObj } from '../../../../core/models/global.interface';
 import { ClientsService } from '../../services/clients.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ConfirmDialogComponent, ConfirmationDialogConfig } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import {
+  ConfirmDialogComponent,
+  ConfirmationDialogConfig,
+} from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { Client, ClientFormEvent } from '../../models/clients.model';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -22,7 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
     DialogModule,
     ButtonModule,
     ClientFormComponent,
-    TranslateModule
+    TranslateModule,
   ],
   providers: [DialogService],
   templateUrl: './clients.component.html',
@@ -44,7 +51,12 @@ export class ClientsComponent implements OnInit {
     page: 1,
     size: 10,
   };
-
+  emptyStateInfo = {
+    label: 'Create New Client',
+    description:
+      'No Data to preview, start create your first client to appear here!',
+    callback: () => this.showDialog(),
+  };
   ngOnInit() {
     this.loadClients();
   }
@@ -58,8 +70,10 @@ export class ClientsComponent implements OnInit {
         this.totalRecords = res.total || 0;
       },
       error: (err) => {
-        console.error('Clients fetch error:', err);
-      }
+        console.error('❌ Clients fetch error:', err);
+        console.error('❌ Status:', err.status);
+        console.error('❌ Error details:', err.error);
+      },
     });
   }
 
@@ -67,22 +81,22 @@ export class ClientsComponent implements OnInit {
     {
       field: 'name',
       header: 'clients.list.table_headers.name',
-      type: 'text'
+      type: 'text',
     },
     {
       field: 'image',
       header: 'clients.list.table_headers.image',
-      type: 'image'
+      type: 'image',
     },
     {
       field: 'createdAt',
       header: 'general.date_added',
-      type: 'date'
+      type: 'date',
     },
     {
       field: 'status',
       header: 'clients.list.table_headers.status',
-      type: 'status'
+      type: 'status',
     },
   ];
 
@@ -91,14 +105,14 @@ export class ClientsComponent implements OnInit {
       callback: (row) => this.edit(row),
       icon: 'pi pi-pencil',
       severity: 'white',
-      class: 'p-2'
+      class: 'p-2',
     },
     {
       callback: (row) => this.delete(row),
       icon: 'pi pi-trash',
       severity: 'white',
-      class: 'p-2'
-    }
+      class: 'p-2',
+    },
   ];
 
   config: TableConfig<Client> = {
@@ -106,29 +120,29 @@ export class ClientsComponent implements OnInit {
     serverSidePagination: true,
     rowsPerPageOptions: [5, 10, 20],
     selectionMode: 'multiple',
-    sortable: true
+    sortable: true,
   };
 
   filterItems: FilterItems[] = [
     {
       type: 'search',
       name: 'key',
-      placeholder: 'general.search_input_table_placeholder'
+      placeholder: 'general.search_input_table_placeholder',
     },
     {
       type: 'btn',
       label: 'general.import',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
-      btnCallback: () => this.importCSV()
+      btnCallback: () => this.importCSV(),
     },
     {
       type: 'btn',
       label: 'clients.list.btns.add_new',
       btnIcon: 'pi pi-plus',
       btnSeverity: 'primary',
-      btnCallback: () => this.showDialog()
-    }
+      btnCallback: () => this.showDialog(),
+    },
   ];
 
   showDialog() {
@@ -150,7 +164,7 @@ export class ClientsComponent implements OnInit {
       cancelText: 'general.cancel',
       confirmSeverity: 'delete',
       cancelSeverity: 'cancel',
-      data: row
+      data: row,
     };
 
     this.confirmDialogRef = this.dialogService.open(ConfirmDialogComponent, {
@@ -159,7 +173,7 @@ export class ClientsComponent implements OnInit {
       header: '',
       width: '505px',
       closable: false,
-      styleClass: 'confirm-dialog'
+      styleClass: 'confirm-dialog',
     });
 
     this.confirmDialogRef.onClose.subscribe((result: any) => {
@@ -172,7 +186,7 @@ export class ClientsComponent implements OnInit {
   private performDelete(id: string) {
     this.clientsService.delete(id).subscribe({
       next: () => this.loadClients(),
-      error: () => alert('Failed to delete client')
+      error: () => alert('Failed to delete client'),
     });
   }
 
@@ -210,14 +224,14 @@ export class ClientsComponent implements OnInit {
           this.visible = false;
           this.currentClientId = undefined;
           this.loadClients();
-        }
+        },
       });
     } else {
       this.clientsService.create(formData).subscribe({
         next: () => {
           this.visible = false;
           this.loadClients();
-        }
+        },
       });
     }
   }
@@ -228,7 +242,7 @@ export class ClientsComponent implements OnInit {
         this.loadClients();
         this.currentClientId = undefined;
         this.clientForm?.resetForm();
-      }
+      },
     });
   }
 
@@ -237,6 +251,23 @@ export class ClientsComponent implements OnInit {
     this.currentClientId = undefined;
   }
 
+  private showErrorMessage(err: any) {
+    let errorMessage = 'An error occurred';
+
+    if (err.error) {
+      if (err.error.errors) {
+        const errors = err.error.errors;
+        const errorMessages = Object.keys(errors).map((key) => {
+          return `${key}: ${Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key]}`;
+        });
+        errorMessage = errorMessages.join('\n');
+      } else if (err.error.message) {
+        errorMessage = err.error.message;
+      }
+    }
+
+    alert(`Failed to save client:\n${errorMessage}`);
+  }
   onDialogHide() {
     this.currentClientId = undefined;
   }
