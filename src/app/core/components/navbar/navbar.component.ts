@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
   private readonly translate = inject(TranslateService);
 
   userMenuVisible = false;
-  currentPageTitle = '';
+  currentPageTitle = this.translate.instant('navigation.dashboard');
   mobileMenuOpen = false;
 
   private pageMap: { [key: string]: string } = {
