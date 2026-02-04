@@ -18,11 +18,18 @@
     "arabic":"Arabic",
     "english":"English",
     "add":"Add",
-    "form_toast_msg":"You are currently editing Website {{currentContent}} content. Changes here do not affect the {{previousContent}} version."
+    "form_toast_msg":"You are currently editing Website {{currentContent}} content. Changes here do not affect the {{previousContent}} version.",
+    "change_lang_dialog_header":"Unsaved Changes?",
+    "change_lang_dialog_desc":"You have unsaved changes in the current language. Do you want to save them before switching?",
+    "change_lang_dialog_save":"Save Changes",
+    "pagination_info":"Showing {{first}} to {{last}} of {{total}} entries",
+    "show":"Show",
+    "entries":"entries"
   },
   "projects": {
     "list": {
       "page_title": "All Projects",
+      "breadcurmb":"Projects",
       "table_headers": {
         "project": "Project",
         "country": "Country",
@@ -46,7 +53,7 @@
     },
     "form": {
       "title": "Add New Project",
-      "breadcrumb_edit": "Edit project",
+      "edit_title": "Update project",
       "english": "(English)",
       "arabic": "(Arabic)",
       "titles": {
@@ -124,6 +131,7 @@
   "awards": {
     "list": {
       "page_title": "All Awards",
+      "breadcurmb":"Awards",
       "table_headers": {
         "award": "Award",
         "date": "Date",
@@ -141,6 +149,7 @@
     },
     "form": {
       "title": "Add New Award",
+      "edit_title":"Update Award",
       "english": "(English)",
       "arabic": "(Arabic)",
       "titles": {

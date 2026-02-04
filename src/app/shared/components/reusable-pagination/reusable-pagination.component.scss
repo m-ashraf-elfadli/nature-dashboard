@@ -71,3 +71,7 @@ html:lang(ar) :host .table-footer .rows ::ng-deep .p-select-dropdown {
     margin-left: 0;
     margin-right: 8px;
 }
+html:lang(ar) :host .pi-angle-left,
+html:lang(ar) :host .pi-angle-right{
+    transform: rotate(135deg) !important;
+}

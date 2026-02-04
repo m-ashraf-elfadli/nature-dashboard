@@ -80,7 +80,6 @@ export class FiltersComponent implements OnInit {
           }
       });
       this.formFilter = this.fb.group(fields);
-      console.log('Initialized Filter Form:', this.formFilter.value);
   }
   setInputsListeners() {
     this.filterConfig?.forEach((field: any) => {

@@ -24,9 +24,6 @@ export const projectsRoutes: Routes = [
       import('../project-form/project-form.component').then(
         (m) => m.ProjectFormComponent,
       ),
-    data: {
-      title: 'projects.form.breadcrumb_edit',
-    },
     resolve: {
       projectName: ProjectNameResolver,
     },

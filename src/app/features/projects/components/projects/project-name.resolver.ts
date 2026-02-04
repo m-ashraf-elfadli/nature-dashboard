@@ -10,7 +10,7 @@ export class ProjectNameResolver implements Resolve<string> {
   resolve(route: ActivatedRouteSnapshot) {
     const id = route.paramMap.get('id')!;
     return this.projectsService
-      .getById(id, 'en')
+      .getById(id, localStorage.getItem('app_lang') || 'en')
       .pipe(map((res) => res.result.name));
   }
 }

@@ -65,6 +65,13 @@ export class PageHeaderComponent implements OnInit {
         };
       }
 
+      if (data?.['awardName']) {
+        this.breadcrumbs[this.breadcrumbs.length] = {
+          label: data['awardName'],
+          route: undefined,
+        };
+      }
+
       this.buildBreadcrumbs(child, url);
     }
   }

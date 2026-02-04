@@ -557,9 +557,9 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
       width: '40vw',
       modal: true,
       data: {
-        title: 'projects.form.language_dialog.header',
-        subtitle: 'projects.form.language_dialog.desc',
-        confirmText: 'projects.form.btns.save',
+        title: 'general.change_lang_dialog_header',
+        subtitle:'general.change_lang_dialog_desc',
+        confirmText: 'general.change_lang_dialog_save',
         cancelText: 'general.cancel',
         confirmSeverity: 'success',
         cancelSeverity: 'cancel',
