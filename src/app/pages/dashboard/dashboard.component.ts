@@ -150,7 +150,7 @@ export class DashboardComponent implements OnInit {
     {
       type: 'search',
       name: 'value',
-      placeholder: 'Search projects...',
+      placeholder: 'general.search_input_table_placeholder',
     },
     {
       type: 'filter',
@@ -238,7 +238,7 @@ export class DashboardComponent implements OnInit {
       {
         type: 'search',
         name: 'name',
-        placeholder: 'Search projects...',
+        placeholder: 'general.search_input_table_placeholder',
       },
       {
         type: 'filter',
