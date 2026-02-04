@@ -25,7 +25,7 @@ import { SettingsComponent } from '../../../../shared/components/settings/settin
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AppDialogService } from '../../../../shared/services/dialog.service';
 import { CustomizeService } from '../../../../services/customize.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AwardsSliderComponent } from '../../../../shared/components/awards-slider/awards-slider.component';
 
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
@@ -64,6 +64,7 @@ export class CustomizeAwardSectionFormComponent
   currentLanguage = 'en';
   previousLanguage = 'en';
   showLanguageSwitchToast = false;
+  result!: any;
 
   private languageNames: { [key: string]: string } = {
     en: 'English',
@@ -88,6 +89,7 @@ export class CustomizeAwardSectionFormComponent
     private router: Router,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -101,6 +103,13 @@ export class CustomizeAwardSectionFormComponent
     }
 
     this.loadSection(this.currentLanguage);
+
+    // Subscribe to language changes
+    this.translate.onLangChange.subscribe(() => {
+      this.setPageTitle();
+    });
+
+    this.setPageTitle();
   }
 
   ngAfterViewInit() {
@@ -108,11 +117,29 @@ export class CustomizeAwardSectionFormComponent
     this.updateSettingsComponent();
   }
 
+  private setPageTitle(): void {
+    this.pageTitle = this.translate.instant('awards_section.form.title');
+  }
+
   initForm(): void {
     this.awardSectionForm = this.fb.group({
       status: [1],
-      name: ['', Validators.required],
-      tagline: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
+      tagline: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
       subsection_publish: [true],
       subsections: this.fb.array([]),
     });
@@ -140,10 +167,25 @@ export class CustomizeAwardSectionFormComponent
 
     return this.fb.group({
       id: [data?.id || null],
-      title: [data?.title || '', publishEnabled ? [Validators.required] : []],
+      title: [
+        data?.title || '',
+        publishEnabled
+          ? [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(50),
+            ]
+          : [],
+      ],
       subtitle: [
         data?.subtitle || '',
-        publishEnabled ? [Validators.required] : [],
+        publishEnabled
+          ? [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(50),
+            ]
+          : [],
       ],
     });
   }
@@ -159,7 +201,11 @@ export class CustomizeAwardSectionFormComponent
       fields.forEach((field) => {
         const control = group.get(field);
         if (enabled) {
-          control?.setValidators([Validators.required]);
+          control?.setValidators([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(200),
+          ]);
           control?.enable();
         } else {
           control?.clearValidators();
@@ -196,15 +242,47 @@ export class CustomizeAwardSectionFormComponent
   }
 
   getFieldError(fieldName: string): string {
-    return this.awardSectionForm.get(fieldName)?.hasError('required')
-      ? 'This field is required'
-      : '';
+    const field = this.awardSectionForm.get(fieldName);
+    if (!field || !field.errors) return '';
+
+    if (field.hasError('required')) {
+      return this.translate.instant(
+        `awards_section.validation.${fieldName}_required`,
+      );
+    }
+    if (field.hasError('minlength')) {
+      return this.translate.instant(
+        `awards_section.validation.${fieldName}_min`,
+      );
+    }
+    if (field.hasError('maxlength')) {
+      return this.translate.instant(
+        `awards_section.validation.${fieldName}_max`,
+      );
+    }
+    return '';
   }
 
   getSubsectionFieldError(index: number, fieldName: string): string {
-    return this.subsectionsArray.at(index)?.get(fieldName)?.hasError('required')
-      ? 'This field is required'
-      : '';
+    const control = this.subsectionsArray.at(index)?.get(fieldName);
+    if (!control || !control.errors) return '';
+
+    if (control.hasError('required')) {
+      return this.translate.instant(
+        `awards_section.validation.${fieldName}_required`,
+      );
+    }
+    if (control.hasError('minlength')) {
+      return this.translate.instant(
+        `awards_section.validation.${fieldName}_min`,
+      );
+    }
+    if (control.hasError('maxlength')) {
+      return this.translate.instant(
+        `awards_section.validation.${fieldName}_max`,
+      );
+    }
+    return '';
   }
 
   addSubsection(): void {
@@ -225,6 +303,7 @@ export class CustomizeAwardSectionFormComponent
     this.customizeService.getSection(lang).subscribe({
       next: (res: any) => {
         const section = res.result;
+        this.result = section;
 
         if (section?.localeComplete) {
           Object.entries(section.localeComplete).forEach(
@@ -254,6 +333,7 @@ export class CustomizeAwardSectionFormComponent
           name: section?.name || '',
           tagline: section?.tagline || '',
           status: section?.status ? 1 : 0,
+          subsection_publish: section?.subsection_publish,
         });
 
         // Populate subsections
@@ -316,8 +396,7 @@ export class CustomizeAwardSectionFormComponent
         this.awardSectionForm.markAsPristine();
 
         if (navigateAway) {
-          // Navigate to appropriate route
-          this.router.navigate(['/customize']);
+          this.router.navigate(['/awards']);
         }
       },
       error: (err) => console.error('Error saving award section:', err),
@@ -337,14 +416,13 @@ export class CustomizeAwardSectionFormComponent
     oldLang: string;
   }): void {
     const ref = this.dialogService.open(ConfirmDialogComponent, {
-      header: 'Change Language',
+      header: this.translate.instant('awards_section.language_dialog.header'),
       width: '500px',
       data: {
-        title: 'Unsaved Changes?',
-        subtitle:
-          'You have unsaved changes in the current language. Do you want to save them before switching?',
-        confirmText: 'Save Changes',
-        cancelText: 'Discard Changes',
+        title: this.translate.instant('awards_section.language_dialog.title'),
+        subtitle: this.translate.instant('awards_section.language_dialog.desc'),
+        confirmText: this.translate.instant('common.save'),
+        cancelText: this.translate.instant('common.discard'),
         confirmSeverity: 'success',
         cancelSeverity: 'cancel',
         showCancel: true,

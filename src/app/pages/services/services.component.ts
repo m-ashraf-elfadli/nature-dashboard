@@ -107,7 +107,7 @@ export class ServicesComponent {
     {
       type: 'search',
       name: 'key',
-      placeholder: 'Search by name ...',
+      placeholder: 'general.search_input_table_placeholder',
     },
     {
       type: 'btn',

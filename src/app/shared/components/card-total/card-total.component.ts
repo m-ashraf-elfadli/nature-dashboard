@@ -1,8 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-card-total',
   standalone: true,
+  imports: [TranslateModule],
   templateUrl: './card-total.component.html',
   styleUrl: './card-total.component.scss',
 })

@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { AppDialogService } from '../../services/dialog.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export type MiniTableColumnType = 'text' | 'delete-action' | 'edit-action';
 
@@ -14,7 +15,7 @@ export interface MiniTableColumn {
 @Component({
   selector: 'app-mini-table',
   standalone: true,
-  imports: [CommonModule, TableModule],
+  imports: [CommonModule, TableModule, TranslateModule],
   templateUrl: './mini-table.component.html',
   styleUrl: './mini-table.component.scss',
 })

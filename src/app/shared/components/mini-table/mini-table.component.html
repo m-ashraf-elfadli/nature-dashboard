@@ -3,15 +3,15 @@
   <ng-template pTemplate="header">
     <tr class="row-header">
       <!-- First column -->
-      <th>{{ columns[0]?.header }}</th>
+      <th>{{ columns[0]?.header | translate }}</th>
 
       <!-- Text columns -->
       <th *ngFor="let col of textColumns">
-        {{ col.header }}
+        {{ col.header | translate }}
       </th>
 
       <!-- Actions -->
-      <th *ngIf="actionColumns.length">Actions</th>
+      <th *ngIf="actionColumns.length">{{'mini_table.header.actions'| translate}}</th>
     </tr>
   </ng-template>
 

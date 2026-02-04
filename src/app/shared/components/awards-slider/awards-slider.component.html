@@ -1,4 +1,4 @@
-<div class="section-wrapper">
+<div class="section-wrapper" *ngIf="data">
   <div class="header-section">
     <div class="title-wrapper">
       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
@@ -17,9 +17,9 @@
           </clipPath>
         </defs>
       </svg>
-      <span class="subtitle">Our work has been honored by </span>
+      <span class="subtitle">{{data.tagline}}</span>
     </div>
-    <h2 class="main-title">Awards & Recognition</h2>
+    <h2 class="main-title">{{data.name}}</h2>
   </div>
   <section class="awards-section">
     <div class="overlay"></div>
@@ -56,29 +56,13 @@
     </div>
   </section>
   <!-- ===== AWARDS INFO SECTION ===== -->
-  <div class="awards-info">
+  <div class="awards-info" *ngIf="data?.subsection_publish">
     <div class="info-grid">
-      <div class="info-item">
-        <h4>Global Recognition</h4>
+      <div class="info-item" *ngFor="let sub of data.subsections; let i = index"
+        [class.bordered]="i === 1 && data.subsections.length > 2">
+        <h4>{{ sub.title }}</h4>
         <p>
-          Honored by international bodies<br />
-          for advancing sustainability and innovation.
-        </p>
-      </div>
-
-      <div class="info-item bordered">
-        <h4>National Excellence</h4>
-        <p>
-          Endorsed by UAE ministries and<br />
-          institutions for impactful contributions.
-        </p>
-      </div>
-
-      <div class="info-item">
-        <h4>Trusted by Leading Organizations</h4>
-        <p>
-          Acknowledged by NGOs, global<br />
-          partners, and industry leaders for measurable results.
+          {{ sub.subtitle }}
         </p>
       </div>
     </div>

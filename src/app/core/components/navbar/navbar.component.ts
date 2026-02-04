@@ -89,8 +89,12 @@ export class NavbarComponent implements OnInit {
   }
 
   private updatePageTitle() {
-    const url = this.router.url.split('/').pop() || 'dashboard';
-    const translationKey = this.pageMap[url] || 'navigation.dashboard';
+    const segments = this.router.url.split('/').filter(Boolean);
+
+    // أول segment رئيسي
+    const mainRoute = segments[0] || 'dashboard';
+
+    const translationKey = this.pageMap[mainRoute] || 'navigation.dashboard';
 
     this.translate.get(translationKey).subscribe((title) => {
       this.currentPageTitle = title;

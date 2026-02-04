@@ -118,10 +118,10 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
   ResultsFormComponent = ResultsFormComponent;
 
   cols: MiniTableColumn[] = [
-    { field: 'title', header: 'Title' },
-    { field: 'description', header: 'Description' },
+    { field: 'title', header: 'mini_table.header.title' },
+    { field: 'description', header: 'mini_table.header.desc' },
     { field: 'actions', header: 'Actions', type: 'edit-action' },
-    { field: 'actions', header: '', type: 'delete-action' },
+    { field: 'actions', header: 'Actions', type: 'delete-action' },
   ];
 
   @ViewChild(FormActionsComponent) formActionsComponent!: FormActionsComponent;

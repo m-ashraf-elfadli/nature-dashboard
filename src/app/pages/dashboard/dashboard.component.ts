@@ -150,7 +150,7 @@ export class DashboardComponent implements OnInit {
     {
       type: 'search',
       name: 'value',
-      placeholder: 'Search projects...',
+      placeholder: 'general.search_input_table_placeholder',
     },
     {
       type: 'filter',
@@ -195,7 +195,7 @@ export class DashboardComponent implements OnInit {
       next: (res) => {
         const stats = res.result;
         this.cards = this.cardConfig.map((c) => ({
-          title: this.translate.instant(c.title),
+          title: c.title,
           icon: c.icon,
           count: stats[c.key],
         }));
@@ -238,7 +238,7 @@ export class DashboardComponent implements OnInit {
       {
         type: 'search',
         name: 'name',
-        placeholder: 'Search projects...',
+        placeholder: 'general.search_input_table_placeholder',
       },
       {
         type: 'filter',

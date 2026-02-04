@@ -190,7 +190,29 @@
     "subsection_title_placeholder": "Enter subsection title...",
     "subsection_subtitle": "Subtitle",
     "subsection_subtitle_placeholder": "Enter subsection subtitle...",
-    "add_subsection": "Add Sub Section"
+    "add_subsection": "Add Sub Section",
+    "validation": {
+      "name_required": "Section name is required",
+      "name_min": "Section name must be at least 3 characters",
+      "name_max": "Section name cannot exceed 50 characters",
+      "tagline_required": "Section tagline is required",
+      "tagline_min": "Section tagline must be at least 3 characters",
+      "tagline_max": "Section tagline cannot exceed 50 characters",
+      "title_required": "Subsection title is required",
+      "title_min": "Subsection title must be at least 3 characters",
+      "title_max": "Subsection title cannot exceed 50 characters",
+      "subtitle_required": "Subsection subtitle is required",
+      "subtitle_min": "Subsection subtitle must be at least 3 characters",
+      "subtitle_max": "Subsection subtitle cannot exceed 50 characters"
+    },
+    "language_dialog": {
+      "header": "Change Language",
+      "title": "Unsaved Changes?",
+      "desc": "You have unsaved changes in the current language. Do you want to save them before switching?"
+    },
+    "slider": {
+      "preview": "Section Preview"
+    }
   },
   "common": {
     "delete": "Delete",
@@ -544,6 +566,13 @@
     "discard": "Discard",
     "save": "Save",
     "localization": "Localization ({{language}})"
+  },
+  "mini_table": {
+    "header": {
+      "actions": "Actions",
+      "title": "Title",
+      "desc": "Description"
+    }
   },
   "Projects": "Projects",
   "Services": "Services",
