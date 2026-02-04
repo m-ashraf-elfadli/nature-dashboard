@@ -296,6 +296,7 @@ export class DashboardComponent implements OnInit {
           this.projectsService.delete(product.data.id).subscribe({
             next: () => {
               this.fetchProjects(this.paginationObj);
+              this.getStats();
             },
           });
         }

@@ -40,4 +40,7 @@ export class CardTotalComponent implements OnChanges {
       }
     }, frameRate);
   }
+  get titleClass(): string {
+    return this.title?.toLowerCase().split('_')?.[1] ?? '';
+  }
 }
