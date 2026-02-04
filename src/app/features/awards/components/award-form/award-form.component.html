@@ -1,6 +1,6 @@
 <div class="form-content">
     <div class="form-header">
-        <app-page-header [title]="'awards.form.title' | translate"></app-page-header>
+        <app-page-header [title]="(isEditMode?'awards.form.edit_title':'awards.form.title' )| translate"></app-page-header>
         <app-form-actions (discard)="onDiscard($event)" (save)="onSave()"
             (languageChange)="onLanguageChange($event)" [isFormValid]="form.valid"></app-form-actions>
     </div>

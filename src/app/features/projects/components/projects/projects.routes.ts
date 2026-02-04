@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ProjectsComponent } from './projects.component';
+import { ProjectNameResolver } from './project-name.resolver';
 
 export const projectsRoutes: Routes = [
   {
@@ -26,9 +27,8 @@ export const projectsRoutes: Routes = [
       import('../project-form/project-form.component').then(
         (m) => m.ProjectFormComponent,
       ),
-    data: {
-      title: 'projects.form.breadcrumb_edit',
-      breadcrumb: 'projects.form.breadcrumb_edit', // Translation key
+    resolve: {
+      projectName: ProjectNameResolver,
     },
   },
 ];

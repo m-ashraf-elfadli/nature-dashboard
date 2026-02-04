@@ -8,29 +8,28 @@
     "text_editor_header": "نص القسم",
     "search_input_table_placeholder": "البحث بالاسم ...",
     "import": "استيراد CSV",
-    "up": "أعلى",
-    "down": "أسفل",
+    "up": "لأعلى",
+    "down": "لأسفل",
     "stable": "مستقر",
     "reset": "إعادة تعيين",
     "apply": "تطبيق",
     "cancel": "إلغاء",
     "delete": "حذف",
     "arabic": "العربية",
-    "english": "الانجليزية",
-    "add": "اضافة",
-    "form_toast_msg": "أنت تقوم بتعديل محتوى {{currentContent}} الخاص بالموقع. لن تؤثر هذه التغييرات على نسخة {{previousContent}}، باستثناء الصور والمحتوى المرتبط بها."
-  },
-  "validation": {
-    "required": "هذا الحقل مطلوب",
-    "min_length": "الحد الأدنى {{min}} أحرف مطلوبة",
-    "max_length": "الحد الأقصى {{max}} حرف مسموح",
-    "min_value": "الحد الأدنى للقيمة هو {{min}}",
-    "only_numbers": "الأرقام فقط مسموحة",
-    "image_required": "الصورة مطلوبة"
+    "english": "الإنجليزية",
+    "add": "إضافة",
+    "form_toast_msg": "أنت تقوم حاليًا بتعديل محتوى الموقع {{currentContent}}. التغييرات هنا لا تؤثر على نسخة {{previousContent}}.",
+    "change_lang_dialog_header": "تغييرات غير محفوظة؟",
+    "change_lang_dialog_desc": "لديك تغييرات غير محفوظة في اللغة الحالية. هل تريد حفظها قبل التبديل؟",
+    "change_lang_dialog_save": "حفظ التغييرات",
+    "pagination_info":"عرض {{first}} إلى {{last}} من أصل {{total}} مُدخل",
+    "show":"عرض",
+    "entries":"مُدخل"
   },
   "projects": {
     "list": {
-      "page_title": " المشاريع",
+      "page_title": "جميع المشاريع",
+      "breadcurmb": "المشاريع",
       "table_headers": {
         "project": "المشروع",
         "country": "الدولة",
@@ -54,7 +53,7 @@
     },
     "form": {
       "title": "إضافة مشروع جديد",
-      "breadcrumb_edit": "تعديل المشروع",
+      "edit_title": "تعديل المشروع",
       "english": "(الإنجليزية)",
       "arabic": "(العربية)",
       "titles": {
@@ -62,7 +61,7 @@
         "settings": "إعدادات المشروع",
         "galary": "معرض صور المشروع",
         "location": "موقع المشروع",
-        "results": "النتائج والتأثيرات",
+        "results": "النتائج والآثار",
         "metrics": "مؤشرات القياس",
         "metrics_desc": "(الحد الأقصى المسموح به 3)"
       },
@@ -108,12 +107,15 @@
       "validation": {
         "name": "الاسم مطلوب",
         "overview": "النظرة العامة مطلوبة",
-        "brief": "النبذة المختصرة مطلوبة",
+        "brief": "النبذة مطلوبة",
         "services": "خدمات المشروع مطلوبة",
         "from": "تاريخ البدء مطلوب",
         "to": "تاريخ الانتهاء مطلوب",
         "country": "الدولة مطلوبة",
-        "city": "المدينة مطلوبة"
+        "city": "المدينة مطلوبة",
+        "gallery": "يجب إضافة صورة واحدة على الأقل للمعرض",
+        "image_after": "الصورة (بعد) مطلوبة",
+        "image_before": "الصورة (قبل) مطلوبة"
       },
       "btns": {
         "add_result": "إضافة قسم آخر",
@@ -128,7 +130,9 @@
   },
   "awards": {
     "list": {
-      "page_title": " الجوائز",
+      "page_title": "جميع الجوائز",
+      "breadcurmb": "الجوائز",
+      "edit_title":"تعديل جائزة",
       "table_headers": {
         "award": "الجائزة",
         "date": "التاريخ",
@@ -140,8 +144,8 @@
         "customize": "تخصيص قسم الجوائز"
       },
       "delete_dialog": {
-        "header": "حذف الجائزة",
-        "desc": "هل أنت متأكد من رغبتك في حذف هذا الجائزة؟ لا يمكن التراجع عن هذا الإجراء."
+        "header": "حذف الجائزة؟",
+        "desc": "هل أنت متأكد من رغبتك في حذف هذه الجائزة؟ لا يمكن التراجع عن هذا الإجراء."
       }
     },
     "form": {
@@ -153,6 +157,11 @@
         "settings": "إعدادات الجوائز",
         "organizations": "شعارات المنظمات",
         "award": "صورة الجائزة"
+      },
+      "validation": {
+        "name": "الاسم مطلوب",
+        "date": "التاريخ مطلوب",
+        "desc": "الوصف مطلوب"
       },
       "labels": {
         "name": "اسم الجائزة",
@@ -173,38 +182,16 @@
     "section_details": "تفاصيل القسم",
     "name": "اسم القسم",
     "name_placeholder": "أدخل اسم القسم...",
-    "tagline": "شعار القسم",
+    "tagline": "شعار القسم (Tagline)",
     "tagline_placeholder": "أدخل شعار القسم...",
     "subsections": "تفاصيل القسم الفرعي",
-    "max_subsections": "الحد الأقصى 3 مسموح",
+    "max_subsections": "الحد الأقصى المسموح به 3",
     "subsection": "قسم فرعي",
     "subsection_title": "العنوان",
     "subsection_title_placeholder": "أدخل عنوان القسم الفرعي...",
     "subsection_subtitle": "العنوان الفرعي",
-    "subsection_subtitle_placeholder": "أدخل العنوان الفرعي للقسم الفرعي...",
-    "add_subsection": "إضافة قسم فرعي",
-    "validation": {
-      "name_required": "اسم القسم مطلوب",
-      "name_min": "اسم القسم يجب أن يكون على الأقل 3 أحرف",
-      "name_max": "اسم القسم لا يمكن أن يتجاوز 50 حرفًا",
-      "tagline_required": "شعار القسم مطلوب",
-      "tagline_min": "شعار القسم يجب أن يكون على الأقل 3 أحرف",
-      "tagline_max": "شعار القسم لا يمكن أن يتجاوز 50 حرفًا",
-      "title_required": "عنوان القسم الفرعي مطلوب",
-      "title_min": "عنوان القسم الفرعي يجب أن يكون على الأقل 3 أحرف",
-      "title_max": "عنوان القسم الفرعي لا يمكن أن يتجاوز 50 حرفًا",
-      "subtitle_required": "العنوان الفرعي للقسم الفرعي مطلوب",
-      "subtitle_min": "العنوان الفرعي للقسم الفرعي يجب أن يكون على الأقل 3 أحرف",
-      "subtitle_max": "العنوان الفرعي للقسم الفرعي لا يمكن أن يتجاوز 50 حرفًا"
-    },
-    "language_dialog": {
-      "header": "تغيير اللغة",
-      "title": "تغييرات غير محفوظة؟",
-      "desc": "لديك تغييرات غير محفوظة في اللغة الحالية. هل تريد حفظها قبل التبديل؟"
-    },
-    "slider": {
-      "preview": "معاينة القسم"
-    }
+    "subsection_subtitle_placeholder": "أدخل العنوان الفرعي للقسم...",
+    "add_subsection": "إضافة قسم فرعي"
   },
   "common": {
     "delete": "حذف",
@@ -215,7 +202,7 @@
   },
   "services": {
     "list": {
-      "page_title": " الخدمات",
+      "page_title": "جميع الخدمات",
       "table_headers": {
         "service": "الخدمة",
         "description": "الوصف",
@@ -384,46 +371,47 @@
   },
   "testimonials": {
     "list": {
-      "page_title": " الشهادات",
-      "breadcurmb": "الشهادات",
+      "breadcurmb": "التوصيات",
+      "page_title": "جميع التوصيات",
       "table_headers": {
         "name": "الاسم",
         "position": "المنصب",
-        "testimonial": "الشهادة",
+        "testimonial": "التوصية",
         "status": "الحالة"
       },
       "btns": {
-        "add_new": "إضافة شهادة جديدة"
+        "add_new": "إضافة توصية جديدة"
       }
     },
     "form": {
-      "title": "إضافة شهادة جديدة",
+      "title": "إضافة توصية جديدة",
+      "edit_title": "تعديل التوصية",
       "labels": {
-        "client_name_en": "اسم العميل (بالإنجليزية)",
-        "client_name_ar": "اسم العميل (بالعربية)",
-        "job_title_en": "المسمى الوظيفي (بالإنجليزية)",
-        "job_title_ar": "المسمى الوظيفي (بالعربية)",
-        "testimonial_en": "الشهادة (بالإنجليزية)",
-        "testimonial_ar": "الشهادة (بالعربية)"
+        "client_name_en": "اسم العميل (الإنجليزية)",
+        "client_name_ar": "اسم العميل (العربية)",
+        "job_title_en": "المسمى الوظيفي (الإنجليزية)",
+        "job_title_ar": "المسمى الوظيفي (العربية)",
+        "testimonial_en": "التوصية (الإنجليزية)",
+        "testimonial_ar": "التوصية (العربية)"
       },
       "placeholders": {
         "client_name_en": "أدخل اسم العميل بالإنجليزية",
         "client_name_ar": "أدخل اسم العميل بالعربية",
         "job_title_en": "أدخل المسمى الوظيفي بالإنجليزية",
         "job_title_ar": "أدخل المسمى الوظيفي بالعربية",
-        "testimonial_en": "أدخل الشهادة بالإنجليزية",
-        "testimonial_ar": "أدخل الشهادة بالعربية"
+        "testimonial_en": "أدخل التوصية بالإنجليزية",
+        "testimonial_ar": "أدخل التوصية بالعربية"
       },
       "validation": {
         "client_name_en": "اسم العميل بالإنجليزية مطلوب",
         "client_name_ar": "اسم العميل بالعربية مطلوب",
         "job_title_en": "المسمى الوظيفي بالإنجليزية مطلوب",
         "job_title_ar": "المسمى الوظيفي بالعربية مطلوب",
-        "testimonial_en": "الشهادة بالإنجليزية مطلوبة",
-        "testimonial_ar": "الشهادة بالعربية مطلوبة"
+        "testimonial_en": "التوصية بالإنجليزية مطلوبة",
+        "testimonial_ar": "التوصية بالعربية مطلوبة"
       },
       "btns": {
-        "save_create": "حفظ وإضافة جديد",
+        "save_create": "حفظ وإنشاء جديد",
         "save": "حفظ",
         "update": "تحديث"
       }
@@ -447,10 +435,10 @@
     },
     "form": {
       "add_title": "إضافة عميل جديد",
-      "edit_title": "تعديل عميل",
+      "edit_title": "تعديل العميل",
       "labels": {
-        "name_en": "اسم العميل (بالإنجليزية)",
-        "name_ar": "اسم العميل (بالعربية)",
+        "name_en": "اسم العميل (الإنجليزية)",
+        "name_ar": "اسم العميل (العربية)",
         "image": "صورة العميل"
       },
       "placeholders": {
@@ -465,12 +453,12 @@
       "btns": {
         "save": "حفظ",
         "update": "تحديث",
-        "save_create": "حفظ وإضافة جديد"
+        "save_create": "حفظ وإنشاء جديد"
       },
       "load_error": "فشل تحميل بيانات العميل"
     },
     "confirm": {
-      "delete_title": "حذف عميل",
+      "delete_title": "حذف العميل",
       "delete_subtitle": "هل أنت متأكد من رغبتك في حذف هذا العميل؟ لا يمكن التراجع عن هذا الإجراء."
     }
   },

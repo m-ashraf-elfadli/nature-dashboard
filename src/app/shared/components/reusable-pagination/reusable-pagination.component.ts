@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { PaginationObj } from '../../../core/models/global.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reusable-pagination',
   standalone: true,
-  imports: [CommonModule, FormsModule, SelectModule],
+  imports: [CommonModule, FormsModule, SelectModule, TranslateModule],
   templateUrl: './reusable-pagination.component.html',
   styleUrl: './reusable-pagination.component.scss'
 })

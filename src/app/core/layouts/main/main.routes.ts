@@ -6,6 +6,7 @@ import { TestimonialsComponent } from '../../../features/testimonials/components
 import { AwardFormComponent } from '../../../features/awards/components/award-form/award-form.component';
 import { AwardsListComponent } from '../../../features/awards/components/awards-list/awards-list.component';
 import { CustomizeAwardSectionFormComponent } from '../../../features/awards/components/customize-award-section-form/customize-award-section-form.component';
+import { awardNameResolver } from '../../resolvers/award-name.resolver';
 
 export const dashboardRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -17,7 +18,7 @@ export const dashboardRoutes: Routes = [
         (m) => m.projectsRoutes,
       ),
     data: {
-      breadcrumb: 'Projects',
+      breadcrumb: 'projects.list.breadcurmb',
     },
   },
   {
@@ -34,7 +35,7 @@ export const dashboardRoutes: Routes = [
     path: 'awards',
     component: AwardsComponent,
     data: {
-      breadcrumb: 'Awards',
+      breadcrumb: 'awards.list.breadcurmb',
     },
     children: [
       {
@@ -51,6 +52,9 @@ export const dashboardRoutes: Routes = [
       {
         path: 'edit/:id',
         component: AwardFormComponent,
+        resolve: {
+          awardName: awardNameResolver,
+        },
       },
       {
         path: 'customize',

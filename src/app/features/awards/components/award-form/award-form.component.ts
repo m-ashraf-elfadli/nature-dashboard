@@ -5,6 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   ChangeDetectorRef,
+  model,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -368,14 +369,14 @@ export class AwardFormComponent implements OnInit, AfterViewInit {
       header: 'Change Language',
       width: '500px',
       data: {
-        title: 'Unsaved Changes?',
-        subtitle:
-          'You have unsaved changes in the current language. Do you want to save them before switching?',
-        confirmText: 'Save Changes',
-        cancelText: 'Discard Changes',
+        title: 'general.change_lang_dialog_header',
+        subtitle:'general.change_lang_dialog_desc',
+        confirmText: 'general.change_lang_dialog_save',
+        cancelText: 'general.cancel',
         confirmSeverity: 'success',
         cancelSeverity: 'cancel',
         showCancel: true,
+        model:true,
       },
     });
 
@@ -457,37 +458,4 @@ export class AwardFormComponent implements OnInit, AfterViewInit {
     return this.languageNames[langCode] || langCode.toUpperCase();
   }
 
-  showConfirmDialog(lang: string) {
-    this.ref = this.dialogService.open(ConfirmDialogComponent, {
-      header: 'Select a Product',
-      width: '40vw',
-      modal: true,
-      data: {
-        title: 'projects.form.language_dialog.header',
-        subtitle: 'projects.form.language_dialog.desc',
-        confirmText: 'projects.form.btns.save',
-        cancelText: 'general.cancel',
-        confirmSeverity: 'success',
-        cancelSeverity: 'cancel',
-        showCancel: true,
-        showExtraButton: false,
-        data: { lang },
-      },
-    });
-    this.ref.onClose.subscribe(
-      (product: { action: string; data: { lang: string } }) => {
-        if (product) {
-          if (product.action === 'confirm') {
-            this.submitForm(false, product.data.lang);
-          } else if (product.action === 'cancel') {
-            // Discard changes and switch language
-            this.switchLanguage(this.previousLanguage === 'en' ? 'ar' : 'en');
-          }
-        } else {
-          // Dialog was closed without action - reset to previous language
-          this.resetLanguage(this.previousLanguage);
-        }
-      },
-    );
-  }
 }

@@ -16,7 +16,7 @@ export class ProjectNameResolver implements Resolve<string> {
       this.translate.currentLang || this.translate.defaultLang || 'en';
 
     return this.projectsService
-      .getById(id, currentLang)
+      .getById(id, localStorage.getItem('app_lang') || 'en')
       .pipe(map((res) => res.result.name));
   }
 }

@@ -123,11 +123,11 @@ export class ProjectsComponent implements OnInit {
       width: '40vw',
       modal: true,
       data: {
-        title: 'projects.list.delete_dialog.header',
-        subtitle: 'projects.list.delete_dialog.desc',
-        confirmText: 'general.delete',
+        title: 'general.change_lang_dialog_header',
+        subtitle:'general.change_lang_dialog_desc',
+        confirmText: 'general.change_lang_dialog_save',
         cancelText: 'general.cancel',
-        confirmSeverity: 'delete',
+        confirmSeverity: 'success',
         cancelSeverity: 'cancel',
         showCancel: true,
         showExtraButton: false,
@@ -254,8 +254,6 @@ export class ProjectsComponent implements OnInit {
   onFilterChange(filter: any) {
     this.filterObj = filter;
     this.fetchData(this.paginationObj);
-
-    console.log(filter);
   }
   addNew() {
     this.router.navigate(['/projects/add']);

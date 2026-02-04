@@ -115,6 +115,13 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
         this.updateLastBreadcrumb(data['serviceName']);
       }
 
+      if (data?.['awardName']) {
+        this.breadcrumbs[this.breadcrumbs.length] = {
+          label: data['awardName'],
+          route: undefined,
+        };
+      }
+
       this.buildBreadcrumbs(child, url);
     }
   }
