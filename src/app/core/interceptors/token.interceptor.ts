@@ -1,16 +1,11 @@
-import { Injectable, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import {
-  HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpErrorResponse,
   HttpHandlerFn,
-  HttpHeaders,
 } from '@angular/common/http';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 export function TokenInterceptor(req: HttpRequest<any>, next: HttpHandlerFn) {
   const auth = inject(AuthService);
@@ -24,7 +19,6 @@ export function TokenInterceptor(req: HttpRequest<any>, next: HttpHandlerFn) {
     headers['Authorization'] = token;
   }
 
-  // ✔ Only add locale for GET requests
   if (req.method === 'GET' && !req.url.includes('/show')) {
     const locale = localStorage.getItem('app_lang') || 'en';
     headers['locale'] = locale;
@@ -35,7 +29,9 @@ export function TokenInterceptor(req: HttpRequest<any>, next: HttpHandlerFn) {
     catchError((error) => {
       if (
         error.status === 401 &&
-        !req.url.toLocaleLowerCase().includes('logout')
+        !req.url.toLocaleLowerCase().includes('logout') &&
+        !req.url.toLocaleLowerCase().includes('signin')
+
       ) {
         auth.logout().subscribe({
           next: () => router.navigate(['/auth']),

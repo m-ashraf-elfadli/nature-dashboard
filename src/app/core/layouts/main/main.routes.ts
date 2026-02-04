@@ -10,7 +10,6 @@ import { CustomizeAwardSectionFormComponent } from '../../../features/awards/com
 export const dashboardRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'clients', component: ClientsComponent },
   {
     path: 'projects',
     loadChildren: () =>
@@ -60,17 +59,18 @@ export const dashboardRoutes: Routes = [
           breadcrumb: 'Add New Award',
         },
       },
-      {
-        path: 'clients',
-        component: ClientsComponent,
-        data: {
-          breadcrumb: 'Clients',
-        },
-      },
     ],
   },
-  { 
-    path: 'testimonials', 
+  {
+    path: 'clients',
+    component: ClientsComponent,
+    data: {
+      breadcrumb: 'Clients',
+      title: 'Clients',
+    },
+  },
+  {
+    path: 'testimonials',
     component: TestimonialsComponent,
     data: {
       breadcrumb: 'testimonials.list.breadcurmb',

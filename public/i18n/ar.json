@@ -504,6 +504,7 @@
   "user_menu": {
     "profile": "الملف الشخصي",
     "settings": "الإعدادات",
+    "help": "المساعدة",
     "logout": "تسجيل الخروج",
     "superadmin": "مدير عام",
     "admin_name": "مدير الطبيعة"
