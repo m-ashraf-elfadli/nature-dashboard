@@ -118,6 +118,9 @@ export class DashboardComponent implements OnInit {
       field: 'status',
       header: 'projects.list.table_headers.status',
       type: 'status',
+
+      statusCallback: (row: Project, value: boolean, e: Event) =>
+        this.changeStatus(row, value, e),
     },
   ];
 
@@ -311,5 +314,8 @@ export class DashboardComponent implements OnInit {
   }
   addNewProject() {
     this.router.navigate(['/projects/add']);
+  }
+  changeStatus(row: Project, value: boolean, e: Event) {
+    this.projectsService.changeStatus(row.id, value).subscribe();
   }
 }
