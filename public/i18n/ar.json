@@ -14,7 +14,11 @@
     "reset": "إعادة تعيين",
     "apply": "تطبيق",
     "cancel": "إلغاء",
-    "delete": "حذف"
+    "delete": "حذف",
+    "arabic": "العربية",
+    "english": "الانجليزية",
+    "add": "اضافة",
+    "form_toast_msg": "أنت تقوم حاليًا بتعديل محتوى الموقع الخاص بـ {{currentContent}}. لن تؤثر هذه التغييرات على إصدار {{previousContent}}."
   },
   "validation": {
     "required": "هذا الحقل مطلوب",
