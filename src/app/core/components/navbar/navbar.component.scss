@@ -179,7 +179,8 @@
   }
 
   .menu-item {
-    padding: 12px 60px 12px 15px;
+    padding-block: 12px;
+    padding-inline: 60px 15px;
     width: 100%;
     border-radius: 4px;
     display: flex;
