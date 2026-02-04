@@ -385,6 +385,7 @@
   "testimonials": {
     "list": {
       "page_title": " الشهادات",
+      "breadcurmb": "الشهادات",
       "table_headers": {
         "name": "الاسم",
         "position": "المنصب",
