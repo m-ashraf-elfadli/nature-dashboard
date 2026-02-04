@@ -108,7 +108,6 @@ export class ClientFormComponent implements OnInit, OnChanges {
   private emitAction(action: ClientFormActions) {
     const formData = this.prepareFormData();
     this.close.emit({ action, formData });
-    this.resetForm();
   }
 
   private prepareFormData(): FormData {

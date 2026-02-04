@@ -87,6 +87,8 @@ export class TestimonialsComponent implements OnInit {
       field: 'status',
       header: 'testimonials.list.table_headers.status',
       type: 'status',
+      statusCallback: (row: Testimonial, value: boolean, e: Event) =>
+        this.changeStatus(row, value, e),
     },
   ];
 
@@ -190,7 +192,9 @@ export class TestimonialsComponent implements OnInit {
       },
     });
   }
-
+  changeStatus(row: Testimonial, value: boolean, e: Event) {
+    this.service.changeStatus(row.id, value).subscribe();
+  }
   onPaginationChange(event: PaginationObj) {
     this.paginationObj = event;
     this.loadTestimonials();
