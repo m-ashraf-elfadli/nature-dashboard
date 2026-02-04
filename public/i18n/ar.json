@@ -560,5 +560,12 @@
     "discard": "تجاهل",
     "save": "حفظ",
     "localization": "الترجمة ({{language}})"
+  },
+  "mini_table": {
+    "header": {
+      "actions": "الاجراءات",
+      "title": "العنوان",
+      "desc": "الوصف"
+    }
   }
 }

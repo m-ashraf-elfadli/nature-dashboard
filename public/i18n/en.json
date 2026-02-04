@@ -566,6 +566,13 @@
     "save": "Save",
     "localization": "Localization ({{language}})"
   },
+  "mini_table": {
+    "header": {
+      "actions": "Actions",
+      "title": "Title",
+      "desc": "Description"
+    }
+  },
   "Projects": "Projects",
   "Services": "Services",
   "Clients": "Clients",
