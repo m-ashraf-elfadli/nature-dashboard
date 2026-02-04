@@ -13,7 +13,7 @@ import { HttpParams } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AwardsService {
-  constructor() {}
+  constructor() { }
   private apiService = inject(ApiService);
   private endpoint = 'awards';
   private lang = this.apiService.getCulture();
