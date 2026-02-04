@@ -58,6 +58,13 @@ export const dashboardRoutes: Routes = [
           breadcrumb: 'Add New Award',
         },
       },
+      {
+        path: 'clients',
+        component: ClientsComponent,
+        data: {
+          breadcrumb: 'Clients',
+        },
+      },
     ],
   },
   { path: 'testimonials', component: TestimonialsComponent },

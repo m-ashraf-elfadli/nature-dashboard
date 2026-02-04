@@ -1,39 +1,22 @@
 import { Component, OnInit, inject, ViewChild } from '@angular/core';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ReusableTableComponent } from '../../../../shared/components/reusable-table/reusable-table.component';
-import {
-  TableAction,
-  TableColumn,
-  TableConfig,
-} from '../../../../shared/components/reusable-table/reusable-table.types';
+import { TableAction, TableColumn, TableConfig, } from '../../../../shared/components/reusable-table/reusable-table.types';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TestimonialsFormComponent } from '../testimonials-form/testimonials-form.component';
 import { FilterItems } from '../../../../shared/components/filters/filters.component';
 import { TestimonialsService } from '../../services/testimonials.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import {
-  ConfirmDialogComponent,
-  ConfirmationDialogConfig,
-} from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent, ConfirmationDialogConfig, } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { PaginationObj } from '../../../../core/models/global.interface';
-import {
-  Testimonial,
-  TestimonialFormEvent,
-} from '../../models/testimonials.model';
+import { Testimonial, TestimonialFormEvent, } from '../../models/testimonials.model';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-testimonials',
   standalone: true,
-  imports: [
-    PageHeaderComponent,
-    ReusableTableComponent,
-    DialogModule,
-    ButtonModule,
-    TestimonialsFormComponent,
-    TranslateModule,
-  ],
+  imports: [PageHeaderComponent, ReusableTableComponent, DialogModule, ButtonModule, TestimonialsFormComponent, TranslateModule,],
   providers: [DialogService],
   templateUrl: './testimonials.component.html',
   styleUrl: './testimonials.component.scss',
@@ -169,8 +152,8 @@ export class TestimonialsComponent implements OnInit {
 
   delete(row: Testimonial) {
     const dialogConfig: ConfirmationDialogConfig<Testimonial> = {
-      title: 'Delete Testimonial',
-      subtitle: `Are you sure you want to delete the testimonial from "${row.clientName}"? This action cannot be undone.`,
+      title: 'testimonials.confirm.delete_title',
+      subtitle: `testimonials.confirm.delete_subtitle`,
       icon: 'images/delete.svg',
       confirmText: 'Delete',
       cancelText: 'Cancel',

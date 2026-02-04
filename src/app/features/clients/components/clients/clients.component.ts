@@ -1,62 +1,44 @@
-import { Component, OnInit, inject, ViewChild } from '@angular/core';
+import { Component, OnInit, inject, ViewChild, OnDestroy } from '@angular/core';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ReusableTableComponent } from '../../../../shared/components/reusable-table/reusable-table.component';
-import {
-  TableAction,
-  TableColumn,
-  TableConfig,
-} from '../../../../shared/components/reusable-table/reusable-table.types';
-import { FilterItems } from '../../../../shared/components/filters/filters.component';
-import { DialogModule } from 'primeng/dialog';
+import { TableAction, TableColumn, TableConfig, } from '../../../../shared/components/reusable-table/reusable-table.types';
 import { ButtonModule } from 'primeng/button';
 import { ClientFormComponent } from '../client-form/client-form.component';
-import { PaginationObj } from '../../../../core/models/global.interface';
+import { FilterItems } from '../../../../shared/components/filters/filters.component';
 import { ClientsService } from '../../services/clients.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import {
-  ConfirmDialogComponent,
-  ConfirmationDialogConfig,
-} from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent, ConfirmationDialogConfig, } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { PaginationObj } from '../../../../core/models/global.interface';
 import { Client, ClientFormEvent } from '../../models/clients.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-clients',
   standalone: true,
-  imports: [
-    PageHeaderComponent,
-    ReusableTableComponent,
-    DialogModule,
-    ButtonModule,
-    ClientFormComponent,
-    TranslateModule,
-  ],
+  imports: [PageHeaderComponent, ReusableTableComponent, ButtonModule, ClientFormComponent, TranslateModule, DialogModule,],
   providers: [DialogService],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss',
 })
-export class ClientsComponent implements OnInit {
-  @ViewChild(ClientFormComponent) clientForm?: ClientFormComponent;
-
+export class ClientsComponent implements OnInit, OnDestroy {
+  @ViewChild(ClientFormComponent)
+  clientForm?: ClientFormComponent;
   private clientsService = inject(ClientsService);
   private dialogService = inject(DialogService);
-
   visible = false;
   data: Client[] = [];
   totalRecords = 0;
   currentClientId?: string;
   confirmDialogRef?: DynamicDialogRef;
-
-  paginationObj: PaginationObj = {
-    page: 1,
-    size: 10,
-  };
+  paginationObj: PaginationObj = { page: 1, size: 10, };
+  filterObj: any;
   emptyStateInfo = {
     label: 'Create New Client',
-    description:
-      'No Data to preview, start create your first client to appear here!',
+    description: 'No Data to preview, start create your first client to appear here!',
     callback: () => this.showDialog(),
   };
+
   ngOnInit() {
     this.loadClients();
   }
@@ -64,16 +46,12 @@ export class ClientsComponent implements OnInit {
   loadClients(pagination?: PaginationObj) {
     const pag = pagination || this.paginationObj;
 
-    this.clientsService.getAll(pag, '').subscribe({
+    this.clientsService.getAll(pag, this.filterObj?.key || '').subscribe({
       next: (res) => {
         this.data = res.result || [];
         this.totalRecords = res.total || 0;
       },
-      error: (err) => {
-        console.error('❌ Clients fetch error:', err);
-        console.error('❌ Status:', err.status);
-        console.error('❌ Error details:', err.error);
-      },
+      error: (err) => console.error('Clients fetch error:', err),
     });
   }
 
@@ -102,14 +80,14 @@ export class ClientsComponent implements OnInit {
 
   actions: TableAction<Client>[] = [
     {
-      callback: (row) => this.edit(row),
       icon: 'pi pi-pencil',
+      callback: (row) => this.edit(row),
       severity: 'white',
       class: 'p-2',
     },
     {
-      callback: (row) => this.delete(row),
       icon: 'pi pi-trash',
+      callback: (row) => this.delete(row),
       severity: 'white',
       class: 'p-2',
     },
@@ -118,9 +96,11 @@ export class ClientsComponent implements OnInit {
   config: TableConfig<Client> = {
     columns: this.columns,
     serverSidePagination: true,
+    rowsPerPage: 10,
     rowsPerPageOptions: [5, 10, 20],
     selectionMode: 'multiple',
     sortable: true,
+    serverSideFilter: true,
   };
 
   filterItems: FilterItems[] = [
@@ -131,17 +111,17 @@ export class ClientsComponent implements OnInit {
     },
     {
       type: 'btn',
-      label: 'general.import',
-      btnIcon: 'pi pi-download',
-      btnSeverity: 'white',
-      btnCallback: () => this.importCSV(),
-    },
-    {
-      type: 'btn',
       label: 'clients.list.btns.add_new',
       btnIcon: 'pi pi-plus',
       btnSeverity: 'primary',
       btnCallback: () => this.showDialog(),
+    },
+    {
+      type: 'btn',
+      label: 'general.import',
+      btnIcon: 'pi pi-download',
+      btnSeverity: 'white',
+      btnCallback: () => this.importCSV(),
     },
   ];
 
@@ -153,6 +133,10 @@ export class ClientsComponent implements OnInit {
   edit(row: Client) {
     this.currentClientId = row.id;
     this.visible = true;
+  }
+
+  onDialogHide() {
+    this.currentClientId = undefined;
   }
 
   delete(row: Client) {
@@ -167,14 +151,16 @@ export class ClientsComponent implements OnInit {
       data: row,
     };
 
-    this.confirmDialogRef = this.dialogService.open(ConfirmDialogComponent, {
-      modal: true,
-      data: dialogConfig,
-      header: '',
-      width: '505px',
-      closable: false,
-      styleClass: 'confirm-dialog',
-    });
+    this.confirmDialogRef = this.dialogService.open(
+      ConfirmDialogComponent,
+      {
+        modal: true,
+        data: dialogConfig,
+        width: '505px',
+        closable: false,
+        styleClass: 'confirm-dialog',
+      }
+    );
 
     this.confirmDialogRef.onClose.subscribe((result: any) => {
       if (result?.action === 'confirm' && result.data?.id) {
@@ -186,7 +172,10 @@ export class ClientsComponent implements OnInit {
   private performDelete(id: string) {
     this.clientsService.delete(id).subscribe({
       next: () => this.loadClients(),
-      error: () => alert('Failed to delete client'),
+      error: (err) => {
+        console.error('Delete error:', err);
+        alert('Failed to delete client');
+      },
     });
   }
 
@@ -195,12 +184,9 @@ export class ClientsComponent implements OnInit {
     this.loadClients(event);
   }
 
-  selectionChange(e: Client[] | Client) {
-    console.log('Selected:', e);
-  }
-
-  importCSV() {
-    console.log('Import CSV');
+  onFilterChange(filter: any) {
+    this.filterObj = filter;
+    this.loadClients();
   }
 
   handleFormClose(event: ClientFormEvent) {
@@ -208,41 +194,46 @@ export class ClientsComponent implements OnInit {
       case 'save':
         this.handleSave(event.formData);
         break;
+
       case 'saveAndCreateNew':
         this.handleSaveAndCreateNew(event.formData);
         break;
+
       case 'cancel':
         this.handleCancel();
         break;
     }
   }
 
-  private handleSave(formData: FormData) {
+  private handleSave(payload: FormData) {
     if (this.currentClientId) {
-      this.clientsService.update(this.currentClientId, formData).subscribe({
+      this.clientsService.update(this.currentClientId, payload).subscribe({
         next: () => {
           this.visible = false;
           this.currentClientId = undefined;
           this.loadClients();
         },
+        error: (err) => this.showErrorMessage(err),
       });
     } else {
-      this.clientsService.create(formData).subscribe({
+      this.clientsService.create(payload).subscribe({
         next: () => {
           this.visible = false;
           this.loadClients();
         },
+        error: (err) => this.showErrorMessage(err),
       });
     }
   }
 
-  private handleSaveAndCreateNew(formData: FormData) {
-    this.clientsService.create(formData).subscribe({
+  private handleSaveAndCreateNew(payload: FormData) {
+    this.clientsService.create(payload).subscribe({
       next: () => {
         this.loadClients();
         this.currentClientId = undefined;
         this.clientForm?.resetForm();
       },
+      error: (err) => this.showErrorMessage(err),
     });
   }
 
@@ -254,13 +245,17 @@ export class ClientsComponent implements OnInit {
   private showErrorMessage(err: any) {
     let errorMessage = 'An error occurred';
 
-    if (err.error) {
+    if (err?.error) {
       if (err.error.errors) {
-        const errors = err.error.errors;
-        const errorMessages = Object.keys(errors).map((key) => {
-          return `${key}: ${Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key]}`;
-        });
-        errorMessage = errorMessages.join('\n');
+        errorMessage = Object.keys(err.error.errors)
+          .map(
+            (key) =>
+              `${key}: ${Array.isArray(err.error.errors[key])
+                ? err.error.errors[key].join(', ')
+                : err.error.errors[key]
+              }`
+          )
+          .join('\n');
       } else if (err.error.message) {
         errorMessage = err.error.message;
       }
@@ -268,8 +263,8 @@ export class ClientsComponent implements OnInit {
 
     alert(`Failed to save client:\n${errorMessage}`);
   }
-  onDialogHide() {
-    this.currentClientId = undefined;
+  importCSV() {
+    console.log('Import CSV');
   }
 
   ngOnDestroy() {

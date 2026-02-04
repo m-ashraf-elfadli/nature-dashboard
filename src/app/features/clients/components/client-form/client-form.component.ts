@@ -1,19 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-  OnChanges,
-  SimpleChanges
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, inject, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { GalleryUploadComponent } from '../../../../shared/components/gallery-upload/gallery-upload.component';
 import { ClientsService } from '../../services/clients.service';
@@ -24,12 +10,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-client-form',
   standalone: true,
-  imports: [
-    InputTextModule,
-    GalleryUploadComponent,
-    ReactiveFormsModule,
-    TranslateModule
-  ],
+  imports: [InputTextModule, GalleryUploadComponent, ReactiveFormsModule, TranslateModule],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss'
 })
