@@ -308,7 +308,7 @@ export class CustomizeAwardSectionFormComponent
         if (section?.localeComplete) {
           Object.entries(section.localeComplete).forEach(
             ([langKey, isComplete]) => {
-              const status = isComplete ? 'completed' : 'ongoing';
+              const status = isComplete ? 'completed' : 'not-started';
               this.languageStatuses.set(langKey, {
                 code: langKey,
                 status: status as LanguageStatusType,

@@ -91,7 +91,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   projectId: string = '';
   isEditMode: boolean = false;
   projectData: ProjectById = {} as ProjectById;
-  isFirstTimeToSend:boolean = false
+  isFirstTimeToSend: boolean = false;
   languageStatuses = new Map<
     string,
     { code: string; status: LanguageStatusType }
@@ -139,9 +139,9 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       service_ids: [[], Validators.required],
-      image_before: [null,Validators.required],
-      image_after: [null,Validators.required],
-      gallery: [null,Validators.required],
+      image_before: [null, Validators.required],
+      image_after: [null, Validators.required],
+      gallery: [null, Validators.required],
       city_id: [{ value: null, disabled: true }, Validators.required],
       country_id: ['', Validators.required],
       status: [1, Validators.required],
@@ -226,7 +226,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
 
     if (data.localeComplete) {
       Object.entries(data.localeComplete).forEach(([langKey, isComplete]) => {
-        const status = isComplete ? 'completed' : 'ongoing';
+        const status = isComplete ? 'completed' : 'not-started';
         this.languageStatuses.set(langKey, {
           code: langKey,
           status: status as LanguageStatusType,
@@ -513,7 +513,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
     console.log(event);
   }
   onSave() {
-    this.isFirstTimeToSend = false
+    this.isFirstTimeToSend = false;
     this.submitForm(true, this.currentLanguage);
   }
   submitForm(isNavigateOut: boolean = false, culture?: string) {
@@ -615,7 +615,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   }
 
   private switchLanguage(lang: string): void {
-    this.isFirstTimeToSend = true
+    this.isFirstTimeToSend = true;
     this.currentLanguage = lang;
     this.commitLanguage(lang);
 

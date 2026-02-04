@@ -300,7 +300,7 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
         if (service.localeComplete) {
           Object.entries(service.localeComplete).forEach(
             ([langKey, isComplete]) => {
-              const status = isComplete ? 'completed' : 'ongoing';
+              const status = isComplete ? 'completed' : 'not-started';
               this.languageStatuses.set(langKey, {
                 code: langKey,
                 status: status as LanguageStatusType,
