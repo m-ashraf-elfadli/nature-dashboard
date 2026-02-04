@@ -72,7 +72,6 @@ export class TestimonialsComponent implements OnInit {
     const pag = pagination || this.paginationObj;
     this.service.getAll(pag, this.filterObj?.key || '').subscribe({
       next: (res) => {
-        console.log(res.result);
         this.data = res.result || [];
         this.totalRecords = res.total;
       },

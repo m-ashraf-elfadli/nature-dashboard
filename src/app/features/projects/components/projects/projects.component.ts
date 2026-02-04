@@ -254,8 +254,6 @@ export class ProjectsComponent implements OnInit {
   onFilterChange(filter: any) {
     this.filterObj = filter;
     this.fetchData(this.paginationObj);
-
-    console.log(filter);
   }
   addNew() {
     this.router.navigate(['/projects/add']);
