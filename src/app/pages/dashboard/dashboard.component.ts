@@ -115,6 +115,16 @@ export class DashboardComponent implements OnInit {
       type: 'text',
     },
     {
+      field: 'services',
+      header: 'projects.list.table_headers.services',
+      type: 'chips-group',
+    },
+    {
+      field: 'localeComplete',
+      header: 'projects.list.table_headers.locale',
+      type: 'languages-chips',
+    },
+    {
       field: 'status',
       header: 'projects.list.table_headers.status',
       type: 'status',
