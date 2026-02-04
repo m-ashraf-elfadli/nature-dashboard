@@ -57,7 +57,7 @@ export const dashboardRoutes: Routes = [
         path: 'customize',
         component: CustomizeAwardSectionFormComponent,
         data: {
-          breadcrumb: 'Add New Award',
+          breadcrumb: 'awards_section.form.title',
         },
       },
       {
@@ -69,8 +69,8 @@ export const dashboardRoutes: Routes = [
       },
     ],
   },
-  { 
-    path: 'testimonials', 
+  {
+    path: 'testimonials',
     component: TestimonialsComponent,
     data: {
       breadcrumb: 'testimonials.list.breadcurmb',
