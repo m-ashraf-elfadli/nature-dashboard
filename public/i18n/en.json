@@ -18,7 +18,7 @@
     "arabic": "Arabic",
     "english": "English",
     "add": "Add",
-    "form_toast_msg": "You are currently editing Website {{currentContent}} content. Changes here do not affect the {{previousContent}} version."
+    "form_toast_msg": "You're editing the {{currentContent}} content of the website. Changes here won't affect the {{previousContent}} version, except for images and related content."
   },
   "validation": {
     "required": "This field is required",

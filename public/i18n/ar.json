@@ -18,7 +18,7 @@
     "arabic": "العربية",
     "english": "الانجليزية",
     "add": "اضافة",
-    "form_toast_msg": "أنت تقوم حاليًا بتعديل محتوى الموقع الخاص بـ {{currentContent}}. لن تؤثر هذه التغييرات على إصدار {{previousContent}}."
+    "form_toast_msg": "أنت تقوم بتعديل محتوى {{currentContent}} الخاص بالموقع. لن تؤثر هذه التغييرات على نسخة {{previousContent}}، باستثناء الصور والمحتوى المرتبط بها."
   },
   "validation": {
     "required": "هذا الحقل مطلوب",
