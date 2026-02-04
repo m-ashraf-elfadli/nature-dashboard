@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, inject, Input } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Select } from 'primeng/select';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export interface StatusOptions {
   label: string;
@@ -13,24 +14,9 @@ export interface StatusConfig {
   class: string;
 }
 
-export const STATUS_MAP: Record<number, StatusConfig> = {
-  0: {
-    text: 'Not Started',
-    class: 'status-not-started',
-  },
-  1: {
-    text: 'Ongoing',
-    class: 'status-ongoing',
-  },
-  2: {
-    text: 'Completed',
-    class: 'status-completed',
-  },
-};
-
 @Component({
   selector: 'app-settings',
-  imports: [Select, CommonModule, FormsModule],
+  imports: [Select, CommonModule, FormsModule, TranslateModule],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
   providers: [
@@ -42,9 +28,11 @@ export const STATUS_MAP: Record<number, StatusConfig> = {
   ],
 })
 export class SettingsComponent {
+  private readonly translate = inject(TranslateService);
+
   statusOptions: StatusOptions[] = [
-    { label: 'Published', value: 1 },
-    { label: 'Unpublished', value: 0 },
+    { label: this.translate.instant('settings.published'), value: 1 },
+    { label: this.translate.instant('settings.unpublished'), value: 0 },
   ];
 
   value: number = 1;
@@ -86,9 +74,22 @@ export class SettingsComponent {
     this.onTouched = fn;
   }
 
-  readonly STATUS_MAP = STATUS_MAP;
-
   statusView(value: number): StatusConfig {
-    return this.STATUS_MAP[value] ?? this.STATUS_MAP[1];
+    const STATUS_MAP: Record<number, StatusConfig> = {
+      0: {
+        text: this.translate.instant('settings.status_not_started'),
+        class: 'status-not-started',
+      },
+      1: {
+        text: this.translate.instant('settings.status_ongoing'),
+        class: 'status-ongoing',
+      },
+      2: {
+        text: this.translate.instant('settings.status_completed'),
+        class: 'status-completed',
+      },
+    };
+
+    return STATUS_MAP[value] ?? STATUS_MAP[1];
   }
 }

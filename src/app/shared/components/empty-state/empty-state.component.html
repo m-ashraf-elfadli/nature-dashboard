@@ -2,11 +2,11 @@
     <div class="empty-state-container">
         <img src="images/empty.png" alt="empty">
         <div class="text-content">
-            <h4>{{ title }}</h4>
-            <p>{{ description }}</p>
+            <h4>{{ title | translate }}</h4>
+            <p>{{ description | translate }}</p>
         </div>
         <button class="action-btn" (click)="onButtonClick()">
-            <span>{{ buttonLabel }}</span>
+            <span>{{ buttonLabel | translate }}</span>
         </button>
     </div>
 </div>

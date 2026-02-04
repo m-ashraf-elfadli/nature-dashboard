@@ -38,7 +38,6 @@ export interface Service {
     PageHeaderComponent,
     ReusableTableComponent,
     TranslateModule,
-    EmptyStateComponent,
   ],
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss',
@@ -61,9 +60,8 @@ export class ServicesComponent {
   ref: DynamicDialogRef | undefined;
 
   emptyStateInfo = {
-    label: 'Create New Service',
-    description:
-      'No Data to preview, start create your first service to appear here!',
+    label: 'empty_state.services.create_btn',
+    description: 'empty_state.services.no_data',
     callback: () => this.addNew(),
   };
   columns: TableColumn<any>[] = [

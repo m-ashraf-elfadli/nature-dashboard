@@ -13,7 +13,6 @@ import { LoaderComponent } from '../../components/loader/loader.component';
     SidebarComponent,
     NavbarComponent,
     TranslateModule,
-    LoaderComponent,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',

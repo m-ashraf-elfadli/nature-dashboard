@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
     InputText,
     ButtonModule,
     FormsModule,
+    TranslateModule,
   ],
   templateUrl: './value-form.component.html',
   styleUrl: './value-form.component.scss',
@@ -28,12 +30,27 @@ export class ValueFormComponent implements OnInit {
     private fb: FormBuilder,
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
+      title: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
       tools: this.fb.array([]),
     });
 
@@ -71,8 +88,37 @@ export class ValueFormComponent implements OnInit {
     this.toolsArray.removeAt(index);
   }
 
+  getErrorMessage(fieldName: string): string {
+    const control = this.form.get(fieldName);
+    if (!control || !control.errors || !control.touched) return '';
+
+    if (control.errors['required']) {
+      return this.translate.instant(
+        `services.value_form.${fieldName}_required`,
+      );
+    }
+    if (control.errors['minlength']) {
+      return this.translate.instant(`services.value_form.${fieldName}_min`);
+    }
+    if (control.errors['maxlength']) {
+      return this.translate.instant(`services.value_form.${fieldName}_max`);
+    }
+    return '';
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.form.get(fieldName);
+    return !!(field?.invalid && field.touched);
+  }
+
   submit() {
-    if (!this.form.valid) return;
+    if (!this.form.valid) {
+      // Mark all fields as touched to show validation errors
+      Object.keys(this.form.controls).forEach((key) => {
+        this.form.get(key)?.markAsTouched();
+      });
+      return;
+    }
 
     const formValue = { ...this.form.value };
 
@@ -85,5 +131,9 @@ export class ValueFormComponent implements OnInit {
     } else {
       this.ref.close(formValue);
     }
+  }
+
+  cancel() {
+    this.ref.close();
   }
 }

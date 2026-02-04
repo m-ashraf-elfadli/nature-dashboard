@@ -15,7 +15,7 @@ import {
 import { FilterItems } from '../../../../shared/components/filters/filters.component';
 import { ReusableTableComponent } from '../../../../shared/components/reusable-table/reusable-table.component';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Award } from '../../models/awards.interface';
 import { PaginationObj } from '../../../../core/models/global.interface';
 import { AwardsService } from '../../../../services/awards.service';
@@ -37,6 +37,7 @@ export class AwardsListComponent implements OnInit {
   private readonly service = inject(AwardsService);
   private readonly router = inject(Router);
   private readonly dialogService = inject(DialogService);
+  private readonly translate = inject(TranslateService);
 
   public data: WritableSignal<Award[]> = signal([]);
   public totalRecords: WritableSignal<number> = signal(0);
@@ -69,13 +70,14 @@ export class AwardsListComponent implements OnInit {
       field: 'status',
       header: 'awards.list.table_headers.status',
       type: 'status',
+      statusCallback: (row: Award, value: boolean, e: Event) =>
+        this.changeStatus(row, value, e),
     },
   ];
 
   emptyStateInfo = {
-    label: 'Create New Award',
-    description:
-      'No Data to preview, start create your first award to appear here!',
+    label: 'empty_state.awards.create_btn',
+    description: 'empty_state.awards.no_data',
     callback: () => this.addNew(),
   };
   actions: TableAction<Award>[] = [
@@ -134,6 +136,9 @@ export class AwardsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchData(this.paginationObj);
+    this.translate.onLangChange.subscribe((_) => {
+      this.fetchData(this.paginationObj);
+    });
   }
 
   fetchData(pagination: PaginationObj) {
@@ -147,7 +152,9 @@ export class AwardsListComponent implements OnInit {
       },
     });
   }
-
+  changeStatus(row: Award, value: boolean, e: Event) {
+    this.service.changeStatus(row.id, value).subscribe();
+  }
   onPaginationChange(event: PaginationObj) {
     this.paginationObj = event;
     this.fetchData(this.paginationObj);

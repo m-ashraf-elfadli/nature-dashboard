@@ -36,6 +36,8 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 import { AppDialogService } from '../../../shared/services/dialog.service';
 import { ServicesService } from '../../../services/services.service';
 import { environment } from '../../../../environments/environment';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CustomValidators } from '../../../core/validators/custom-validators.';
 
 export interface ServiceItemFormValue {
   title: string;
@@ -56,12 +58,15 @@ const STATUS_MAP = {
 
 const DIALOG_CONFIGS = {
   stage: {
-    header: 'Create New Stage',
+    headerKey: 'services.stage_form.create_title',
     component: StageFormComponent,
   },
-  value: { header: 'Create New Value', component: ValueFormComponent },
+  value: {
+    headerKey: 'services.value_form.create_title',
+    component: ValueFormComponent,
+  },
   result: {
-    header: 'Create New Results & Impacts',
+    headerKey: 'services.result_form.create_title',
     component: ResultsFormComponent,
   },
 } as const;
@@ -81,13 +86,14 @@ const DIALOG_CONFIGS = {
     EmptyStateActionComponent,
     SettingsComponent,
     MiniTableComponent,
+    TranslateModule,
   ],
   templateUrl: './service-form.component.html',
   styleUrl: './service-form.component.scss',
   providers: [AppDialogService],
 })
 export class ServiceFormComponent implements OnInit, AfterViewInit {
-  pageTitle = 'Add New Service';
+  pageTitle = '';
   serviceForm!: FormGroup;
   serviceId!: string;
   isEditMode = false;
@@ -128,11 +134,13 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
     this.previousLanguage = this.currentLanguage;
+    this.setPageTitle();
 
     // Set current language from localStorage
     const storedLang = localStorage.getItem('app_lang');
@@ -145,11 +153,16 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
       if (id) {
         this.isEditMode = true;
         this.serviceId = id;
-        this.pageTitle = 'Update Service';
+        this.setPageTitle();
         this.loadService(id, this.currentLanguage);
       } else {
         this.updateLanguageStatus(this.currentLanguage, 'ongoing');
       }
+    });
+
+    // Subscribe to language changes
+    this.translate.onLangChange.subscribe(() => {
+      this.setPageTitle();
     });
   }
 
@@ -158,18 +171,59 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
     this.updateSettingsComponent();
   }
 
+  private setPageTitle(): void {
+    this.pageTitle = this.isEditMode
+      ? this.translate.instant('services.form.update_title')
+      : this.translate.instant('services.form.title');
+  }
+
   buildForm(): void {
     this.serviceForm = this.fb.group({
-      name: ['', Validators.required],
-      tagline: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
+      tagline: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
       status: [1],
       steps: this.fb.array([], this.atLeastOneStepValidator()),
       values: this.fb.array([]),
       impacts: this.fb.array([]),
       benefitEnabled: [true],
-      benefitTitle: ['', Validators.required],
-      benefitTagline: ['', Validators.required],
-      benefitBody: ['', Validators.required],
+      benefitTitle: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
+      benefitTagline: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
+      benefitBody: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
       benefitInsights: this.fb.array([this.createInsightGroup()]),
     });
 
@@ -209,8 +263,14 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
   private createInsightGroup(data?: any): FormGroup {
     return this.fb.group({
       id: [data?.id],
-      metricTitle: [data?.metricTitle || ''],
-      metricNumber: [data?.metricNumber || ''],
+      metricTitle: [
+        data?.metricTitle || '',
+        [Validators.minLength(3), Validators.maxLength(50)],
+      ],
+      metricNumber: [
+        data?.metricNumber || '',
+        [CustomValidators.numericOnly(), CustomValidators.minValue(0)],
+      ],
     });
   }
 
@@ -339,7 +399,11 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
     fields.forEach((field) => {
       const control = this.serviceForm.get(field);
       if (enabled) {
-        control?.setValidators([Validators.required]);
+        control?.setValidators([
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ]);
         control?.enable();
       } else {
         control?.clearValidators();
@@ -392,7 +456,7 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
 
   get stepsError(): string {
     if (this.stagesArray.hasError('required') && this.stagesArray.touched) {
-      return 'At least one service stage is required';
+      return this.translate.instant('services.form.stages.error_required');
     }
     return '';
   }
@@ -413,9 +477,57 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
   }
 
   getFieldError(fieldName: string): string {
-    return this.serviceForm.get(fieldName)?.hasError('required')
-      ? 'This field is required'
-      : '';
+    const field = this.serviceForm.get(fieldName);
+    if (!field || !field.errors) return '';
+
+    if (field.hasError('required')) {
+      return this.translate.instant(
+        `services.form.validation.${fieldName}_required`,
+      );
+    }
+    if (field.hasError('minlength')) {
+      return this.translate.instant(
+        `services.form.validation.${fieldName}_min`,
+      );
+    }
+    if (field.hasError('maxlength')) {
+      return this.translate.instant(
+        `services.form.validation.${fieldName}_max`,
+      );
+    }
+    return '';
+  }
+
+  getInsightFieldError(index: number, fieldName: string): string {
+    const control = this.benefitInsightsArray.at(index).get(fieldName);
+    if (!control || !control.errors || !control.touched) return '';
+
+    if (control.hasError('minlength')) {
+      return this.translate.instant(
+        `services.form.benefits.insights.${fieldName}_min`,
+      );
+    }
+    if (control.hasError('maxlength')) {
+      return this.translate.instant(
+        `services.form.benefits.insights.${fieldName}_max`,
+      );
+    }
+    if (control.hasError('numericOnly')) {
+      return this.translate.instant(
+        'services.form.benefits.insights.number_invalid',
+      );
+    }
+    if (control.hasError('minValue')) {
+      return this.translate.instant(
+        'services.form.benefits.insights.number_min',
+      );
+    }
+    return '';
+  }
+
+  isInsightFieldInvalid(index: number, fieldName: string): boolean {
+    const control = this.benefitInsightsArray.at(index).get(fieldName);
+    return !!(control?.invalid && control.touched);
   }
 
   private createItemGroup(item: ServiceItemFormValue): FormGroup {
@@ -484,7 +596,7 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
           : this.serviceResultsArray;
 
     const ref = this.dialogService.open(config.component, {
-      header: config.header,
+      header: this.translate.instant(config.headerKey),
       width: '600px',
     });
 
@@ -590,7 +702,7 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
         if (!this.serviceId && response?.result?.id) {
           this.serviceId = response.result.id;
           this.isEditMode = true;
-          this.pageTitle = 'Edit Service';
+          this.setPageTitle();
         }
 
         this.updateLanguageStatus(lang, 'completed');
@@ -660,14 +772,13 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
     oldLang: string;
   }): void {
     const ref = this.dialogService.open(ConfirmDialogComponent, {
-      header: 'Change Language',
+      header: this.translate.instant('projects.form.language_dialog.header'),
       width: '500px',
       data: {
-        title: 'Unsaved Changes?',
-        subtitle:
-          'You have unsaved changes in the current language. Do you want to save them before switching?',
-        confirmText: 'Save Changes',
-        cancelText: 'Discard Changes',
+        title: this.translate.instant('projects.form.language_dialog.header'),
+        subtitle: this.translate.instant('projects.form.language_dialog.desc'),
+        confirmText: this.translate.instant('common.save'),
+        cancelText: this.translate.instant('common.discard'),
         confirmSeverity: 'success',
         cancelSeverity: 'cancel',
         showCancel: true,
@@ -712,7 +823,7 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
         if (!this.serviceId && response?.result?.id) {
           this.serviceId = response.result.id;
           this.isEditMode = true;
-          this.pageTitle = 'Edit Service';
+          this.setPageTitle();
         }
 
         this.updateLanguageStatus(currentLang, 'completed');

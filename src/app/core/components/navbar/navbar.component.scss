@@ -1,7 +1,7 @@
 :host {
   .p-select {
     border-radius: 12px;
-    border: 1px solid var(--Colors-Neutral-450, #EFF1F5);
+    border: 1px solid var(--Colors-Neutral-450, #eff1f5);
     box-shadow: 0 1px 2px 0 rgba(146, 146, 146, 0.05);
     padding: 8px 12px;
   }
@@ -21,15 +21,15 @@
 }
 
 .navbar {
-  border-bottom: 1px solid var(--Color-Neutral-400, #DEDEDF);
-  background: var(--Color-Neutral-white, #FFF);
+  border-bottom: 1px solid var(--Color-Neutral-400, #dededf);
+  background: var(--Color-Neutral-white, #fff);
   padding: 16px 24px 16px 32px;
   position: relative;
   z-index: 100;
   flex-shrink: 0;
 
-  @media(max-width: 768px) {
-    padding: 0
+  @media (max-width: 768px) {
+    padding: 0;
   }
 }
 
@@ -57,8 +57,6 @@
     border-radius: 2px;
     transition: all 0.3s ease;
   }
-
-
 }
 
 .navbar-logo {
@@ -110,7 +108,6 @@
   cursor: pointer;
 
   .user-info {
-
     .user-name {
       overflow: hidden;
       color: var(--Color-Neutral-Black, #000);
@@ -181,7 +178,7 @@
     text-decoration: none;
     font-size: 0.95rem;
     transition: all 0.2s ease;
-    border-bottom: 1px solid #E4E7EC;
+    border-bottom: 1px solid #e4e7ec;
     cursor: pointer;
 
     &:last-child {
@@ -218,7 +215,6 @@
     flex: 1;
     min-width: 0;
 
-
     h1 {
       font-size: 20px;
       margin: 0;
@@ -228,7 +224,6 @@
   .navbar-right {
     gap: 0.5rem;
   }
-
 
   .user-profile {
     .user-info {

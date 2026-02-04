@@ -1,15 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-form-actions',
-  imports: [SelectModule, FormsModule, CommonModule],
+  imports: [SelectModule, FormsModule, CommonModule, TranslateModule],
   templateUrl: './form-actions.component.html',
   styleUrl: './form-actions.component.scss',
 })
-export class FormActionsComponent {
+export class FormActionsComponent implements OnInit {
+  private readonly translate = inject(TranslateService);
+
   @Input() editMode: boolean = false;
   @Input() isFormValid: boolean = false;
   @Output() discard = new EventEmitter<any>();
@@ -89,5 +99,10 @@ export class FormActionsComponent {
       newLang,
       oldLang,
     });
+  }
+
+  getLanguageLabel(code: string): string {
+    const lang = this.languages.find((l) => l.code === code);
+    return lang ? lang.label : '';
   }
 }

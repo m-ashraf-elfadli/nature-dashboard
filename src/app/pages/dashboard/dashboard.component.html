@@ -2,8 +2,8 @@
   <app-page-header></app-page-header>
   <div class="content-wrapper">
     <div class="page-title">
-      <h2>Welcome back, {{userName}}</h2>
-      <p>Here's what's happening with your projects today.</p>
+      <h2>{{ 'dashboard.welcome' | translate: {name: userName} }}</h2>
+      <p>{{ 'dashboard.subtitle' | translate }}</p>
     </div>
 
     <div class="cards">
@@ -11,7 +11,7 @@
         <app-card-total [icon]="card.icon" [title]="card.title" [count]="card.count"></app-card-total>
       </div>
     </div>
-    <h2 class="table-title">Latest Projects</h2>
+    <h2 class="table-title">{{ 'dashboard.latest_projects' | translate }}</h2>
     <app-reusable-table [data]="data()" [config]="config" [actions]="actions" [totalRecords]="totalRecords()"
       [filterItems]="filterItems" [emptyStateInfo]="emptyStateInfo" (onServerSideFilterChange)="onFilterChange($event)"
       (paginationChange)="onPaginationChange($event)">

@@ -1,29 +1,40 @@
 <form [formGroup]="form">
   <div class="our-field">
-    <label for="valueTitle">Title
+    <label for="valueTitle">
+      {{ 'services.value_form.title_label' | translate }}
       <span class="required">*</span>
     </label>
-    <input id="valueTitle" pInputText formControlName="title" placeholder="Enter value title.." />
+    <input id="valueTitle" pInputText formControlName="title"
+      [placeholder]="'services.value_form.title_placeholder' | translate" [class.error]="isFieldInvalid('title')" />
+    <small class="error-message" *ngIf="isFieldInvalid('title')">
+      {{ getErrorMessage('title') }}
+    </small>
   </div>
 
   <div class="our-field">
-    <label for="valueDescription">Description
+    <label for="valueDescription">
+      {{ 'services.value_form.description_label' | translate }}
       <span class="required">*</span>
     </label>
-    <input id="valueDescription" pInputText formControlName="description" placeholder="Enter value description" />
+    <input id="valueDescription" pInputText formControlName="description"
+      [placeholder]="'services.value_form.description_placeholder' | translate"
+      [class.error]="isFieldInvalid('description')" />
+    <small class="error-message" *ngIf="isFieldInvalid('description')">
+      {{ getErrorMessage('description') }}
+    </small>
   </div>
 
   <div class="our-field">
-    <label for="tools">Tools Used</label>
+    <label for="tools">{{ 'services.value_form.tools_label' | translate }}</label>
     <div class="tools-input-wrapper">
       <input id="tools" pInputText [(ngModel)]="toolInput" [ngModelOptions]="{ standalone: true }"
-        placeholder="Enter tool name" (keyup.enter)="addTool()" />
+        [placeholder]="'services.value_form.tools_placeholder' | translate" (keyup.enter)="addTool()" />
       <button type="button" class="add-another" (click)="addTool()">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
           <path d="M4.5 9H13.5" stroke="#82C672" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M9 13.5V4.5" stroke="#82C672" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span>Add</span>
+        <span>{{ 'services.value_form.tools_add' | translate }}</span>
       </button>
     </div>
     <div class="tools-badges" *ngIf="toolsArray.length > 0">
@@ -47,7 +58,13 @@
     </div>
   </div>
 
-  <button label="Save" class="action-btn" (click)="submit()">
-    <span>Save</span>
-  </button>
+  <div class="custom-btns-container">
+    <button type="button" (click)="cancel()" class="custom-btn btn-white">
+      <span>{{ 'services.value_form.cancel' | translate }}</span>
+    </button>
+    <button class="action-btn" [disabled]="form.invalid" (click)="submit()">
+      <span>{{ isEditMode ? ('services.value_form.update' | translate) : ('services.value_form.save' | translate)
+        }}</span>
+    </button>
+  </div>
 </form>

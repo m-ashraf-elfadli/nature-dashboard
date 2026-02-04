@@ -1,7 +1,7 @@
 .sidebar {
   width: 242px;
   background: white;
-  border-right: 1px solid #DEDEDF;
+  border-right: 1px solid #dededf;
   height: 100vh;
   position: fixed;
   left: 0;
@@ -11,8 +11,7 @@
   flex-direction: column;
   transition: width 0.3s ease;
 
-  .logo-img
-  {
+  .logo-img {
     max-width: 96px;
   }
 
@@ -78,8 +77,8 @@
 
 .collapse-btn {
   border-radius: 8px;
-  border: 1px solid var(--Neutral-Gray-200, #E4E7EC);
-  background: var(--Support-White, #FFF);
+  border: 1px solid var(--Neutral-Gray-200, #e4e7ec);
+  background: var(--Support-White, #fff);
   transition: all 0.2s ease;
   display: flex;
   padding: 4px 5px 4px 3px;
@@ -96,8 +95,6 @@
   &:hover {
     background-color: #f5f5f5;
   }
-
-  
 }
 
 .nav-menu {
@@ -105,8 +102,7 @@
   flex-direction: column;
   gap: 8px;
 
-  .text-main
-  {
+  .text-main {
     color: var(--Color-Neutral-500, #939598);
     font-size: 14px;
     font-style: normal;
@@ -126,34 +122,29 @@
   transition: all 0.2s ease;
   position: relative;
   min-width: fit-content;
-  
 
-    .nav-label 
-    {
-    color: var(--Color-Primary-1000, #2E4528);
+  .nav-label {
+    color: var(--Color-Primary-1000, #2e4528);
     font-size: var(--Font-Size-2Xs, 16px);
     font-style: normal;
     font-weight: var(--Font-Weight-Regular, 400);
-    }
-    .nav-icon {
-        height: 20px;
-    }
+  }
+  .nav-icon {
+    height: 20px;
+  }
   &:hover {
     background-color: #f5f5f5;
 
-    .nav-label 
-    {
-    color: #2d7d5e;
+    .nav-label {
+      color: #2d7d5e;
     }
-    
   }
 
   &.active {
-    background: var(--Color-Primary-100, #F3F9F1);
-    .nav-label 
-    {
-    color: var(--Color-Primary-600, #689E5B);
-    font-weight: 600;
+    background: var(--Color-Primary-100, #f3f9f1);
+    .nav-label {
+      color: var(--Color-Primary-600, #689e5b);
+      font-weight: 600;
     }
   }
 
@@ -166,12 +157,12 @@
 }
 
 .sidebar-footer {
-    padding: 16px 16px 24px 16px;
-    border-top: 1px solid #E4E7EC;
-    text-align: center;
-    width: 80%;
-    margin: auto;
-    transition: width 0.3s ease;
+  padding: 16px 16px 24px 16px;
+  border-top: 1px solid #e4e7ec;
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  transition: width 0.3s ease;
 }
 
 .footer-section {
@@ -180,9 +171,8 @@
   gap: 0.5rem;
   justify-content: space-between;
 
-  p 
-  {
-    color: var(--Color-Primary-1000, #2E4528);
+  p {
+    color: var(--Color-Primary-1000, #2e4528);
     font-size: var(--Font-Size-XS, 14px);
     font-style: normal;
     font-weight: var(--Font-Weight-Regular, 400);
@@ -204,7 +194,6 @@
   justify-content: center;
 
   svg {
-
     cursor: pointer;
     transition: transform 0.2s ease;
 
@@ -265,16 +254,12 @@
     box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
     z-index: 98;
 
-    
-
     &.show-mobile {
       left: 0;
     }
 
     &.collapsed {
       width: 70px;
-
-      
 
       .nav-label {
         display: none;
@@ -324,7 +309,7 @@ html:lang(ar) :host {
   .sidebar {
     left: auto;
     right: 0;
-    border-left: 1px solid #DEDEDF;
+    border-left: 1px solid #dededf;
     border-right: none;
   }
 
@@ -332,10 +317,13 @@ html:lang(ar) :host {
     right: auto;
     left: 0;
     transform: translateX(-50%);
+
+    svg {
+      transform: rotate(180deg);
+    }
   }
 
   .sidebar.collapsed {
-
     .collapse-btn {
       transform: translateX(-50%) rotate(180deg);
     }

@@ -1,22 +1,39 @@
 <form [formGroup]="form">
   <div class="our-field">
-    <label for="resultTitle">Title
+    <label for="resultTitle">
+      {{ 'services.result_form.title_label' | translate }}
       <span class="required">*</span>
     </label>
-    <input id="resultTitle" pInputText formControlName="title" placeholder="Enter result title.." />
+    <input id="resultTitle" pInputText formControlName="title"
+      [placeholder]="'services.result_form.title_placeholder' | translate" [class.error]="isFieldInvalid('title')" />
+    <small class="error-message" *ngIf="isFieldInvalid('title')">
+      {{ getErrorMessage('title') }}
+    </small>
   </div>
 
   <div class="our-field">
-    <label for="resultDescription">Description
+    <label for="resultDescription">
+      {{ 'services.result_form.description_label' | translate }}
       <span class="required">*</span>
     </label>
-    <input id="resultDescription" pInputText formControlName="description" placeholder="Enter result description" />
+    <input id="resultDescription" pInputText formControlName="description"
+      [placeholder]="'services.result_form.description_placeholder' | translate"
+      [class.error]="isFieldInvalid('description')" />
+    <small class="error-message" *ngIf="isFieldInvalid('description')">
+      {{ getErrorMessage('description') }}
+    </small>
   </div>
 
   <app-gallery-upload [multiple]="false" formControlName="image" (removed)="onImageRemoved()"
     style="width: 100%"></app-gallery-upload>
 
-  <button (click)="submit()" class="action-btn">
-    <span>Save</span>
-  </button>
+  <div class="custom-btns-container">
+    <button type="button" (click)="cancel()" class="custom-btn btn-white">
+      <span>{{ 'services.result_form.cancel' | translate }}</span>
+    </button>
+    <button class="action-btn" [disabled]="form.invalid" (click)="submit()">
+      <span>{{ isEditMode ? ('services.result_form.update' | translate) : ('services.result_form.save' | translate)
+        }}</span>
+    </button>
+  </div>
 </form>
