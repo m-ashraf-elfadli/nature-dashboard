@@ -85,6 +85,8 @@ export class ServicesComponent {
       field: 'status',
       header: 'projects.list.table_headers.status',
       type: 'status',
+      statusCallback: (row: Project, value: boolean, e: Event) =>
+        this.changeStatus(row, value, e),
     },
   ];
 
@@ -199,5 +201,8 @@ export class ServicesComponent {
         }
       }
     });
+  }
+  changeStatus(row: Project, value: boolean, e: Event) {
+    this.service.changeStatus(row.id, value).subscribe();
   }
 }

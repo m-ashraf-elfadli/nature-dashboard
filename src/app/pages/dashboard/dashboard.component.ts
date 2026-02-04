@@ -115,9 +115,22 @@ export class DashboardComponent implements OnInit {
       type: 'text',
     },
     {
+      field: 'services',
+      header: 'projects.list.table_headers.services',
+      type: 'chips-group',
+    },
+    {
+      field: 'localeComplete',
+      header: 'projects.list.table_headers.locale',
+      type: 'languages-chips',
+    },
+    {
       field: 'status',
       header: 'projects.list.table_headers.status',
       type: 'status',
+
+      statusCallback: (row: Project, value: boolean, e: Event) =>
+        this.changeStatus(row, value, e),
     },
   ];
 
@@ -311,5 +324,8 @@ export class DashboardComponent implements OnInit {
   }
   addNewProject() {
     this.router.navigate(['/projects/add']);
+  }
+  changeStatus(row: Project, value: boolean, e: Event) {
+    this.projectsService.changeStatus(row.id, value).subscribe();
   }
 }
