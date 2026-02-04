@@ -588,7 +588,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
     // Store the languages
     this.previousLanguage = event.oldLang;
 
-    if (this.isEditMode) {
+    if (this.isEditMode && this.form.valid) {
       if (this.form.dirty) {
         this.showConfirmDialog(event.oldLang);
       } else {

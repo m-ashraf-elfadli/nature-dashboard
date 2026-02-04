@@ -404,10 +404,12 @@ export class CustomizeAwardSectionFormComponent
   }
 
   onLanguageChange(event: { newLang: string; oldLang: string }): void {
-    if (this.awardSectionForm.dirty) {
-      this.showLanguageChangeConfirmation(event);
-    } else {
-      this.switchLanguage(event.newLang);
+    if (this.awardSectionForm.valid) {
+      if (this.awardSectionForm.dirty) {
+        this.showLanguageChangeConfirmation(event);
+      } else {
+        this.switchLanguage(event.newLang);
+      }
     }
   }
 

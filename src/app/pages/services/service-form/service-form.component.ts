@@ -614,6 +614,7 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
   // Delete handlers
   onDeleteStage(index: number): void {
     this.removeFromArray(this.stagesArray, index);
+    this.stagesArray.markAllAsTouched();
   }
 
   onDeleteServiceValue(index: number): void {
@@ -748,7 +749,7 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
   }
 
   onLanguageChange(event: { newLang: string; oldLang: string }): void {
-    if (this.isEditMode) {
+    if (this.isEditMode && this.serviceForm.valid) {
       if (this.serviceForm.dirty) {
         this.showLanguageChangeConfirmation(event);
       } else {

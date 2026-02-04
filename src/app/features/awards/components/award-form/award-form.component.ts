@@ -334,7 +334,7 @@ export class AwardFormComponent implements OnInit, AfterViewInit {
     // Store the languages
     this.previousLanguage = event.oldLang;
 
-    if (this.isEditMode) {
+    if (this.isEditMode && this.form.valid) {
       if (this.form.dirty) {
         this.showLanguageChangeConfirmation(event);
       } else {
