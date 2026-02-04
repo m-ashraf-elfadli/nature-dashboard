@@ -200,7 +200,7 @@ export class ProjectsComponent implements OnInit {
     this.filterItems = [
       {
         type: 'search',
-        name: 'name',
+        name: 'value',
         placeholder: 'general.search_input_table_placeholder',
       },
       {

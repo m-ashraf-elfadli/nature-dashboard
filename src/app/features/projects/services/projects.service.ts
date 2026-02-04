@@ -42,7 +42,7 @@ export class ProjectsService {
       .set('size', pagination.size);
 
     if (search) {
-      params = params.set('key', search);
+      params = params.set('value', search);
     }
     if (filter) {
       Object.keys(filter).forEach((filterKey) => {
