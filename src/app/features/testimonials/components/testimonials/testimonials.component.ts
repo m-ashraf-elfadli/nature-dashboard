@@ -40,7 +40,6 @@ import { ClientFormActions } from '../../../clients/models/clients.model';
   styleUrl: './testimonials.component.scss',
 })
 export class TestimonialsComponent implements OnInit {
-
   @ViewChild(TestimonialsFormComponent)
   testimonialForm?: TestimonialsFormComponent;
 
@@ -58,9 +57,8 @@ export class TestimonialsComponent implements OnInit {
   };
   filterObj: any;
   emptyStateInfo = {
-    label: 'Create New Testimonial',
-    description:
-      'No Data to preview, start create your first testimonial to appear here!',
+    label: 'empty_state.testimonials.create_btn',
+    description: 'empty_state.testimonials.no_data',
     callback: () => this.showDialog(),
   };
 
@@ -232,32 +230,30 @@ export class TestimonialsComponent implements OnInit {
         this.handleSaveAndCreateNew(event.formData);
         break;
 
-      default: return
-
+      default:
+        return;
     }
   }
-  submitForm(payload:any,isEditMode:boolean,action:ClientFormActions){
+  submitForm(payload: any, isEditMode: boolean, action: ClientFormActions) {
     if (isEditMode) {
-      this.service
-        .update(this.currentTestimonialId!, payload)
-        .subscribe({
-          next: () => {
-            if(action === 'save'){
-              this.visible = false;
-            }
-            this.currentTestimonialId = undefined;
-            this.testimonialForm?.resetForm();
-            this.loadTestimonials();
-          },
-          error: (err) => {
-            console.error('❌ Update error:', err);
-          },
-        });
+      this.service.update(this.currentTestimonialId!, payload).subscribe({
+        next: () => {
+          if (action === 'save') {
+            this.visible = false;
+          }
+          this.currentTestimonialId = undefined;
+          this.testimonialForm?.resetForm();
+          this.loadTestimonials();
+        },
+        error: (err) => {
+          console.error('❌ Update error:', err);
+        },
+      });
     } else {
       // Create new
       this.service.create(payload).subscribe({
         next: (res) => {
-          if(action === 'save'){
+          if (action === 'save') {
             this.visible = false;
           }
           this.currentTestimonialId = undefined;
@@ -271,16 +267,16 @@ export class TestimonialsComponent implements OnInit {
     }
   }
   private handleSave(payload: any) {
-    this.submitForm(payload,!!this.currentTestimonialId,'save');
+    this.submitForm(payload, !!this.currentTestimonialId, 'save');
   }
 
   private handleSaveAndCreateNew(payload: any) {
-    this.submitForm(payload,!!this.currentTestimonialId,'saveAndCreateNew');
+    this.submitForm(payload, !!this.currentTestimonialId, 'saveAndCreateNew');
   }
 
   onDialogHide() {
     this.visible = false;
     this.currentTestimonialId = undefined;
-    this.testimonialForm?.resetForm()
+    this.testimonialForm?.resetForm();
   }
 }

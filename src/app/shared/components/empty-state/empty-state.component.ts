@@ -8,7 +8,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrl: './empty-state.component.scss',
 })
 export class EmptyStateComponent {
-  @Input() title?: string = 'No Data to preview yet!';
+  @Input() title?: string = 'empty_state.title';
   @Input() description?: string =
     'No Data to preview, start create your first project to appear here!';
   @Input() buttonLabel?: string = 'Create New Project';

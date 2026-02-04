@@ -15,10 +15,10 @@
     "apply": "Apply",
     "cancel": "Cancel",
     "delete": "Delete",
-    "arabic":"Arabic",
-    "english":"English",
-    "add":"Add",
-    "form_toast_msg":"You are currently editing Website {{currentContent}} content. Changes here do not affect the {{previousContent}} version."
+    "arabic": "Arabic",
+    "english": "English",
+    "add": "Add",
+    "form_toast_msg": "You are currently editing Website {{currentContent}} content. Changes here do not affect the {{previousContent}} version."
   },
   "validation": {
     "required": "This field is required",
@@ -114,9 +114,9 @@
         "to": "To date is required",
         "country": "Country is required",
         "city": "City is required",
-        "gallery":"You have to add at least 1 image to gallery",
-        "image_after":"Image after is required",
-        "image_before":"Image before is required"
+        "gallery": "You have to add at least 1 image to gallery",
+        "image_after": "Image after is required",
+        "image_before": "Image before is required"
       },
       "btns": {
         "add_result": "Add another section",
@@ -157,10 +157,10 @@
         "organizations": "Organizations Logos",
         "award": "Award Image"
       },
-      "validation":{
-        "name":"Name is required",
-        "date":"Date is Required",
-        "desc":"Description is Required"
+      "validation": {
+        "name": "Name is required",
+        "date": "Date is Required",
+        "desc": "Description is Required"
       },
       "labels": {
         "name": "Award name",
@@ -370,7 +370,7 @@
   },
   "testimonials": {
     "list": {
-      "breadcurmb":"Testimonials",
+      "breadcurmb": "Testimonials",
       "page_title": "All Testimonials",
       "table_headers": {
         "name": "Name",
@@ -384,7 +384,7 @@
     },
     "form": {
       "title": "Add New Testimonial",
-      "edit_title":"Edit Testimonial",
+      "edit_title": "Edit Testimonial",
       "labels": {
         "client_name_en": "Client name (English)",
         "client_name_ar": "Client name (Arabic)",
@@ -511,8 +511,26 @@
   },
   "empty_state": {
     "title": "No Data to preview yet!",
-    "create_btn": "Create New Project",
-    "no_data": "No Date to preview, start create your first project to appear here!"
+    "projects": {
+      "create_btn": "Create New Project",
+      "no_data": "No Date to preview, start create your first project to appear here!"
+    },
+    "services": {
+      "create_btn": "Create New Service",
+      "no_data": "No Date to preview, start create your first service to appear here!"
+    },
+    "clients": {
+      "create_btn": "Create New Client",
+      "no_data": "No Date to preview, start create your first client to appear here!"
+    },
+    "awards": {
+      "create_btn": "Create New Award",
+      "no_data": "No Date to preview, start create your first award to appear here!"
+    },
+    "testimonials": {
+      "create_btn": "Create New Testimonial",
+      "no_data": "No Date to preview, start create your first testimonial to appear here!"
+    }
   },
   "breadcrumb": {
     "dashboard": "Dashboard"

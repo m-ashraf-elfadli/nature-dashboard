@@ -52,9 +52,8 @@ export class ClientsComponent implements OnInit {
     size: 10,
   };
   emptyStateInfo = {
-    label: 'Create New Client',
-    description:
-      'No Data to preview, start create your first client to appear here!',
+    label: 'empty_state.clients.create_btn',
+    description: 'empty_state.clients.no_data',
     callback: () => this.showDialog(),
   };
   ngOnInit() {

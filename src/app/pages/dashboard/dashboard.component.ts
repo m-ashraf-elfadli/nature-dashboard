@@ -60,8 +60,8 @@ export class DashboardComponent implements OnInit {
   cards: any[] = [];
 
   emptyStateInfo = {
-    label: 'empty_state.create_project',
-    description: 'empty_state.no_data',
+    label: 'empty_state.projects.create_btn',
+    description: 'empty_state.projects.no_data',
     callback: () => this.addNewProject(),
   };
 

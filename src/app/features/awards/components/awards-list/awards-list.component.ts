@@ -37,7 +37,7 @@ export class AwardsListComponent implements OnInit {
   private readonly service = inject(AwardsService);
   private readonly router = inject(Router);
   private readonly dialogService = inject(DialogService);
-  private readonly translate = inject(TranslateService)
+  private readonly translate = inject(TranslateService);
 
   public data: WritableSignal<Award[]> = signal([]);
   public totalRecords: WritableSignal<number> = signal(0);
@@ -70,14 +70,14 @@ export class AwardsListComponent implements OnInit {
       field: 'status',
       header: 'awards.list.table_headers.status',
       type: 'status',
-      statusCallback:(row:Award,value:boolean,e:Event) => this.changeStatus(row,value,e)
+      statusCallback: (row: Award, value: boolean, e: Event) =>
+        this.changeStatus(row, value, e),
     },
   ];
 
   emptyStateInfo = {
-    label: 'Create New Award',
-    description:
-      'No Data to preview, start create your first award to appear here!',
+    label: 'empty_state.awards.create_btn',
+    description: 'empty_state.awards.no_data',
     callback: () => this.addNew(),
   };
   actions: TableAction<Award>[] = [
@@ -152,8 +152,8 @@ export class AwardsListComponent implements OnInit {
       },
     });
   }
-  changeStatus(row:Award,value:boolean,e:Event){
-    this.service.changeStatus(row.id,value).subscribe()
+  changeStatus(row: Award, value: boolean, e: Event) {
+    this.service.changeStatus(row.id, value).subscribe();
   }
   onPaginationChange(event: PaginationObj) {
     this.paginationObj = event;
