@@ -113,7 +113,7 @@ export class ServicesComponent {
     },
     {
       type: 'btn',
-      label: 'Import CSV',
+      label: 'general.import',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
     },
