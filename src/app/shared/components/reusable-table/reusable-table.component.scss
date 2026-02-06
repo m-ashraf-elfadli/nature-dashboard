@@ -76,13 +76,6 @@
                 }
             }
             .p-datatable-thead > tr > th{
-                &:first-child{
-                    border-top-left-radius: 8px;
-
-                }
-                &:last-child{
-                    border-top-right-radius: 8px;
-                }
                 background: var(--Color-Secondary-100, #EDF3F8);
             }
         }

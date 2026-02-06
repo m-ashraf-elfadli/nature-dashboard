@@ -56,6 +56,11 @@ html:lang(ar) :host .app-layout {
     margin-left: 0;
     margin-right: 242px;
     transition: margin-left 0.3s ease;
+    &{
+      @media screen and (max-width:768px) {
+        margin-right: 0;
+      }
+    }
   }
   &.sidebar-collapsed .app-right {
     margin-left: 0;

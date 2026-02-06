@@ -1,12 +1,12 @@
 <div class="table-footer">
 
-<div class="info">
-  {{ 'general.pagination_info' | translate: { 
-      first: (page * rows + 1), 
-      last: getLastItemIndex(), 
-      total: totalRecords 
-  } }}
-</div>
+  <div class="info">
+    {{ 'general.pagination_info' | translate: { 
+        first: (page * rows + 1), 
+        last: getLastItemIndex(), 
+        total: totalRecords 
+    } }}
+  </div>
 
   <div class="pagination">
     <button class="pagination-table-btn" (click)="prev()" [disabled]="page === 0">
