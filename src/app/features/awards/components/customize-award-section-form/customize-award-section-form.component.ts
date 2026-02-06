@@ -4,6 +4,7 @@ import {
   ViewChild,
   AfterViewInit,
   ChangeDetectorRef,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,6 +28,7 @@ import { AppDialogService } from '../../../../shared/services/dialog.service';
 import { CustomizeService } from '../../../../services/customize.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AwardsSliderComponent } from '../../../../shared/components/awards-slider/awards-slider.component';
+import { ApiService } from '../../../../core/services/api.service';
 
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
@@ -57,7 +59,7 @@ const STATUS_MAP = {
   providers: [AppDialogService],
 })
 export class CustomizeAwardSectionFormComponent
-  implements OnInit, AfterViewInit
+  implements OnInit, OnDestroy, AfterViewInit
 {
   pageTitle = 'Customize Award Section';
   awardSectionForm!: FormGroup;
@@ -88,6 +90,7 @@ export class CustomizeAwardSectionFormComponent
     private customizeService: CustomizeService,
     private router: Router,
     private route: ActivatedRoute,
+    private apiService: ApiService,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
   ) {}
@@ -115,6 +118,10 @@ export class CustomizeAwardSectionFormComponent
   ngAfterViewInit() {
     // Update settings component after view is initialized
     this.updateSettingsComponent();
+  }
+
+  ngOnDestroy(): void {
+    this.apiService.setCulture(localStorage.getItem('app_lang') || this.translate.getCurrentLang())
   }
 
   private setPageTitle(): void {

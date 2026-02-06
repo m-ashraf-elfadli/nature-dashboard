@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class ApiService {
 
   private readonly baseUrl = environment.baseUrl;
   private readonly http = inject(HttpClient);
-
-  private culture: string = localStorage.getItem('app_lang') || 'en';
+  private readonly translate = inject(TranslateService);
+  private culture: string = localStorage.getItem('app_lang') ||this.translate.getCurrentLang() || 'en';
 
   // =============================
   // Culture

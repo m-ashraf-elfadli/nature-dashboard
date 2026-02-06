@@ -4,6 +4,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
   AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -38,6 +39,7 @@ import { ServicesService } from '../../../services/services.service';
 import { environment } from '../../../../environments/environment';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CustomValidators } from '../../../core/validators/custom-validators.';
+import { ApiService } from '../../../core/services/api.service';
 
 export interface ServiceItemFormValue {
   title: string;
@@ -92,7 +94,7 @@ const DIALOG_CONFIGS = {
   styleUrl: './service-form.component.scss',
   providers: [AppDialogService],
 })
-export class ServiceFormComponent implements OnInit, AfterViewInit {
+export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
   pageTitle = '';
   serviceForm!: FormGroup;
   serviceId!: string;
@@ -135,6 +137,7 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
+    private apiService: ApiService
   ) {}
 
   ngOnInit(): void {
@@ -169,6 +172,10 @@ export class ServiceFormComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // Update settings component after view is initialized
     this.updateSettingsComponent();
+  }
+
+  ngOnDestroy(): void {
+    this.apiService.setCulture(localStorage.getItem('app_lang') || this.translate.getCurrentLang())
   }
 
   private setPageTitle(): void {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { InputTextModule } from 'primeng/inputtext';
@@ -55,7 +55,7 @@ export interface OptionsFilter {
   styleUrl: './filters.component.scss'
 })
 
-export class FiltersComponent implements OnInit {
+export class FiltersComponent implements OnInit, OnChanges {
     @ViewChild('op') op!:Popover;
     private readonly fb = inject(FormBuilder);
     formFilter!: FormGroup;
@@ -66,6 +66,13 @@ export class FiltersComponent implements OnInit {
       this.initFilterForm();
       this.setInputsListeners();
     }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['filterConfig']) {
+      this.initFilterForm();
+      this.setInputsListeners();
+    }
+  }
 
   private initFilterForm() {
       const fields: any = {};

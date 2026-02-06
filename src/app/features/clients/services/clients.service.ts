@@ -39,6 +39,12 @@ export class ClientsService {
   delete(id: string): Observable<any> {
     return this.api.delete(`clients/${id}`);
   }
+
+  bulkDelete(ids: string[]): Observable<any> {
+    const payload = { ids };
+    return this.api.post('clients/actions/bulk-delete', payload);
+  }
+
   changeStatus(id: string, value: boolean) {
     this.apiService.setCulture(localStorage.getItem('app_lang') || 'en');
     let formData: FormData = new FormData();

@@ -24,7 +24,8 @@
     "change_lang_dialog_save":"Save Changes",
     "pagination_info":"Showing {{first}} to {{last}} of {{total}} entries",
     "show":"Show",
-    "entries":"entries"
+    "entries":"entries",
+    "delete_selected":"Delete Selected"
   },
   "projects": {
     "list": {
@@ -41,6 +42,10 @@
       "delete_dialog": {
         "header": "Delete Project?",
         "desc": "Are you sure want to delete this project? This action can't be undone."
+      },
+      "bulk_delete_dialog": {
+        "header": "Delete Projects?",
+        "desc": "Are you sure want to delete these {{count}} projects? This action can't be undone."
       },
       "btns": {
         "add_new": "Add new project",
@@ -145,6 +150,10 @@
       "delete_dialog": {
         "header": "Delete Award?",
         "desc": "Are you sure want to delete this award? This action can't be undone."
+      },
+      "bulk_delete_dialog": {
+        "header": "Delete Awards?",
+        "desc": "Are you sure want to delete these {{count}} Awards? This action can't be undone."
       }
     },
     "form": {
@@ -236,6 +245,10 @@
       "delete_dialog": {
         "header": "Delete Service",
         "desc": "Are you sure want to delete this service? This action can't be undone."
+      },
+      "bulk_delete_dialog": {
+        "header": "Delete Services?",
+        "desc": "Are you sure want to delete these {{count}} Services? This action can't be undone."
       }
     },
     "form": {
@@ -403,6 +416,14 @@
       },
       "btns": {
         "add_new": "Add New Testimonial"
+      },
+      "bulk_delete_dialog": {
+        "header": "Delete Testimonials?",
+        "desc": "Are you sure want to delete these {{count}} Testimonials? This action can't be undone."
+      },
+      "delete_dialog": {
+        "header": "Delete Testimonial?",
+        "desc": "Are you sure want to delete this Testimonial? This action can't be undone."
       }
     },
     "form": {
@@ -453,6 +474,14 @@
       },
       "btns": {
         "add_new": "Add new client"
+      },
+      "bulk_delete_dialog": {
+        "header": "Delete Clients?",
+        "desc": "Are you sure want to delete these {{count}} Clients? This action can't be undone."
+      },
+      "delete_dialog": {
+        "header": "Delete Client?",
+        "desc": "Are you sure want to delete this Clients? This action can't be undone."
       }
     },
     "form": {

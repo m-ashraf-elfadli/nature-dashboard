@@ -21,7 +21,7 @@ import {
   ClientFormActions,
   ClientFormEvent,
 } from '../../models/clients.model';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
@@ -42,13 +42,16 @@ import { DialogModule } from 'primeng/dialog';
 export class ClientsComponent implements OnInit, OnDestroy {
   private readonly service = inject(ClientsService);
   private readonly dialogService = inject(DialogService);
+  private readonly translate = inject(TranslateService);
 
   @ViewChild(ClientFormComponent)
   clientForm?: ClientFormComponent;
+  @ViewChild(ReusableTableComponent) reusableTableComponent!: ReusableTableComponent<Client>;
 
   visible = false;
   data: Client[] = [];
   totalRecords = 0;
+  selectedItems: Client[] = [];
 
   currentClientId?: string;
   confirmDialogRef?: DynamicDialogRef;
@@ -154,7 +157,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
     },
   ];
 
-
   showDialog() {
     this.currentClientId = undefined;
     this.visible = true;
@@ -170,31 +172,78 @@ export class ClientsComponent implements OnInit, OnDestroy {
   }
 
   delete(row: Client) {
-    const config: ConfirmationDialogConfig<Client> = {
-      title: 'clients.confirm.delete_title',
-      subtitle: 'clients.confirm.delete_subtitle',
-      icon: 'images/delete.svg',
-      confirmText: 'general.delete',
-      cancelText: 'general.cancel',
-      confirmSeverity: 'delete',
-      cancelSeverity: 'cancel',
-      data: row,
+    this.showDeleteConfirmDialog(row, 'delete');
+  }
+
+  bulkDelete() {
+    this.showDeleteConfirmDialog(this.selectedItems, 'bulk-delete');
+  }
+
+  selectionChange(e: Client[] | Client) {
+    this.selectedItems = Array.isArray(e) ? e : [e];
+    this.addAndHideBulkDeleteBtn();
+  }
+
+  addAndHideBulkDeleteBtn() {
+    const hasSelection = Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
+    const bulkDeleteBtn: FilterItems = {
+      label: 'general.delete_selected',
+      type: 'btn',
+      name: 'bulk-delete-btn',
+      btnIcon: 'pi pi-trash',
+      btnSeverity: 'white',
+      btnCallback: () => this.bulkDelete(),
     };
+    if (hasSelection) {
+      const withoutBulk = this.filterItems.filter((f) => f.name !== 'bulk-delete-btn');
+      this.filterItems = [bulkDeleteBtn, ...withoutBulk];
+    } else {
+      this.filterItems = this.filterItems.filter((f) => f.name !== 'bulk-delete-btn');
+    }
+  }
 
-    this.confirmDialogRef = this.dialogService.open(
-      ConfirmDialogComponent,
-      {
-        modal: true,
-        data: config,
-        width: '505px',
-        closable: false,
-        styleClass: 'confirm-dialog',
-      }
-    );
+  showDeleteConfirmDialog(dataToDelete: Client | Client[], actionType: 'delete' | 'bulk-delete' = 'delete') {
+    const header =
+      actionType === 'delete'
+        ? 'clients.list.delete_dialog.header'
+        : this.translate.instant('clients.list.bulk_delete_dialog.header');
+    const count = Array.isArray(dataToDelete) ? dataToDelete.length : 0;
+    const desc =
+      actionType === 'delete'
+        ? 'clients.list.delete_dialog.desc'
+        : this.translate.instant('clients.list.bulk_delete_dialog.desc', { count });
+    const data = dataToDelete;
 
-    this.confirmDialogRef.onClose.subscribe((res) => {
-      if (res?.action === 'confirm' && res.data?.id) {
-        this.performDelete(res.data.id);
+    this.confirmDialogRef = this.dialogService.open(ConfirmDialogComponent, {
+      modal: true,
+      data: {
+        title: header,
+        subtitle: desc,
+        icon: 'images/delete.svg',
+        confirmText: 'general.delete',
+        cancelText: 'general.cancel',
+        confirmSeverity: 'delete',
+        cancelSeverity: 'cancel',
+        showCancel: true,
+        data: data,
+      },
+      width: '505px',
+      closable: false,
+      styleClass: 'confirm-dialog',
+    });
+
+    this.confirmDialogRef.onClose.subscribe((product: { action: string; data: Client | Client[] }) => {
+      if (product && product.action === 'confirm') {
+        if (!Array.isArray(product.data)) {
+          this.performDelete(product.data.id);
+        } else {
+          const ids = product.data.map((c: Client) => c.id);
+          this.service.bulkDelete(ids).subscribe((_) => {
+            this.loadClients();
+            this.reusableTableComponent.selection = [];
+            this.selectedItems = [];
+          });
+        }
       }
     });
   }

@@ -3,6 +3,7 @@ import {
   inject,
   OnInit,
   signal,
+  ViewChild,
   WritableSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -34,13 +35,15 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
   styleUrl: './awards-list.component.scss',
 })
 export class AwardsListComponent implements OnInit {
+  @ViewChild(ReusableTableComponent) reusableTableComponent!:ReusableTableComponent<Award>;
   private readonly service = inject(AwardsService);
   private readonly router = inject(Router);
   private readonly dialogService = inject(DialogService);
   private readonly translate = inject(TranslateService);
 
-  public data: WritableSignal<Award[]> = signal([]);
-  public totalRecords: WritableSignal<number> = signal(0);
+  data: WritableSignal<Award[]> = signal([]);
+  selectedItems: Award[] = []
+  totalRecords: WritableSignal<number> = signal(0);
 
   paginationObj: PaginationObj = {
     page: 1,
@@ -146,6 +149,9 @@ export class AwardsListComponent implements OnInit {
       next: (res) => {
         this.data.set(res.result);
         this.totalRecords.set(res.total!);
+        // this.selectedItems = this.data()
+        //   .filter((d:Award) => this.selectedItems.some((s:Award)=> d.id === s.id))
+        this.addAndHideBulkDeleteBtn()
       },
       error: (err) => {
         console.error('Failed to load projects', err);
@@ -159,8 +165,29 @@ export class AwardsListComponent implements OnInit {
     this.paginationObj = event;
     this.fetchData(this.paginationObj);
   }
+  addAndHideBulkDeleteBtn(){
+    const hasSelection = Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
+    const bulkDeleteBtn: FilterItems = {
+      label: 'general.delete_selected',
+      type: 'btn',
+      name:'bulk-delete-btn',
+      btnIcon:"pi pi-trash",
+      btnSeverity: 'white',
+      btnCallback: () => this.bulkDelete(),
+    };
+    if (hasSelection) {
+      const withoutBulk = this.filterItems.filter((f) => f.name !== 'bulk-delete-btn');
+      this.filterItems = [bulkDeleteBtn, ...withoutBulk];
+    } else {
+      this.filterItems = this.filterItems.filter((f) => f.name !== 'bulk-delete-btn');
+    }
+  }
+  bulkDelete(){
+    this.showDeleteConfirmDialog(this.selectedItems,'bulk-delete')
+  }
   selectionChange(e: Award[] | Award) {
-    console.log('selected items', e);
+    this.selectedItems = Array.isArray(e) ? e : [e]
+    this.addAndHideBulkDeleteBtn();
   }
   onFilterChange(filter: any) {
     this.filterObj = filter;
@@ -173,31 +200,49 @@ export class AwardsListComponent implements OnInit {
     this.router.navigate(['/awards/edit', row.id]);
   }
   delete(row: Award, event?: Event) {
-    this.showConfirmDialog(row);
+    this.showDeleteConfirmDialog(row,'delete');
   }
-  showConfirmDialog(row: Award) {
+  showDeleteConfirmDialog(dataToDelete: Award | Award[], actionType: 'delete' | 'bulk-delete' = 'delete') {
+    const header =
+      actionType === 'delete'
+        ? 'awards.list.delete_dialog.header'
+        : this.translate.instant('awards.list.bulk_delete_dialog.header');
+    const count = Array.isArray(dataToDelete) ? dataToDelete.length : 0;
+    const desc =
+      actionType === 'delete'
+        ? 'awards.list.delete_dialog.desc'
+        : this.translate.instant('awards.list.bulk_delete_dialog.desc', { count });
+    const data = dataToDelete;
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
       width: '40vw',
       modal: true,
       data: {
-        title: 'awards.list.delete_dialog.header',
-        subtitle: 'awards.list.delete_dialog.desc',
+        title: header,
+        subtitle: desc,
         confirmText: 'general.delete',
         cancelText: 'general.cancel',
+        icon: 'images/delete.svg',
         confirmSeverity: 'delete',
         cancelSeverity: 'cancel',
         showCancel: true,
         showExtraButton: false,
-        data: row,
+        data: data,
       },
     });
-    this.ref.onClose.subscribe((product: { action: string; data: Award }) => {
-      if (product) {
-        if (product.action === 'confirm') {
+    this.ref.onClose.subscribe((product: { action: string; data: Award | Award[] }) => {
+      if (product && product.action === 'confirm') {
+        if (!Array.isArray(product.data)) {
           this.service.delete(product.data.id).subscribe({
             next: () => {
               this.fetchData(this.paginationObj);
             },
+          });
+        } else {
+          const ids = product.data.map((a: Award) => a.id);
+          this.service.bulkDelete(ids).subscribe((_) => {
+            this.fetchData(this.paginationObj);
+            this.reusableTableComponent.selection = [];
+            this.selectedItems = []
           });
         }
       }

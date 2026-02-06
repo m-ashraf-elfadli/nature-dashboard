@@ -47,7 +47,6 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.updateBreadcrumbs();
       });
-    console.log(this.breadcrumbs);
     // Update breadcrumbs on language change
     this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.updateBreadcrumbs();

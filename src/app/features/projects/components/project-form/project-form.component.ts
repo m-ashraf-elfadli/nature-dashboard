@@ -5,6 +5,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
   AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -36,6 +37,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ProjectById } from '../../models/projects.interface';
 import { environment } from '../../../../../environments/environment.prod';
+import { ApiService } from '../../../../core/services/api.service';
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
 const STATUS_MAP = {
@@ -67,11 +69,13 @@ const STATUS_MAP = {
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss',
 })
-export class ProjectFormComponent implements OnInit, AfterViewInit {
+export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(FormActionsComponent) formActionsComponent!: FormActionsComponent;
   private readonly dialogService = inject(DialogService);
   private readonly service = inject(ProjectsService);
   private readonly route = inject(ActivatedRoute);
+  private readonly translate = inject(TranslateService);
+  private readonly apiService = inject(ApiService);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -126,7 +130,9 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
+  ngOnDestroy(): void {
+    this.apiService.setCulture(localStorage.getItem('app_lang') || this.translate.getCurrentLang())
+  }
   ngAfterViewInit() {
     // Update settings component after view is initialized
     this.updateSettingsComponent();

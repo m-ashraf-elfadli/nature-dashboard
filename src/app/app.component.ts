@@ -15,19 +15,5 @@ import { MessageService } from 'primeng/api';
   providers: [DialogService],
 })
 export class AppComponent {
-  showDialog: any;
-  private readonly messageService = inject(MessageService);
-  onDeleteConfirmed() {
-    throw new Error('Method not implemented.');
-  }
-
   title = 'nature-dashboard';
-  test() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Operation completed successfully',
-      life: 3000,
-    });
-  }
 }

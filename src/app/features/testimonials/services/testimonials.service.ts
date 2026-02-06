@@ -56,6 +56,12 @@ export class TestimonialsService {
   delete(id: string): Observable<any> {
     return this.api.delete(`testimonials/${id}`);
   }
+
+  bulkDelete(ids: string[]): Observable<any> {
+    const payload = { ids };
+    return this.api.post('testimonials/actions/bulk-delete', payload);
+  }
+
   changeStatus(id: string, value: boolean) {
     this.apiService.setCulture(localStorage.getItem('app_lang') || 'en');
     let formData: FormData = new FormData();

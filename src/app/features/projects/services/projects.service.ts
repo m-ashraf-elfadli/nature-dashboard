@@ -73,6 +73,12 @@ export class ProjectsService {
   delete(id: string): Observable<any> {
     return this.apiService.delete(`${this.endpoint}/${id}`);
   }
+  bulkDelete(ids:string[]):Observable<any>{
+    let payload = {
+      ids
+    }
+    return this.apiService.post(`${this.endpoint}/actions/bulk-delete`,payload)
+  }
   getCountries(): Observable<PaginationResponse<DropDownOption>> {
     return this.apiService.get('countries');
   }

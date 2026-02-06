@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   model,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +18,7 @@ import {
 } from '@angular/forms';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { EditorModule } from 'primeng/editor';
@@ -29,6 +30,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 import { AwardsService } from '../../../../services/awards.service';
 import { environment } from '../../../../../environments/environment';
 import { Award } from '../../models/awards.interface';
+import { ApiService } from '../../../../core/services/api.service';
 
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
@@ -56,7 +58,7 @@ const STATUS_MAP = {
   templateUrl: './award-form.component.html',
   styleUrl: './award-form.component.scss',
 })
-export class AwardFormComponent implements OnInit, AfterViewInit {
+export class AwardFormComponent implements OnInit,OnDestroy, AfterViewInit {
   @ViewChild(FormActionsComponent) formActionsComponent!: FormActionsComponent;
   @ViewChild(SettingsComponent) settingsComponent!: SettingsComponent;
 
@@ -64,6 +66,8 @@ export class AwardFormComponent implements OnInit, AfterViewInit {
   private readonly service = inject(AwardsService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly apiService = inject(ApiService)
+  private readonly translate = inject(TranslateService);
   private readonly dialogService = inject(DialogService);
   private readonly cdr = inject(ChangeDetectorRef);
 
@@ -109,6 +113,9 @@ export class AwardFormComponent implements OnInit, AfterViewInit {
         this.updateLanguageStatus(this.currentLanguage, 'ongoing');
       }
     });
+  }
+  ngOnDestroy(): void {
+    this.apiService.setCulture(localStorage.getItem('app_lang') || this.translate.getCurrentLang())
   }
 
   ngAfterViewInit() {

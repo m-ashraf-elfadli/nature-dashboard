@@ -1,4 +1,4 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, ViewChild, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
@@ -9,11 +9,10 @@ import {
   TableConfig,
 } from '../../shared/components/reusable-table/reusable-table.types';
 import { ReusableTableComponent } from '../../shared/components/reusable-table/reusable-table.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ServicesService } from '../../services/services.service';
 import {
   LocaleComplete,
-  Project,
 } from '../../features/projects/models/projects.interface';
 import { PaginationObj } from '../../core/models/global.interface';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
@@ -44,11 +43,14 @@ export interface Service {
   providers: [AppDialogService],
 })
 export class ServicesComponent {
+  @ViewChild(ReusableTableComponent) reusableTableComponent!:ReusableTableComponent<Service>;
   private router = inject(Router);
   private service = inject(ServicesService);
+  private translate = inject(TranslateService)
   private dialogService = inject(AppDialogService);
 
   data: WritableSignal<Service[]> = signal([]);
+  selectedItems: Service[] = []
   totalRecords: WritableSignal<number> = signal(0);
 
   paginationObj: PaginationObj = {
@@ -85,7 +87,7 @@ export class ServicesComponent {
       field: 'status',
       header: 'projects.list.table_headers.status',
       type: 'status',
-      statusCallback: (row: Project, value: boolean, e: Event) =>
+      statusCallback: (row: Service, value: boolean, e: Event) =>
         this.changeStatus(row, value, e),
     },
   ];
@@ -147,9 +149,26 @@ export class ServicesComponent {
         this.totalRecords.set(res.total!);
       },
       error: (err) => {
-        console.error('Failed to load projects', err);
+        console.error('Failed to load services', err);
       },
     });
+  }
+    addAndHideBulkDeleteBtn(){
+    const hasSelection = Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
+    const bulkDeleteBtn: FilterItems = {
+      label: 'general.delete_selected',
+      type: 'btn',
+      name:'delete-btn',
+      btnIcon:"pi pi-trash",
+      btnSeverity: 'white',
+      btnCallback: () => this.bulkDelete(),
+    };
+    if (hasSelection) {
+      const withoutBulk = this.filterItems.filter((f) => f.name !== 'delete-btn');
+      this.filterItems = [bulkDeleteBtn, ...withoutBulk];
+    } else {
+      this.filterItems = this.filterItems.filter((f) => f.name !== 'delete-btn');
+    }
   }
   onFilterChange(filter: any) {
     this.filterObj = filter;
@@ -160,7 +179,9 @@ export class ServicesComponent {
     this.fetchData(this.paginationObj);
   }
   selectionChange(e: Service[] | Service) {
-    console.log('selected items', e);
+    this.selectedItems = Array.isArray(e)?e:[e]
+    this.addAndHideBulkDeleteBtn();
+
   }
   addNewService(e: Event) {
     console.log('Add New Service button clicked', e);
@@ -172,37 +193,58 @@ export class ServicesComponent {
     this.router.navigate(['/services/edit', row.id]);
   }
   delete(row: Service, event?: Event) {
-    this.showConfirmDialog(row);
+    this.showDeleteConfirmDialog(row,'delete');
   }
-  showConfirmDialog(row: Service) {
+  bulkDelete(){
+    this.showDeleteConfirmDialog(this.selectedItems,'bulk-delete')
+  }
+  showDeleteConfirmDialog(dataToDelete: Service | Service[], actionType: 'delete' | 'bulk-delete' = 'delete') {
+    const header =
+      actionType === 'delete'
+        ? 'services.list.delete_dialog.header'
+        : this.translate.instant('services.list.bulk_delete_dialog.header');
+    const count = Array.isArray(dataToDelete) ? dataToDelete.length : 0;
+    const desc =
+      actionType === 'delete'
+        ? 'services.list.delete_dialog.desc'
+        : this.translate.instant('services.list.bulk_delete_dialog.desc', { count });
+    const data = dataToDelete;
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
       width: '40vw',
       modal: true,
       data: {
-        title: 'services.list.delete_dialog.header',
-        subtitle: 'services.list.delete_dialog.desc',
+        title: header,
+        subtitle: desc,
+        icon: 'images/delete.svg',
         confirmText: 'general.delete',
         cancelText: 'general.cancel',
         confirmSeverity: 'delete',
         cancelSeverity: 'cancel',
         showCancel: true,
         showExtraButton: false,
-        data: row,
+        data: data,
       },
     });
-    this.ref.onClose.subscribe((product: { action: string; data: Service }) => {
-      if (product) {
-        if (product.action === 'confirm') {
+    this.ref.onClose.subscribe((product: { action: string; data: Service | Service[] }) => {
+      if (product && product.action === 'confirm') {
+        if (!Array.isArray(product.data)) {
           this.service.delete(product.data.id).subscribe({
             next: () => {
               this.fetchData(this.paginationObj);
             },
           });
+        } else {
+          const ids = product.data.map((a: Service) => a.id);
+          this.service.bulkDelete(ids).subscribe((_) => {
+            this.fetchData(this.paginationObj);
+            this.reusableTableComponent.selection = [];
+            this.selectedItems = []
+          });
         }
       }
     });
   }
-  changeStatus(row: Project, value: boolean, e: Event) {
+  changeStatus(row: Service, value: boolean, e: Event) {
     this.service.changeStatus(row.id, value).subscribe();
   }
 }

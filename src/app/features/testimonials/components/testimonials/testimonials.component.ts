@@ -11,7 +11,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent, ConfirmationDialogConfig, } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { PaginationObj } from '../../../../core/models/global.interface';
 import { Testimonial, TestimonialFormEvent, } from '../../models/testimonials.model';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ClientFormActions } from '../../../clients/models/clients.model';
 
 @Component({
@@ -23,15 +23,18 @@ import { ClientFormActions } from '../../../clients/models/clients.model';
   styleUrl: './testimonials.component.scss',
 })
 export class TestimonialsComponent implements OnInit {
+  @ViewChild(ReusableTableComponent) reusableTableComponent!: ReusableTableComponent<Testimonial>;
   @ViewChild(TestimonialsFormComponent)
   testimonialForm?: TestimonialsFormComponent;
 
   private service = inject(TestimonialsService);
   private dialogService = inject(DialogService);
+  private translate = inject(TranslateService);
 
   visible = false;
   data: Testimonial[] = [];
   totalRecords = 0;
+  selectedItems: Testimonial[] = [];
   currentTestimonialId?: string;
   confirmDialogRef?: DynamicDialogRef;
   paginationObj: PaginationObj = {
@@ -148,20 +151,61 @@ export class TestimonialsComponent implements OnInit {
   }
 
   delete(row: Testimonial) {
-    const dialogConfig: ConfirmationDialogConfig<Testimonial> = {
-      title: 'testimonials.confirm.delete_title',
-      subtitle: `testimonials.confirm.delete_subtitle`,
-      icon: 'images/delete.svg',
-      confirmText: 'Delete',
-      cancelText: 'Cancel',
-      confirmSeverity: 'delete',
-      cancelSeverity: 'cancel',
-      data: row,
+    this.showDeleteConfirmDialog(row, 'delete');
+  }
+
+  bulkDelete() {
+    this.showDeleteConfirmDialog(this.selectedItems, 'bulk-delete');
+  }
+
+  selectionChange(e: Testimonial[] | Testimonial) {
+    this.selectedItems = Array.isArray(e) ? e : [e];
+    this.addAndHideBulkDeleteBtn();
+  }
+
+  addAndHideBulkDeleteBtn() {
+    const hasSelection = Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
+    const bulkDeleteBtn: FilterItems = {
+      label: 'general.delete_selected',
+      type: 'btn',
+      name: 'bulk-delete-btn',
+      btnIcon: 'pi pi-trash',
+      btnSeverity: 'white',
+      btnCallback: () => this.bulkDelete(),
     };
+    if (hasSelection) {
+      const withoutBulk = this.filterItems.filter((f) => f.name !== 'bulk-delete-btn');
+      this.filterItems = [bulkDeleteBtn, ...withoutBulk];
+    } else {
+      this.filterItems = this.filterItems.filter((f) => f.name !== 'bulk-delete-btn');
+    }
+  }
+
+  showDeleteConfirmDialog(dataToDelete: Testimonial | Testimonial[], actionType: 'delete' | 'bulk-delete' = 'delete') {
+    const header =
+      actionType === 'delete'
+        ? 'testimonials.list.delete_dialog.header'
+        : this.translate.instant('testimonials.list.bulk_delete_dialog.header');
+    const count = Array.isArray(dataToDelete) ? dataToDelete.length : 0;
+    const desc =
+      actionType === 'delete'
+        ? 'testimonials.list.delete_dialog.desc'
+        : this.translate.instant('testimonials.list.bulk_delete_dialog.desc', { count });
+    const data = dataToDelete;
 
     this.confirmDialogRef = this.dialogService.open(ConfirmDialogComponent, {
       modal: true,
-      data: dialogConfig,
+      data: {
+        title: header,
+        subtitle: desc,
+        icon: 'images/delete.svg',
+        confirmText: 'general.delete',
+        cancelText: 'general.cancel',
+        confirmSeverity: 'delete',
+        cancelSeverity: 'cancel',
+        showCancel: true,
+        data: data,
+      },
       header: '',
       width: '505px',
       closable: false,
@@ -169,13 +213,17 @@ export class TestimonialsComponent implements OnInit {
     });
 
     this.confirmDialogRef.onClose.subscribe((result: any) => {
-      if (
-        result &&
-        result.action === 'confirm' &&
-        result.data &&
-        result.data.id
-      ) {
-        this.performDelete(result.data.id);
+      if (result && result.action === 'confirm' && result.data) {
+        if (!Array.isArray(result.data)) {
+          this.performDelete(result.data.id);
+        } else {
+          const ids = result.data.map((t: Testimonial) => t.id);
+          this.service.bulkDelete(ids).subscribe((_) => {
+            this.loadTestimonials();
+            this.reusableTableComponent.selection = [];
+            this.selectedItems = [];
+          });
+        }
       }
     });
   }

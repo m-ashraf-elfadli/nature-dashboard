@@ -19,10 +19,10 @@ export function TokenInterceptor(req: HttpRequest<any>, next: HttpHandlerFn) {
     headers['Authorization'] = token;
   }
 
-  if (req.method === 'GET' && !req.url.includes('/show')) {
-    const locale = localStorage.getItem('app_lang') || 'en';
-    headers['locale'] = locale;
-  }
+  // if (req.method === 'GET' && !req.url.includes('/show')) {
+  //   const locale = localStorage.getItem('app_lang') || 'en';
+  //   headers['locale'] = locale;
+  // }
 
   req = req.clone({ setHeaders: headers });
   return next(req).pipe(

@@ -9,6 +9,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-navbar',
@@ -26,6 +27,7 @@ import { filter } from 'rxjs/operators';
 export class NavbarComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly translate = inject(TranslateService);
+  private readonly apiService = inject(ApiService)
 
   userMenuVisible = false;
   currentPageTitle = this.translate.instant('navigation.dashboard');
@@ -54,6 +56,7 @@ export class NavbarComponent implements OnInit {
 
   changeLang(lang: string) {
     this.selectedLanguage = lang;
+    this.apiService.setCulture(lang)
     this.translate.use(lang);
     localStorage.setItem(this.LANG_KEY, lang);
     this.setDirection(lang);
