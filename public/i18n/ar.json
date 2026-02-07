@@ -504,7 +504,8 @@
     "services": "الخدمات",
     "clients": "العملاء",
     "awards": "الجوائز",
-    "testimonials": "الشهادات"
+    "testimonials": "الشهادات",
+    "questions": "الاسئلة"
   },
   "Projects": "المشاريع",
   "Services": "الخدمات",
@@ -572,6 +573,10 @@
     "testimonials": {
       "create_btn": "إضافة شهادة جديدة",
       "no_data": "لا توجد بيانات للعرض، ابدأ بإضافة شهادتك الأولى لتظهر هنا."
+    },
+    "questions": {
+      "create_btn": "أضف سؤالًا جديدًا",
+      "no_data": "لا يوجد أي أسئلة بعد، أنشئ سؤالك الأول ليظهر هنا."
     }
   },
   "breadcrumb": {
@@ -587,6 +592,58 @@
       "actions": "الاجراءات",
       "title": "العنوان",
       "desc": "الوصف"
+    }
+  },
+   "questions": {
+    "list": {
+      "breadcurmb": "الاسئلة",
+      "page_title": "جميع الاسئلة",
+      "table_headers": {
+        "name": "Name",
+        "position": "Position",
+        "testimonial": "Testimonial",
+        "status": "Status"
+      },
+      "btns": {
+        "add_new": "أضف سؤالًا جديدًا"
+      }
+    },
+    "form": {
+      "title": "أضف سؤالًا جديدًا",
+      "edit_title": "Edit Testimonial",
+      "labels": {
+        "client_name_en": "Client name (English)",
+        "client_name_ar": "Client name (Arabic)",
+        "job_title_en": "Job title (English)",
+        "job_title_ar": "Job title (Arabic)",
+        "testimonial_en": "Testimonial (English)",
+        "testimonial_ar": "Testimonial (Arabic)"
+      },
+      "placeholders": {
+        "client_name_en": "Enter client name in English",
+        "client_name_ar": "Enter client name in Arabic",
+        "job_title_en": "Enter job title in English",
+        "job_title_ar": "Enter job title in Arabic",
+        "testimonial_en": "Enter testimonial in English",
+        "testimonial_ar": "Enter testimonial in Arabic"
+      },
+      "validation": {
+        "client_name_en": "Client name in English is required",
+        "client_name_ar": "Client name in Arabic is required",
+        "job_title_en": "Job title in English is required",
+        "job_title_ar": "Job title in Arabic is required",
+        "testimonial_en": "Testimonial in English is required",
+        "testimonial_ar": "Testimonial in Arabic is required"
+      },
+      "btns": {
+        "save_create": "Save and create new",
+        "save": "Save",
+        "update": "Update"
+      }
+    },
+    "confirm": {
+      "delete_title": "Delete Testimonial",
+      "delete_subtitle": "Are you sure you want to delete this testimonial? This action cannot be undone."
     }
   }
 }

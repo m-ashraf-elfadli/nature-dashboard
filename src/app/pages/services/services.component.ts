@@ -48,6 +48,7 @@ export class ServicesComponent {
   private service = inject(ServicesService);
   private translate = inject(TranslateService)
   private dialogService = inject(AppDialogService);
+  private readonly translate = inject(TranslateService);
 
   data: WritableSignal<Service[]> = signal([]);
   selectedItems: Service[] = []
@@ -140,6 +141,10 @@ export class ServicesComponent {
 
   ngOnInit() {
     this.fetchData(this.paginationObj);
+
+    this.translate.onLangChange.subscribe(() => {
+      this.fetchData(this.paginationObj);
+    });
   }
 
   fetchData(pagination: PaginationObj) {

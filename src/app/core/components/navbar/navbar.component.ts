@@ -55,11 +55,13 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   changeLang(lang: string) {
+    console.log(lang);
+
     this.selectedLanguage = lang;
     this.apiService.setCulture(lang)
     this.translate.use(lang);
-    localStorage.setItem(this.LANG_KEY, lang);
     this.setDirection(lang);
+    localStorage.setItem(this.LANG_KEY, lang);
   }
 
   private setDirection(lang: string) {
