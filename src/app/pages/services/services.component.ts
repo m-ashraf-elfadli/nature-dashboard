@@ -9,7 +9,7 @@ import {
   TableConfig,
 } from '../../shared/components/reusable-table/reusable-table.types';
 import { ReusableTableComponent } from '../../shared/components/reusable-table/reusable-table.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ServicesService } from '../../services/services.service';
 import {
   LocaleComplete,
@@ -47,6 +47,7 @@ export class ServicesComponent {
   private router = inject(Router);
   private service = inject(ServicesService);
   private dialogService = inject(AppDialogService);
+  private readonly translate = inject(TranslateService);
 
   data: WritableSignal<Service[]> = signal([]);
   totalRecords: WritableSignal<number> = signal(0);
@@ -138,6 +139,10 @@ export class ServicesComponent {
 
   ngOnInit() {
     this.fetchData(this.paginationObj);
+
+    this.translate.onLangChange.subscribe(() => {
+      this.fetchData(this.paginationObj);
+    });
   }
 
   fetchData(pagination: PaginationObj) {

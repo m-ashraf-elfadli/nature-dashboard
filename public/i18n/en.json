@@ -495,7 +495,8 @@
     "services": "Services",
     "clients": "Clients",
     "awards": "Awards",
-    "testimonials": "Testimonials"
+    "testimonials": "Testimonials",
+    "questions": "Questions"
   },
   "dashboard": {
     "welcome": "Welcome back, {{name}}",
@@ -558,6 +559,10 @@
     "testimonials": {
       "create_btn": "Create New Testimonial",
       "no_data": "No Date to preview, start create your first testimonial to appear here!"
+    },
+    "questions": {
+      "create_btn": "Create New Question",
+      "no_data": "No Date to preview, start create your first question to appear here!"
     }
   },
   "breadcrumb": {
@@ -579,5 +584,57 @@
   "Services": "Services",
   "Clients": "Clients",
   "Awards": "Awards",
-  "Testimonials": "Testimonials"
+  "Testimonials": "Testimonials",
+  "questions": {
+    "list": {
+      "breadcurmb": "Questions",
+      "page_title": "All Questions",
+      "table_headers": {
+        "name": "Name",
+        "position": "Position",
+        "testimonial": "Testimonial",
+        "status": "Status"
+      },
+      "btns": {
+        "add_new": "Add New Question"
+      }
+    },
+    "form": {
+      "title": "Create New Question",
+      "edit_title": "Edit Question",
+      "labels": {
+        "client_name_en": "Client name (English)",
+        "client_name_ar": "Client name (Arabic)",
+        "job_title_en": "Job title (English)",
+        "job_title_ar": "Job title (Arabic)",
+        "testimonial_en": "Question (English)",
+        "testimonial_ar": "Question (Arabic)"
+      },
+      "placeholders": {
+        "client_name_en": "Enter client name in English",
+        "client_name_ar": "Enter client name in Arabic",
+        "job_title_en": "Enter job title in English",
+        "job_title_ar": "Enter job title in Arabic",
+        "testimonial_en": "Enter testimonial in English",
+        "testimonial_ar": "Enter testimonial in Arabic"
+      },
+      "validation": {
+        "client_name_en": "Client name in English is required",
+        "client_name_ar": "Client name in Arabic is required",
+        "job_title_en": "Job title in English is required",
+        "job_title_ar": "Job title in Arabic is required",
+        "testimonial_en": "Testimonial in English is required",
+        "testimonial_ar": "Testimonial in Arabic is required"
+      },
+      "btns": {
+        "save_create": "Save and create new",
+        "save": "Save",
+        "update": "Update"
+      }
+    },
+    "confirm": {
+      "delete_title": "Delete Testimonial",
+      "delete_subtitle": "Are you sure you want to delete this testimonial? This action cannot be undone."
+    }
+  }
 }

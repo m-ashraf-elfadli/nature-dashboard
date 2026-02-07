@@ -1,0 +1,38 @@
+<div class="page-content">
+  <app-page-header></app-page-header>
+  <h1>{{ "questions.list.page_title" | translate }}</h1>
+  <app-reusable-table
+    [data]="data"
+    [config]="config"
+    [actions]="actions"
+    [totalRecords]="totalRecords"
+    [filterItems]="filterItems"
+    [emptyStateInfo]="emptyStateInfo"
+    (paginationChange)="onPaginationChange($event)"
+    (onServerSideFilterChange)="onFilterChange($event)"
+  >
+  </app-reusable-table>
+</div>
+
+<!-- questions form dialog -->
+<p-dialog
+  styleClass="form-dialog"
+  [modal]="true"
+  dismissableMask="true"
+  [(visible)]="visible"
+  [style]="{ width: '60rem' }"
+  (onHide)="onDialogHide()"
+>
+  <ng-template pTemplate="header">
+    @if (currentQuestionId) {
+      <h2>{{ "questions.form.edit_title" | translate }}</h2>
+    } @else {
+      <h2>{{ "questions.form.title" | translate }}</h2>
+    }
+  </ng-template>
+
+  <app-questions-form
+    [questionId]="currentQuestionId"
+    (formClose)="handleFormClose($event)"
+  ></app-questions-form>
+</p-dialog>

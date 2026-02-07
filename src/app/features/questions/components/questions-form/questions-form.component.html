@@ -1,0 +1,113 @@
+<div class="form-container">
+  <form [formGroup]="questionForm">
+    <!-- Question EN -->
+    <div class="our-field">
+      <label> Question (English) <span class="required">*</span> </label>
+      <input
+        pInputText
+        formControlName="question_en"
+        placeholder="Write Question in English here."
+      />
+      <small
+        class="error-message"
+        *ngIf="
+          questionForm.get('question_en')?.invalid &&
+          questionForm.get('question_en')?.touched
+        "
+      >
+        Question in English is required
+      </small>
+    </div>
+
+    <!-- Question AR -->
+    <div class="our-field">
+      <label> Question (Arabic) <span class="required">*</span> </label>
+      <input
+        pInputText
+        formControlName="question_ar"
+        placeholder="Write Question in Arabic here."
+      />
+      <small
+        class="error-message"
+        *ngIf="
+          questionForm.get('question_ar')?.invalid &&
+          questionForm.get('question_ar')?.touched
+        "
+      >
+        Question in Arabic is required
+      </small>
+    </div>
+
+    <!-- Answers -->
+    <h4 class="section-title">Answer</h4>
+
+    <div formArrayName="answers">
+      <div
+        class="answer-row"
+        *ngFor="let answer of answers.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <!-- Answer EN -->
+        <div class="our-field">
+          <label> English <span class="required">*</span> </label>
+          <input
+            pInputText
+            formControlName="answer_en"
+            placeholder="Write Answer in English"
+          />
+        </div>
+
+        <!-- Answer AR -->
+        <div class="our-field">
+          <label> Arabic <span class="required">*</span> </label>
+          <input
+            pInputText
+            formControlName="answer_ar"
+            placeholder="Write Answer in Arabic"
+          />
+        </div>
+
+        <!-- Correct Answer -->
+        <div class="correct-answer">
+          <p-radiobutton
+            name="is_accepted"
+            [value]="true"
+            [binary]="true"
+            formControlName="is_accepted"
+            (onClick)="setCorrectAnswer(i)"
+          ></p-radiobutton>
+          <label>Answer</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Validation message for correct answer -->
+    <small
+      class="error-message"
+      *ngIf="!hasCorrectAnswer() && answers.length > 0 && questionForm.touched"
+    >
+      Please select at least one correct answer
+    </small>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button
+        type="button"
+        class="btn-outline"
+        (click)="submitForm('saveAndCreateNew')"
+        [disabled]="questionForm.invalid || !hasCorrectAnswer()"
+      >
+        Save And Create New
+      </button>
+
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="submitForm('save')"
+        [disabled]="questionForm.invalid || !hasCorrectAnswer()"
+      >
+        {{ isEditMode ? "Update" : "Save" }}
+      </button>
+    </div>
+  </form>
+</div>
