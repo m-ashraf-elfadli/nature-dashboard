@@ -170,7 +170,9 @@
       "validation": {
         "name": "Name is required",
         "date": "Date is Required",
-        "desc": "Description is Required"
+        "desc": "Description is Required",
+        "image": "Image is Required",
+        "organizations_logos":"You have to add at least 1 logo for organizations logos"
       },
       "labels": {
         "name": "Award name",

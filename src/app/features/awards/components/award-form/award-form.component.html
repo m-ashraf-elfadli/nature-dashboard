@@ -104,6 +104,9 @@
                 <div class="inputs">
                     <app-gallery-upload formControlName="image"></app-gallery-upload>
                 </div>
+                @if(hasError('image')){
+                    <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.image' | translate}}</p-message>
+                }
             </div>
         </div>
         <div class="form-right-section">
@@ -124,6 +127,9 @@
                             <h3>{{ 'awards.form.titles.organizations' | translate }}</h3>
                         </div>
                         <app-gallery-upload [multiple]="true" formControlName="organizations_logos"></app-gallery-upload>
+                        @if(hasError('organizations_logos')){
+                            <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.organizations_logos' | translate}}</p-message>
+                        }
                     </div>
                 </div>
             </div>

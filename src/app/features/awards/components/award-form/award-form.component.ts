@@ -127,9 +127,9 @@ export class AwardFormComponent implements OnInit,OnDestroy, AfterViewInit {
     this.form = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      image: [null],
+      image: [null, Validators.required],
       award_date: [null, Validators.required],
-      organizations_logos: [null],
+      organizations_logos: [null, Validators.required],
       status: [1, Validators.required],
     });
   }
