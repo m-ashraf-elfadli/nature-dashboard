@@ -12,8 +12,6 @@ export class QuestionsService {
   private endpoint = 'questions';
 
   getAll(pagination: PaginationObj, search?: string): Observable<any> {
-    this.apiService.setCulture(localStorage.getItem('app_lang') || 'en');
-
     let params = new HttpParams()
       .set('page', pagination.page.toString())
       .set('size', pagination.size.toString());
@@ -32,36 +30,11 @@ export class QuestionsService {
 
   create(payload: any): Observable<any> {
     this.apiService.setCulture(localStorage.getItem('app_lang') || 'en');
-    // Payload structure for create:
-    // {
-    //   question_en: string,
-    //   question_ar: string,
-    //   answers: [
-    //     {
-    //       answer_en: string,
-    //       answer_ar: string,
-    //       is_accepted: boolean
-    //     }
-    //   ]
-    // }
     return this.apiService.post(this.endpoint, payload);
   }
 
   update(id: string, payload: any): Observable<any> {
     this.apiService.setCulture(localStorage.getItem('app_lang') || 'en');
-    // Payload structure for update (same as create but answers include IDs):
-    // {
-    //   question_en: string,
-    //   question_ar: string,
-    //   answers: [
-    //     {
-    //       id: string,
-    //       answer_en: string,
-    //       answer_ar: string,
-    //       is_accepted: boolean
-    //     }
-    //   ]
-    // }
     return this.apiService.post(`${this.endpoint}/${id}`, payload);
   }
 
