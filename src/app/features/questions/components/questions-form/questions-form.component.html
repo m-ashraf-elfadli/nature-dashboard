@@ -2,111 +2,113 @@
   <form [formGroup]="questionForm">
     <!-- Question EN -->
     <div class="our-field">
-      <label> Question (English) <span class="required">*</span> </label>
-      <input
-        pInputText
-        formControlName="question_en"
-        placeholder="Write Question in English here."
-      />
-      <small
-        class="error-message"
-        *ngIf="
+      <label>
+        {{ 'questions.form.labels.question_en' | translate }}
+        <span class="required">*</span>
+      </label>
+      <input pInputText formControlName="question_en"
+        [placeholder]="'questions.form.placeholders.question_en' | translate" />
+      <small class="error-message" *ngIf="
           questionForm.get('question_en')?.invalid &&
           questionForm.get('question_en')?.touched
-        "
-      >
-        Question in English is required
+        ">
+        <ng-container *ngIf="questionForm.get('question_en')?.errors?.['required']">
+          {{ 'questions.form.validation.question_en' | translate }}
+        </ng-container>
+        <ng-container *ngIf="questionForm.get('question_en')?.errors?.['minlength']">
+          {{ 'questions.form.validation.min_length' | translate }}
+        </ng-container>
+        <ng-container *ngIf="questionForm.get('question_en')?.errors?.['maxlength']">
+          {{ 'questions.form.validation.max_length' | translate }}
+        </ng-container>
       </small>
     </div>
 
     <!-- Question AR -->
     <div class="our-field">
-      <label> Question (Arabic) <span class="required">*</span> </label>
-      <input
-        pInputText
-        formControlName="question_ar"
-        placeholder="Write Question in Arabic here."
-      />
-      <small
-        class="error-message"
-        *ngIf="
+      <label>
+        {{ 'questions.form.labels.question_ar' | translate }}
+        <span class="required">*</span>
+      </label>
+      <input pInputText formControlName="question_ar"
+        [placeholder]="'questions.form.placeholders.question_ar' | translate" />
+      <small class="error-message" *ngIf="
           questionForm.get('question_ar')?.invalid &&
           questionForm.get('question_ar')?.touched
-        "
-      >
-        Question in Arabic is required
+        ">
+        <ng-container *ngIf="questionForm.get('question_ar')?.errors?.['required']">
+          {{ 'questions.form.validation.question_ar' | translate }}
+        </ng-container>
+        <ng-container *ngIf="questionForm.get('question_ar')?.errors?.['minlength']">
+          {{ 'questions.form.validation.min_length' | translate }}
+        </ng-container>
+        <ng-container *ngIf="questionForm.get('question_ar')?.errors?.['maxlength']">
+          {{ 'questions.form.validation.max_length' | translate }}
+        </ng-container>
       </small>
     </div>
 
     <!-- Answers -->
-    <h4 class="section-title">Answer</h4>
+    <h4 class="section-title">{{ 'questions.form.sections.answers' | translate }}</h4>
 
     <div formArrayName="answers">
-      <div
-        class="answer-row"
-        *ngFor="let answer of answers.controls; let i = index"
-        [formGroupName]="i"
-      >
+      <div class="answer-row" *ngFor="let answer of answers.controls; let i = index" [formGroupName]="i">
         <!-- Answer EN -->
         <div class="our-field">
-          <label> English <span class="required">*</span> </label>
-          <input
-            pInputText
-            formControlName="answer_en"
-            placeholder="Write Answer in English"
-          />
+          <label>
+            {{ 'questions.form.labels.answer_en' | translate }}
+            <span class="required">*</span>
+          </label>
+          <input pInputText formControlName="answer_en"
+            [placeholder]="'questions.form.placeholders.answer_en' | translate" />
+          <small class="error-message" *ngIf="
+              answer.get('answer_en')?.invalid &&
+              answer.get('answer_en')?.touched
+            ">
+            {{ 'questions.form.validation.answer_en' | translate }}
+          </small>
         </div>
 
         <!-- Answer AR -->
         <div class="our-field">
-          <label> Arabic <span class="required">*</span> </label>
-          <input
-            pInputText
-            formControlName="answer_ar"
-            placeholder="Write Answer in Arabic"
-          />
+          <label>
+            {{ 'questions.form.labels.answer_ar' | translate }}
+            <span class="required">*</span>
+          </label>
+          <input pInputText formControlName="answer_ar"
+            [placeholder]="'questions.form.placeholders.answer_ar' | translate" />
+          <small class="error-message" *ngIf="
+              answer.get('answer_ar')?.invalid &&
+              answer.get('answer_ar')?.touched
+            ">
+            {{ 'questions.form.validation.answer_ar' | translate }}
+          </small>
         </div>
 
         <!-- Correct Answer -->
         <div class="correct-answer">
-          <p-radiobutton
-            name="is_accepted"
-            [value]="true"
-            [binary]="true"
-            formControlName="is_accepted"
-            (onClick)="setCorrectAnswer(i)"
-          ></p-radiobutton>
-          <label>Answer</label>
+          <p-radiobutton name="is_accepted" [value]="true" [binary]="true" formControlName="is_accepted"
+            (onClick)="setCorrectAnswer(i)"></p-radiobutton>
+          <label>{{ 'questions.form.labels.correct_answer' | translate }}</label>
         </div>
       </div>
     </div>
 
     <!-- Validation message for correct answer -->
-    <small
-      class="error-message"
-      *ngIf="!hasCorrectAnswer() && answers.length > 0 && questionForm.touched"
-    >
-      Please select at least one correct answer
+    <small class="error-message" *ngIf="!hasCorrectAnswer() && answers.length > 0 && questionForm.touched">
+      {{ 'questions.form.validation.correct_answer' | translate }}
     </small>
 
     <!-- Actions -->
     <div class="actions">
-      <button
-        type="button"
-        class="btn-outline"
-        (click)="submitForm('saveAndCreateNew')"
-        [disabled]="questionForm.invalid || !hasCorrectAnswer()"
-      >
-        Save And Create New
+      <button type="button" class="btn-outline" (click)="submitForm('saveAndCreateNew')"
+        [disabled]="questionForm.invalid || !hasCorrectAnswer()">
+        {{ 'questions.form.btns.save_create' | translate }}
       </button>
 
-      <button
-        type="button"
-        class="btn-primary"
-        (click)="submitForm('save')"
-        [disabled]="questionForm.invalid || !hasCorrectAnswer()"
-      >
-        {{ isEditMode ? "Update" : "Save" }}
+      <button type="button" class="btn-primary" (click)="submitForm('save')"
+        [disabled]="questionForm.invalid || !hasCorrectAnswer()">
+        {{ isEditMode ? ('questions.form.btns.update' | translate) : ('questions.form.btns.save' | translate) }}
       </button>
     </div>
   </form>
