@@ -22,9 +22,9 @@
     "change_lang_dialog_header": "تغييرات غير محفوظة؟",
     "change_lang_dialog_desc": "لديك تغييرات غير محفوظة في اللغة الحالية. هل تريد حفظها قبل التبديل؟",
     "change_lang_dialog_save": "حفظ التغييرات",
-    "pagination_info":"عرض {{first}} إلى {{last}} من أصل {{total}} مُدخل",
-    "show":"عرض",
-    "entries":"مُدخل"
+    "pagination_info": "عرض {{first}} إلى {{last}} من أصل {{total}} مُدخل",
+    "show": "عرض",
+    "entries": "مُدخل"
   },
   "projects": {
     "list": {
@@ -132,7 +132,7 @@
     "list": {
       "page_title": "جميع الجوائز",
       "breadcurmb": "الجوائز",
-      "edit_title":"تعديل جائزة",
+      "edit_title": "تعديل جائزة",
       "table_headers": {
         "award": "الجائزة",
         "date": "التاريخ",
@@ -563,56 +563,56 @@
       "desc": "الوصف"
     }
   },
-   "questions": {
+  "questions": {
     "list": {
-      "breadcurmb": "الاسئلة",
-      "page_title": "جميع الاسئلة",
+      "breadcurmb": "الأسئلة",
+      "page_title": "جميع الأسئلة",
       "table_headers": {
-        "name": "Name",
-        "position": "Position",
-        "testimonial": "Testimonial",
-        "status": "Status"
+        "question": "السؤال",
+        "status": "الحالة"
       },
       "btns": {
         "add_new": "أضف سؤالًا جديدًا"
       }
     },
     "form": {
-      "title": "أضف سؤالًا جديدًا",
-      "edit_title": "Edit Testimonial",
+      "title": "إنشاء سؤال جديد",
+      "edit_title": "تعديل السؤال",
       "labels": {
-        "client_name_en": "Client name (English)",
-        "client_name_ar": "Client name (Arabic)",
-        "job_title_en": "Job title (English)",
-        "job_title_ar": "Job title (Arabic)",
-        "testimonial_en": "Testimonial (English)",
-        "testimonial_ar": "Testimonial (Arabic)"
+        "question_en": "السؤال (إنجليزي)",
+        "question_ar": "السؤال (عربي)",
+        "answer_en": "الإجابة (إنجليزي)",
+        "answer_ar": "الإجابة (عربي)",
+        "correct_answer": "الإجابة"
       },
       "placeholders": {
-        "client_name_en": "Enter client name in English",
-        "client_name_ar": "Enter client name in Arabic",
-        "job_title_en": "Enter job title in English",
-        "job_title_ar": "Enter job title in Arabic",
-        "testimonial_en": "Enter testimonial in English",
-        "testimonial_ar": "Enter testimonial in Arabic"
+        "question_en": "اكتب السؤال بالإنجليزية هنا.",
+        "question_ar": "اكتب السؤال بالعربية هنا.",
+        "answer_en": "اكتب الإجابة بالإنجليزية",
+        "answer_ar": "اكتب الإجابة بالعربية"
       },
       "validation": {
-        "client_name_en": "Client name in English is required",
-        "client_name_ar": "Client name in Arabic is required",
-        "job_title_en": "Job title in English is required",
-        "job_title_ar": "Job title in Arabic is required",
-        "testimonial_en": "Testimonial in English is required",
-        "testimonial_ar": "Testimonial in Arabic is required"
+        "question_en": "السؤال بالإنجليزية مطلوب",
+        "question_ar": "السؤال بالعربية مطلوب",
+        "answer_en": "الإجابة بالإنجليزية مطلوبة",
+        "answer_ar": "الإجابة بالعربية مطلوبة",
+        "correct_answer": "يرجى اختيار إجابة صحيحة واحدة على الأقل",
+        "min_length": "الحد الأدنى للطول هو 3 أحرف",
+        "max_length": "الحد الأقصى للطول هو 500 حرف"
+      },
+      "sections": {
+        "answers": "الإجابات"
       },
       "btns": {
-        "save_create": "Save and create new",
-        "save": "Save",
-        "update": "Update"
+        "save_create": "حفظ وإنشاء جديد",
+        "save": "حفظ",
+        "update": "تحديث",
+        "cancel": "إلغاء"
       }
     },
     "confirm": {
-      "delete_title": "Delete Testimonial",
-      "delete_subtitle": "Are you sure you want to delete this testimonial? This action cannot be undone."
+      "delete_title": "حذف السؤال",
+      "delete_subtitle": "هل أنت متأكد أنك تريد حذف هذا السؤال؟ لا يمكن التراجع عن هذا الإجراء."
     }
   }
 }

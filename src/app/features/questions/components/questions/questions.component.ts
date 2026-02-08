@@ -88,7 +88,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   columns: TableColumn<Question>[] = [
     {
       field: 'question',
-      header: 'questions.list.table_headers.name',
+      header: 'questions.list.table_headers.question',
       type: 'text',
     },
     {
