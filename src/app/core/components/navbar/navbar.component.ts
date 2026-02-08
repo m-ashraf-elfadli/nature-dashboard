@@ -27,7 +27,7 @@ import { ApiService } from '../../services/api.service';
 export class NavbarComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly translate = inject(TranslateService);
-  private readonly apiService = inject(ApiService)
+  private readonly apiService = inject(ApiService);
 
   userMenuVisible = false;
   currentPageTitle = this.translate.instant('navigation.dashboard');
@@ -40,6 +40,7 @@ export class NavbarComponent implements OnInit {
     services: 'navigation.services',
     awards: 'navigation.awards',
     testimonials: 'navigation.testimonials',
+    questions: 'navigation.questions',
   };
   private readonly LANG_KEY = 'app_lang';
 
@@ -58,7 +59,7 @@ export class NavbarComponent implements OnInit {
     console.log(lang);
 
     this.selectedLanguage = lang;
-    this.apiService.setCulture(lang)
+    this.apiService.setCulture(lang);
     this.translate.use(lang);
     this.setDirection(lang);
     localStorage.setItem(this.LANG_KEY, lang);
