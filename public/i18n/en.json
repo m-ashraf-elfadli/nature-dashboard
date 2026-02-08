@@ -626,6 +626,14 @@
       },
       "btns": {
         "add_new": "Add New Question"
+      },
+      "bulk_delete_dialog":{
+        "header":"Delete Questions",
+        "desc":"Are you sure want to delete these {{count}} Questions? This action can't be undone."
+      },
+      "delete_dialog":{
+        "header":"Delete Question",
+        "desc":"Are you sure you want to delete this question? This action cannot be undone."
       }
     },
     "form": {

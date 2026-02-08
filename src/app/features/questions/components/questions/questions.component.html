@@ -9,6 +9,7 @@
     [filterItems]="filterItems"
     [emptyStateInfo]="emptyStateInfo"
     (paginationChange)="onPaginationChange($event)"
+    (selectionChange)="selectionChange($event)"
     (onServerSideFilterChange)="onFilterChange($event)"
   >
   </app-reusable-table>
