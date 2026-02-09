@@ -94,7 +94,9 @@
         </div>
       } @else if (item.type === "btn") {
         <button
-          class="primary-btn custom-btn btn-{{ item.btnSeverity }}"
+          class=" custom-btn anm-{{ item.anmSeverity }}} btn-{{
+            item.btnSeverity
+          }}"
           type="button"
           (click)="item.btnCallback?.($event)"
         >

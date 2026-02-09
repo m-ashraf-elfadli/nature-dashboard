@@ -137,6 +137,7 @@ export class TestimonialsComponent implements OnInit {
       label: 'general.import',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
+      anmSeverity: 'bg-grow',
     },
   ];
 

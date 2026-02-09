@@ -566,65 +566,6 @@ html:lang(ar) {
   font-weight: 500;
 }
 
-.primary-btn {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 16px 24px;
-  border-radius: 16px;
-  background: #fff;
-  cursor: pointer;
-  z-index: 1;
-  border: 1px solid #82c672;
-
-  span {
-    color: var(--Color-Primary-400, #82c672);
-    font-size: var(--Font-Size-Xs, 16px);
-    font-style: normal;
-    font-weight: var(--Font-Weight-Semi-Bold, 600);
-    line-height: var(--Font-Line-Height-Xs, 19.2px);
-    /* 120% */
-  }
-
-  svg path,
-  span {
-    transition: 0.6s ease;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(270deg,
-        var(--Color-Primary-400, #82c672) 40%,
-        var(--Color-Primary2-400, #b0d357) 100%);
-    border-radius: 50%;
-    left: 50%;
-    bottom: -10px;
-    transform: translateX(-50%) scale(0);
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: -1;
-  }
-
-  &:hover {
-    svg path {
-      fill: #fff;
-    }
-
-    span {
-      color: #fff;
-    }
-
-    &::before {
-      transform: translateX(-50%) scale(25);
-    }
-  }
-}
-
 .pagination-btn {
   width: 40px;
   height: 40px;

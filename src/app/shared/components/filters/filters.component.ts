@@ -12,40 +12,41 @@ import { debounceTime } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
 export interface FilterItems {
-    name?: string;
-    type?: 'filter' | 'search' | 'btn' | 'select';
-    label?: string;
-    placeholder?: string;
-    filterOptions?: FilterOption[];
-    DDOption?: OptionsFilter[];
-    multiple?: boolean;
-    btnIcon?: string;
-    btnSeverity?: 'primary' | 'danger' |'white';
-    btnCallback?: (e:Event) => void;
+  name?: string;
+  type?: 'filter' | 'search' | 'btn' | 'select';
+  label?: string;
+  placeholder?: string;
+  filterOptions?: FilterOption[];
+  DDOption?: OptionsFilter[];
+  multiple?: boolean;
+  btnIcon?: string;
+  btnSeverity?: 'primary' | 'danger' | 'white';
+  anmSeverity?: 'bg-grow' | 'expand';
+  btnCallback?: (e: Event) => void;
 }
 export interface FilterOption {
-    type?: 'input' | 'select' | "date";
-    inputType?: "text" | "number";
-    placeholder?: string;
-    multiple?: boolean;
-    label: string;
-    inputName: string;
-    options?: OptionsFilter[];
+  type?: 'input' | 'select' | "date";
+  inputType?: "text" | "number";
+  placeholder?: string;
+  multiple?: boolean;
+  label: string;
+  inputName: string;
+  options?: OptionsFilter[];
 }
 export interface OptionsFilter {
-    id: string | number;
-    name: string;
+  id: string | number;
+  name: string;
 }
 
 @Component({
   selector: 'app-filters',
   imports: [
-    ReactiveFormsModule, 
-    PopoverModule, 
-    InputTextModule, 
-    SelectModule, 
-    CalendarModule, 
-    CheckboxModule, 
+    ReactiveFormsModule,
+    PopoverModule,
+    InputTextModule,
+    SelectModule,
+    CalendarModule,
+    CheckboxModule,
     MultiSelectModule,
     InputIcon,
     IconField,
@@ -56,16 +57,16 @@ export interface OptionsFilter {
 })
 
 export class FiltersComponent implements OnInit, OnChanges {
-    @ViewChild('op') op!:Popover;
-    private readonly fb = inject(FormBuilder);
-    formFilter!: FormGroup;
-    @Input() filterConfig: FilterItems[] = [];
-    @Output() filterChange = new EventEmitter<any>();
+  @ViewChild('op') op!: Popover;
+  private readonly fb = inject(FormBuilder);
+  formFilter!: FormGroup;
+  @Input() filterConfig: FilterItems[] = [];
+  @Output() filterChange = new EventEmitter<any>();
 
-    ngOnInit() {
-      this.initFilterForm();
-      this.setInputsListeners();
-    }
+  ngOnInit() {
+    this.initFilterForm();
+    this.setInputsListeners();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['filterConfig']) {
@@ -75,18 +76,18 @@ export class FiltersComponent implements OnInit, OnChanges {
   }
 
   private initFilterForm() {
-      const fields: any = {};
-      this.filterConfig?.forEach((field: any) => {
-          if (field.type != 'btn' && field.type != 'filter') {
-              fields[field.name] = field.multiple ? [[]] : [null];
-          }
-          if (field.type === 'filter') {
-              field.filterOptions.forEach((f:FilterOption) => {
-                  fields[f.inputName] = [null];
-              });
-          }
-      });
-      this.formFilter = this.fb.group(fields);
+    const fields: any = {};
+    this.filterConfig?.forEach((field: any) => {
+      if (field.type != 'btn' && field.type != 'filter') {
+        fields[field.name] = field.multiple ? [[]] : [null];
+      }
+      if (field.type === 'filter') {
+        field.filterOptions.forEach((f: FilterOption) => {
+          fields[f.inputName] = [null];
+        });
+      }
+    });
+    this.formFilter = this.fb.group(fields);
   }
   setInputsListeners() {
     this.filterConfig?.forEach((field: any) => {
@@ -117,11 +118,11 @@ export class FiltersComponent implements OnInit, OnChanges {
       // }
     });
   }
-  applyFilter(e:Event){
+  applyFilter(e: Event) {
     this.filterChange.emit(this.formFilter.value);
     this.op.toggle(e);
   }
-  resetFilter(e:Event){
+  resetFilter(e: Event) {
     this.formFilter.reset();
     this.op.toggle(e);
   }
