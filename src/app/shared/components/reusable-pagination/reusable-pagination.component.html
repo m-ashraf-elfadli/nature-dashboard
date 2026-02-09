@@ -29,7 +29,11 @@
 
     @for (p of pages; track p) {
       @if (typeof p === "number") {
-        <button [class.active]="p === page" (click)="go(+p)">
+        <button
+          [class.active]="p === page"
+          [disabled]="p === page"
+          (click)="go(+p)"
+        >
           {{ +p + 1 }}
         </button>
       } @else {

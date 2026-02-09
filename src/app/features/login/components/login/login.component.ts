@@ -5,11 +5,12 @@ import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { InputText } from "primeng/inputtext";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, PasswordModule, InputText],
+  imports: [CommonModule, ReactiveFormsModule, PasswordModule, InputText, TranslateModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -60,16 +61,14 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        console.error('Login failed', err);
         this.isLoading = false;
 
-        // Set error message based on status code or error response
         if (err.status === 401 || err.status === 403) {
-          this.loginError = 'Invalid username or password. Please try again.';
+          this.loginError = 'login.errors.invalid_credentials';
         } else if (err.status === 0) {
-          this.loginError = 'Unable to connect to the server. Please check your internet connection.';
+          this.loginError = 'login.errors.server_unreachable';
         } else {
-          this.loginError = 'An error occurred during login. Please try again later.';
+          this.loginError = 'login.errors.generic';
         }
       }
     });

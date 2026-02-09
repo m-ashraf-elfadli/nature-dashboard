@@ -664,3 +664,11 @@ html:lang(ar) {
     transform: rotate(45deg) translate(8px, -8px);
   }
 }
+
+html:lang(ar) .table-footer .pagination .pagination-btn.prev:hover {
+  transform: rotate(45deg) translate(8px, -8px);
+}
+
+html:lang(ar) .table-footer .pagination .pagination-btn.next:hover {
+  transform: rotate(45deg) translate(-8px, 8px);
+}

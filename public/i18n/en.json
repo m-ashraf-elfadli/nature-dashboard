@@ -28,6 +28,36 @@
     "only_numbers": "Only numbers are allowed",
     "image_required": "Image is required"
   },
+  "login": {
+    "powered_by": "Powered By",
+    "title": "Login to your account",
+    "subtitle": "Unlock Your Progress - Securely Access Your Content!",
+    "labels": {
+      "username": "Username",
+      "password": "Password"
+    },
+    "placeholders": {
+      "username": "Enter your username",
+      "password": "Enter your password"
+    },
+    "buttons": {
+      "sign_in": "Sign In",
+      "signing_in": "Signing In..."
+    },
+    "support": {
+      "text": "Have a problem signing in?",
+      "cta": "Call Support"
+    },
+    "overlay": {
+      "title": "Manage your website content",
+      "desc": "Dive in to set up your Website content, upload projects, and manage your website effectively."
+    },
+    "errors": {
+      "invalid_credentials": "Invalid username or password. Please try again.",
+      "server_unreachable": "Unable to connect to the server. Please check your internet connection.",
+      "generic": "An error occurred during login. Please try again later."
+    }
+  },
   "projects": {
     "list": {
       "page_title": "All Projects",

@@ -87,3 +87,7 @@ html:lang(ar) :host .table-footer .rows ::ng-deep .p-select-dropdown {
     margin-left: 0;
     margin-right: 8px;
 }
+
+html:lang(ar) :host .table-footer .pagination .pagination-btn svg {
+    transform: rotate(-225deg);
+}
