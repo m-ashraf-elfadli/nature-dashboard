@@ -1,22 +1,26 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { ApiService } from '../services/api.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
   private api = inject(ApiService);
+  private translate = inject(TranslateService);
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor() {}
+  constructor() { }
 
   private hasToken(): boolean {
     return !!localStorage.getItem('authToken');
   }
 
   login(credentials: { username: string, password: string }) {
+    console.log('auth service changed to:', this.api.getCulture());
+    console.log('auth service from translate service:', this.translate.getCurrentLang());
     return this.api.post<any>('users/signin', credentials).pipe(
       tap(res => {
         const token = `${res.data.token_type} ${res.data.token}`;

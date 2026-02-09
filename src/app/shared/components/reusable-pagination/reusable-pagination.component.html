@@ -1,42 +1,84 @@
 <div class="table-footer">
-
   <div class="info">
-    {{ 'general.pagination_info' | translate: { 
-        first: (page * rows + 1), 
-        last: getLastItemIndex(), 
-        total: totalRecords 
-    } }}
+    {{
+      "general.pagination_info"
+        | translate
+          : {
+              first: page * rows + 1,
+              last: getLastItemIndex(),
+              total: totalRecords,
+            }
+    }}
   </div>
 
   <div class="pagination">
-    <button class="pagination-table-btn" (click)="prev()" [disabled]="page === 0">
-      <i class="pi pi-angle-left"></i>
+    <button
+      class="pagination-btn prev"
+      (click)="prev()"
+      [disabled]="page === 0"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="8"
+        height="14"
+        viewBox="0 0 8 14"
+        fill="none"
+      >
+        <path
+          d="M6.75 12.75L0.75 6.75L6.75 0.75"
+          stroke="#FEFEFE"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
     </button>
 
     @for (p of pages; track p) {
-      @if (typeof p === 'number') {
-        <button [class.active]="p === page" (click)="go(+p)" [disabled]="p === page">
-          {{ +(p) + 1 }}
+      @if (typeof p === "number") {
+        <button
+          [class.active]="p === page"
+          [disabled]="p === page"
+          (click)="go(+p)"
+        >
+          {{ +p + 1 }}
         </button>
       } @else {
         <span class="disabled">...</span>
       }
     }
 
-    <button class="pagination-table-btn" (click)="next()" [disabled]="page === totalPages - 1">
-      <i class="pi pi-angle-right"></i>
+    <button
+      class="pagination-btn next"
+      (click)="next()"
+      [disabled]="page === totalPages - 1"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="8"
+        height="14"
+        viewBox="0 0 8 14"
+        fill="none"
+      >
+        <path
+          d="M0.75 0.75L6.75 6.75L0.75 12.75"
+          stroke="#FEFEFE"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
     </button>
   </div>
 
   <div class="rows">
-    {{'general.show' | translate }}
-    <p-select 
+    {{ "general.show" | translate }}
+    <p-select
       [options]="rowsOptions"
       [(ngModel)]="rows"
       (ngModelChange)="onPaginationChange({ size: $event })"
       styleClass="rows-dropdown"
     />
-    {{'general.entries' | translate }}
+    {{ "general.entries" | translate }}
   </div>
-
 </div>

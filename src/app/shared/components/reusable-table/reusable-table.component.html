@@ -1,148 +1,198 @@
 <div class="table-container">
   <div class="filter">
-    <app-filters [filterConfig]="filterItems" (filterChange)="onFilterChange($event)">
+    <app-filters
+      [filterConfig]="filterItems"
+      (filterChange)="onFilterChange($event)"
+    >
     </app-filters>
   </div>
-  @if(data.length > 0)
-  {
-  <div class="custom-table">
-    <p-table [value]="displayedData" [rows]="rows" [paginator]="false" [lazy]="
-        config.serverSidePagination ||
-        config.serverSideSort ||
-        config.serverSideFilter
-      " [selection]="selection" (selectionChange)="onSelectionChange($event)" (onSort)="onSort($event)">
-      <ng-template pTemplate="header">
-        <tr>
-          @if (config.selectionMode) {
-          <th style="width: 40px">
-            @if (config.selectionMode === "multiple") {
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+  @if (data.length > 0) {
+    <div class="custom-table">
+      <p-table
+        [value]="displayedData"
+        [rows]="rows"
+        [paginator]="false"
+        [lazy]="
+          config.serverSidePagination ||
+          config.serverSideSort ||
+          config.serverSideFilter
+        "
+        [selection]="selection"
+        (selectionChange)="onSelectionChange($event)"
+        (onSort)="onSort($event)"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            @if (config.selectionMode) {
+              <th style="width: 40px">
+                @if (config.selectionMode === "multiple") {
+                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                }
+              </th>
             }
-          </th>
-          }
-          <th *ngFor="let col of config.columns" [style.width]="col.width"
-            [pSortableColumn]="col.sortable ? col.field : ''">
-            {{ col.header | translate }}
-            @if (col.sortable) {
-            <p-sortIcon [field]="col.field"></p-sortIcon>
-            }
-          </th>
-
-          @if (actions.length) {
-          <th>{{ "general.actions" | translate }}</th>
-          }
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-row>
-        <tr>
-          @if (config.selectionMode) {
-          <td>
-            @if (config.selectionMode === "multiple") {
-            <p-tableCheckbox [value]="row"></p-tableCheckbox>
-            } @else if (config.selectionMode === "single") {
-            <p-tableRadioButton [value]="row"></p-tableRadioButton>
-            }
-          </td>
-          }
-          <td *ngFor="let col of config.columns" [class]="col.class">
-            @switch (col.type) {
-            @case ("avatar-and-name") {
-            <div class="avatar-and-name-cell">
-              <img [src]="
-                      baseMediaUrl +
-                      (col.avatarField ? row[col.avatarField] : '')
-                    " alt="avatar" />
-              <span>{{ row[col.field] }}</span>
-            </div>
-            }
-
-            @case ("country-chip") {
-            <div class="country-chip-cell">
-              <img [src]="
-                      (col.avatarField ? row[col.avatarField] : '')
-                    " />
-              <span>{{ row[col.field] }}</span>
-            </div>
-            }
-
-            @case ("chips-group") {
-            <div class="chips-group" [class]="row[col.field]">
-              <span class="chip" *ngFor="let s of row[col.field] | slice: 0 : 3">{{ s }}</span>
-              @if (row[col.field].length > 3) {
-              <span class="chip plus">+ {{ row[col.field].length - 3 }}</span>
+            <th
+              *ngFor="let col of config.columns"
+              [style.width]="col.width"
+              [pSortableColumn]="col.sortable ? col.field : ''"
+            >
+              {{ col.header | translate }}
+              @if (col.sortable) {
+                <p-sortIcon [field]="col.field"></p-sortIcon>
               }
-            </div>
-            }
-            @case ("languages-chips") {
-            <div class="chips-group">
-              <div class="country-chip-cell" *ngFor="let l of getLanguagesChips(row[col.field])">
-                <img *ngIf="l.flag" [src]="l.flag" />
-                <span>{{ l.code }}</span>
-                <i class="pi pi-check checked-lang"></i>
-              </div>
-            </div>
-            }
-            @case ("status") {
-            <p-inputswitch (onChange)="col?.statusCallback(row,$event.checked,$event.originalEvent)" [(ngModel)]="row[col.field]"></p-inputswitch>
-            }
+            </th>
 
-            @case ("badge") {
-            <span [class]="
-                    'badge ' +
-                    (col.badgeColorField ? col.badgeColorField(row) : '')
-                  ">
-              {{ row[col.field] }}
-            </span>
+            @if (actions.length) {
+              <th>{{ "general.actions" | translate }}</th>
             }
+          </tr>
+        </ng-template>
 
-            @case ("text-and-desc") {
-            <div>
-              <div>{{ row[col.field] }}</div>
-              <small>{{
-                col.secondaryField ? row[col.secondaryField] : ""
-                }}</small>
-            </div>
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            @if (config.selectionMode) {
+              <td>
+                @if (config.selectionMode === "multiple") {
+                  <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                } @else if (config.selectionMode === "single") {
+                  <p-tableRadioButton [value]="row"></p-tableRadioButton>
+                }
+              </td>
             }
+            <td *ngFor="let col of config.columns" [class]="col.class">
+              @switch (col.type) {
+                @case ("avatar-and-name") {
+                  <div class="avatar-and-name-cell">
+                    <img
+                      [src]="
+                        baseMediaUrl +
+                        (col.avatarField ? row[col.avatarField] : '')
+                      "
+                      alt="avatar"
+                    />
+                    <span>{{ row[col.field] }}</span>
+                  </div>
+                }
 
-            @case ("image") {
-            <img [src]="baseMediaUrl + row[col.field]" alt="image" class="table-image" />
-            }
-            @case ('text-editor') {
-            <div [innerHTML]="row[col.field]"></div>
-            }
+                @case ("country-chip") {
+                  <div class="country-chip-cell">
+                    <img
+                      [src]="
+                        baseMediaUrl +
+                        (col.avatarField ? row[col.avatarField] : '')
+                      "
+                    />
+                    <span>{{ row[col.field] }}</span>
+                  </div>
+                }
 
-            @default {
-            <span>{{ row[col.field] }}</span>
-            }
-            }
-          </td>
+                @case ("chips-group") {
+                  <div class="chips-group" [class]="row[col.field]">
+                    <span
+                      class="chip"
+                      *ngFor="let s of row[col.field] | slice: 0 : 3"
+                      >{{ s }}</span
+                    >
+                    @if (row[col.field].length > 3) {
+                      <span class="chip plus"
+                        >+ {{ row[col.field].length - 3 }}</span
+                      >
+                    }
+                  </div>
+                }
+                @case ("languages-chips") {
+                  <div class="chips-group">
+                    <div
+                      class="country-chip-cell"
+                      *ngFor="let l of getLanguagesChips(row[col.field])"
+                    >
+                      <img *ngIf="l.flag" [src]="l.flag" />
+                      <span>{{ l.code }}</span>
+                      <i class="pi pi-check checked-lang"></i>
+                    </div>
+                  </div>
+                }
+                @case ("status") {
+                  <p-inputswitch
+                    (onChange)="
+                      col?.statusCallback(
+                        row,
+                        $event.checked,
+                        $event.originalEvent
+                      )
+                    "
+                    [(ngModel)]="row[col.field]"
+                  ></p-inputswitch>
+                }
 
-          @if (actions.length) {
-          <td class="actions-cell">
-            <button *ngFor="let act of getVisibleRowActions(row)"
-              class="custom-btn btn-{{ act.severity }} {{ act.class }}" (click)="act.callback(row, $event)">
-              {{ act.label | translate }}
-              @if (act.icon) {
-              <i [class]="act.icon"></i>
+                @case ("badge") {
+                  <span
+                    [class]="
+                      'badge ' +
+                      (col.badgeColorField ? col.badgeColorField(row) : '')
+                    "
+                  >
+                    {{ row[col.field] }}
+                  </span>
+                }
+
+                @case ("text-and-desc") {
+                  <div>
+                    <div>{{ row[col.field] }}</div>
+                    <small>{{
+                      col.secondaryField ? row[col.secondaryField] : ""
+                    }}</small>
+                  </div>
+                }
+
+                @case ("image") {
+                  <img
+                    [src]="baseMediaUrl + row[col.field]"
+                    alt="image"
+                    class="table-image"
+                  />
+                }
+                @case ("text-editor") {
+                  <div [innerHTML]="row[col.field]"></div>
+                }
+
+                @default {
+                  <span>{{ row[col.field] }}</span>
+                }
               }
-            </button>
-          </td>
-          }
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+            </td>
 
+            @if (actions.length) {
+              <td class="actions-cell">
+                <button
+                  *ngFor="let act of getVisibleRowActions(row)"
+                  class="custom-btn btn-{{ act.severity }} {{ act.class }}"
+                  (click)="act.callback(row, $event)"
+                >
+                  {{ act.label | translate }}
+                  @if (act.icon) {
+                    <i [class]="act.icon"></i>
+                  }
+                </button>
+              </td>
+            }
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
 
-  <div class="custom-pagination">
-    <app-reusable-pagination [totalRecords]="totalRecords" [rowsOptions]="config.rowsPerPageOptions"
-      [rows]="config.rowsPerPage!" (paginationChange)="onPaginationChange($event)"></app-reusable-pagination>
-  </div>
-  }
-  @else
-  {
-  <app-empty-state [description]="emptyStateInfo.description" [buttonLabel]="emptyStateInfo.label"
-    (buttonAction)="onEmptyStateAction()"></app-empty-state>
+    <div class="custom-pagination">
+      <app-reusable-pagination
+        [totalRecords]="totalRecords"
+        [rowsOptions]="config.rowsPerPageOptions"
+        [rows]="config.rowsPerPage!"
+        (paginationChange)="onPaginationChange($event)"
+      ></app-reusable-pagination>
+    </div>
+  } @else {
+    <app-empty-state
+      [description]="emptyStateInfo.description"
+      [buttonLabel]="emptyStateInfo.label"
+      (buttonAction)="onEmptyStateAction()"
+    ></app-empty-state>
   }
 </div>

@@ -1,23 +1,31 @@
-:host{
-    .table-footer{
+:host {
+    .table-footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap:8px;
-        &{
+        gap: 8px;
+
+        & {
             @media screen and (max-width:768px) {
                 flex-direction: column;
                 align-items: center;
-                gap:16px;
+                gap: 16px;
             }
         }
-        .info,.rows{
+
+        .info,
+        .rows {
             color: var(--Color-Neutral-800, #6E7072);
             font-size: var(--Font-Size-3Xs, 12px);
             font-weight: var(--Font-Weight-Regular, 400);
         }
-        .pagination{
-            button{
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+
+            button:not(.pagination-btn) {
                 width: 40px;
                 height: 40px;
                 padding: 10px;
@@ -28,57 +36,66 @@
                 font-weight: var(--Font-Weight-Regular, 400);
                 color: var(--Color-Neutral-800, #6E7072);
                 cursor: pointer;
-                &.active{
+
+                &.active {
                     color: white;
                     background: var(--Color-Primary-100, #F3F9F1);
                     color: var(--Color-Primary-1000, #2E4528);
                 }
             }
-            .pagination-table-btn{
+
+            .pagination-table-btn {
                 transform: rotate(45deg);
                 border-radius: 19.2px 0;
                 margin: auto 1.3rem;
                 background: linear-gradient(180deg, var(--Color-Primary2-400, #B0D357) 0%, var(--Color-Primary-400, #82C672) 100%);
-                i{
+
+                i {
                     transform: rotate(-45deg);
-                    color: var(--Color-Neutral-100, #FEFEFE);;
+                    color: var(--Color-Neutral-100, #FEFEFE);
+                    ;
 
                 }
             }
         }
-        .rows{
-            ::ng-deep{
-                .p-select{
+
+        .rows {
+            ::ng-deep {
+                .p-select {
                     border-radius: 8px;
                     border: 1px solid var(--Other-Stroke, #D9D9D9);
                     background: var(--Secondary-White, #FFF);
                     padding: 8px 12px;
                 }
-                .p-select-dropdown{
+
+                .p-select-dropdown {
                     width: fit-content;
                     margin-left: 8px;
-                    ::ng-deep{
-                        svg{
-                            path{
+
+                    ::ng-deep {
+                        svg {
+                            path {
                                 fill: var(--Secondary-500, #232323);
                             }
                         }
                     }
                 }
-                .p-select-label{
+
+                .p-select-label {
                     color: var(--Secondary-500, #232323);
                     padding: 0;
                 }
             }
         }
     }
-    
+
 }
+
 html:lang(ar) :host .table-footer .rows ::ng-deep .p-select-dropdown {
     margin-left: 0;
     margin-right: 8px;
 }
-html:lang(ar) :host .pi-angle-left,
-html:lang(ar) :host .pi-angle-right{
-    transform: rotate(135deg) !important;
+
+html:lang(ar) :host .table-footer .pagination .pagination-btn svg {
+    transform: rotate(-225deg);
 }

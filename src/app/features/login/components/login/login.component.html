@@ -1,39 +1,37 @@
 <div class="login-wrapper">
   <div class="production">
-    Powerd By
+    {{ "login.powered_by" | translate }}
     <img src="images/2blogo.svg" alt="2b" />
   </div>
+
   <!-- Left Side -->
   <div class="login-left">
     <div class="logo">
       <img src="images/logo.svg" alt="Nature" />
     </div>
+
     <div class="head">
-      <h2>Login to your account</h2>
-      <p class="subtitle">
-        Unlock Your Progress - Securely Access Your Content!
-      </p>
+      <h2>{{ "login.title" | translate }}</h2>
+      <p class="subtitle">{{ "login.subtitle" | translate }}</p>
     </div>
+
     <form [formGroup]="loginForm" (ngSubmit)="submit()">
-      @if (loginError) {
-        <div class="login-error">
-          <span>{{ loginError }}</span>
-        </div>
-      }
       <div class="credntials">
         <!-- USERNAME -->
         <div class="our-field">
-          <label>Username <span>*</span></label>
+          <label>
+            {{ "login.labels.username" | translate }} <span>*</span>
+          </label>
           <input
             type="text"
-            placeholder="Enter your username"
+            [placeholder]="'login.placeholders.username' | translate"
             formControlName="username"
             pInputText
           />
           @if (username?.touched && username?.invalid) {
             <div class="error">
               @if (username?.errors?.["required"]) {
-                <span>Please enter your username</span>
+                <span>{{ "validation.required" | translate }}</span>
               }
             </div>
           }
@@ -41,29 +39,43 @@
 
         <!-- PASSWORD -->
         <div class="our-field">
-          <label>Password <span>*</span></label>
+          <label>
+            {{ "login.labels.password" | translate }} <span>*</span>
+          </label>
           <p-password
             formControlName="password"
             [toggleMask]="true"
             [feedback]="false"
             autocomplete="off"
-            placeholder="Enter your password"
+            [placeholder]="'login.placeholders.password' | translate"
           />
           @if (password?.touched && password?.invalid) {
             <div class="error">
               @if (password?.errors?.["required"]) {
-                <span>Please enter your password</span>
+                <span>{{ "validation.required" | translate }}</span>
               }
             </div>
           }
         </div>
       </div>
-      <button class="submit" type="submit" [disabled]="isLoading">
-        {{ isLoading ? "Signing In..." : "Sign In" }}
-      </button>
 
+      <button class="primary-btn submit" type="submit" [disabled]="isLoading">
+        <span>
+          {{
+            isLoading
+              ? ("login.buttons.signing_in" | translate)
+              : ("login.buttons.sign_in" | translate)
+          }}
+        </span>
+      </button>
+      @if (loginError) {
+        <div class="login-error">
+          <span>{{ loginError | translate }}</span>
+        </div>
+      }
       <p class="support">
-        Have a problem signing in? <a href="#">Call Support</a>
+        {{ "login.support.text" | translate }}
+        <a href="#">{{ "login.support.cta" | translate }}</a>
       </p>
     </form>
   </div>
@@ -71,11 +83,8 @@
   <!-- Right Side -->
   <div class="login-right">
     <div class="overlay">
-      <h3>Manage your website content</h3>
-      <p>
-        Dive in to set up your Website content, upload projects, and manage your
-        website effectively.
-      </p>
+      <h3>{{ "login.overlay.title" | translate }}</h3>
+      <p>{{ "login.overlay.desc" | translate }}</p>
     </div>
 
     <img class="dashboard-preview" src="images/asdsasd.png" alt="Dashboard" />
