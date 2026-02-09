@@ -19,8 +19,6 @@ export class AuthService {
   }
 
   login(credentials: { username: string, password: string }) {
-    console.log('auth service changed to:', this.api.getCulture());
-    console.log('auth service from translate service:', this.translate.getCurrentLang());
     return this.api.post<any>('users/signin', credentials).pipe(
       tap(res => {
         const token = `${res.data.token_type} ${res.data.token}`;
