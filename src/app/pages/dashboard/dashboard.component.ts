@@ -136,7 +136,6 @@ export class DashboardComponent implements OnInit {
 
   actions: TableAction<Project>[] = [
     {
-      icon: 'pi pi-pencil',
       severity: 'white',
       callback: (row) => this.router.navigate([`/projects/edit/${row.id}`]),
       class:'padding-action-btn'

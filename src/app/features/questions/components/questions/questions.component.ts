@@ -109,7 +109,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   actions: TableAction<Question>[] = [
     {
-      icon: 'pi pi-pencil',
       callback: (row) => this.edit(row),
       severity: 'white',
       class: 'padding-action-btn',

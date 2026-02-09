@@ -86,7 +86,6 @@ export class AwardsListComponent implements OnInit {
   actions: TableAction<Award>[] = [
     {
       callback: (row) => this.edit(row),
-      icon: 'pi pi-pencil',
       severity: 'white',
       class: 'padding-action-btn',
     },
