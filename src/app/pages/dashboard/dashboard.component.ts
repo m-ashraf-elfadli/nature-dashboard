@@ -139,11 +139,13 @@ export class DashboardComponent implements OnInit {
       icon: 'pi pi-pencil',
       severity: 'white',
       callback: (row) => this.router.navigate([`/projects/edit/${row.id}`]),
+      class:'padding-action-btn'
     },
     {
       callback: (row, event) => this.delete(row, event),
       icon: 'pi pi-trash',
       severity: 'white',
+      class:'padding-action-btn'
     },
   ];
 

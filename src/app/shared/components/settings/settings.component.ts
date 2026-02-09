@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, forwardRef, inject, Input } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Select } from 'primeng/select';
+import { SelectModule } from 'primeng/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export interface StatusOptions {
@@ -16,7 +16,7 @@ export interface StatusConfig {
 
 @Component({
   selector: 'app-settings',
-  imports: [Select, CommonModule, FormsModule, TranslateModule],
+  imports: [SelectModule, CommonModule, FormsModule, TranslateModule],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
   providers: [

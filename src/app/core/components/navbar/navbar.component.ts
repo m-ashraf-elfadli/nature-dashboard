@@ -56,7 +56,6 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   changeLang(lang: string) {
-    console.log(lang);
 
     this.selectedLanguage = lang;
     this.apiService.setCulture(lang);

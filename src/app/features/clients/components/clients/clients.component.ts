@@ -115,13 +115,13 @@ export class ClientsComponent implements OnInit, OnDestroy {
       icon: 'pi pi-pencil',
       callback: (row) => this.edit(row),
       severity: 'white',
-      class: 'p-2',
+      class: 'padding-action-btn',
     },
     {
       icon: 'pi pi-trash',
       callback: (row) => this.delete(row),
       severity: 'white',
-      class: 'p-2',
+      class: 'padding-action-btn',
     },
   ];
 

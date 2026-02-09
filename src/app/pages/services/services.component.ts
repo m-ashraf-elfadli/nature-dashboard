@@ -102,13 +102,13 @@ export class ServicesComponent {
       callback: (row) => this.edit(row),
       icon: 'pi pi-pencil',
       severity: 'white',
-      class: 'p-2',
+      class: 'padding-action-btn',
     },
     {
       callback: (row) => this.delete(row),
       icon: 'pi pi-trash',
       severity: 'white',
-      class: 'p-2',
+      class: 'padding-action-btn',
     },
   ];
 

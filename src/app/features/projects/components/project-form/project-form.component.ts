@@ -527,6 +527,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       this.form.markAllAsTouched();
       return;
     }
+    const projectCulture: 'en' | 'ar' = culture === 'en' ? 'ar' : 'en';
     const formData = this.buildFormData();
     const observable = this.isEditMode
       ? this.service.update(this.projectId, formData, culture)
@@ -548,12 +549,12 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
           this.router.navigate(['/projects']);
         } else {
           // Switch to the other language after saving
-          const projectCulture: 'en' | 'ar' = culture === 'en' ? 'ar' : 'en';
           this.switchLanguage(projectCulture);
         }
       },
       error: (err) => {
         console.log(err);
+        this.formActionsComponent.revertLanguage();
       },
     });
   }

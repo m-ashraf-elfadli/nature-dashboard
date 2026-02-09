@@ -104,13 +104,13 @@ export class ProjectsComponent implements OnInit {
       callback: (row) => this.edit(row),
       icon: 'pi pi-pencil',
       severity: 'white',
-      class: 'p-2',
+      class: 'padding-action-btn',
     },
     {
       callback: (row, event) => this.delete(row, event),
       icon: 'pi pi-trash',
       severity: 'white',
-      class: 'p-2',
+      class: 'padding-action-btn',
     },
   ];
 

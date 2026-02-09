@@ -5,9 +5,23 @@
       {{ 'settings.status' | translate }}
       <span class="required">{{ 'settings.required' | translate }}</span>
     </label>
-    <p-select [options]="statusOptions" [(ngModel)]="value" (ngModelChange)="onChange($event)"
+    <p-select 
+      [options]="statusOptions"
+      [(ngModel)]="value"
+      (ngModelChange)="onChange($event)"
       [placeholder]="'settings.select_status' | translate">
+      <ng-template let-selected pTemplate="selectedItem">
+        <div *ngIf="selected" class="flex align-items-center gap-2">
+          <span>{{ selected.label | translate }}</span>
+        </div>
+      </ng-template>
+      <ng-template let-item pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <span>{{ item.label | translate }}</span>
+        </div>
+      </ng-template>
     </p-select>
+
   </div>
 
   <div class="localization">
