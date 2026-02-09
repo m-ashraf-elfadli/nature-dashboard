@@ -160,42 +160,10 @@ export class DashboardComponent implements OnInit {
   };
   filterObj: any;
 
-  filterItems: FilterItems[] = [
-    {
-      type: 'search',
-      name: 'value',
-      placeholder: 'general.search_input_table_placeholder',
-    },
-    {
-      type: 'filter',
-      btnIcon: 'pi pi-download',
-      btnSeverity: 'white',
-      filterOptions: [
-        {
-          type: 'select',
-          multiple: true,
-          label: 'projects.list.filter.country',
-          inputName: 'country_ids',
-          options: this.countriesDD,
-        },
-        {
-          type: 'select',
-          multiple: true,
-          label: 'projects.list.filter.city',
-          inputName: 'city_ids',
-          options: this.citiesDD,
-        },
-      ],
-    },
-    {
-      type: 'btn',
-      label: 'projects.list.btns.view_all',
-      btnSeverity: 'primary',
-      btnCallback: (e: Event) => this.viewAllProjects(),
-    },
-  ];
+  filterItems: FilterItems[] = []
 
   ngOnInit(): void {
+    this.initFilterConfig()
     this.getStats();
     this.getDropDowns();
     this.fetchProjects(this.paginationObj);
@@ -251,7 +219,7 @@ export class DashboardComponent implements OnInit {
     this.filterItems = [
       {
         type: 'search',
-        name: 'name',
+        name: 'value',
         placeholder: 'general.search_input_table_placeholder',
       },
       {
