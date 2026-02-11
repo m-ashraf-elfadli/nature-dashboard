@@ -96,7 +96,6 @@ export class TestimonialsComponent implements OnInit {
 
   actions: TableAction<Testimonial>[] = [
     {
-      icon: 'pi pi-pencil',
       callback: (row) => this.edit(row),
       severity: 'white',
       class: 'padding-action-btn',

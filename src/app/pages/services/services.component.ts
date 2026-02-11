@@ -100,7 +100,6 @@ export class ServicesComponent {
   actions: TableAction<Service>[] = [
     {
       callback: (row) => this.edit(row),
-      icon: 'pi pi-pencil',
       severity: 'white',
       class: 'padding-action-btn',
     },

@@ -112,7 +112,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   actions: TableAction<Client>[] = [
     {
-      icon: 'pi pi-pencil',
       callback: (row) => this.edit(row),
       severity: 'white',
       class: 'padding-action-btn',

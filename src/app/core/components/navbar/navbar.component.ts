@@ -119,7 +119,6 @@ export class NavbarComponent implements OnInit {
 
     this.authService.logout().subscribe({
       next: () => {
-        console.log('Logout successful');
         this.router.navigate(['/auth']);
       },
       error: (err) => {

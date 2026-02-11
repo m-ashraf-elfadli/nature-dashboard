@@ -136,7 +136,6 @@ export class DashboardComponent implements OnInit {
 
   actions: TableAction<Project>[] = [
     {
-      icon: 'pi pi-pencil',
       severity: 'white',
       callback: (row) => this.router.navigate([`/projects/edit/${row.id}`]),
       class: 'padding-action-btn'
@@ -198,6 +197,7 @@ export class DashboardComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.initFilterConfig()
     this.getStats();
     this.getDropDowns();
     this.fetchProjects(this.paginationObj);
@@ -253,7 +253,7 @@ export class DashboardComponent implements OnInit {
     this.filterItems = [
       {
         type: 'search',
-        name: 'name',
+        name: 'value',
         placeholder: 'general.search_input_table_placeholder',
       },
       {
