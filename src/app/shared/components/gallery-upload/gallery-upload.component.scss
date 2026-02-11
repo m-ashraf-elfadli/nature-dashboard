@@ -131,6 +131,7 @@
       }
 
       &:hover {
+
         .remove-btn,
         .replace-label {
           opacity: 1;
@@ -227,6 +228,7 @@
     }
 
     .gallery-item {
+
       aspect-ratio: 1;
       border-radius: 12px;
       overflow: hidden;
@@ -312,6 +314,7 @@
           }
         }
       }
+
     }
   }
 }

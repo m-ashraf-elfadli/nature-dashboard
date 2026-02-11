@@ -143,18 +143,21 @@ export class ClientsComponent implements OnInit, OnDestroy {
     },
     {
       type: 'btn',
-      label: 'clients.list.btns.add_new',
-      btnIcon: 'pi pi-plus',
-      btnSeverity: 'primary',
-      btnCallback: () => this.showDialog(),
-    },
-    {
-      type: 'btn',
       label: 'general.import',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
+      anmSeverity: 'bg-grow',
       btnCallback: () => this.importCSV(),
     },
+    {
+      type: 'btn',
+      label: 'clients.list.btns.add_new',
+      btnIcon: 'pi pi-plus',
+      btnSeverity: 'primary',
+      anmSeverity: 'expand-gap',
+      btnCallback: () => this.showDialog(),
+    },
+
   ];
 
   showDialog() {

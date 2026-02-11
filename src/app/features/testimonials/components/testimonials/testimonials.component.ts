@@ -125,20 +125,23 @@ export class TestimonialsComponent implements OnInit {
       name: 'key',
       placeholder: 'general.search_input_table_placeholder',
     },
+      {
+      type: 'btn',
+      label: 'general.import',
+      btnIcon: 'pi pi-download',
+      btnSeverity: 'white',
+      anmSeverity:'bg-grow'
+
+    },
     {
       type: 'btn',
       label: 'testimonials.list.btns.add_new',
       btnIcon: 'pi pi-plus',
       btnSeverity: 'primary',
+      anmSeverity: 'expand-gap',
       btnCallback: () => this.showDialog(),
     },
-    {
-      type: 'btn',
-      label: 'general.import',
-      btnIcon: 'pi pi-download',
-      btnSeverity: 'white',
-      anmSeverity: 'bg-grow',
-    },
+  
   ];
 
   showDialog() {

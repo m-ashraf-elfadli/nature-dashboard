@@ -35,7 +35,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
   styleUrl: './awards-list.component.scss',
 })
 export class AwardsListComponent implements OnInit {
-  @ViewChild(ReusableTableComponent) reusableTableComponent!:ReusableTableComponent<Award>;
+  @ViewChild(ReusableTableComponent) reusableTableComponent!: ReusableTableComponent<Award>;
   private readonly service = inject(AwardsService);
   private readonly router = inject(Router);
   private readonly dialogService = inject(DialogService);
@@ -116,6 +116,7 @@ export class AwardsListComponent implements OnInit {
       label: 'general.import',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
+      anmSeverity: 'bg-grow',
       btnCallback: (e: Event) => this.addNew(),
     },
     {
@@ -123,6 +124,7 @@ export class AwardsListComponent implements OnInit {
       label: 'awards.list.btns.add_new',
       btnIcon: 'pi pi-plus',
       btnSeverity: 'primary',
+      anmSeverity: 'expand-gap',
       btnCallback: (e: Event) => this.addNew(),
     },
   ];
@@ -165,13 +167,13 @@ export class AwardsListComponent implements OnInit {
     this.paginationObj = event;
     this.fetchData(this.paginationObj);
   }
-  addAndHideBulkDeleteBtn(){
+  addAndHideBulkDeleteBtn() {
     const hasSelection = Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
     const bulkDeleteBtn: FilterItems = {
       label: 'general.delete_selected',
       type: 'btn',
-      name:'bulk-delete-btn',
-      btnIcon:"pi pi-trash",
+      name: 'bulk-delete-btn',
+      btnIcon: "pi pi-trash",
       btnSeverity: 'white',
       btnCallback: () => this.bulkDelete(),
     };
@@ -182,8 +184,8 @@ export class AwardsListComponent implements OnInit {
       this.filterItems = this.filterItems.filter((f) => f.name !== 'bulk-delete-btn');
     }
   }
-  bulkDelete(){
-    this.showDeleteConfirmDialog(this.selectedItems,'bulk-delete')
+  bulkDelete() {
+    this.showDeleteConfirmDialog(this.selectedItems, 'bulk-delete')
   }
   selectionChange(e: Award[] | Award) {
     this.selectedItems = Array.isArray(e) ? e : [e]
@@ -200,7 +202,7 @@ export class AwardsListComponent implements OnInit {
     this.router.navigate(['/awards/edit', row.id]);
   }
   delete(row: Award, event?: Event) {
-    this.showDeleteConfirmDialog(row,'delete');
+    this.showDeleteConfirmDialog(row, 'delete');
   }
   showDeleteConfirmDialog(dataToDelete: Award | Award[], actionType: 'delete' | 'bulk-delete' = 'delete') {
     const header =

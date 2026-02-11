@@ -123,12 +123,14 @@ export class ServicesComponent {
       label: 'general.import',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
+      anmSeverity: 'bg-grow',
     },
     {
       type: 'btn',
       label: 'services.list.btns.add_new',
       btnIcon: 'pi pi-plus',
       btnSeverity: 'primary',
+      anmSeverity: 'expand-gap',
       btnCallback: (e: Event) => this.addNew(),
     },
   ];
@@ -224,8 +226,8 @@ export class ServicesComponent {
       actionType === 'delete'
         ? 'services.list.delete_dialog.desc'
         : this.translate.instant('services.list.bulk_delete_dialog.desc', {
-            count,
-          });
+          count,
+        });
     const data = dataToDelete;
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
       width: '40vw',

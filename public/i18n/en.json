@@ -52,6 +52,9 @@
       "desc": "Dive in to set up your Website content, upload projects, and manage your website effectively."
     },
     "errors": {
+      "username":"Username Is Required",
+      "password":"Password Is Required",
+      "invalid_credentials": "Invalid username or password. Please try again.",
       "invalid_credentials": "Invalid username or password. Please try again.",
       "server_unreachable": "Unable to connect to the server. Please check your internet connection.",
       "generic": "An error occurred during login. Please try again later."

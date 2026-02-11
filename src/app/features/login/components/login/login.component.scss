@@ -76,42 +76,18 @@
       font-style: normal;
       font-weight: var(--Font-Weight-Regular, 500);
       line-height: var(--Font-Line-Height-S, 21.6px);
+    }
 
-
+    .submit-container {
+      margin-top: 20px;
+      width: 100%;
     }
 
     button.submit {
-      margin-top: 20px;
-
-      // display: flex;
-      // height: 48px;
-      // padding: 4px 24px;
-      // justify-content: center;
-      // align-items: center;
-      // gap: 4px;
-      // align-self: stretch;
-      // border-radius: 16px;
-      // background: linear-gradient(270deg, var(--Color-Primary-400, #82C672) 39.41%, var(--Color-Primary2-400, #B0D357) 98.64%);
-      // border: none;
-      // color: var(--Color-Neutral-100, #FEFEFE);
-      // font-size: var(--Font-Size-Xs, 16px);
-      // font-style: normal;
-      // font-weight: var(--Font-Weight-Semi-Bold, 600);
-      // line-height: var(--Font-Line-Height-Xs, 19.2px);
-      // cursor: pointer;
-      &::before {
-        // width: 5%;
-      }
-
-      &:hover {
-        // background: linear-gradient(270deg, var(--Color-Primary-400, #77b26a) 39.41%, var(--Color-Primary2-400, #B0D357) 98.64%);
-      }
+      width: 100%;
+      border-radius: 16px;
     }
   }
-
-
-
-
 
   .support {
     margin-top: 18px;

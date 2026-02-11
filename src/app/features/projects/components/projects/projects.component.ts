@@ -40,7 +40,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
   styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent implements OnInit {
-  @ViewChild(ReusableTableComponent) reusableTableComponent!:ReusableTableComponent<Project>;
+  @ViewChild(ReusableTableComponent) reusableTableComponent!: ReusableTableComponent<Project>;
   private readonly service = inject(ProjectsService);
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
@@ -151,7 +151,7 @@ export class ProjectsComponent implements OnInit {
     console.log('Edit action triggered', row, event);
   }
   delete(row: Project, event?: Event) {
-    this.showDeleteConfirmDialog(row,'delete');
+    this.showDeleteConfirmDialog(row, 'delete');
   }
   showDeleteConfirmDialog(dataToDelete: Project | Project[], actionType: 'delete' | 'bulk-delete' = 'delete') {
     const header =
@@ -244,12 +244,14 @@ export class ProjectsComponent implements OnInit {
             options: this.citiesDD,
           },
         ],
+
       },
       {
         type: 'btn',
         label: 'general.import',
         btnIcon: 'pi pi-download',
         btnSeverity: 'white',
+        anmSeverity: 'bg-grow',
         btnCallback: (e: Event) => this.addNewProject(e),
       },
       {
@@ -257,17 +259,18 @@ export class ProjectsComponent implements OnInit {
         label: 'projects.list.btns.add_new',
         btnIcon: 'pi pi-plus',
         btnSeverity: 'primary',
+        anmSeverity: 'expand-gap',
         btnCallback: (e: Event) => this.addNew(),
       },
     ];
   }
-  addAndHideBulkDeleteBtn(){
+  addAndHideBulkDeleteBtn() {
     const hasSelection = Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
     const bulkDeleteBtn: FilterItems = {
       label: 'general.delete_selected',
       type: 'btn',
-      name:'delete-btn',
-      btnIcon:"pi pi-trash",
+      name: 'delete-btn',
+      btnIcon: "pi pi-trash",
       btnSeverity: 'white',
       btnCallback: () => this.bulkDelete(),
     };
@@ -278,8 +281,8 @@ export class ProjectsComponent implements OnInit {
       this.filterItems = this.filterItems.filter((f) => f.name !== 'delete-btn');
     }
   }
-  bulkDelete(){
-    this.showDeleteConfirmDialog(this.selectedItems,'bulk-delete')
+  bulkDelete() {
+    this.showDeleteConfirmDialog(this.selectedItems, 'bulk-delete')
   }
   selectionChange(e: Project[] | Project) {
     this.selectedItems = Array.isArray(e) ? e : [e]

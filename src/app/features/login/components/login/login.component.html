@@ -31,7 +31,7 @@
           @if (username?.touched && username?.invalid) {
             <div class="error">
               @if (username?.errors?.["required"]) {
-                <span>{{ "validation.required" | translate }}</span>
+                <span>{{ "login.errors.username" | translate }}</span>
               }
             </div>
           }
@@ -52,27 +52,33 @@
           @if (password?.touched && password?.invalid) {
             <div class="error">
               @if (password?.errors?.["required"]) {
-                <span>{{ "validation.required" | translate }}</span>
+                <span>{{ "login.errors.password" | translate }}</span>
               }
             </div>
           }
         </div>
       </div>
 
-      <button class="primary-btn submit" type="submit" [disabled]="isLoading">
-        <span>
-          {{
-            isLoading
-              ? ("login.buttons.signing_in" | translate)
-              : ("login.buttons.sign_in" | translate)
-          }}
-        </span>
-      </button>
-      @if (loginError) {
-        <div class="login-error">
-          <span>{{ loginError | translate }}</span>
-        </div>
-      }
+      <div class="submit-container">
+        @if (loginError) {
+          <div class="error">
+            <span>{{ loginError | translate }}</span>
+          </div>
+        }
+        <button
+          class="btn-primary-outline anm-bg-grow submit"
+          type="submit"
+          [disabled]="isLoading"
+        >
+          <span>
+            {{
+              isLoading
+                ? ("login.buttons.signing_in" | translate)
+                : ("login.buttons.sign_in" | translate)
+            }}
+          </span>
+        </button>
+      </div>
       <p class="support">
         {{ "login.support.text" | translate }}
         <a href="#">{{ "login.support.cta" | translate }}</a>

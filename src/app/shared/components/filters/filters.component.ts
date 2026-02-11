@@ -20,8 +20,8 @@ export interface FilterItems {
   DDOption?: OptionsFilter[];
   multiple?: boolean;
   btnIcon?: string;
-  btnSeverity?: 'primary' | 'danger' | 'white';
-  anmSeverity?: 'bg-grow' | 'expand';
+  btnSeverity?: 'primary' | 'danger' | 'white' | 'primary-outline';
+  anmSeverity?: 'bg-grow' | 'expand' | 'expand-gap';
   btnCallback?: (e: Event) => void;
 }
 export interface FilterOption {

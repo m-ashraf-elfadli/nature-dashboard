@@ -176,6 +176,11 @@ a {
       border-color: #8bc34a;
     }
 
+    &:hover {
+      outline: none;
+      border-color: #8bc34a !important;
+    }
+
     &::placeholder {
       color: var(--Color-Neutral-500, #939598);
       font-size: var(--Font-Size-Xs, 16px);
@@ -517,7 +522,7 @@ span.required {
         padding: 4px;
         border: none;
         cursor: pointer;
-        transition: 0.2s ease;
+        transition: all 0.4s ease;
         transform: rotate(90deg);
 
         svg {
@@ -527,7 +532,13 @@ span.required {
         }
 
         &:hover {
-          opacity: 0.8;
+          border: 1px solid var(--Color-Primary-400, #82c672);
+          background: white;
+          transform: rotate(0deg);
+
+          svg path {
+            fill: #8ac86e;
+          }
         }
       }
     }

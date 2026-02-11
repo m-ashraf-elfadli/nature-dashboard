@@ -139,13 +139,13 @@ export class DashboardComponent implements OnInit {
       icon: 'pi pi-pencil',
       severity: 'white',
       callback: (row) => this.router.navigate([`/projects/edit/${row.id}`]),
-      class:'padding-action-btn'
+      class: 'padding-action-btn'
     },
     {
       callback: (row, event) => this.delete(row, event),
       icon: 'pi pi-trash',
       severity: 'white',
-      class:'padding-action-btn'
+      class: 'padding-action-btn'
     },
   ];
 
@@ -192,6 +192,7 @@ export class DashboardComponent implements OnInit {
       type: 'btn',
       label: 'projects.list.btns.view_all',
       btnSeverity: 'primary',
+      anmSeverity: 'expand',
       btnCallback: (e: Event) => this.viewAllProjects(),
     },
   ];
@@ -280,6 +281,7 @@ export class DashboardComponent implements OnInit {
         type: 'btn',
         label: 'projects.list.btns.view_all',
         btnSeverity: 'primary',
+        anmSeverity: 'expand-gap',
         btnCallback: (e: Event) => this.viewAllProjects(),
       },
     ];
