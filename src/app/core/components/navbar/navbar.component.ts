@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -25,6 +25,7 @@ import { ApiService } from '../../services/api.service';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
+  @ViewChild('userMenu') userMenu!: ElementRef;
   private readonly authService = inject(AuthService);
   private readonly translate = inject(TranslateService);
   private readonly apiService = inject(ApiService);
@@ -32,6 +33,13 @@ export class NavbarComponent implements OnInit {
   userMenuVisible = false;
   currentPageTitle = this.translate.instant('navigation.dashboard');
   mobileMenuOpen = false;
+
+  @HostListener('document:click', ['$event'])
+    onClick(event: MouseEvent) {
+    if (!this.userMenu.nativeElement.contains(event.target)) {
+      this.userMenuVisible = false;
+    }
+  }
 
   private pageMap: { [key: string]: string } = {
     dashboard: 'navigation.dashboard',

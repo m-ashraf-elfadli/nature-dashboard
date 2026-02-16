@@ -516,7 +516,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.metrics.removeAt(index);
   }
   onDiscard(event: Event) {
-    console.log(event);
+    this.router.navigate(['/projects']);
   }
   onSave() {
     this.isFirstTimeToSend = false;

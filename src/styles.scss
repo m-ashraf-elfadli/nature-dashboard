@@ -410,7 +410,10 @@ input[type="number"] {
     cursor: default;
   }
 }
-
+p-checkbox{
+  display: flex;
+  align-items: center;
+}
 .checkbox-field {
   display: flex;
   align-items: center;
