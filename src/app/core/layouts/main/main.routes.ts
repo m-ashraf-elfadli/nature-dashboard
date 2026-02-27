@@ -47,7 +47,7 @@ export const dashboardRoutes: Routes = [
         path: 'add',
         component: AwardFormComponent,
         data: {
-          breadcrumb: 'general.add',
+          breadcrumb: 'awards.form.add_breadcrumb',
         },
       },
       {

@@ -193,6 +193,7 @@
       "title": "Add New Award",
       "edit_title": "Update Award",
       "english": "(English)",
+      "add_breadcrumb":"Add New Award",
       "arabic": "(Arabic)",
       "titles": {
         "details": "Award Details",
