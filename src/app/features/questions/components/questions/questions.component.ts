@@ -220,7 +220,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
           this.service.bulkDelete(ids).subscribe((_) => {
             this.loadQuestions(this.paginationObj);
             this.reusableTableComponent.selection = [];
-            this.selectedItems = []
+            this.selectedItems = [];
+            this.addAndHideBulkDeleteBtn();
           });
         }
       }

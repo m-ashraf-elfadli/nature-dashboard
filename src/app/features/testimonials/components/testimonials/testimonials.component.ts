@@ -225,6 +225,7 @@ export class TestimonialsComponent implements OnInit {
             this.loadTestimonials();
             this.reusableTableComponent.selection = [];
             this.selectedItems = [];
+            this.addAndHideBulkDeleteBtn();
           });
         }
       }

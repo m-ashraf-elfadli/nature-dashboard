@@ -8,7 +8,7 @@ import {
 } from '../../../../shared/components/reusable-table/reusable-table.types';
 import { ButtonModule } from 'primeng/button';
 import { ClientFormComponent } from '../client-form/client-form.component';
-import { FilterItems } from '../../../../shared/components/filters/filters.component';
+import { FilterItems, FiltersComponent } from '../../../../shared/components/filters/filters.component';
 import { ClientsService } from '../../services/clients.service';
 import {
   ConfirmDialogComponent,
@@ -47,6 +47,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
   @ViewChild(ClientFormComponent)
   clientForm?: ClientFormComponent;
   @ViewChild(ReusableTableComponent) reusableTableComponent!: ReusableTableComponent<Client>;
+  @ViewChild(FiltersComponent) filtersComponent!: FiltersComponent;
 
   visible = false;
   data: Client[] = [];
@@ -244,6 +245,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
             this.loadClients();
             this.reusableTableComponent.selection = [];
             this.selectedItems = [];
+            this.addAndHideBulkDeleteBtn();
           });
         }
       }

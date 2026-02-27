@@ -259,6 +259,7 @@ export class ServicesComponent {
               this.fetchData(this.paginationObj);
               this.reusableTableComponent.selection = [];
               this.selectedItems = [];
+              this.addAndHideBulkDeleteBtn();
             });
           }
         }

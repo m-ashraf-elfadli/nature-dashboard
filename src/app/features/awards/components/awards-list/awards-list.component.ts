@@ -243,7 +243,8 @@ export class AwardsListComponent implements OnInit {
           this.service.bulkDelete(ids).subscribe((_) => {
             this.fetchData(this.paginationObj);
             this.reusableTableComponent.selection = [];
-            this.selectedItems = []
+            this.selectedItems = [];
+            this.addAndHideBulkDeleteBtn()
           });
         }
       }
