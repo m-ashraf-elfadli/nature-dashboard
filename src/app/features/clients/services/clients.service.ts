@@ -18,7 +18,7 @@ export class ClientsService {
       .set('size', pagination.size.toString());
 
     if (search) {
-      params = params.set('key', search);
+      params = params.set('value', search);
     }
 
     return this.api.get('clients', params);
