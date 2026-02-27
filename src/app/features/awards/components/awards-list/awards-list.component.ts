@@ -150,9 +150,6 @@ export class AwardsListComponent implements OnInit {
       next: (res) => {
         this.data.set(res.result);
         this.totalRecords.set(res.total!);
-        // this.selectedItems = this.data()
-        //   .filter((d:Award) => this.selectedItems.some((s:Award)=> d.id === s.id))
-        this.addAndHideBulkDeleteBtn()
       },
       error: (err) => {
         console.error('Failed to load projects', err);
