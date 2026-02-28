@@ -99,7 +99,7 @@
             </div>
             <div class="award-image-section">
                 <div class="header-section">
-                    <h3>{{ 'awards.form.titles.award' | translate }}</h3>
+                    <h3>{{ 'awards.form.titles.award' | translate }} <span class="required">*</span></h3>
                 </div>
                 <div class="inputs">
                     <app-gallery-upload formControlName="image"></app-gallery-upload>
@@ -124,7 +124,7 @@
                 <div class="inputs">
                     <div class="organizations-input">
                         <div class="header-section">
-                            <h3>{{ 'awards.form.titles.organizations' | translate }}</h3>
+                            <h3>{{ 'awards.form.titles.organizations' | translate }} <span class="required">*</span></h3>
                         </div>
                         <app-gallery-upload [multiple]="true" formControlName="organizations_logos"></app-gallery-upload>
                         @if(hasError('organizations_logos')){
