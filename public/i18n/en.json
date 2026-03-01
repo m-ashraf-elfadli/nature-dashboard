@@ -565,6 +565,7 @@
   },
   "dashboard": {
     "welcome": "Welcome back, {{name}}",
+    "welcome_admin": "Welcome back, Nature Admin",
     "subtitle": "Here's what's happening with your projects today.",
     "total_projects": "Total Projects",
     "total_clients": "Total Clients",
