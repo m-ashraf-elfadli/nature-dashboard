@@ -45,7 +45,8 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild(ReusableTableComponent) reusableTableComponent!: ReusableTableComponent<Project>;
+  @ViewChild(ReusableTableComponent)
+  reusableTableComponent!: ReusableTableComponent<Project>;
   private dashboardService = inject(DashboardService);
   private service = inject(ProjectsService);
   private router = inject(Router);
@@ -54,7 +55,7 @@ export class DashboardComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   countriesDD: DropDownOption[] = [];
   citiesDD: DropDownOption[] = [];
-  selectedItems:Project[] = [];
+  selectedItems: Project[] = [];
   userName =
     JSON.parse(localStorage.getItem('user') || '{}')?.username ??
     this.translate.instant('user_menu.admin_name');
@@ -140,13 +141,13 @@ export class DashboardComponent implements OnInit {
     {
       severity: 'white',
       callback: (row) => this.router.navigate([`/projects/edit/${row.id}`]),
-      class: 'padding-action-btn'
+      class: 'padding-action-btn',
     },
     {
       callback: (row, event) => this.delete(row, event),
       icon: 'pi pi-trash',
       severity: 'white',
-      class: 'padding-action-btn'
+      class: 'padding-action-btn',
     },
   ];
 
@@ -199,10 +200,14 @@ export class DashboardComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.initFilterConfig()
+    this.initFilterConfig();
     this.getStats();
     this.getDropDowns();
     this.fetchProjects(this.paginationObj);
+
+    this.translate.onLangChange.subscribe(() => {
+      this.fetchProjects(this.paginationObj);
+    });
   }
   viewAllProjects() {
     this.router.navigate(['/projects']);
@@ -290,9 +295,12 @@ export class DashboardComponent implements OnInit {
   }
   delete(row: Project, event?: Event) {
     console.log('Delete action triggered', row, event);
-    this.showDeleteConfirmDialog(row,'delete');
+    this.showDeleteConfirmDialog(row, 'delete');
   }
-  showDeleteConfirmDialog(dataToDelete: Project | Project[], actionType: 'delete' | 'bulk-delete' = 'delete') {
+  showDeleteConfirmDialog(
+    dataToDelete: Project | Project[],
+    actionType: 'delete' | 'bulk-delete' = 'delete',
+  ) {
     const header =
       actionType === 'delete'
         ? 'projects.list.delete_dialog.header'
@@ -301,7 +309,9 @@ export class DashboardComponent implements OnInit {
     const desc =
       actionType === 'delete'
         ? 'projects.list.delete_dialog.desc'
-        : this.translate.instant('projects.list.bulk_delete_dialog.desc', { count });
+        : this.translate.instant('projects.list.bulk_delete_dialog.desc', {
+            count,
+          });
     const data = dataToDelete;
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
       width: '40vw',
@@ -319,45 +329,52 @@ export class DashboardComponent implements OnInit {
         data: data,
       },
     });
-    this.ref.onClose.subscribe((product: { action: string; data: Project | Project[] }) => {
-      if (product && product.action === 'confirm') {
-        if (!Array.isArray(product.data)) {
-          this.service.delete(product.data.id).subscribe({
-            next: () => {
+    this.ref.onClose.subscribe(
+      (product: { action: string; data: Project | Project[] }) => {
+        if (product && product.action === 'confirm') {
+          if (!Array.isArray(product.data)) {
+            this.service.delete(product.data.id).subscribe({
+              next: () => {
+                this.fetchProjects(this.paginationObj);
+              },
+            });
+          } else {
+            const ids = product.data.map((a: Project) => a.id);
+            this.service.bulkDelete(ids).subscribe((_) => {
               this.fetchProjects(this.paginationObj);
-            },
-          });
-        } else {
-          const ids = product.data.map((a: Project) => a.id);
-          this.service.bulkDelete(ids).subscribe((_) => {
-            this.fetchProjects(this.paginationObj);
-            this.reusableTableComponent.selection = [];
-            this.selectedItems = [];
-            this.addAndHideBulkDeleteBtn();
-          });
+              this.reusableTableComponent.selection = [];
+              this.selectedItems = [];
+              this.addAndHideBulkDeleteBtn();
+            });
+          }
         }
-      }
-    });
+      },
+    );
   }
   addAndHideBulkDeleteBtn() {
-    const hasSelection = Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
+    const hasSelection =
+      Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
     const bulkDeleteBtn: FilterItems = {
       label: 'general.delete_selected',
       type: 'btn',
       name: 'delete-btn',
-      btnIcon: "pi pi-trash",
+      btnIcon: 'pi pi-trash',
       btnSeverity: 'white',
       btnCallback: () => this.bulkDelete(),
     };
     if (hasSelection) {
-      const withoutBulk = this.filterItems.filter((f) => f.name !== 'delete-btn');
+      const withoutBulk = this.filterItems.filter(
+        (f) => f.name !== 'delete-btn',
+      );
       this.filterItems = [bulkDeleteBtn, ...withoutBulk];
     } else {
-      this.filterItems = this.filterItems.filter((f) => f.name !== 'delete-btn');
+      this.filterItems = this.filterItems.filter(
+        (f) => f.name !== 'delete-btn',
+      );
     }
   }
   bulkDelete() {
-    this.showDeleteConfirmDialog(this.selectedItems, 'bulk-delete')
+    this.showDeleteConfirmDialog(this.selectedItems, 'bulk-delete');
   }
   onFilterChange(filter: any) {
     this.filterObj = filter;
@@ -370,7 +387,7 @@ export class DashboardComponent implements OnInit {
     this.service.changeStatus(row.id, value).subscribe();
   }
   selectionChange(e: Project[] | Project) {
-    this.selectedItems = Array.isArray(e) ? e : [e]
+    this.selectedItems = Array.isArray(e) ? e : [e];
     this.addAndHideBulkDeleteBtn();
   }
 }
