@@ -31,7 +31,11 @@
             <div class="details-section">
                 <div class="header-section gap-2">
                     <h3>{{ 'projects.form.titles.deatils' | translate }}</h3>
-                    <span>{{ 'projects.form.english' | translate }}</span>
+                    @if(currentLanguage === 'en'){
+                        <span>(English)</span>
+                    }@else {
+                        <span>(عربي)</span>
+                    }
                 </div>
                 <div class="inputs">
                     <div class="our-field">
@@ -48,12 +52,16 @@
                         <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span
                                 class="text-red-val">*</span></label>
                         <div class="textarea-container">
-                            <textarea pTextarea [placeholder]="'projects.form.placeholders.overview' | translate"
+                            <textarea (input)="test()" pTextarea [placeholder]="'projects.form.placeholders.overview' | translate"
                                 id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
-                            <span class="char-counter">{{ form.get('overview')?.value?.length || 0 }}/200</span>
+                            <span class="char-counter"><span [class.text-red-val]="hasError('overview','maxlength')">{{ form.get('overview')?.value?.length || 0 }}</span>/200</span>
                         </div>
-                        @if(hasError('overview')){
+                        @if(hasError('overview','required')){
                         <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview'
+                            | translate}}</p-message>
+                        }
+                        @if(hasError('overview','maxlength')){
+                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview_max_length'
                             | translate}}</p-message>
                         }
                     </div>
@@ -64,11 +72,15 @@
                             <textarea pTextarea [disabled]="true"
                                 [placeholder]="'projects.form.placeholders.brief' | translate" id="brief"
                                 [autoResize]="true" formControlName="brief" rows="4"></textarea>
-                            <span class="char-counter">{{ form.get('brief')?.value?.length || 0 }}/200</span>
+                            <span class="char-counter"><span [class.text-red-val]="hasError('brief','maxlength')">{{ form.get('brief')?.value?.length || 0 }}</span>/200</span>
                         </div>
-                        @if(hasError('brief')){
+                        @if(hasError('brief','required')){
                         <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.brief' |
                             translate}}</p-message>
+                        }
+                        @if(hasError('brief','maxlength')){
+                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview_max_length'
+                            | translate}}</p-message>
                         }
                     </div>
                 </div>

@@ -55,7 +55,6 @@
       "username":"Username Is Required",
       "password":"Password Is Required",
       "invalid_credentials": "Invalid username or password. Please try again.",
-      "invalid_credentials": "Invalid username or password. Please try again.",
       "server_unreachable": "Unable to connect to the server. Please check your internet connection.",
       "generic": "An error occurred during login. Please try again later."
     }
@@ -145,6 +144,7 @@
       "validation": {
         "name": "Name is required",
         "overview": "Overview is required",
+        "overview_max_length":"This field has a 200-character limit",
         "brief": "Brief is required",
         "services": "Project Services is required",
         "from": "From date is required",

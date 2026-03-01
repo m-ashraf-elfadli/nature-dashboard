@@ -31,7 +31,11 @@
             <div class="details-section">
                 <div class="header-section gap-2">
                     <h3>{{ 'awards.form.titles.details' | translate }}</h3>
-                    <span>{{ 'awards.form.english' | translate }}</span>
+                    @if(currentLanguage === 'en'){
+                        <span>(English)</span>
+                    }@else {
+                        <span>(عربي)</span>
+                    }
                 </div>
                 <div class="inputs">
                     <div class="our-field">

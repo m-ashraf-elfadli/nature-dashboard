@@ -256,6 +256,9 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       isCurrentlyActive: !data.endDate,
     });
 
+    if(!data.endDate){
+      this.form.get('end_date')?.disable();
+    }
     // Services (ids)
     const serviceIds = (data.services || []).map((s: any) => s.id);
     this.form.get('service_ids')?.setValue(serviceIds);
@@ -410,7 +413,9 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       endDateControl.updateValueAndValidity();
     }
   }
-
+  test(){
+    console.log(this.form)
+  }
   hasError(controlName: string, errorName?: string): boolean {
     const control = this.form.get(controlName);
     if (!control) return false;
