@@ -3,9 +3,11 @@
   height: 40px;
   transform: rotate(90deg);
   border-radius: 24px 0;
-  background: linear-gradient(180deg,
-      var(--Color-Primary2-400, #b0d357) 0%,
-      var(--Color-Primary-400, #82c672) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--Color-Primary2-400, #b0d357) 0%,
+    var(--Color-Primary-400, #82c672) 100%
+  );
   border: none;
   border-color: transparent;
   cursor: pointer;
@@ -63,9 +65,11 @@
   height: 40px;
   transform: rotate(45deg);
   border-radius: 24px 0;
-  background: linear-gradient(180deg,
-      var(--Color-Primary2-400, #b0d357) 0%,
-      var(--Color-Primary-400, #82c672) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--Color-Primary2-400, #b0d357) 0%,
+    var(--Color-Primary-400, #82c672) 100%
+  );
   border: none;
   border-color: transparent;
   cursor: pointer;
@@ -100,7 +104,6 @@
   }
 }
 
-
 .partner-btn {
   position: relative;
   overflow: hidden;
@@ -134,9 +137,11 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    background: linear-gradient(270deg,
-        var(--Color-Primary-400, #82c672) 40%,
-        var(--Color-Primary2-400, #b0d357) 100%);
+    background: linear-gradient(
+      270deg,
+      var(--Color-Primary-400, #82c672) 40%,
+      var(--Color-Primary2-400, #b0d357) 100%
+    );
     border-radius: 50%;
     left: 50%;
     bottom: -10px;
@@ -162,9 +167,11 @@
 
 .backBtn {
   border-radius: 19.2px 0;
-  background: linear-gradient(180deg,
-      var(--Color-Primary2-400, #b0d357) 0%,
-      var(--Color-Primary-400, #82c672) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--Color-Primary2-400, #b0d357) 0%,
+    var(--Color-Primary-400, #82c672) 100%
+  );
   width: 32px;
   height: 32px;
   transform: rotate(45deg);
@@ -215,9 +222,11 @@
 .btn-primary {
   color: var(--Color-Neutral-100, #fefefe);
   border-radius: 12px;
-  background: linear-gradient(270deg,
-      var(--Color-Primary-400, #82c672) 39.41%,
-      var(--Color-Primary2-400, #b0d357) 98.64%);
+  background: linear-gradient(
+    270deg,
+    var(--Color-Primary-400, #82c672) 39.41%,
+    var(--Color-Primary2-400, #b0d357) 98.64%
+  );
   display: flex;
   height: 42px;
   padding: 4px 24px;
@@ -243,7 +252,6 @@
     background: #d1d5dc;
     cursor: not-allowed;
   }
-
 }
 
 .btn-primary-outline {
@@ -282,7 +290,6 @@
   i {
     transition: 0.6s ease;
   }
-
 }
 
 .anm-bg-grow {
@@ -291,9 +298,11 @@
     position: absolute;
     width: 5%;
     height: 20px;
-    background: linear-gradient(270deg,
-        var(--Color-Primary-400, #82c672) 40%,
-        var(--Color-Primary2-400, #b0d357) 100%);
+    background: linear-gradient(
+      270deg,
+      var(--Color-Primary-400, #82c672) 40%,
+      var(--Color-Primary2-400, #b0d357) 100%
+    );
     border-radius: 50%;
     left: 50%;
     bottom: -10px;
@@ -301,8 +310,6 @@
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: -1;
   }
-
-
 
   &:hover {
     color: white;
@@ -318,7 +325,6 @@
 
     &::before {
       transform: translateX(-50%) scale(25);
-
     }
   }
 }
@@ -328,9 +334,11 @@
 
   &:hover {
     padding: 4px 40px;
-    background: linear-gradient(270deg,
-        var(--Color-Primary-400, #82c672) 39.41%,
-        var(--Color-Primary2-400, #b0d357) 98.64%);
+    background: linear-gradient(
+      270deg,
+      var(--Color-Primary-400, #82c672) 39.41%,
+      var(--Color-Primary2-400, #b0d357) 98.64%
+    );
     gap: 20px;
   }
 }
@@ -348,9 +356,11 @@
   }
 
   &:hover {
-    background: linear-gradient(270deg,
-        var(--Color-Primary-400, #82c672) 39.41%,
-        var(--Color-Primary2-400, #b0d357) 98.64%);
+    background: linear-gradient(
+      270deg,
+      var(--Color-Primary-400, #82c672) 39.41%,
+      var(--Color-Primary2-400, #b0d357) 98.64%
+    );
 
     i,
     svg {
@@ -358,7 +368,6 @@
     }
 
     span {
-
       transform: translateX(4px);
     }
   }
@@ -401,9 +410,11 @@
 
 .action-btn {
   border-radius: 12px;
-  background: linear-gradient(270deg,
-      var(--Color-Primary-400, #82c672) 39.41%,
-      var(--Color-Primary2-400, #b0d357) 98.64%);
+  background: linear-gradient(
+    270deg,
+    var(--Color-Primary-400, #82c672) 39.41%,
+    var(--Color-Primary2-400, #b0d357) 98.64%
+  );
   display: flex;
   height: 42px;
   padding: 4px 24px;
@@ -412,6 +423,7 @@
   gap: 4px;
   cursor: pointer;
   border: none;
+  min-width: 134px;
 
   span {
     color: var(--Color-Neutral-100, #fefefe);
@@ -426,9 +438,11 @@
 
   &:hover {
     padding: 4px 40px;
-    background: linear-gradient(270deg,
-        var(--Color-Primary-400, #82c672) 39.41%,
-        var(--Color-Primary2-400, #b0d357) 98.64%);
+    background: linear-gradient(
+      270deg,
+      var(--Color-Primary-400, #82c672) 39.41%,
+      var(--Color-Primary2-400, #b0d357) 98.64%
+    );
     gap: 20px;
   }
 
@@ -465,7 +479,6 @@
   opacity: 0.6;
 }
 
-
 .add-form-group-btn {
   display: flex;
   align-items: center;
@@ -499,6 +512,7 @@
   transition: 0.2s ease;
   border: none;
   cursor: pointer;
+  min-width: 134px;
 
   span,
   i {

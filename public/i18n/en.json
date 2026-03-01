@@ -276,7 +276,7 @@
         "status": "Status"
       },
       "btns": {
-        "add_new": "Add new service"
+        "add_new": "Add new services"
       },
       "delete_dialog": {
         "header": "Delete Service",

@@ -1,4 +1,11 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -35,7 +42,7 @@ export class NavbarComponent implements OnInit {
   mobileMenuOpen = false;
 
   @HostListener('document:click', ['$event'])
-    onClick(event: MouseEvent) {
+  onClick(event: MouseEvent) {
     if (!this.userMenu.nativeElement.contains(event.target)) {
       this.userMenuVisible = false;
     }
@@ -54,7 +61,7 @@ export class NavbarComponent implements OnInit {
 
   languages: { code: string; label: string; flag: string }[] = [
     { code: 'en', label: 'English', flag: './images/usa.webp' },
-    { code: 'ar', label: 'العربية', flag: './images/eg.webp' },
+    { code: 'ar', label: 'العربية', flag: './images/ue.webp' },
   ];
   selectedLanguage!: string;
 
@@ -64,7 +71,6 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   changeLang(lang: string) {
-
     this.selectedLanguage = lang;
     this.apiService.setCulture(lang);
     this.translate.use(lang);
