@@ -356,6 +356,7 @@
           "title": "Benefits Insights",
           "max_allowed": "(Maximum 3 Insights)",
           "label": "Insight",
+          "label_number": "Metrics Number",
           "title_placeholder": "Please enter Insight title",
           "title_min": "Insight title must be at least 3 characters",
           "title_max": "Insight title cannot exceed 50 characters",

@@ -164,11 +164,11 @@
 
           <div class="insights-container">
             <div class="insight-row" *ngFor="let control of benefitInsightsArray.controls; let i = index">
-              <div class="insight-label">
-                <label>{{ 'services.form.benefits.insights.label' | translate }} ({{ i + 1 }})</label>
-              </div>
               <div class="insight-inputs">
                 <div class="our-field">
+                  <div class="insight-label">
+                    <label>{{ 'services.form.benefits.insights.label' | translate }} ({{ i + 1 }})</label>
+                  </div>
                   <input type="text" [placeholder]="'services.form.benefits.insights.title_placeholder' | translate"
                     [formControl]="$any(control.get('metricTitle'))" pInputText
                     [class.error]="isInsightFieldInvalid(i, 'metricTitle')" />
@@ -177,6 +177,9 @@
                   </small>
                 </div>
                 <div class="our-field insight-input">
+                  <div class="insight-label">
+                    <label>{{ 'services.form.benefits.insights.label_number' | translate }}</label>
+                  </div>
                   <input type="number" [placeholder]="'services.form.benefits.insights.number_placeholder' | translate"
                     [formControl]="$any(control.get('metricNumber'))" pInputText min="0"
                     [class.error]="isInsightFieldInvalid(i, 'metricNumber')" />
