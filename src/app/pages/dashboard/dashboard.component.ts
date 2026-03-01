@@ -231,7 +231,7 @@ export class DashboardComponent implements OnInit {
       .getAll(pagination, this.filterObj?.key || '', this.filterObj)
       .subscribe({
         next: (res) => {
-          this.data.set(res.result);
+          // this.data.set(res.result);
           this.totalRecords.set(res.total!);
         },
       });
