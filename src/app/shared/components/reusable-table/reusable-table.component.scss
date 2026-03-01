@@ -97,7 +97,7 @@
 // hide bottom border of table cells
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
   border-bottom: none !important;
-  max-width: 35vw;
+  max-width: 25vw;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
