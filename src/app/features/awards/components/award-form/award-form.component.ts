@@ -58,7 +58,7 @@ const STATUS_MAP = {
   templateUrl: './award-form.component.html',
   styleUrl: './award-form.component.scss',
 })
-export class AwardFormComponent implements OnInit,OnDestroy, AfterViewInit {
+export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(FormActionsComponent) formActionsComponent!: FormActionsComponent;
   @ViewChild(SettingsComponent) settingsComponent!: SettingsComponent;
 
@@ -66,7 +66,7 @@ export class AwardFormComponent implements OnInit,OnDestroy, AfterViewInit {
   private readonly service = inject(AwardsService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly apiService = inject(ApiService)
+  private readonly apiService = inject(ApiService);
   private readonly translate = inject(TranslateService);
   private readonly dialogService = inject(DialogService);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -115,7 +115,9 @@ export class AwardFormComponent implements OnInit,OnDestroy, AfterViewInit {
     });
   }
   ngOnDestroy(): void {
-    this.apiService.setCulture(localStorage.getItem('app_lang') || this.translate.getCurrentLang())
+    this.apiService.setCulture(
+      localStorage.getItem('app_lang') || this.translate.getCurrentLang(),
+    );
   }
 
   ngAfterViewInit() {
@@ -377,13 +379,13 @@ export class AwardFormComponent implements OnInit,OnDestroy, AfterViewInit {
       width: '500px',
       data: {
         title: 'general.change_lang_dialog_header',
-        subtitle:'general.change_lang_dialog_desc',
+        subtitle: 'general.change_lang_dialog_desc',
         confirmText: 'general.change_lang_dialog_save',
         cancelText: 'general.cancel',
         confirmSeverity: 'success',
         cancelSeverity: 'cancel',
         showCancel: true,
-        model:true,
+        model: true,
       },
     });
 
@@ -464,5 +466,4 @@ export class AwardFormComponent implements OnInit,OnDestroy, AfterViewInit {
   getLanguageName(langCode: string): string {
     return this.languageNames[langCode] || langCode.toUpperCase();
   }
-
 }
