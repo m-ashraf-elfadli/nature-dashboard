@@ -105,8 +105,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   ]);
 
   mediaUrl: string = environment.mediaUrl;
-  currentLanguage = 'en';
-  previousLanguage = 'en';
+  currentLanguage:string = 'en';
+  previousLanguage:string = 'en';
   @ViewChild(SettingsComponent) settingsComponent!: SettingsComponent;
 
   ngOnInit() {
@@ -162,8 +162,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getDropDowns() {
     forkJoin({
-      countries: this.service.getCountries(),
-      services: this.service.getServicesDropDown(),
+      countries: this.service.getCountriesWithHTTP(this.currentLanguage),
+      services: this.service.getServicesDropDownWithHTTP(this.currentLanguage),
     }).subscribe({
       next: (res) => {
         this.services = res.services.result;
@@ -543,7 +543,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
           this.projectId = res.result.id;
           this.isEditMode = true;
         }
-
         // Update language status to completed after successful save
         if (culture) {
           this.updateLanguageStatus(culture, 'completed');
@@ -630,6 +629,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isFirstTimeToSend = true;
     this.currentLanguage = lang;
     this.commitLanguage(lang);
+    this.getDropDowns();
 
     const currentStatus = this.languageStatuses.get(lang)?.status;
     if (currentStatus !== 'completed') {

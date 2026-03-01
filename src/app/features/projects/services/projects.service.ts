@@ -7,14 +7,16 @@ import {
   PaginationObj,
   PaginationResponse,
 } from '../../../core/models/global.interface';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Project, ProjectById } from '../models/projects.interface';
+import { environment } from '../../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectsService {
   private readonly apiService = inject(ApiService);
+  private readonly http = inject(HttpClient);
   private readonly endpoint = 'projects';
 
   create(
@@ -82,6 +84,16 @@ export class ProjectsService {
   getCountries(): Observable<PaginationResponse<DropDownOption>> {
     return this.apiService.get('countries');
   }
+  getCountriesWithHTTP(culture: string): Observable<PaginationResponse<DropDownOption>> {
+    const headers = new HttpHeaders({
+      locale: culture
+    });
+
+    return this.http.get<PaginationResponse<DropDownOption>>(
+      environment.baseUrl + '/countries',
+      { headers }
+    );
+  }
   getAllCities(): Observable<PaginationResponse<DropDownOption>> {
     return this.apiService.get('cities');
   }
@@ -92,6 +104,16 @@ export class ProjectsService {
   }
   getServicesDropDown(): Observable<PaginationResponse<DropDownOption>> {
     return this.apiService.get(`services/names`);
+  }
+  getServicesDropDownWithHTTP(culture: string): Observable<PaginationResponse<DropDownOption>> {
+    const headers = new HttpHeaders({
+      locale: culture
+    });
+
+    return this.http.get<PaginationResponse<DropDownOption>>(
+      environment.baseUrl + '/services/names',
+      { headers }
+    );
   }
   changeStatus(id:string,value:boolean){
     this.apiService.setCulture(localStorage.getItem('app_lang') || 'en');
