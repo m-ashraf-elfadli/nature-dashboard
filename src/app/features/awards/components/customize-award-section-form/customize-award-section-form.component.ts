@@ -121,7 +121,9 @@ export class CustomizeAwardSectionFormComponent
   }
 
   ngOnDestroy(): void {
-    this.apiService.setCulture(localStorage.getItem('app_lang') || this.translate.getCurrentLang())
+    this.apiService.setCulture(
+      localStorage.getItem('app_lang') || this.translate.getCurrentLang(),
+    );
   }
 
   private setPageTitle(): void {

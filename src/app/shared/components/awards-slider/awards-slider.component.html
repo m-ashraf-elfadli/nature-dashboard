@@ -33,14 +33,13 @@
     </div>
 
     <!-- CAROUSEL -->
-    <owl-carousel-o [options]="carouselOptions">
-      <ng-template carouselSlide *ngFor="let award of awards; let i = index">
-        <div class="award-item" (mouseenter)="onHover(i)" (mouseleave)="onLeave()">
-          <div class="award-image" [style.backgroundImage]="'url(' + mediaUrl + award.image + ')'"
-            [class.blurred]="hoveredAwardIndex === i">
+    <owl-carousel-o [options]="carouselOptions" *ngIf="awards && awards.length > 0">
+      <ng-template carouselSlide *ngFor="let award of awards; let i = index; trackBy: trackByIndex">
+        <div class="award-item">
+          <div class="award-image" [style.backgroundImage]="'url(' + mediaUrl + award.image + ')'">
           </div>
 
-          <div class="award-overlay" [class.visible]="hoveredAwardIndex === i">
+          <div class="award-overlay">
             <h3>{{ award.name }}</h3>
             <span>{{ award.awardDate }}</span>
           </div>
