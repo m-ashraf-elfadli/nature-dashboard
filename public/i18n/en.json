@@ -52,8 +52,8 @@
       "desc": "Dive in to set up your Website content, upload projects, and manage your website effectively."
     },
     "errors": {
-      "username":"Username Is Required",
-      "password":"Password Is Required",
+      "username": "Username Is Required",
+      "password": "Password Is Required",
       "invalid_credentials": "Invalid username or password. Please try again.",
       "invalid_credentials": "Invalid username or password. Please try again.",
       "server_unreachable": "Unable to connect to the server. Please check your internet connection.",
@@ -193,7 +193,7 @@
       "title": "Add New Award",
       "edit_title": "Update Award",
       "english": "(English)",
-      "add_breadcrumb":"Add New Award",
+      "add_breadcrumb": "Add New Award",
       "arabic": "(Arabic)",
       "titles": {
         "details": "Award Details",
@@ -636,6 +636,7 @@
   "form_actions": {
     "discard": "Discard",
     "save": "Save",
+    "update": "Update",
     "localization": "Localization ({{language}})"
   },
   "mini_table": {
@@ -661,13 +662,13 @@
       "btns": {
         "add_new": "Add New Question"
       },
-      "bulk_delete_dialog":{
-        "header":"Delete Questions",
-        "desc":"Are you sure want to delete these {{count}} Questions? This action can't be undone."
+      "bulk_delete_dialog": {
+        "header": "Delete Questions",
+        "desc": "Are you sure want to delete these {{count}} Questions? This action can't be undone."
       },
-      "delete_dialog":{
-        "header":"Delete Question",
-        "desc":"Are you sure you want to delete this question? This action cannot be undone."
+      "delete_dialog": {
+        "header": "Delete Question",
+        "desc": "Are you sure you want to delete this question? This action cannot be undone."
       }
     },
     "form": {

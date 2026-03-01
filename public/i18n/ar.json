@@ -192,7 +192,7 @@
     "form": {
       "title": "إضافة جائزة جديدة",
       "edit_title": "تعديل جائزة",
-      "add_breadcrumb":"اضافة جائزة جديدة",
+      "add_breadcrumb": "اضافة جائزة جديدة",
       "english": "(الإنجليزية)",
       "arabic": "(العربية)",
       "titles": {
@@ -619,6 +619,7 @@
   "form_actions": {
     "discard": "تجاهل",
     "save": "حفظ",
+    "update": "تحديث",
     "localization": "الترجمة ({{language}})"
   },
   "mini_table": {
@@ -639,7 +640,7 @@
       "btns": {
         "add_new": "أضف سؤالًا جديدًا"
       },
-      "bulk_delete_dialog":{
+      "bulk_delete_dialog": {
         "header": "حذف الأسئلة",
         "desc": "هل أنت متأكد أنك تريد حذف هذه الـ {{count}} سؤال؟ لا يمكن التراجع عن هذا الإجراء."
       },
