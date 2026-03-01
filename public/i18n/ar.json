@@ -548,6 +548,7 @@
   "Testimonials": "الشهادات",
   "dashboard": {
     "welcome": "مرحباً بعودتك، {{name}}",
+    "welcome_admin": "مرحباً بعودتك، مدير الطبيعة",
     "subtitle": "إليك ما يحدث مع مشاريعك اليوم.",
     "total_projects": "إجمالي المشاريع",
     "total_clients": "إجمالي العملاء",
