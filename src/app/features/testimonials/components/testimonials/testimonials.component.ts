@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ViewChild } from '@angular/core';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ReusableTableComponent } from '../../../../shared/components/reusable-table/reusable-table.component';
 import { TableAction, TableColumn, TableConfig, } from '../../../../shared/components/reusable-table/reusable-table.types';
@@ -13,6 +13,7 @@ import { PaginationObj } from '../../../../core/models/global.interface';
 import { Testimonial, TestimonialFormEvent, } from '../../models/testimonials.model';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ClientFormActions } from '../../../clients/models/clients.model';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-testimonials',
@@ -22,7 +23,7 @@ import { ClientFormActions } from '../../../clients/models/clients.model';
   templateUrl: './testimonials.component.html',
   styleUrl: './testimonials.component.scss',
 })
-export class TestimonialsComponent implements OnInit {
+export class TestimonialsComponent implements OnInit, OnDestroy {
   @ViewChild(ReusableTableComponent) reusableTableComponent!: ReusableTableComponent<Testimonial>;
   @ViewChild(TestimonialsFormComponent)
   testimonialForm?: TestimonialsFormComponent;
@@ -30,6 +31,7 @@ export class TestimonialsComponent implements OnInit {
   private service = inject(TestimonialsService);
   private dialogService = inject(DialogService);
   private translate = inject(TranslateService);
+  private readonly destroy$ = new Subject<void>();
 
   visible = false;
   data: Testimonial[] = [];
@@ -50,6 +52,15 @@ export class TestimonialsComponent implements OnInit {
 
   ngOnInit() {
     this.loadTestimonials();
+
+    this.translate.onLangChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.loadTestimonials());
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadTestimonials(pagination?: PaginationObj) {
@@ -124,12 +135,12 @@ export class TestimonialsComponent implements OnInit {
       name: 'key',
       placeholder: 'general.search_input_table_placeholder',
     },
-      {
+    {
       type: 'btn',
       label: 'general.import',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
-      anmSeverity:'bg-grow'
+      anmSeverity: 'bg-grow'
 
     },
     {
@@ -140,7 +151,7 @@ export class TestimonialsComponent implements OnInit {
       anmSeverity: 'expand-gap',
       btnCallback: () => this.showDialog(),
     },
-  
+
   ];
 
   showDialog() {
@@ -281,6 +292,9 @@ export class TestimonialsComponent implements OnInit {
           }
           this.currentTestimonialId = undefined;
           this.testimonialForm?.resetForm();
+          if (action === 'saveAndCreateNew') {
+            this.testimonialForm?.scrollToTop();
+          }
           this.loadTestimonials();
         },
         error: (err) => {
@@ -296,6 +310,9 @@ export class TestimonialsComponent implements OnInit {
           }
           this.currentTestimonialId = undefined;
           this.testimonialForm?.resetForm();
+          if (action === 'saveAndCreateNew') {
+            this.testimonialForm?.scrollToTop();
+          }
           this.loadTestimonials();
         },
         error: (err) => {

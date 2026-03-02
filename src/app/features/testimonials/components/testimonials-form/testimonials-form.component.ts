@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { TestimonialsService } from '../../services/testimonials.service';
@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class TestimonialsFormComponent implements OnInit, OnChanges {
   @Input() testimonialId?: string;
   @Output() close = new EventEmitter<TestimonialFormEvent>();
+  @ViewChild('formContainer') formContainer?: ElementRef<HTMLElement>;
 
   private fb = inject(FormBuilder);
   private testimonialsService = inject(TestimonialsService);
@@ -34,13 +35,13 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['testimonialId']) {
       const currentValue = changes['testimonialId'].currentValue
-
-
       if (currentValue) {
         this.isEditMode = true;
         this.loadTestimonial();
+      } else {
+        this.isEditMode = false;
+        this.resetForm();
       }
-
     }
   }
 
@@ -59,6 +60,10 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
     this.form.reset();
     this.form.markAsPristine();
     this.form.markAsUntouched();
+  }
+
+  scrollToTop() {
+    this.formContainer?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   private loadTestimonial() {

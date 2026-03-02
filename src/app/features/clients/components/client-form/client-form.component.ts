@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { GalleryUploadComponent } from '../../../../shared/components/gallery-upload/gallery-upload.component';
@@ -17,6 +17,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class ClientFormComponent implements OnInit, OnChanges {
   @Input() clientId?: string;
   @Output() close = new EventEmitter<ClientFormEvent>();
+  @ViewChild('formContainer') formContainer?: ElementRef<HTMLElement>;
 
   private fb = inject(FormBuilder);
   private clientsService = inject(ClientsService);
@@ -57,6 +58,10 @@ export class ClientFormComponent implements OnInit, OnChanges {
     this.form.reset();
     this.form.markAsPristine();
     this.form.markAsUntouched();
+  }
+
+  scrollToTop() {
+    this.formContainer?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   private loadClient() {
