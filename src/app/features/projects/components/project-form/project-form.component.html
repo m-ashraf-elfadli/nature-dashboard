@@ -49,8 +49,7 @@
                         }
                     </div>
                     <div class="our-field">
-                        <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span
-                                class="text-red-val">*</span></label>
+                        <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span class="text-red-val">*</span></label>
                         <div class="textarea-container">
                             <textarea (input)="test()" pTextarea [placeholder]="'projects.form.placeholders.overview' | translate"
                                 id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
@@ -357,7 +356,7 @@
         <div class="form-right-section">
             <div class="gallery-section">
                 <h3 class="header-section">
-                    {{'projects.form.labels.gallery' | translate}}
+                    {{'projects.form.labels.gallery' | translate}} <span class="text-red-val">*</span>
                 </h3>
                 <app-gallery-upload formControlName="gallery" [multiple]="true"></app-gallery-upload>
                 @if(hasError('gallery')){
@@ -368,7 +367,7 @@
                 <div class="inputs">
                     <div class="gallery-field flex flex-column gap-3">
                         <h3 class="header-section">
-                            {{'projects.form.labels.image_before' | translate}}
+                            {{'projects.form.labels.image_before' | translate}} <span class="text-red-val">*</span>
                         </h3>
                         <app-gallery-upload formControlName="image_before" class="image_before"
                             [multiple]="false"></app-gallery-upload>
@@ -378,7 +377,7 @@
                     </div>
                     <div class="gallery-field flex flex-column gap-3">
                         <h3 class="header-section">
-                            {{'projects.form.labels.image_after' | translate}}
+                            {{'projects.form.labels.image_after' | translate}} <span class="text-red-val">*</span>
                         </h3>
                         <app-gallery-upload formControlName="image_after" class="image_after"
                             [multiple]="false"></app-gallery-upload>

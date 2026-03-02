@@ -17,6 +17,7 @@
   .header-section {
     display: flex;
     align-items: center;
+    gap: 4px;
     color: var(--Color-Neutral-2000, #333435);
     font-size: var(--Font-Size-M, 20px);
     // font-weight: var(--Font-Weight-Medium, 500);
@@ -25,6 +26,9 @@
       font-size: var(--Static-Body-Small-Size, 12px);
       font-weight: 500;
       letter-spacing: var(--Static-Body-Small-Tracking, 0.4px);
+    }
+    .text-red-val{
+      color: var(--Color-Error-500, #e74c3c);
     }
   }
   .project-form {
