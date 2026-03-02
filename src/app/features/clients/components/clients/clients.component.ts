@@ -23,6 +23,7 @@ import {
 } from '../../models/clients.model';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DialogModule } from 'primeng/dialog';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-clients',
@@ -43,6 +44,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
   private readonly service = inject(ClientsService);
   private readonly dialogService = inject(DialogService);
   private readonly translate = inject(TranslateService);
+  private readonly destroy$ = new Subject<void>();
 
   @ViewChild(ClientFormComponent)
   clientForm?: ClientFormComponent;
@@ -68,10 +70,16 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadClients();
+
+    this.translate.onLangChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.loadClients());
   }
 
   ngOnDestroy() {
     this.confirmDialogRef?.close();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadClients(pagination?: PaginationObj) {
@@ -309,6 +317,9 @@ export class ClientsComponent implements OnInit, OnDestroy {
         // reset after success only
         this.currentClientId = undefined;
         this.clientForm?.resetForm();
+        if (action === 'saveAndCreateNew') {
+          this.clientForm?.scrollToTop();
+        }
 
         this.loadClients();
       },
