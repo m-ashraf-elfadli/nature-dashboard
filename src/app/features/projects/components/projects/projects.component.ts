@@ -137,7 +137,6 @@ export class ProjectsComponent implements OnInit {
       .getAll(pagination, this.filterObj?.value || '', this.filterObj)
       .subscribe({
         next: (res) => {
-          debugger
           this.data.set(res.result);
           this.totalRecords.set(res.total!);
         },

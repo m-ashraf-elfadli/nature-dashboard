@@ -19,6 +19,7 @@ export const SuccessInterceptor: HttpInterceptorFn = (req, next) => {
             if (!(event instanceof HttpResponse)) return;
             if (event.status < 200 || event.status >= 300) return;
             if (!['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) return;
+            if (req.url.includes('search/all-projects')) return;
 
             const body = event.body as ApiResponse | null;
             if (body?.success === false) return;
