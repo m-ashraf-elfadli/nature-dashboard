@@ -100,9 +100,11 @@
                                 </svg>
                             </ng-template>
                         </p-datepicker>
-                        @if(hasError('award_date')){
-                        <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.date' |
-                            translate}}</p-message>
+                        @if(hasError('award_date','required')){
+                        <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.date' | translate}}</p-message>
+                        }
+                        @if(hasError('award_date','futureDate')){
+                        <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.date_future' | translate}}</p-message>
                         }
                     </div>
                     <div class="our-field">

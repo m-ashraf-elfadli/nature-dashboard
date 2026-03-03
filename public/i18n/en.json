@@ -145,6 +145,7 @@
         "name": "Name is required",
         "overview": "Overview is required",
         "overview_max_length":"This field has a 200-character limit",
+        "overview_min_length":"This field must be at least [10] characters long.",
         "brief": "Brief is required",
         "services": "Project Services is required",
         "from": "From date is required",
@@ -153,7 +154,8 @@
         "city": "City is required",
         "gallery": "You have to add at least 1 image to gallery",
         "image_after": "Image after is required",
-        "image_before": "Image before is required"
+        "image_before": "Image before is required",
+        "start_date_after_end_date": "Start date cannot be after end date"
       },
       "btns": {
         "add_result": "Add another section",
@@ -204,6 +206,7 @@
       "validation": {
         "name": "Name is required",
         "date": "Date is Required",
+        "date_future": "Date cannot be in the future",
         "desc": "Description is Required",
         "image": "Image is Required",
         "organizations_logos": "You have to add at least 1 logo for organizations logos"

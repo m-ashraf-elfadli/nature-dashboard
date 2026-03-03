@@ -15,6 +15,7 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  AbstractControl,
 } from '@angular/forms';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
@@ -25,6 +26,8 @@ import { EditorModule } from 'primeng/editor';
 import { GalleryUploadComponent } from '../../../../shared/components/gallery-upload/gallery-upload.component';
 import { SettingsComponent } from '../../../../shared/components/settings/settings.component';
 import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AwardsService } from '../../../../services/awards.service';
@@ -54,7 +57,9 @@ const STATUS_MAP = {
     GalleryUploadComponent,
     SettingsComponent,
     MessageModule,
+    ToastModule,
   ],
+  providers: [MessageService],
   templateUrl: './award-form.component.html',
   styleUrl: './award-form.component.scss',
 })
@@ -70,6 +75,7 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly translate = inject(TranslateService);
   private readonly dialogService = inject(DialogService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly messageService = inject(MessageService);
 
   form!: FormGroup;
   awardId: string = '';
@@ -130,7 +136,7 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       image: [null, Validators.required],
-      award_date: [null, Validators.required],
+      award_date: [null, [Validators.required, this.notFutureDate]],
       organizations_logos: [null, Validators.required],
       status: [1, Validators.required],
     });
@@ -339,6 +345,15 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return !!(control.touched && control.invalid);
   }
+
+  notFutureDate(control: AbstractControl) {
+    const value = control.value;
+    if (!value) return null;
+    const selected = new Date(value).setHours(0,0,0,0);
+    const today = new Date().setHours(0,0,0,0);
+    return selected > today ? { futureDate: true } : null;
+  }
+
 
   onLanguageChange(event: { newLang: string; oldLang: string }) {
     // Store the languages

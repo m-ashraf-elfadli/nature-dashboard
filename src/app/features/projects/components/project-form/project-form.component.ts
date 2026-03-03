@@ -10,11 +10,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
+  ValidationErrors,
 } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InputText } from 'primeng/inputtext';
@@ -140,8 +142,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   initForm() {
     this.form = this.fb.group({
       name: ['', Validators.required],
-      brief: ['', [Validators.required, Validators.maxLength(200)]],
-      overview: ['', [Validators.required, Validators.maxLength(200)]],
+      brief: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+      overview: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       service_ids: [[], Validators.required],
@@ -158,7 +160,38 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       // form arrays
       results: this.fb.array([]),
       metrics: this.fb.array([]),
-    });
+    }, { validators: this.compareDates.bind(this) });
+  }
+
+  compareDates(control: AbstractControl): ValidationErrors | null {
+    const formGroup = control as FormGroup;
+    const startDate = formGroup.get('start_date')?.value;
+    const endDate = formGroup.get('end_date')?.value;
+
+    // Skip validation if either date is missing
+    if (!startDate || !endDate) {
+      return null;
+    }
+
+    const start = new Date(startDate).getTime();
+    const end = new Date(endDate).getTime();
+
+    if (start > end) {
+      // Set error on form group (silently, no toast here)
+      formGroup.setErrors({ dateRangeInvalid: true });
+      return { dateRangeInvalid: true };
+    }
+
+    // Clear the specific error if dates are valid
+    const errors = formGroup.errors;
+    if (errors) {
+      delete errors['dateRangeInvalid'];
+      if (Object.keys(errors).length === 0) {
+        formGroup.setErrors(null);
+      }
+    }
+
+    return null;
   }
   getDropDowns() {
     forkJoin({
@@ -460,21 +493,17 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       formData.append('image_after', value.image_after);
     }
 
-    // 🔹 Gallery (array of images) - send both new files and existing paths in the same array
     if (value.gallery?.length) {
       value.gallery.forEach((item: File | string, index: number) => {
         if (item instanceof File) {
-          // New file upload
           formData.append(`gallery[${index}]`, item);
         } else if (typeof item === 'string') {
-          // Existing file - send as string (relative path)
           const relativePath = item.replace(this.mediaUrl, '');
           formData.append(`gallery[${index}]`, relativePath);
         }
       });
     }
 
-    // 🔹 Results
     if (value.enableResults && value.results?.length) {
       value.results.forEach((res: any, index: number) => {
         formData.append(`results[${index}][section_title]`, res.section_title);
@@ -482,7 +511,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
 
-    // 🔹 Metrics
     if (value.enableMetrics && value.metrics?.length) {
       value.metrics.forEach((met: any, index: number) => {
         formData.append(`metrics[${index}][metric_title]`, met.metric_title);
@@ -562,6 +590,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       },
     });
   }
+
   showConfirmDialog(lang: string) {
     this.ref = this.dialogService.open(ConfirmDialogComponent, {
       header: 'Select a Product',
@@ -585,11 +614,9 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
           if (product.action === 'confirm') {
             this.submitForm(false, product.data.lang);
           } else if (product.action === 'cancel') {
-            // Discard changes and switch language
             this.switchLanguage(this.previousLanguage === 'en' ? 'ar' : 'en');
           }
         } else {
-          // Dialog was closed without action - reset to previous language
           this.resetLanguage(this.previousLanguage);
         }
       },
