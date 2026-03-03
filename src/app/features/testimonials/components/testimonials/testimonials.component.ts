@@ -14,6 +14,7 @@ import { Testimonial, TestimonialFormEvent, } from '../../models/testimonials.mo
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ClientFormActions } from '../../../clients/models/clients.model';
 import { Subject, takeUntil } from 'rxjs';
+import { ExportService } from '../../../../shared/services/export.service';
 
 @Component({
   selector: 'app-testimonials',
@@ -31,6 +32,7 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
   private service = inject(TestimonialsService);
   private dialogService = inject(DialogService);
   private translate = inject(TranslateService);
+  private readonly exportService = inject(ExportService);
   private readonly destroy$ = new Subject<void>();
 
   visible = false;
@@ -137,11 +139,11 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
     },
     {
       type: 'btn',
-      label: 'general.import',
+      label: 'general.export',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
-      anmSeverity: 'bg-grow'
-
+      anmSeverity: 'bg-grow',
+      btnCallback:() => this.export()
     },
     {
       type: 'btn',
@@ -175,6 +177,20 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
   selectionChange(e: Testimonial[] | Testimonial) {
     this.selectedItems = Array.isArray(e) ? e : [e];
     this.addAndHideBulkDeleteBtn();
+  }
+  export() {
+    this.exportService.export('testimonials').subscribe({
+      next:(res)=>{
+        const blob = res.body;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'testimonials.xlsx';
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }
+    })
   }
 
   addAndHideBulkDeleteBtn() {

@@ -23,6 +23,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
 import { AppDialogService } from '../../shared/services/dialog.service';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ExportService } from '../../shared/services/export.service';
 
 export interface Service {
   id: string;
@@ -53,6 +54,7 @@ export class ServicesComponent {
   private service = inject(ServicesService);
   private dialogService = inject(AppDialogService);
   private readonly translate = inject(TranslateService);
+  private readonly exportService = inject(ExportService)
 
   data: WritableSignal<Service[]> = signal([]);
   selectedItems: Service[] = [];
@@ -119,10 +121,11 @@ export class ServicesComponent {
     },
     {
       type: 'btn',
-      label: 'general.import',
+      label: 'general.export',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
       anmSeverity: 'bg-grow',
+      btnCallback:(e:Event) => this.export()
     },
     {
       type: 'btn',
@@ -196,6 +199,20 @@ export class ServicesComponent {
   selectionChange(e: Service[] | Service) {
     this.selectedItems = Array.isArray(e) ? e : [e];
     this.addAndHideBulkDeleteBtn();
+  }
+    export() {
+    this.exportService.export('services').subscribe({
+      next:(res)=>{
+        const blob = res.body;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'services.xlsx';
+        a.click();
+        a.remove()
+        window.URL.revokeObjectURL(url);
+      }
+    })
   }
   addNewService(e: Event) {
     console.log('Add New Service button clicked', e);

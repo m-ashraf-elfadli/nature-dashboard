@@ -24,6 +24,7 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DialogModule } from 'primeng/dialog';
 import { Subject, takeUntil } from 'rxjs';
+import { ExportService } from '../../../../shared/services/export.service';
 
 @Component({
   selector: 'app-clients',
@@ -44,6 +45,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
   private readonly service = inject(ClientsService);
   private readonly dialogService = inject(DialogService);
   private readonly translate = inject(TranslateService);
+  private readonly exportService = inject(ExportService);
   private readonly destroy$ = new Subject<void>();
 
   @ViewChild(ClientFormComponent)
@@ -151,11 +153,11 @@ export class ClientsComponent implements OnInit, OnDestroy {
     },
     {
       type: 'btn',
-      label: 'general.import',
+      label: 'general.export',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
       anmSeverity: 'bg-grow',
-      btnCallback: () => this.importCSV(),
+      btnCallback: () => this.export(),
     },
     {
       type: 'btn',
@@ -337,7 +339,18 @@ export class ClientsComponent implements OnInit, OnDestroy {
     this.currentClientId = undefined;
   }
 
-  importCSV() {
-    console.log('Import CSV');
+  export() {
+    this.exportService.export('clients').subscribe({
+      next:(res)=>{
+        const blob = res.body;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'clients.xlsx';
+        a.click();
+        a.remove()
+        window.URL.revokeObjectURL(url);
+      }
+    })
   }
 }

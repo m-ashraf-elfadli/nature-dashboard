@@ -22,6 +22,7 @@ import { PaginationObj } from '../../../../core/models/global.interface';
 import { AwardsService } from '../../../../services/awards.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ExportService } from '../../../../shared/services/export.service';
 
 @Component({
   selector: 'app-awards-list',
@@ -40,6 +41,7 @@ export class AwardsListComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dialogService = inject(DialogService);
   private readonly translate = inject(TranslateService);
+  private readonly exportService = inject(ExportService);
 
   data: WritableSignal<Award[]> = signal([]);
   selectedItems: Award[] = []
@@ -112,11 +114,11 @@ export class AwardsListComponent implements OnInit {
     },
     {
       type: 'btn',
-      label: 'general.import',
+      label: 'general.export',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
       anmSeverity: 'bg-grow',
-      btnCallback: (e: Event) => this.addNew(),
+      btnCallback: (e: Event) => this.export(),
     },
     {
       type: 'btn',
@@ -190,6 +192,20 @@ export class AwardsListComponent implements OnInit {
   onFilterChange(filter: any) {
     this.filterObj = filter;
     this.fetchData(this.paginationObj);
+  }
+  export() {
+    this.exportService.export('awards').subscribe({
+      next:(res)=>{
+        const blob = res.body;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'awards.xlsx';
+        a.click();
+        a.remove()
+        window.URL.revokeObjectURL(url);
+      }
+    })
   }
   addNew() {
     this.router.navigate(['/awards/add']);

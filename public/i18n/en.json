@@ -8,6 +8,7 @@
     "text_editor_header": "Section body",
     "search_input_table_placeholder": "Search by name ...",
     "import": "Import CSV",
+    "export":"Export CSV",
     "up": "Up",
     "down": "Down",
     "stable": "Stable",

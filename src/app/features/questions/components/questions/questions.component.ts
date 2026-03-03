@@ -21,6 +21,7 @@ import { ClientFormActions } from '../../../clients/models/clients.model';
 import { QuestionsFormComponent } from '../questions-form/questions-form.component';
 import { QuestionsService } from '../../services/questions.service';
 import { Subscription } from 'rxjs';
+import { ExportService } from '../../../../shared/services/export.service';
 
 @Component({
   selector: 'app-questions',
@@ -44,6 +45,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   private service = inject(QuestionsService);
   private dialogService = inject(DialogService);
   private translate = inject(TranslateService);
+  private readonly exportService = inject(ExportService);
   private langChangeSubscription?: Subscription;
 
   visible = false;
@@ -140,10 +142,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     },
     {
       type: 'btn',
-      label: 'general.import',
+      label: 'general.export',
       btnIcon: 'pi pi-download',
       btnSeverity: 'white',
       anmSeverity: 'bg-grow',
+      btnCallback:()=> this.export()
     },
     {
       type: 'btn',
@@ -233,6 +236,21 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         }
       },
     );
+  }
+
+  export() {
+    this.exportService.export('questions').subscribe({
+      next:(res)=>{
+        const blob = res.body;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'questions.xlsx';
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }
+    })
   }
 
   changeStatus(row: Question, value: boolean, e: Event) {

@@ -26,6 +26,7 @@ import { Project } from '../../models/projects.interface';
 import { forkJoin } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ExportService } from '../../../../shared/services/export.service';
 
 @Component({
   selector: 'app-projects',
@@ -45,6 +46,7 @@ export class ProjectsComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
   private readonly dialogService = inject(DialogService);
+  private readonly exportService = inject(ExportService)
 
   data: WritableSignal<Project[]> = signal([]);
   selectedItems: Project[] = [];
@@ -248,11 +250,11 @@ export class ProjectsComponent implements OnInit {
       },
       {
         type: 'btn',
-        label: 'general.import',
+        label: 'general.export',
         btnIcon: 'pi pi-download',
         btnSeverity: 'white',
         anmSeverity: 'bg-grow',
-        btnCallback: (e: Event) => this.addNewProject(e),
+        btnCallback: (e: Event) => this.export(),
       },
       {
         type: 'btn',
@@ -292,8 +294,19 @@ export class ProjectsComponent implements OnInit {
     this.paginationObj = event;
     this.fetchData(this.paginationObj);
   }
-  addNewProject(e: Event) {
-    console.log('Add New Project button clicked', e);
+  export() {
+    this.exportService.export('projects').subscribe({
+      next:(res)=>{
+        const blob = res.body;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'projects.xlsx';
+        a.click();
+        a.remove()
+        window.URL.revokeObjectURL(url);
+      }
+    })
   }
   onFilterChange(filter: any) {
     this.filterObj = filter;

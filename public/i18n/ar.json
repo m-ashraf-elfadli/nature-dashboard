@@ -8,6 +8,7 @@
     "text_editor_header": "نص القسم",
     "search_input_table_placeholder": "البحث بالاسم ...",
     "import": "استيراد CSV",
+    "export":"تنزيل كملف CSV",
     "up": "لأعلى",
     "down": "لأسفل",
     "stable": "مستقر",
