@@ -39,31 +39,12 @@ export class ProjectsService {
     search?: string,
     filter?: any,
   ): Observable<PaginationResponse<Project>> {
-    let params = new HttpParams()
-      .set('page', pagination.page)
-      .set('size', pagination.size);
-
-    if (search) {
-      params = params.set('value', search);
+    const body = {
+      ...pagination,
+      ...filter,
+      value:search
     }
-    if (filter) {
-      Object.keys(filter).forEach((filterKey) => {
-        const value = filter[filterKey];
-
-        if (value === null || value === undefined) return;
-
-        if (Array.isArray(value)) {
-          value.forEach((v) => {
-            if (v !== null && v !== undefined) {
-              params = params.append(`${filterKey}[]`, v);
-            }
-          });
-        } else {
-          params = params.set(filterKey, value);
-        }
-      });
-    }
-    return this.apiService.get(this.endpoint, params);
+    return this.apiService.post(this.endpoint+'/search/all-projects', body);
   }
   getById(
     id: string,
