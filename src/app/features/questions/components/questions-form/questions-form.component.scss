@@ -37,7 +37,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr auto;
     gap: 8px;
-    align-items: center;
+    align-items: start;
     padding: 1rem 0;
 
     // Radio button column
@@ -47,7 +47,7 @@
       padding: 10.087px 15.13px;
       align-items: center;
       gap: 10.087px;
-      align-self: stretch;
+      align-self: start;
       border-radius: 15.13px;
       border: 1.261px solid var(--Color-Neutral-300, #efeff0);
       background: var(--Color-Neutral-white, #fff);
