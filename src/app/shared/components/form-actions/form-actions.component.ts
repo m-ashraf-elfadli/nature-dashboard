@@ -34,7 +34,7 @@ export class FormActionsComponent implements OnInit {
 
   languages = [
     { code: 'en', label: 'English', flag: './images/usa.webp' },
-    { code: 'ar', label: 'العربية', flag: './images/eg.webp' },
+    { code: 'ar', label: 'العربية', flag: './images/ue.webp' },
   ];
 
   get selectedLanguage(): string {

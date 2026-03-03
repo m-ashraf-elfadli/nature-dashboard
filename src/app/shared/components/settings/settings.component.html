@@ -5,10 +5,7 @@
       {{ 'settings.status' | translate }}
       <span class="required">{{ 'settings.required' | translate }}</span>
     </label>
-    <p-select 
-      [options]="statusOptions"
-      [(ngModel)]="value"
-      (ngModelChange)="onChange($event)"
+    <p-select [options]="statusOptions" [(ngModel)]="value" (ngModelChange)="onChange($event)"
       [placeholder]="'settings.select_status' | translate">
       <ng-template let-selected pTemplate="selectedItem">
         <div *ngIf="selected" class="flex align-items-center gap-2">
@@ -39,7 +36,7 @@
 
       <div class="language-item">
         <div class="language-info">
-          <img src="./images/eg.webp" [alt]="'settings.arabic' | translate" />
+          <img src="./images/ue.webp" [alt]="'settings.arabic' | translate" />
           <span>{{ 'settings.arabic' | translate }}</span>
         </div>
         <div class="status-pill" [ngClass]="statusView(arabicStatus).class">

@@ -36,7 +36,8 @@ import { Subscription } from 'rxjs';
   styleUrl: './questions.component.scss',
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
-  @ViewChild(ReusableTableComponent) reusableTableComponent!: ReusableTableComponent<Question>;
+  @ViewChild(ReusableTableComponent)
+  reusableTableComponent!: ReusableTableComponent<Question>;
   @ViewChild(QuestionsFormComponent)
   questionForm?: QuestionsFormComponent;
 
@@ -47,7 +48,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   visible = false;
   data: Question[] = [];
-  selectedItems: Question | Question[] = []
+  selectedItems: Question | Question[] = [];
   totalRecords = 0;
   currentQuestionId?: string;
   confirmDialogRef?: DynamicDialogRef;
@@ -152,7 +153,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       anmSeverity: 'expand-gap',
       btnCallback: () => this.showDialog(),
     },
-
   ];
 
   showDialog() {
@@ -180,7 +180,10 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       },
     });
   }
-  showDeleteConfirmDialog(dataToDelete: Question | Question[], actionType: 'delete' | 'bulk-delete' = 'delete') {
+  showDeleteConfirmDialog(
+    dataToDelete: Question | Question[],
+    actionType: 'delete' | 'bulk-delete' = 'delete',
+  ) {
     const header =
       actionType === 'delete'
         ? 'questions.list.delete_dialog.header'
@@ -189,7 +192,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     const desc =
       actionType === 'delete'
         ? 'questions.list.delete_dialog.desc'
-        : this.translate.instant('questions.list.bulk_delete_dialog.desc', { count });
+        : this.translate.instant('questions.list.bulk_delete_dialog.desc', {
+            count,
+          });
     const data = dataToDelete;
     this.confirmDialogRef = this.dialogService.open(ConfirmDialogComponent, {
       width: '40vw',
@@ -207,25 +212,27 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         data: data,
       },
     });
-    this.confirmDialogRef.onClose.subscribe((product: { action: string; data: Question | Question[] }) => {
-      if (product && product.action === 'confirm') {
-        if (!Array.isArray(product.data)) {
-          this.service.delete(product.data.id).subscribe({
-            next: () => {
+    this.confirmDialogRef.onClose.subscribe(
+      (product: { action: string; data: Question | Question[] }) => {
+        if (product && product.action === 'confirm') {
+          if (!Array.isArray(product.data)) {
+            this.service.delete(product.data.id).subscribe({
+              next: () => {
+                this.loadQuestions(this.paginationObj);
+              },
+            });
+          } else {
+            const ids = product.data.map((a: Question) => a.id);
+            this.service.bulkDelete(ids).subscribe((_) => {
               this.loadQuestions(this.paginationObj);
-            },
-          });
-        } else {
-          const ids = product.data.map((a: Question) => a.id);
-          this.service.bulkDelete(ids).subscribe((_) => {
-            this.loadQuestions(this.paginationObj);
-            this.reusableTableComponent.selection = [];
-            this.selectedItems = [];
-            this.addAndHideBulkDeleteBtn();
-          });
+              this.reusableTableComponent.selection = [];
+              this.selectedItems = [];
+              this.addAndHideBulkDeleteBtn();
+            });
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   changeStatus(row: Question, value: boolean, e: Event) {
@@ -242,28 +249,33 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.loadQuestions();
   }
   selectionChange(e: Question[] | Question) {
-    this.selectedItems = Array.isArray(e) ? e : [e]
+    this.selectedItems = Array.isArray(e) ? e : [e];
     this.addAndHideBulkDeleteBtn();
   }
   addAndHideBulkDeleteBtn() {
-    const hasSelection = Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
+    const hasSelection =
+      Array.isArray(this.selectedItems) && this.selectedItems.length > 0;
     const bulkDeleteBtn: FilterItems = {
       label: 'general.delete_selected',
       type: 'btn',
       name: 'delete-btn',
-      btnIcon: "pi pi-trash",
+      btnIcon: 'pi pi-trash',
       btnSeverity: 'white',
       btnCallback: () => this.bulkDelete(),
     };
     if (hasSelection) {
-      const withoutBulk = this.filterItems.filter((f) => f.name !== 'delete-btn');
+      const withoutBulk = this.filterItems.filter(
+        (f) => f.name !== 'delete-btn',
+      );
       this.filterItems = [bulkDeleteBtn, ...withoutBulk];
     } else {
-      this.filterItems = this.filterItems.filter((f) => f.name !== 'delete-btn');
+      this.filterItems = this.filterItems.filter(
+        (f) => f.name !== 'delete-btn',
+      );
     }
   }
   bulkDelete() {
-    this.showDeleteConfirmDialog(this.selectedItems, 'bulk-delete')
+    this.showDeleteConfirmDialog(this.selectedItems, 'bulk-delete');
   }
 
   handleFormClose(event: QuestionFormEvent) {
@@ -320,7 +332,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       });
     }
   }
-
 
   private handleSave(payload: any) {
     this.submitForm(payload, !!this.currentQuestionId, 'save');

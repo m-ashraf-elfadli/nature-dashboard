@@ -166,7 +166,7 @@ export class ReusableTableComponent<T> implements OnChanges {
     // لو Object جاي من API
     if (value && typeof value === 'object') {
       const flagsMap: Record<string, string> = {
-        ar: 'images/eg.webp',
+        ar: 'images/ue.webp',
         en: 'images/usa.webp',
       };
 

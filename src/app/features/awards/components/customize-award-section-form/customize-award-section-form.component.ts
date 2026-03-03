@@ -121,7 +121,9 @@ export class CustomizeAwardSectionFormComponent
   }
 
   ngOnDestroy(): void {
-    this.apiService.setCulture(localStorage.getItem('app_lang') || this.translate.getCurrentLang())
+    this.apiService.setCulture(
+      localStorage.getItem('app_lang') || this.translate.getCurrentLang(),
+    );
   }
 
   private setPageTitle(): void {
@@ -136,7 +138,7 @@ export class CustomizeAwardSectionFormComponent
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       tagline: [
@@ -144,7 +146,7 @@ export class CustomizeAwardSectionFormComponent
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       subsection_publish: [true],
@@ -180,7 +182,7 @@ export class CustomizeAwardSectionFormComponent
           ? [
               Validators.required,
               Validators.minLength(3),
-              Validators.maxLength(50),
+              Validators.maxLength(400),
             ]
           : [],
       ],
@@ -190,7 +192,7 @@ export class CustomizeAwardSectionFormComponent
           ? [
               Validators.required,
               Validators.minLength(3),
-              Validators.maxLength(50),
+              Validators.maxLength(400),
             ]
           : [],
       ],

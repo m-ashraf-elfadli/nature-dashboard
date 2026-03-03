@@ -87,8 +87,10 @@
       </legend>
 
       @if(stages.length > 0) {
-      <app-mini-table [data]="stages" [columns]="cols" [reorderable]="true" [showImage]="true" imageField="imagePreview"
-        [editComponent]="StageFormComponent"
+
+      <p class="all-stages">{{'services.form.stages.all_stages' | translate}} ({{stages.length}})</p>
+      <app-mini-table [data]="stages" [columns]="colsStages" [reorderable]="true" [showImage]="true"
+        imageField="imagePreview" [editComponent]="StageFormComponent"
         [editDialogConfig]="{ header: ('services.form.stages.edit' | translate), width: '600px' }"
         (rowDeleted)="onDeleteStage($event)" (rowEdited)="onEditStage($event)" (reordered)="onReorder($event)">
       </app-mini-table>
@@ -164,11 +166,11 @@
 
           <div class="insights-container">
             <div class="insight-row" *ngFor="let control of benefitInsightsArray.controls; let i = index">
-              <div class="insight-label">
-                <label>{{ 'services.form.benefits.insights.label' | translate }} ({{ i + 1 }})</label>
-              </div>
               <div class="insight-inputs">
                 <div class="our-field">
+                  <div class="insight-label">
+                    <label>{{ 'services.form.benefits.insights.label' | translate }} ({{ i + 1 }})</label>
+                  </div>
                   <input type="text" [placeholder]="'services.form.benefits.insights.title_placeholder' | translate"
                     [formControl]="$any(control.get('metricTitle'))" pInputText
                     [class.error]="isInsightFieldInvalid(i, 'metricTitle')" />
@@ -177,6 +179,9 @@
                   </small>
                 </div>
                 <div class="our-field insight-input">
+                  <div class="insight-label">
+                    <label>{{ 'services.form.benefits.insights.label_number' | translate }}</label>
+                  </div>
                   <input type="number" [placeholder]="'services.form.benefits.insights.number_placeholder' | translate"
                     [formControl]="$any(control.get('metricNumber'))" pInputText min="0"
                     [class.error]="isInsightFieldInvalid(i, 'metricNumber')" />
@@ -218,8 +223,8 @@
         </legend>
 
         @if(serviceValuesArray.length > 0) {
-        <app-mini-table [data]="serviceValuesArray.value" [columns]="cols" [reorderable]="true" [showImage]="false"
-          [editComponent]="ValueFormComponent"
+        <app-mini-table [data]="serviceValuesArray.value" [columns]="colsValues" [reorderable]="false"
+          [showImage]="false" [editComponent]="ValueFormComponent"
           [editDialogConfig]="{ header: ('services.form.values.edit' | translate), width: '600px' }"
           (rowDeleted)="onDeleteServiceValue($event)" (rowEdited)="onEditServiceValue($event)"
           (reordered)="onReorderServiceValues($event)">
@@ -249,8 +254,8 @@
         </legend>
 
         @if(serviceResultsArray.length > 0) {
-        <app-mini-table [data]="serviceResultsArray.value" [columns]="cols" [reorderable]="true" [showImage]="false"
-          [editComponent]="ResultsFormComponent"
+        <app-mini-table [data]="serviceResultsArray.value" [columns]="colsResult" [reorderable]="false"
+          [showImage]="false" [editComponent]="ResultsFormComponent"
           [editDialogConfig]="{ header: ('services.form.results.edit' | translate), width: '600px' }"
           (rowDeleted)="onDeleteServiceResult($event)" (rowEdited)="onEditServiceResult($event)"
           (reordered)="onReorderServiceResults($event)">

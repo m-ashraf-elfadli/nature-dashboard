@@ -28,13 +28,12 @@ export class AwardsSliderComponent {
     private translate: TranslateService,
   ) {}
 
-  hoveredAwardIndex: number | null = null;
   mediaUrl = environment.mediaUrl;
   awards: any[] = [];
   @Input() data!: any;
   carouselOptions: OwlOptions = {
     loop: true,
-    margin: 24,
+    margin: 8,
     autoplay: true,
     autoplayTimeout: 3000,
     autoplayHoverPause: true,
@@ -42,10 +41,10 @@ export class AwardsSliderComponent {
     nav: false,
     rtl: false,
     responsive: {
-      0: { items: 2 },
-      576: { items: 4 },
-      768: { items: 4 },
-      1200: { items: 6 },
+      0: { items: 1 },
+      576: { items: 2 },
+      768: { items: 3 },
+      1200: { items: 4 },
     },
   };
 
@@ -68,14 +67,6 @@ export class AwardsSliderComponent {
     };
   }
 
-  onHover(index: number) {
-    this.hoveredAwardIndex = index;
-  }
-
-  onLeave() {
-    this.hoveredAwardIndex = null;
-  }
-
   getAwards() {
     this.awardsService.getAllAwards().subscribe({
       next: (res) => {
@@ -86,5 +77,9 @@ export class AwardsSliderComponent {
         console.log(err);
       },
     });
+  }
+
+  trackByIndex(index: number): number {
+    return index;
   }
 }

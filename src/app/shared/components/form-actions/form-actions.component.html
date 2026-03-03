@@ -17,6 +17,7 @@
     </div>
 
     <button (click)="onSave($event)" class="action-btn" [disabled]="!isFormValid" [class.disabled]="!isFormValid">
-        <span>{{ 'form_actions.save' | translate }}</span>
+        <span *ngIf="!editMode">{{ 'form_actions.save' | translate }}</span>
+        <span *ngIf="editMode">{{ 'form_actions.update' | translate }}</span>
     </button>
 </div>

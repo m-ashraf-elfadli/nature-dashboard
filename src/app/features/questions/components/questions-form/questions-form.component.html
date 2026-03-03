@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="form-container" #formContainer>
   <form [formGroup]="questionForm">
     <!-- Question EN -->
     <div class="our-field">
@@ -6,7 +6,7 @@
         {{ 'questions.form.labels.question_en' | translate }}
         <span class="required">*</span>
       </label>
-      <input pInputText formControlName="question_en"
+      <input pInputText trimInput formControlName="question_en"
         [placeholder]="'questions.form.placeholders.question_en' | translate" />
       <small class="error-message" *ngIf="
           questionForm.get('question_en')?.invalid &&
@@ -30,7 +30,7 @@
         {{ 'questions.form.labels.question_ar' | translate }}
         <span class="required">*</span>
       </label>
-      <input pInputText formControlName="question_ar"
+      <input pInputText trimInput formControlName="question_ar"
         [placeholder]="'questions.form.placeholders.question_ar' | translate" />
       <small class="error-message" *ngIf="
           questionForm.get('question_ar')?.invalid &&
@@ -59,7 +59,7 @@
             {{ 'questions.form.labels.answer_en' | translate }}
             <span class="required">*</span>
           </label>
-          <input pInputText formControlName="answer_en"
+          <input pInputText trimInput formControlName="answer_en"
             [placeholder]="'questions.form.placeholders.answer_en' | translate" />
           <small class="error-message" *ngIf="
               answer.get('answer_en')?.invalid &&
@@ -75,7 +75,7 @@
             {{ 'questions.form.labels.answer_ar' | translate }}
             <span class="required">*</span>
           </label>
-          <input pInputText formControlName="answer_ar"
+          <input pInputText trimInput formControlName="answer_ar"
             [placeholder]="'questions.form.placeholders.answer_ar' | translate" />
           <small class="error-message" *ngIf="
               answer.get('answer_ar')?.invalid &&

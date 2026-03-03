@@ -41,7 +41,7 @@ export class StageFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       description: [
@@ -49,7 +49,7 @@ export class StageFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       image: [null, Validators.required],
@@ -124,13 +124,13 @@ export class StageFormComponent implements OnInit {
     const formValue = { ...this.form.value };
 
     if (this.isEditMode) {
-      if (this.imageRemoved) {
-        // User removed the image → prefer null
-        formValue.image = null;
-        formValue.imagePreview = null;
-        this.returnFormData(formValue);
-        return;
-      }
+      // if (this.imageRemoved) {
+      //   // User removed the image → prefer null
+      //   formValue.image = null;
+      //   formValue.imagePreview = null;
+      //   this.returnFormData(formValue);
+      //   return;
+      // }
 
       const image = formValue.image;
 

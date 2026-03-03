@@ -46,6 +46,10 @@
         align-items: center;
         gap: 12px;
 
+        img {
+          width: 20px;
+        }
+
         span {
           color: var(--Color-Neutral-2000, #333435);
           font-size: var(--Font-Size-Xs, 16px);
