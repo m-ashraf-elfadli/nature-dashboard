@@ -94,7 +94,7 @@ const DIALOG_CONFIGS = {
   styleUrl: './service-form.component.scss',
   providers: [AppDialogService],
 })
-export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
+export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
   pageTitle = '';
   serviceForm!: FormGroup;
   serviceId!: string;
@@ -119,8 +119,22 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
   ValueFormComponent = ValueFormComponent;
   ResultsFormComponent = ResultsFormComponent;
 
-  cols: MiniTableColumn[] = [
-    { field: 'title', header: 'mini_table.header.title' },
+  colsStages: MiniTableColumn[] = [
+    { field: 'title', header: 'mini_table.header.stage' },
+    { field: 'description', header: 'mini_table.header.desc' },
+    { field: 'actions', header: 'Actions', type: 'edit-action' },
+    { field: 'actions', header: 'Actions', type: 'delete-action' },
+  ];
+
+  colsValues: MiniTableColumn[] = [
+    { field: 'title', header: 'mini_table.header.value' },
+    { field: 'description', header: 'mini_table.header.desc' },
+    { field: 'actions', header: 'Actions', type: 'edit-action' },
+    { field: 'actions', header: 'Actions', type: 'delete-action' },
+  ];
+
+  colsResult: MiniTableColumn[] = [
+    { field: 'title', header: 'mini_table.header.result' },
     { field: 'description', header: 'mini_table.header.desc' },
     { field: 'actions', header: 'Actions', type: 'edit-action' },
     { field: 'actions', header: 'Actions', type: 'delete-action' },
@@ -137,7 +151,7 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {
@@ -175,7 +189,9 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.apiService.setCulture(localStorage.getItem('app_lang') || this.translate.getCurrentLang())
+    this.apiService.setCulture(
+      localStorage.getItem('app_lang') || this.translate.getCurrentLang(),
+    );
   }
 
   private setPageTitle(): void {
@@ -191,7 +207,7 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       tagline: [
@@ -199,7 +215,7 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       status: [1],
@@ -212,7 +228,7 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       benefitTagline: [
@@ -220,7 +236,7 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       benefitBody: [
@@ -228,7 +244,7 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       benefitInsights: this.fb.array([this.createInsightGroup()]),
@@ -272,7 +288,7 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
       id: [data?.id],
       metricTitle: [
         data?.metricTitle || '',
-        [Validators.minLength(3), Validators.maxLength(50)],
+        [Validators.minLength(1), Validators.maxLength(400)],
       ],
       metricNumber: [
         data?.metricNumber || '',
@@ -409,7 +425,7 @@ export class ServiceFormComponent implements OnInit ,OnDestroy ,AfterViewInit {
         control?.setValidators([
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ]);
         control?.enable();
       } else {

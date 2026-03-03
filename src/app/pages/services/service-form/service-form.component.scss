@@ -42,6 +42,16 @@
       border-radius: 20px;
       background: var(--Color-Neutral-white, #fff);
 
+      .all-stages {
+        margin-bottom: -8px;
+        color: var(--Grey-grey-500, #242424);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 120%; /* 16.8px */
+        letter-spacing: 0.28px;
+      }
+
       legend {
         color: var(--Color-Neutral-2000, #333435);
         font-size: var(--Font-Size-M, 20px);

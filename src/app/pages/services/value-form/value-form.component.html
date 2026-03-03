@@ -27,7 +27,7 @@
   <div class="our-field">
     <label for="tools">{{ 'services.value_form.tools_label' | translate }}</label>
     <div class="tools-input-wrapper">
-      <input id="tools" pInputText [(ngModel)]="toolInput" [ngModelOptions]="{ standalone: true }"
+      <input id="tools" pInputText [(ngModel)]="toolInput" maxlength="45" [ngModelOptions]="{ standalone: true }"
         [placeholder]="'services.value_form.tools_placeholder' | translate" (keyup.enter)="addTool()" />
       <button type="button" class="add-another" (click)="addTool()">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">

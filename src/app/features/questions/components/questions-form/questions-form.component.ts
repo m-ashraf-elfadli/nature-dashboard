@@ -8,6 +8,8 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import {
   FormArray,
@@ -22,6 +24,7 @@ import { InputText } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { QuestionFormEvent } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
+import { TrimInputDirective } from '../../../../core/directives/trim-input.directive';
 
 @Component({
   selector: 'app-questions-form',
@@ -32,6 +35,7 @@ import { QuestionsService } from '../../services/questions.service';
     FormsModule,
     InputText,
     RadioButtonModule,
+    TrimInputDirective,
   ],
   templateUrl: './questions-form.component.html',
   styleUrl: './questions-form.component.scss',
@@ -39,6 +43,7 @@ import { QuestionsService } from '../../services/questions.service';
 export class QuestionsFormComponent implements OnInit, OnChanges {
   @Input() questionId?: string;
   @Output() formClose = new EventEmitter<QuestionFormEvent>();
+  @ViewChild('formContainer') formContainer!: ElementRef;
 
   questionForm!: FormGroup;
   isEditMode = false;
@@ -166,6 +171,20 @@ export class QuestionsFormComponent implements OnInit, OnChanges {
 
     for (let i = 0; i < 4; i++) {
       this.addAnswer();
+    }
+
+    // Scroll to top of form
+    this.scrollToTop();
+  }
+
+  private scrollToTop() {
+    if (this.formContainer) {
+      setTimeout(() => {
+        this.formContainer.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }, 0);
     }
   }
 

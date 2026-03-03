@@ -40,7 +40,7 @@ export class ValueFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       description: [
@@ -48,7 +48,7 @@ export class ValueFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(400),
         ],
       ],
       tools: this.fb.array([]),
