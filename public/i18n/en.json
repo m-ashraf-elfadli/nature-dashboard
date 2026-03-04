@@ -9,6 +9,8 @@
     "search_input_table_placeholder": "Search by name ...",
     "import": "Import CSV",
     "export":"Export CSV",
+    "gallary_btn":"Click to upload",
+    "gallary_desc":"or Drag and Drop files here",
     "up": "Up",
     "down": "Down",
     "stable": "Stable",

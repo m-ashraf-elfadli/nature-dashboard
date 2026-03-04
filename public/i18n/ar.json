@@ -9,6 +9,8 @@
     "search_input_table_placeholder": "البحث بالاسم ...",
     "import": "استيراد CSV",
     "export":"تنزيل كملف CSV",
+    "gallary_btn": " اضغط للرفع",
+    "gallary_desc": "أو قم بسحب وإفلات الملفات هنا ",
     "up": "لأعلى",
     "down": "لأسفل",
     "stable": "مستقر",
