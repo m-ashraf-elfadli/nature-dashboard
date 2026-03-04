@@ -68,7 +68,7 @@
                     <div class="our-field">
                         <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span class="text-red-val">*</span></label>
                         <div class="textarea-container">
-                            <textarea (input)="test()" pTextarea [placeholder]="'projects.form.placeholders.overview' | translate"
+                            <textarea pTextarea [placeholder]="'projects.form.placeholders.overview' | translate"
                                 id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
                             <span class="char-counter"><span [class.text-red-val]="hasError('overview','maxlength')">{{ form.get('overview')?.value?.length || 0 }}</span>/200</span>
                         </div>

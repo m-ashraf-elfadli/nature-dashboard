@@ -446,9 +446,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       endDateControl.updateValueAndValidity();
     }
   }
-  test(){
-    console.log(this.form)
-  }
+
   hasError(controlName: string, errorName?: string): boolean {
     const control = this.form.get(controlName);
     if (!control) return false;
