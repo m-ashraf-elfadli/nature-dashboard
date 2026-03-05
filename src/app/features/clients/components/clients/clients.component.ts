@@ -340,17 +340,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
   }
 
   export() {
-    this.exportService.export('clients').subscribe({
-      next:(res)=>{
-        const blob = res.body;
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'clients.xlsx';
-        a.click();
-        a.remove()
-        window.URL.revokeObjectURL(url);
-      }
-    })
+    this.exportService.exportModule('clients')
   }
 }

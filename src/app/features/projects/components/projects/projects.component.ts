@@ -295,18 +295,7 @@ export class ProjectsComponent implements OnInit {
     this.fetchData(this.paginationObj);
   }
   export() {
-    this.exportService.export('projects').subscribe({
-      next:(res)=>{
-        const blob = res.body;
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'projects.xlsx';
-        a.click();
-        a.remove()
-        window.URL.revokeObjectURL(url);
-      }
-    })
+    this.exportService.exportModule('projects')
   }
   onFilterChange(filter: any) {
     this.filterObj = filter;

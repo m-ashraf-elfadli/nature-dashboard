@@ -1,13 +1,15 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, catchError, of, tap } from 'rxjs';
 import { ApiService } from '../services/api.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
   private api = inject(ApiService);
   private translate = inject(TranslateService);
+  private router = inject(Router);
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
@@ -32,11 +34,18 @@ export class AuthService {
   logout() {
     return this.api.post('users/logout', {}).pipe(
       tap(() => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
-        this.isAuthenticatedSubject.next(false);
+        this.performLogout()
+      }),catchError((err)=>{
+        this.performLogout();
+        this.router.navigate(['/auth']);
+        return of(null);
       })
     );
+  }
+  performLogout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    this.isAuthenticatedSubject.next(false);
   }
 
   getToken(): string | null {

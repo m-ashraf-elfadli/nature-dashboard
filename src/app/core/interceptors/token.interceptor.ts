@@ -33,10 +33,9 @@ export function TokenInterceptor(req: HttpRequest<any>, next: HttpHandlerFn) {
         !req.url.toLocaleLowerCase().includes('signin')
 
       ) {
-        auth.logout().subscribe({
-          next: () => router.navigate(['/auth']),
-          error: () => router.navigate(['/auth']),
-        });
+        auth.performLogout();
+        router.navigate(['/auth'])
+
       }
       return throwError(() => error);
     }),

@@ -57,9 +57,9 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
   }
 
   resetForm() {
-    this.form.reset();
-    this.form.markAsPristine();
-    this.form.markAsUntouched();
+    this.form?.reset();
+    this.form?.markAsPristine();
+    this.form?.markAsUntouched();
   }
 
   scrollToTop() {

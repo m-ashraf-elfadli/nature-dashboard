@@ -179,18 +179,7 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
     this.addAndHideBulkDeleteBtn();
   }
   export() {
-    this.exportService.export('testimonials').subscribe({
-      next:(res)=>{
-        const blob = res.body;
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'testimonials.xlsx';
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      }
-    })
+    this.exportService.exportModule('testimonials');
   }
 
   addAndHideBulkDeleteBtn() {

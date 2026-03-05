@@ -112,7 +112,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(SettingsComponent) settingsComponent!: SettingsComponent;
 
   ngOnInit() {
-    this.getDropDowns();
+    const currentLang = this.translate.getCurrentLang();
+    this.getDropDowns(currentLang);
     this.initForm();
 
     // Set current language from localStorage
@@ -193,10 +194,10 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
     return null;
   }
-  getDropDowns() {
+  getDropDowns(lang:string) {
     forkJoin({
-      countries: this.service.getCountriesWithHTTP(this.currentLanguage),
-      services: this.service.getServicesDropDownWithHTTP(this.currentLanguage),
+      countries: this.service.getCountriesWithHTTP(lang),
+      services: this.service.getServicesDropDownWithHTTP(lang),
     }).subscribe({
       next: (res) => {
         this.services = res.services.result;
@@ -654,7 +655,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isFirstTimeToSend = true;
     this.currentLanguage = lang;
     this.commitLanguage(lang);
-    this.getDropDowns();
+    this.getDropDowns(this.currentLanguage);
 
     const currentStatus = this.languageStatuses.get(lang)?.status;
     if (currentStatus !== 'completed') {

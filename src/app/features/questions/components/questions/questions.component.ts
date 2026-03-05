@@ -239,18 +239,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   export() {
-    this.exportService.export('questions').subscribe({
-      next:(res)=>{
-        const blob = res.body;
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'questions.xlsx';
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      }
-    })
+    this.exportService.exportModule('questions');
   }
 
   changeStatus(row: Question, value: boolean, e: Event) {

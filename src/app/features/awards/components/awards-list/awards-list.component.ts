@@ -194,18 +194,7 @@ export class AwardsListComponent implements OnInit {
     this.fetchData(this.paginationObj);
   }
   export() {
-    this.exportService.export('awards').subscribe({
-      next:(res)=>{
-        const blob = res.body;
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'awards.xlsx';
-        a.click();
-        a.remove()
-        window.URL.revokeObjectURL(url);
-      }
-    })
+    this.exportService.exportModule('awards')
   }
   addNew() {
     this.router.navigate(['/awards/add']);

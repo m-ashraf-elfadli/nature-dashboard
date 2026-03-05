@@ -201,18 +201,7 @@ export class ServicesComponent {
     this.addAndHideBulkDeleteBtn();
   }
     export() {
-    this.exportService.export('services').subscribe({
-      next:(res)=>{
-        const blob = res.body;
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'services.xlsx';
-        a.click();
-        a.remove()
-        window.URL.revokeObjectURL(url);
-      }
-    })
+    this.exportService.exportModule('services')
   }
   addNewService(e: Event) {
     console.log('Add New Service button clicked', e);

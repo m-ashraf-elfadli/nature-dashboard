@@ -16,4 +16,18 @@ export class ExportService {
         observe: 'response'
     })
   }
+  exportModule(endPoint:string){
+    this.export(endPoint).subscribe({
+      next:(res)=>{
+        const blob = res.body;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${endPoint}.csv`;
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }
+    })
+  }
 }
