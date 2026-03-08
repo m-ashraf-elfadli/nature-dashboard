@@ -137,3 +137,7 @@ html:lang(ar)
   left: 0;
   transform: translateX(-25%) translateY(-25%);
 }
+h3,
+label {
+  user-select: none;
+}
