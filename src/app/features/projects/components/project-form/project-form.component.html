@@ -49,9 +49,9 @@
                 <div class="header-section gap-2">
                     <h3>{{ 'projects.form.titles.deatils' | translate }}</h3>
                     @if(currentLanguage === 'en'){
-                        <span>(English)</span>
+                    <span>(English)</span>
                     }@else {
-                        <span>(عربي)</span>
+                    <span>(عربي)</span>
                     }
                 </div>
                 <div class="inputs">
@@ -66,22 +66,26 @@
                         }
                     </div>
                     <div class="our-field">
-                        <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span class="text-red-val">*</span></label>
+                        <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span
+                                class="text-red-val">*</span></label>
                         <div class="textarea-container">
                             <textarea pTextarea [placeholder]="'projects.form.placeholders.overview' | translate"
                                 id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
-                            <span class="char-counter"><span [class.text-red-val]="hasError('overview','maxlength')">{{ form.get('overview')?.value?.length || 0 }}</span>/200</span>
+                            <span class="char-counter"><span [class.text-red-val]="hasError('overview','maxlength')">{{
+                                    form.get('overview')?.value?.length || 0 }}</span>/200</span>
                         </div>
                         @if(hasError('overview','required')){
                         <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview'
                             | translate}}</p-message>
                         }
                         @if(hasError('overview','maxlength')){
-                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview_max_length'
+                        <p-message severity="error" variant="simple"
+                            size="small">{{'projects.form.validation.overview_max_length'
                             | translate}}</p-message>
                         }
                         @if(hasError('overview','minlength')){
-                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview_min_length'
+                        <p-message severity="error" variant="simple"
+                            size="small">{{'projects.form.validation.overview_min_length'
                             | translate}}</p-message>
                         }
                     </div>
@@ -92,18 +96,21 @@
                             <textarea pTextarea [disabled]="true"
                                 [placeholder]="'projects.form.placeholders.brief' | translate" id="brief"
                                 [autoResize]="true" formControlName="brief" rows="4"></textarea>
-                            <span class="char-counter"><span [class.text-red-val]="hasError('brief','maxlength')">{{ form.get('brief')?.value?.length || 0 }}</span>/200</span>
+                            <span class="char-counter"><span [class.text-red-val]="hasError('brief','maxlength')">{{
+                                    form.get('brief')?.value?.length || 0 }}</span>/200</span>
                         </div>
                         @if(hasError('brief','required')){
                         <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.brief' |
                             translate}}</p-message>
                         }
                         @if(hasError('brief','maxlength')){
-                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview_max_length'
+                        <p-message severity="error" variant="simple"
+                            size="small">{{'projects.form.validation.overview_max_length'
                             | translate}}</p-message>
                         }
                         @if(hasError('brief','minlength')){
-                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview_min_length'
+                        <p-message severity="error" variant="simple"
+                            size="small">{{'projects.form.validation.overview_min_length'
                             | translate}}</p-message>
                         }
                     </div>
@@ -221,8 +228,9 @@
                                     </div>
                                 </div>
                                 @if(form.getError('dateRangeInvalid')){
-                                    <p-message severity="error" variant="simple"
-                                        size="small">{{'projects.form.validation.start_date_after_end_date' | translate}}</p-message>
+                                <p-message severity="error" variant="simple"
+                                    size="small">{{'projects.form.validation.start_date_after_end_date' |
+                                    translate}}</p-message>
                                 }
                             </div>
 
@@ -243,8 +251,8 @@
                         <div class="our-field">
                             <label for="country_id">{{ 'projects.form.labels.country' | translate }} <span
                                     class="text-red-val">*</span></label>
-                            <p-select [options]="countries" formControlName="country_id" optionValue="id"
-                                optionLabel="name" (onChange)="getCitiesByCountry($event.value)"
+                            <p-select [options]="countries" [filter]="true" formControlName="country_id"
+                                optionValue="id" optionLabel="name" (onChange)="getCitiesByCountry($event.value)"
                                 [placeholder]="'projects.form.placeholders.country' | translate" />
                             @if(hasError('country_id')){
                             <p-message severity="error" variant="simple"
@@ -254,8 +262,9 @@
                         <div class="our-field">
                             <label for="city_id">{{ 'projects.form.labels.city' | translate }} <span
                                     class="text-red-val">*</span></label>
-                            <p-select [options]="cities" formControlName="city_id" optionValue="id" optionLabel="name"
-                                [disabled]="true" [placeholder]="'projects.form.placeholders.city' | translate" />
+                            <p-select [options]="cities" [filter]="true" formControlName="city_id" optionValue="id"
+                                optionLabel="name" [disabled]="true"
+                                [placeholder]="'projects.form.placeholders.city' | translate" />
                             @if(hasError('city_id')){
                             <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.city'
                                 | translate}}</p-message>
@@ -287,7 +296,8 @@
                         </div>
                         <div class="our-field">
                             <label for="section_body">{{ 'projects.form.labels.section_body' | translate }}</label>
-                            <p-editor formControlName="section_body" [style]="{ height: '100px' }" [placeholder]="'projects.form.placeholders.section_body' | translate">
+                            <p-editor formControlName="section_body" [style]="{ height: '100px' }"
+                                [placeholder]="'projects.form.placeholders.section_body' | translate">
                                 <ng-template #header>
                                     <div class="w-full flex align-items-center justify-content-between">
                                         <h6 class="text-editor-header">
