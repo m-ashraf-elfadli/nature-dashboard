@@ -70,7 +70,7 @@
                                 class="text-red-val">*</span></label>
                         <div class="textarea-container">
                             <textarea pTextarea [placeholder]="'projects.form.placeholders.overview' | translate"
-                                id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
+                                id="overview" style="height: 100px;" formControlName="overview" rows="4"></textarea>
                             <span class="char-counter"><span [class.text-red-val]="hasError('overview','maxlength')">{{
                                     form.get('overview')?.value?.length || 0 }}</span>/200</span>
                         </div>
