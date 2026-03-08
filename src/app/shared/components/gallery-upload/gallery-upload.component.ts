@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class GalleryUploadComponent implements ControlValueAccessor {
   @Input() multiple: boolean = false;
-  @Input() maxSize: number = 100;
+  @Input() maxSize: number = 3;
   @Input() formControlName: string = '';
   @Output() fileSelected = new EventEmitter<File | File[]>();
   @Output() removed = new EventEmitter<void>();
@@ -36,8 +36,8 @@ export class GalleryUploadComponent implements ControlValueAccessor {
   isDragOver: boolean = false;
 
   // ✅ Fix: Accept any type for onChange to handle mixed arrays
-  private onChange: (value: any) => void = () => { };
-  private onTouched: () => void = () => { };
+  private onChange: (value: any) => void = () => {};
+  private onTouched: () => void = () => {};
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
