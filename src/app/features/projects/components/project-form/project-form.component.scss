@@ -21,13 +21,13 @@
     color: var(--Color-Neutral-2000, #333435);
     font-size: var(--Font-Size-M, 20px);
     // font-weight: var(--Font-Weight-Medium, 500);
-    span{
-      color: var(--Secondary-200, #9A9A9A);
+    span {
+      color: var(--Secondary-200, #9a9a9a);
       font-size: var(--Static-Body-Small-Size, 12px);
       font-weight: 500;
       letter-spacing: var(--Static-Body-Small-Tracking, 0.4px);
     }
-    .text-red-val{
+    .text-red-val {
       color: var(--Color-Error-500, #e74c3c);
     }
   }
@@ -109,22 +109,31 @@
         background-color: rgba(240, 249, 238, 0.8);
       }
     }
-    .results-form-group{
+    .results-form-group {
       position: relative;
       border-radius: 12px;
-      border: 1px solid var(--Color-Neutral-300, #EFEFF0);
-      background: var(--Color-Neutral-100, #FEFEFE);
+      border: 1px solid var(--Color-Neutral-300, #efeff0);
+      background: var(--Color-Neutral-100, #fefefe);
       padding: 12px;
-      .delete-results-form-array-btn{
+      .delete-results-form-array-btn {
         position: absolute;
         top: 0%;
         right: 0;
         transform: translateX(25%) translateY(-25%);
       }
     }
-    .result-form-group-seperator{
-      background: var(--Color-Neutral-400, #DEDEDF);
+    .result-form-group-seperator {
+      background: var(--Color-Neutral-400, #dededf);
       height: 1px;
     }
   }
+}
+html:lang(ar)
+  :host
+  .project-form
+  .results-form-group
+  .delete-results-form-array-btn {
+  right: unset;
+  left: 0;
+  transform: translateX(-25%) translateY(-25%);
 }
