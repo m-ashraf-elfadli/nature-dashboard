@@ -153,7 +153,7 @@ export class DashboardComponent implements OnInit {
 
   config: TableConfig<Project> = {
     columns: this.columns,
-    rowsPerPage: 10,
+    rowsPerPage: 5,
     serverSidePagination: true,
     rowsPerPageOptions: [5, 10, 20],
     selectionMode: 'multiple',
