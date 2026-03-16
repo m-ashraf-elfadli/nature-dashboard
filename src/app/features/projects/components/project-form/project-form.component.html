@@ -95,7 +95,7 @@
                                 class="text-red-val">*</span></label>
                         <div class="textarea-container">
                             <textarea pTextarea style="height: 100px;" [disabled]="true"
-                                [placeholder]="'projects.form.placeholders.brief' | translate" id="brief"
+                                [placeholder]=" currentLanguage() === 'ar'?'من فضلك ادخل موجز عن المشروع ...':'Write project brief ...'" id="brief" [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'"
                                 formControlName="brief" rows="4"></textarea>
                             <span class="char-counter"><span [class.text-red-val]="hasError('brief','maxlength')">{{
                                     form.get('brief')?.value?.length || 0 }}</span>/200</span>
@@ -293,12 +293,14 @@
                         <div class="our-field">
                             <label for="section_title">{{ 'projects.form.labels.section_title' | translate }}</label>
                             <input pInputText type="text" formControlName="section_title" id="section_title"
-                                [placeholder]="'projects.form.placeholders.section_title' | translate">
+                                [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
+                                [placeholder]="currentLanguage() === 'ar'? 'من فضلك قم بادخال اسم القسم ...':'Enter section title'">
                         </div>
                         <div class="our-field">
                             <label for="section_body">{{ 'projects.form.labels.section_body' | translate }}</label>
                             <p-editor formControlName="section_body" [style]="{ height: '100px' }"
-                                [placeholder]="'projects.form.placeholders.section_body' | translate">
+                                [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
+                                [placeholder]="currentLanguage() === 'ar'? 'من فضلك قم بادخال وصف القسم ...':'Enter section body'">
                                 <ng-template #header>
                                     <div class="w-full flex align-items-center justify-content-between">
                                         <h6 class="text-editor-header">
