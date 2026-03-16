@@ -94,9 +94,9 @@
                         <label for="brief">{{ 'projects.form.labels.brief' | translate }} <span
                                 class="text-red-val">*</span></label>
                         <div class="textarea-container">
-                            <textarea pTextarea [disabled]="true"
+                            <textarea pTextarea style="height: 100px;" [disabled]="true"
                                 [placeholder]="'projects.form.placeholders.brief' | translate" id="brief"
-                                [autoResize]="true" formControlName="brief" rows="4"></textarea>
+                                formControlName="brief" rows="4"></textarea>
                             <span class="char-counter"><span [class.text-red-val]="hasError('brief','maxlength')">{{
                                     form.get('brief')?.value?.length || 0 }}</span>/200</span>
                         </div>
@@ -307,9 +307,9 @@
                                         <div class="btns">
                                             <!-- Text formatting -->
                                             <span class="ql-formats">
-                                                <button class="ql-bold"></button>
-                                                <button class="ql-italic"></button>
-                                                <button class="ql-underline"></button>
+                                                <button type="button" class="ql-bold"></button>
+                                                <button type="button" class="ql-italic"></button>
+                                                <button type="button" class="ql-underline"></button>
                                             </span>
                                             <!-- Text color -->
                                             <span class="ql-formats">
@@ -317,8 +317,8 @@
                                             </span>
                                             <!-- Lists -->
                                             <span class="ql-formats">
-                                                <button class="ql-list" value="ordered"></button>
-                                                <button class="ql-list" value="bullet"></button>
+                                                <button type="button" class="ql-list" value="ordered"></button>
+                                                <button type="button" class="ql-list" value="bullet"></button>
                                             </span>
                                         </div>
                                     </div>

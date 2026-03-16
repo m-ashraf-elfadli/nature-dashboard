@@ -10,6 +10,9 @@ export class CustomValidators {
       if (!control.value) {
         return null; // Don't validate empty values to allow optional controls
       }
+      if (control.value == '') {
+        return null;
+      }
 
       const value = control.value.toString();
 

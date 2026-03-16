@@ -715,7 +715,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const formData = new FormData();
-    this.appendFormData(formData, this.serviceForm.value);
+    this.appendFormData(formData, this.serviceForm.getRawValue());
 
     const request$ = this.serviceId
       ? this.servicesService.updateService(this.serviceId, formData, lang)
@@ -832,7 +832,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const formData = new FormData();
-    this.appendFormData(formData, this.serviceForm.value);
+    this.appendFormData(formData, this.serviceForm.getRawValue());
 
     const request$ = this.serviceId
       ? this.servicesService.updateService(
