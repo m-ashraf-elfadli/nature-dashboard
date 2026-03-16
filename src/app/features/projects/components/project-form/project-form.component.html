@@ -23,8 +23,8 @@
         </svg>
         {{
         'general.form_toast_msg' | translate:{
-        currentContent:(currentLanguage === 'en'? 'general.english':'general.arabic') | translate,
-        previousContent:(currentLanguage === 'en'? 'general.arabic':'general.english') | translate
+        currentContent:(currentLanguage() === 'en'? 'general.english':'general.arabic') | translate,
+        previousContent:(currentLanguage() === 'en'? 'general.arabic':'general.english') | translate
         }
         }}
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
@@ -48,7 +48,7 @@
             <div class="details-section">
                 <div class="header-section gap-2">
                     <h3>{{ 'projects.form.titles.deatils' | translate }}</h3>
-                    @if(currentLanguage === 'en'){
+                    @if(currentLanguage() === 'en'){
                     <span>(English)</span>
                     }@else {
                     <span>(عربي)</span>
@@ -58,7 +58,7 @@
                     <div class="our-field">
                         <label for="name">{{ 'projects.form.labels.name' | translate }} <span
                                 class="text-red-val">*</span></label>
-                        <input pInputText id="name" [placeholder]="'projects.form.placeholders.name' | translate"
+                        <input pInputText id="name" [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" [placeholder]="currentLanguage() === 'en'?'Write project name ...' : 'من فضلك اكتب اسم المشروع ...'"
                             type="text" formControlName="name" />
                         @if(hasError('name')){
                         <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.name' |
@@ -69,7 +69,8 @@
                         <label for="overview">{{ 'projects.form.labels.overview' | translate }} <span
                                 class="text-red-val">*</span></label>
                         <div class="textarea-container">
-                            <textarea pTextarea [placeholder]="'projects.form.placeholders.overview' | translate"
+                            <textarea pTextarea [placeholder]="currentLanguage() === 'ar'? 'من فضلك ادخل وصف المشروع ...':'Write project overview ...'"
+                            [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
                                 id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
                             <span class="char-counter"><span [class.text-red-val]="hasError('overview','maxlength')">{{
                                     form.get('overview')?.value?.length || 0 }}</span>/200</span>

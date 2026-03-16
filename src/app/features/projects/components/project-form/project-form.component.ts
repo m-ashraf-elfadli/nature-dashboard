@@ -6,6 +6,8 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
   OnDestroy,
+  WritableSignal,
+  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -107,8 +109,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   ]);
 
   mediaUrl: string = environment.mediaUrl;
-  currentLanguage:string = 'en';
-  previousLanguage:string = 'en';
+  currentLanguage: WritableSignal<string> = signal('en');
+  previousLanguage: string = 'en';
   @ViewChild(SettingsComponent) settingsComponent!: SettingsComponent;
 
   ngOnInit() {
@@ -118,8 +120,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Set current language from localStorage
     const storedLang = localStorage.getItem('app_lang');
-    if (storedLang) {
-      this.currentLanguage = storedLang;
+    if (storedLang === 'en' || storedLang === 'ar') {
+      this.currentLanguage.set(storedLang);
     }
 
     this.route.params.subscribe((params) => {
@@ -127,9 +129,9 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       if (id) {
         this.isEditMode = true;
         this.projectId = id;
-        this.getProjectById(id, this.currentLanguage);
+        this.getProjectById(id, this.currentLanguage());
       } else {
-        this.updateLanguageStatus(this.currentLanguage, 'ongoing');
+        this.updateLanguageStatus(this.currentLanguage(), 'ongoing');
       }
     });
   }
@@ -552,7 +554,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onSave() {
     this.isFirstTimeToSend = false;
-    this.submitForm(true, this.currentLanguage);
+    this.submitForm(true, this.currentLanguage());
   }
   submitForm(isNavigateOut: boolean = false, culture?: string) {
     if (this.form.invalid) {
@@ -653,9 +655,9 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private switchLanguage(lang: string): void {
     this.isFirstTimeToSend = true;
-    this.currentLanguage = lang;
+    this.currentLanguage.set(lang);
     this.commitLanguage(lang);
-    this.getDropDowns(this.currentLanguage);
+    this.getDropDowns(this.currentLanguage());
 
     const currentStatus = this.languageStatuses.get(lang)?.status;
     if (currentStatus !== 'completed') {
@@ -684,7 +686,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private resetLanguage(lang: string): void {
     this.formActionsComponent?.revertLanguage();
-    this.currentLanguage = lang;
+    this.currentLanguage.set(lang);
   }
 
   private commitLanguage(lang: string): void {
