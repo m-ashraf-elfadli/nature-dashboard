@@ -113,12 +113,12 @@
 
   .insight-inputs {
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 10px;
 
     .delete-btn {
-      align-self: end;
-      transform: translateY(-50%);
+      align-self: start;
+      transform: translateY(48px);
     }
   }
 

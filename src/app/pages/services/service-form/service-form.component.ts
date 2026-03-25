@@ -288,7 +288,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
       id: [data?.id],
       metricTitle: [
         data?.metricTitle || '',
-        [Validators.minLength(1), Validators.maxLength(400)],
+        [Validators.minLength(3), Validators.maxLength(400)],
       ],
       metricNumber: [
         data?.metricNumber || '',

@@ -8,9 +8,9 @@
     "text_editor_header": "Section body",
     "search_input_table_placeholder": "Search by name ...",
     "import": "Import CSV",
-    "export":"Export CSV",
-    "gallary_btn":"Click to upload",
-    "gallary_desc":"or Drag and Drop files here",
+    "export": "Export CSV",
+    "gallary_btn": "Click to upload",
+    "gallary_desc": "or Drag and Drop files here",
     "up": "Up",
     "down": "Down",
     "stable": "Stable",
@@ -147,8 +147,8 @@
       "validation": {
         "name": "Name is required",
         "overview": "Overview is required",
-        "overview_max_length":"This field has a 200-character limit",
-        "overview_min_length":"This field must be at least [10] characters long.",
+        "overview_max_length": "This field has a 200-character limit",
+        "overview_min_length": "This field must be at least [10] characters long.",
         "brief": "Brief is required",
         "services": "Project Services is required",
         "from": "From date is required",
@@ -365,9 +365,9 @@
           "label": "Insight",
           "label_number": "Metrics Number",
           "title_placeholder": "Please enter Insight title",
-          "title_min": "Insight title must be at least 3 characters",
-          "title_max": "Insight title cannot exceed 400 characters",
-          "number_placeholder": "Number",
+          "metricTitle_min": "Insight title must be at least 3 characters",
+          "metricTitle_max": "Insight title cannot exceed 400 characters",
+          "number_placeholder": "Enter number",
           "number_min": "Minimum value is 0",
           "number_invalid": "Only numbers are allowed",
           "add_new": "Add New Insight"
@@ -380,7 +380,8 @@
         "add_another": "Add Another",
         "edit": "Edit Value",
         "empty_title": "Start Adding values to appear here",
-        "empty_subtitle": "Start adding the first service value."
+        "empty_subtitle": "Start adding the first service value.",
+        "all_values": "All Values"
       },
       "results": {
         "title": "Results & Impacts",
@@ -389,7 +390,8 @@
         "add_another": "Add Another",
         "edit": "Edit Result & Impact",
         "empty_title": "Start Adding results & impacts to appear here",
-        "empty_subtitle": "Start adding the first result & impact."
+        "empty_subtitle": "Start adding the first result & impact.",
+        "all_results": "All Results"
       }
     },
     "stage_form": {
@@ -707,7 +709,7 @@
         "answer_ar": "Answer in Arabic is required",
         "correct_answer": "Please select at least one correct answer",
         "min_length": "Minimum length is 3 characters",
-        "max_length": "Maximum length is 500 characters"
+        "max_length": "Maximum length is 400 characters"
       },
       "sections": {
         "answers": "Answers"

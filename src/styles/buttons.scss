@@ -423,6 +423,7 @@
   gap: 4px;
   cursor: pointer;
   border: none;
+  min-width: 120px;
 
   span {
     color: var(--Color-Neutral-100, #fefefe);
@@ -511,6 +512,7 @@
   transition: 0.2s ease;
   border: none;
   cursor: pointer;
+  min-width: 120px;
 
   span,
   i {

@@ -81,7 +81,7 @@ export class QuestionsFormComponent implements OnInit, OnChanges {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(500),
+          Validators.maxLength(400),
         ],
       ],
       question_ar: [
@@ -89,7 +89,7 @@ export class QuestionsFormComponent implements OnInit, OnChanges {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(500),
+          Validators.maxLength(400),
         ],
       ],
       answers: this.fb.array([]),
