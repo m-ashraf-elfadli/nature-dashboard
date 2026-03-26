@@ -355,11 +355,13 @@
                             <div class="metrics-form-group-fields">
                                 <div class="title-field">
                                     <input pInputText type="text" formControlName="metric_title" id="metric_title"
-                                        [placeholder]="'projects.form.placeholders.metric_title' | translate">
+                                    [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
+                                        [placeholder]="currentLanguage() === 'ar'?'أدخل عنوان القسم':'Enter section title'">
                                 </div>
                                 <div class="number-field">
                                     <input type="number" formControlName="metric_number" id="metric_number" pInputText
-                                        [placeholder]="'projects.form.placeholders.metric_number' | translate">
+                                    [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
+                                        [placeholder]="currentLanguage() === 'ar'?'الرقم':'Number'">
                                 </div>
                                 <div class="case-field">
                                     <p-select [options]="metricCases" formControlName="metric_case" optionValue="id"
