@@ -700,10 +700,9 @@
       "export_dummy_detail": "Turn off dummy data in environment to export from the API."
     },
     "category_types": {
-      "water": "Water",
-      "land": "Land",
-      "technology": "Technology",
-      "environmental": "Environmental"
+      "earth": "Earth",
+      "air": "Air",
+      "water": "Water"
     },
     "categories": {
       "breadcrumb": "Blog categories",
@@ -732,6 +731,7 @@
       "form": {
         "title": "New category",
         "edit_title": "Edit category",
+        "load_error": "Failed to load category data",
         "name_en": "Name (English)",
         "name_ar": "Name (Arabic)",
         "type": "Category type",

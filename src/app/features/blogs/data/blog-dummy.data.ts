@@ -4,10 +4,9 @@ import { BlogCategory, BlogPost } from '../models/blogs.model';
 const img = (seed: number) => `https://picsum.photos/seed/natureblog${seed}/96/64`;
 
 export const BLOG_CATEGORY_TYPES = [
+  { id: 'earth', labelKey: 'blogs.category_types.earth' },
+  { id: 'air', labelKey: 'blogs.category_types.air' },
   { id: 'water', labelKey: 'blogs.category_types.water' },
-  { id: 'land', labelKey: 'blogs.category_types.land' },
-  { id: 'tech', labelKey: 'blogs.category_types.technology' },
-  { id: 'env', labelKey: 'blogs.category_types.environmental' },
 ] as const;
 
 export function createInitialDummyCategories(): BlogCategory[] {
@@ -28,7 +27,7 @@ export function createInitialDummyCategories(): BlogCategory[] {
       name: 'Worldwide',
       name_en: 'Worldwide',
       name_ar: 'عالمي',
-      type_id: 'land',
+      type_id: 'earth',
       type_label: '',
       image: img(2),
       created_at: '2024-11-01',
@@ -39,7 +38,7 @@ export function createInitialDummyCategories(): BlogCategory[] {
       name: 'Technology',
       name_en: 'Technology',
       name_ar: 'تقنية',
-      type_id: 'tech',
+      type_id: 'air',
       type_label: '',
       image: img(3),
       created_at: '2024-10-15',
@@ -50,7 +49,7 @@ export function createInitialDummyCategories(): BlogCategory[] {
       name: 'Environmental',
       name_en: 'Environmental',
       name_ar: 'بيئي',
-      type_id: 'env',
+      type_id: 'earth',
       type_label: '',
       image: img(4),
       created_at: '2024-09-20',

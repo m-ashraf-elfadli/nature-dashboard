@@ -28,6 +28,7 @@ import {
   BlogCategoryFormPayload,
 } from '../../models/blogs.model';
 import { BLOG_CATEGORY_TYPES } from '../../data/blog-dummy.data';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-blog-category-form',
@@ -58,6 +59,7 @@ export class BlogCategoryFormComponent implements OnInit, OnChanges, OnDestroy {
 
   form!: FormGroup;
   isEditMode = false;
+  isLoading = false;
   typeOptions: { id: string; label: string }[] = [];
 
   ngOnInit(): void {
@@ -108,16 +110,34 @@ export class BlogCategoryFormComponent implements OnInit, OnChanges, OnDestroy {
 
   private load(): void {
     if (!this.categoryId) return;
+
+    this.isLoading = true;
+
     this.service.getCategoryById(this.categoryId).subscribe({
       next: (res: any) => {
-        const d = res?.result;
-        if (!d) return;
+        const data = res?.result;
+        if (!data) {
+          this.isLoading = false;
+          return;
+        }
+
         this.form.patchValue({
-          name_en: d.name_en,
-          name_ar: d.name_ar,
-          type_id: d.type_id,
-          image: d.image,
+          name_en: data.name_en || data.name || '',
+          name_ar: data.name_ar || data.name || '',
+          type_id: data.type_id,
+          image: data.image
+            ? data.image.startsWith('http://') ||
+              data.image.startsWith('https://')
+              ? data.image
+              : `${environment.mediaUrl}${data.image}`
+            : null,
         });
+
+        this.isLoading = false;
+      },
+      error: () => {
+        alert(this.translate.instant('blogs.categories.form.load_error'));
+        this.isLoading = false;
       },
     });
   }

@@ -36,10 +36,68 @@ export class BlogsService {
     return environment.blogs.useDummyData;
   }
 
+  /**
+   * When true, categories use in-memory dummy data; when false, real API.
+   * If `blogs.useDummyCategories` is unset, follows `blogs.useDummyData`.
+   */
+  categoriesUseDummy(): boolean {
+    const b = environment.blogs as {
+      useDummyData: boolean;
+      useDummyCategories?: boolean;
+    };
+    if (typeof b.useDummyCategories === 'boolean') {
+      return b.useDummyCategories;
+    }
+    return b.useDummyData;
+  }
+
+  private mapCategoryListResponse(res: any): { result: BlogCategory[]; total: number } {
+    const rows =
+      res?.result ??
+      res?.data ??
+      res?.categories ??
+      [];
+    const list = Array.isArray(rows) ? rows.map((r) => this.mapCategoryRow(r)) : [];
+    const total =
+      Number(
+        res?.total ??
+          res?.meta?.total ??
+          res?.meta?.pagination?.total,
+      ) || list.length;
+    return { result: list, total };
+  }
+
+  /** Map API row to table/form shape (type slug, names, image URL). */
+  private mapCategoryRow(row: any): BlogCategory {
+    if (!row || typeof row !== 'object') {
+      return row;
+    }
+    const typeSlug = row.type ?? row.type_id ?? row.type_slug ?? '';
+    const nameEn = row.name_en ?? row.nameEn ?? '';
+    const nameAr = row.name_ar ?? row.nameAr ?? '';
+    const displayName = row.name || nameEn || nameAr || '';
+    return {
+      id: String(row.id ?? ''),
+      name: displayName,
+      name_en: nameEn || displayName,
+      name_ar: nameAr,
+      type_id: String(typeSlug),
+      type_label: row.type_label ?? row.type_name ?? '',
+      image: row.image ?? row.image_url ?? row.thumbnail ?? '',
+      created_at:
+        row.created_at ?? row.createdAt ?? row.date ?? '',
+      status:
+        row.status === true ||
+        row.status === 1 ||
+        row.status === '1' ||
+        row.is_active === true,
+    };
+  }
+
   // --- Categories ---
 
   getCategories(pagination: PaginationObj, search?: string): Observable<any> {
-    if (this.useDummy()) {
+    if (this.categoriesUseDummy()) {
       return of(this.sliceCategories(pagination, search || ''));
     }
     let params = new HttpParams()
@@ -48,7 +106,9 @@ export class BlogsService {
     if (search) {
       params = params.set('value', search);
     }
-    return this.api.get(this.categoriesPath(), params);
+    return this.api
+      .get<any>(this.categoriesPath(), params)
+      .pipe(map((res) => this.mapCategoryListResponse(res)));
   }
 
   private sliceCategories(pagination: PaginationObj, search: string) {
@@ -69,16 +129,21 @@ export class BlogsService {
   }
 
   getCategoryById(id: string): Observable<any> {
-    if (this.useDummy()) {
+    if (this.categoriesUseDummy()) {
       const row = this.dummyCategories.find((c) => c.id === id) || null;
       return of({ result: row });
     }
     this.api.setCulture(localStorage.getItem('app_lang') || 'en');
-    return this.api.get(`${this.categoriesPath()}/show/${id}`);
+    return this.api.get<any>(`${this.categoriesPath()}/${id}`).pipe(
+      map((res) => ({
+        ...res,
+        result: this.mapCategoryRow(res?.result ?? res?.data ?? res),
+      })),
+    );
   }
 
   createCategory(payload: BlogCategoryFormPayload): Observable<any> {
-    if (this.useDummy()) {
+    if (this.categoriesUseDummy()) {
       const nextNum =
         this.dummyCategories.reduce(
           (m, c) => Math.max(m, parseInt(c.id, 10) || 0),
@@ -108,7 +173,7 @@ export class BlogsService {
   }
 
   updateCategory(id: string, payload: BlogCategoryFormPayload): Observable<any> {
-    if (this.useDummy()) {
+    if (this.categoriesUseDummy()) {
       const idx = this.dummyCategories.findIndex((c) => c.id === id);
       if (idx < 0) return of({ result: null });
       const prev = this.dummyCategories[idx];
@@ -139,17 +204,16 @@ export class BlogsService {
     const fd = new FormData();
     fd.append('name_en', p.name_en);
     fd.append('name_ar', p.name_ar);
-    fd.append('type_id', p.type_id);
+    // API collection expects `type` (slug), not `type_id`
+    fd.append('type', p.type_id);
     if (p.image instanceof File) {
-      fd.append('image', p.image);
-    } else if (typeof p.image === 'string' && p.image) {
       fd.append('image', p.image);
     }
     return fd;
   }
 
   deleteCategory(id: string): Observable<any> {
-    if (this.useDummy()) {
+    if (this.categoriesUseDummy()) {
       this.dummyCategories = this.dummyCategories.filter((c) => c.id !== id);
       this.dummyPosts = this.dummyPosts.filter((p) => p.category_id !== id);
       return of({ success: true });
@@ -159,7 +223,7 @@ export class BlogsService {
   }
 
   bulkDeleteCategories(ids: string[]): Observable<any> {
-    if (this.useDummy()) {
+    if (this.categoriesUseDummy()) {
       this.dummyCategories = this.dummyCategories.filter(
         (c) => !ids.includes(c.id),
       );
@@ -174,7 +238,7 @@ export class BlogsService {
   }
 
   changeCategoryStatus(id: string, value: boolean): Observable<any> {
-    if (this.useDummy()) {
+    if (this.categoriesUseDummy()) {
       this.dummyCategories = this.dummyCategories.map((c) =>
         c.id === id ? { ...c, status: value } : c,
       );
@@ -433,7 +497,7 @@ export class BlogsService {
 
   /** Post form: all categories as select options (dummy or API list). */
   getCategoriesForDropdown(): Observable<{ id: string; name: string }[]> {
-    if (this.useDummy()) {
+    if (this.categoriesUseDummy()) {
       return of(this.getCategoryOptionsForSelect());
     }
     return this.getCategories({ page: 1, size: 500 }, '').pipe(

@@ -4,12 +4,16 @@ export const environment = {
   mediaUrl:
     'https://lavenderblush-reindeer-325183.hostingersite.com/api/media/',
   /**
-   * Blogs module: flip `useDummyData` to false and set paths to match your backend.
-   * Endpoints are resolved as `${baseUrl}/${categoriesApiPath}` etc.
+   * Blogs module — `baseUrl` already ends with `/api`.
+   * Categories (Postman): POST/GET `categories`, POST `categories/:id` update, DELETE `categories/:id`,
+   * POST `categories/actions/bulk-delete` { ids }, GET `categories/actions/export`.
+   * FormData keys: name_en, name_ar, image, type (slug e.g. earth, air).
    */
   blogs: {
     useDummyData: true,
-    categoriesApiPath: 'blog-categories',
+    /** When false, categories use the API; when omitted, follows `useDummyData`. */
+    useDummyCategories: false,
+    categoriesApiPath: 'categories',
     postsApiPath: 'blog-posts',
   },
 };

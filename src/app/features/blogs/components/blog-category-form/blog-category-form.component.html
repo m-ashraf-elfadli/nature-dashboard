@@ -69,19 +69,21 @@
     </div>
 
     <div class="actions">
+      @if (!isEditMode) {
       <button
         type="button"
         class="btn-outline"
         (click)="submit('saveAndCreateNew')"
-        [disabled]="form.invalid"
+        [disabled]="form.invalid || isLoading"
       >
         {{ "blogs.categories.form.btns.save_create" | translate }}
       </button>
+      }
       <button
         type="button"
         class="btn-primary"
         (click)="submit('save')"
-        [disabled]="form.invalid"
+        [disabled]="form.invalid || isLoading"
       >
         {{
           isEditMode
