@@ -1,0 +1,281 @@
+<div class="form-content">
+  <div class="form-header">
+    <app-page-header
+      [title]="
+        (isEditMode ? 'blogs.posts.form.edit_title' : 'blogs.posts.form.title')
+          | translate
+      "
+    ></app-page-header>
+    <app-form-actions
+      (discard)="onDiscard()"
+      (save)="onSave()"
+      (languageChange)="onLanguageChange($event)"
+      [isFormValid]="form.valid"
+      [editMode]="isEditMode"
+    ></app-form-actions>
+  </div>
+
+  @if (isFirstTimeToSend) {
+  <div class="form-toaster">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="25"
+      viewBox="0 0 25 25"
+      fill="none"
+    >
+      <path
+        d="M19.1976 5.01186C19.2537 5.1621 19.2807 5.28526 19.2791 5.44543C19.2788 5.48665 19.2786 5.52788 19.2784 5.57036C19.2775 5.63739 19.2775 5.63739 19.2765 5.70577C19.2762 5.75325 19.2758 5.80073 19.2755 5.84965C19.2747 5.9526 19.2738 6.05555 19.2727 6.15849C19.2711 6.32129 19.27 6.48409 19.2692 6.64689C19.2667 7.10972 19.2636 7.57254 19.259 8.03536C19.2562 8.31851 19.2545 8.60166 19.2534 8.88482C19.2529 8.99284 19.2518 9.10085 19.2504 9.20885C19.2485 9.3596 19.2479 9.5103 19.2476 9.66107C19.2467 9.7059 19.2458 9.75074 19.2448 9.79693C19.2429 9.93462 19.2429 9.93462 19.2716 10.1232C19.4347 10.2814 19.6545 10.3361 19.8643 10.4195C20.1757 10.566 20.3877 10.7754 20.6272 11.0198C20.667 11.0598 20.7068 11.0998 20.7478 11.141C20.8742 11.2682 21 11.3959 21.1259 11.5237C21.2118 11.6103 21.2977 11.6969 21.3836 11.7835C21.5936 11.9951 21.8032 12.2072 22.0125 12.4195C21.7772 12.6586 21.5412 12.8972 21.3049 13.1353C21.2247 13.2162 21.1446 13.2974 21.0646 13.3786C20.9493 13.4957 20.8335 13.6124 20.7176 13.7289C20.6822 13.765 20.6469 13.8011 20.6105 13.8384C20.2056 14.2433 19.6721 14.5625 19.0957 14.6418C18.934 14.6653 18.934 14.6653 18.8364 14.7807C18.7682 14.9097 18.7115 15.0352 18.6559 15.1696C18.005 16.7362 16.6565 18.0057 15.1095 18.6744C14.2155 19.0388 13.324 19.2231 12.3604 19.2555C12.3146 19.257 12.2688 19.2586 12.2217 19.2602C11.5805 19.2794 10.9391 19.2764 10.2977 19.2754C10.1137 19.2752 9.92974 19.2751 9.74575 19.2751C9.39922 19.275 9.0527 19.2747 8.70617 19.2743C8.31086 19.2739 7.91556 19.2737 7.52026 19.2735C6.70882 19.2731 5.89738 19.2725 5.08594 19.2716C5.04914 18.873 5.04295 18.4778 5.04234 18.0776C5.04211 18.0068 5.04186 17.936 5.0416 17.8653C5.04083 17.6344 5.04044 17.4036 5.04007 17.1728C5.03992 17.0927 5.03977 17.0126 5.03962 16.9326C5.03891 16.556 5.03838 16.1795 5.03807 15.8029C5.03771 15.3711 5.03674 14.9392 5.03524 14.5074C5.03411 14.1718 5.03357 13.8362 5.03345 13.5005C5.03337 13.301 5.03304 13.1014 5.0321 12.9018C5.0276 11.8985 5.03097 10.916 5.34521 9.95186C5.35918 9.9078 5.37316 9.86375 5.38756 9.81835C5.52635 9.39954 5.71314 9.00813 5.92502 8.62173C5.9693 8.54068 6.01131 8.45841 6.05299 8.37599C6.34741 7.88423 6.71721 7.4649 7.12305 7.06286C7.17023 7.0161 7.21741 6.96934 7.26602 6.92116C9.00344 5.22802 11.1732 4.99801 13.4941 5.00435C13.6952 5.00482 13.8963 5.00486 14.0973 5.00494C14.4767 5.00517 14.856 5.00578 15.2353 5.00652C15.6678 5.00736 16.1003 5.00776 16.5327 5.00813C17.421 5.0089 18.3093 5.0102 19.1976 5.01186Z"
+        fill="#9CC371"
+      />
+    </svg>
+    <span>
+      {{
+          'general.form_toast_msg'
+            | translate
+              : {
+                  currentContent:
+                    (currentLanguage() === 'en'
+                      ? 'general.english'
+                      : 'general.arabic'
+                    ) | translate,
+                  previousContent:
+                    (currentLanguage() === 'en'
+                      ? 'general.arabic'
+                      : 'general.english'
+                    ) | translate,
+                }
+      }}
+    </span>
+  </div>
+  }
+
+  <form [formGroup]="form" class="blog-post-form">
+    <div class="form-left-section">
+      <div class="details-section">
+        <div class="header-section gap-2">
+          <h3>{{ "blogs.posts.form.section_details" | translate }}</h3>
+          @if (currentLanguage() === 'en') {
+          <span>(English)</span>
+          } @else {
+          <span>(عربي)</span>
+          }
+        </div>
+        <div class="inputs">
+          <div class="our-field">
+            <label for="title_en"
+              >{{ "blogs.posts.form.title_en" | translate }}
+              <span class="text-red-val">*</span></label
+            >
+            <input
+              pInputText
+              trimInput
+              id="title_en"
+              formControlName="title_en"
+              [placeholder]="
+                'blogs.posts.form.placeholders.title_en' | translate
+              "
+            />
+            @if (hasError('title_en')) {
+            <p-message severity="error" variant="simple" size="small">{{
+              "blogs.posts.form.validation.title_en" | translate
+            }}</p-message>
+            }
+          </div>
+          <div class="our-field">
+            <label for="title_ar"
+              >{{ "blogs.posts.form.title_ar" | translate }}
+              <span class="text-red-val">*</span></label
+            >
+            <input
+              pInputText
+              trimInput
+              id="title_ar"
+              formControlName="title_ar"
+              [placeholder]="
+                'blogs.posts.form.placeholders.title_ar' | translate
+              "
+            />
+            @if (hasError('title_ar')) {
+            <p-message severity="error" variant="simple" size="small">{{
+              "blogs.posts.form.validation.title_ar" | translate
+            }}</p-message>
+            }
+          </div>
+          <div class="our-field">
+            <label for="category_id"
+              >{{ "blogs.posts.form.category" | translate }}
+              <span class="text-red-val">*</span></label
+            >
+            <p-select
+              inputId="category_id"
+              formControlName="category_id"
+              [options]="categoryOptions"
+              optionValue="id"
+              optionLabel="name"
+              [filter]="true"
+              [placeholder]="
+                'blogs.posts.form.placeholders.category' | translate
+              "
+            />
+            @if (hasError('category_id')) {
+            <p-message severity="error" variant="simple" size="small">{{
+              "blogs.posts.form.validation.category" | translate
+            }}</p-message>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-sections-section">
+        <div formArrayName="sections">
+          @for (item of sections.controls; track $index) {
+          <div class="details-section" [formGroupName]="$index">
+            <div class="header-section header-section--split">
+              <h3>
+                {{
+                  "blogs.posts.form.section_block_title"
+                    | translate : { n: $index + 1 }
+                }}
+              </h3>
+              <p-toggleswitch
+                class="flex align-items-center"
+                formControlName="enabled"
+                (onChange)="sections.at($index).updateValueAndValidity()"
+              />
+            </div>
+            @if (sections.at($index).get('enabled')?.value) {
+            <div class="inputs">
+              <div class="our-field">
+                <label
+                  >{{ "blogs.posts.form.section_fields.title" | translate }}
+                  <span class="text-red-val">*</span></label
+                >
+                <input
+                  pInputText
+                  formControlName="title"
+                  [placeholder]="
+                    'blogs.posts.form.section_fields.title_ph' | translate
+                  "
+                />
+                @if ( hasError('title', undefined, $index) ||
+                sectionGroupError($index, 'sectionTitleRequired') ) {
+                <p-message severity="error" variant="simple" size="small">{{
+                  "blogs.posts.form.section_fields.validation_title" | translate
+                }}</p-message>
+                }
+              </div>
+              <div class="our-field">
+                <label>{{
+                  "blogs.posts.form.section_fields.subtitle" | translate
+                }}</label>
+                <p-editor
+                  formControlName="subtitle"
+                  [style]="{ height: '120px' }"
+                >
+                  <ng-template #header>
+                    <div
+                      class="w-full flex align-items-center justify-content-between"
+                    >
+                      <h6 class="text-editor-header">
+                        {{ "general.text_editor_header" | translate }}
+                      </h6>
+                      <div class="btns">
+                        <span class="ql-formats">
+                          <button type="button" class="ql-bold"></button>
+                          <button type="button" class="ql-italic"></button>
+                          <button type="button" class="ql-underline"></button>
+                        </span>
+                        <span class="ql-formats">
+                          <select class="ql-color"></select>
+                        </span>
+                        <span class="ql-formats">
+                          <button
+                            type="button"
+                            class="ql-list"
+                            value="ordered"
+                          ></button>
+                          <button
+                            type="button"
+                            class="ql-list"
+                            value="bullet"
+                          ></button>
+                        </span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-editor>
+              </div>
+              <div class="our-field">
+                <label>{{
+                  "blogs.posts.form.section_fields.image" | translate
+                }}</label>
+                <app-gallery-upload
+                  formControlName="image"
+                  [multiple]="false"
+                />
+              </div>
+              <div class="our-field">
+                <label>{{
+                  "blogs.posts.form.section_fields.quote" | translate
+                }}</label>
+                <input
+                  pInputText
+                  formControlName="quote"
+                  [placeholder]="
+                    'blogs.posts.form.section_fields.quote_ph' | translate
+                  "
+                />
+              </div>
+              <div class="our-field">
+                <label>{{
+                  "blogs.posts.form.section_fields.tags" | translate
+                }}</label>
+                <input
+                  pInputText
+                  formControlName="tags"
+                  [placeholder]="
+                    'blogs.posts.form.section_fields.tags_ph' | translate
+                  "
+                />
+              </div>
+            </div>
+            } @if ($index > 0) {
+            <button
+              type="button"
+              class="custom-btn btn-white remove-section-btn"
+              (click)="removeSection($index)"
+            >
+              <i class="pi pi-trash"></i>
+              {{ "blogs.posts.form.section_remove" | translate }}
+            </button>
+            }
+          </div>
+          }
+        </div>
+        <button type="button" (click)="addSection()" class="add-form-group-btn">
+          <i class="pi pi-plus"></i>
+          {{ "blogs.posts.form.add_section" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="form-right-section">
+      <div class="gallery-section">
+        <h3 class="header-section">
+          {{ "blogs.posts.form.main_image" | translate }}
+          <span class="text-red-val">*</span>
+        </h3>
+        <app-gallery-upload formControlName="image" [multiple]="false" />
+        @if (hasError('image')) {
+        <p-message severity="error" variant="simple" size="small">{{
+          "blogs.posts.form.validation.image" | translate
+        }}</p-message>
+        }
+      </div>
+      <div class="settings-card">
+        <app-settings formControlName="status"></app-settings>
+      </div>
+    </div>
+  </form>
+</div>

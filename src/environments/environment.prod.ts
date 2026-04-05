@@ -1,6 +1,10 @@
 export const environment = {
   production: true,
   baseUrl: 'https://developer.neas.ae/api',
-  mediaUrl:
-    'https://developer.neas.ae/api/media/',
+  mediaUrl: 'http://193.203.162.68/api/media/',
+  blogs: {
+    useDummyData: true,
+    categoriesApiPath: 'blog-categories',
+    postsApiPath: 'blog-posts',
+  },
 };
