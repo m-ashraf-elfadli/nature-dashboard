@@ -655,10 +655,9 @@
       "export_dummy_detail": "عطّل البيانات التجريبية في الإعدادات لتصدير البيانات من الـ API."
     },
     "category_types": {
-      "water": "مياه",
-      "land": "بر",
-      "technology": "تقنية",
-      "environmental": "بيئي"
+      "earth": "أرض",
+      "air": "هواء",
+      "water": "مياه"
     },
     "categories": {
       "breadcrumb": "تصنيفات المدونة",
@@ -687,6 +686,7 @@
       "form": {
         "title": "تصنيف جديد",
         "edit_title": "تعديل التصنيف",
+        "load_error": "فشل تحميل بيانات التصنيف",
         "name_en": "الاسم (إنجليزي)",
         "name_ar": "الاسم (عربي)",
         "type": "نوع التصنيف",

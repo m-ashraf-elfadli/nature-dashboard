@@ -91,7 +91,10 @@
     ::ng-deep {
       .p-datatable-tbody > tr > td {
         img {
-          width: 50px;
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 6px;
         }
       }
       .p-datatable-thead > tr > th {

@@ -5,7 +5,8 @@ export const environment = {
     'http://193.203.162.68/api/media/',
   blogs: {
     useDummyData: true,
-    categoriesApiPath: 'blog-categories',
+    useDummyCategories: false,
+    categoriesApiPath: 'categories',
     postsApiPath: 'blog-posts',
   },
 };
