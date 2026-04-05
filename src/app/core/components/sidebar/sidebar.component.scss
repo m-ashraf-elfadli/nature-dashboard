@@ -1,5 +1,6 @@
 .sidebar {
-  width: 242px;
+  /* Figma Master properties: 208px menu + 16px horizontal padding = 240px */
+  width: 240px;
   background: white;
   border-right: 1px solid #dededf;
   height: 100vh;
@@ -100,7 +101,10 @@
 .nav-menu {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 8px;
+  width: 100%;
+  min-width: 0;
 
   .text-main {
     color: var(--Color-Neutral-500, #939598);
@@ -111,28 +115,156 @@
   }
 }
 
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Figma: flush header + sub-list with slight overlap (mb -2px) */
+.nav-group--expanded {
+  gap: 0;
+}
+
+.nav-group--expanded .nav-group__header {
+  margin-bottom: -2px;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-group--expanded .nav-group__children {
+  position: relative;
+  z-index: 0;
+  padding-top: 2px;
+}
+
+.nav-group__header {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font: inherit;
+}
+
+.nav-group__chevron {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--Color-Primary-1000, #2e4528);
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.nav-group__header.active .nav-group__chevron {
+  color: var(--Color-Primary-600, #689e5b);
+}
+
+.nav-group__chevron--open {
+  transform: rotate(90deg);
+}
+
+/* Rail is a sibling column so row backgrounds never paint over the tree line */
+.nav-group__children {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+.nav-group__rail {
+  flex: 0 0 11px;
+  width: 11px;
+  min-width: 11px;
+  position: relative;
+  align-self: stretch;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    inset-inline-start: 50%;
+    width: 2px;
+    margin-inline-start: -1px;
+    border-radius: 1px;
+    background: var(--Neutral-Gray-200, #e4e7ec);
+  }
+}
+
+.nav-group__links {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+}
+
+.nav-item.nav-group__child {
+  position: relative;
+  padding: 12px;
+  border-radius: 8px;
+
+  .nav-label {
+    font-family: var(--Font-Family-Secondary, Dubai), sans-serif;
+    font-size: var(--Font-Size-2Xs, 14px);
+    font-weight: var(--Font-Weight-Regular, 400);
+    line-height: var(--Font-Line-Height-2Xs, 16.8px);
+    color: var(--Color-Primary-1000, #2e4528);
+  }
+
+  &.active::before {
+    content: '';
+    position: absolute;
+    /* Pull into rail column so the accent sits on the gray line */
+    inset-inline-start: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 24px;
+    border-radius: 0px;
+    background: var(--Color-Primary-600, #689e5b);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
 .nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
-  min-width: fit-content;
 
   .nav-label {
     color: var(--Color-Primary-1000, #2e4528);
-    font-size: var(--Font-Size-2Xs, 16px);
+    font-family: var(--Font-Family-Secondary, Dubai), sans-serif;
+    font-size: var(--Font-Size-2Xs, 14px);
     font-style: normal;
     font-weight: var(--Font-Weight-Regular, 400);
+    line-height: var(--Font-Line-Height-2Xs, 16.8px);
   }
   .nav-icon {
     height: 20px;
   }
-  &:hover {
+  &:hover:not(.nav-group__child) {
     background-color: #f5f5f5;
 
     .nav-label {
@@ -148,12 +280,41 @@
     }
   }
 
+  /* Figma Left Sidebar: expanded group header uses Regular, not Semibold */
+  &.nav-group__header.active .nav-label {
+    font-weight: var(--Font-Weight-Regular, 600);
+  }
+
   .nav-label {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    text-align: start;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+
+/* Figma: inactive sub-item uses primary-1000; active sub-item uses primary-600 (not top-nav active green weight) */
+.nav-item.nav-group__child:not(.active) .nav-label {
+  color: var(--Color-Primary-1000, #2e4528);
+  font-weight: var(--Font-Weight-Regular, 400);
+}
+
+.nav-item.nav-group__child.active .nav-label {
+  color: var(--Color-Primary-600, #689e5b);
+  font-weight: var(--Font-Weight-Regular, 400);
+}
+
+/* Active sub-route: light row fill + green accent (does not cover rail — separate column) */
+.nav-item.nav-group__child.active {
+  background-color: transparent
+}
+
+/* Active group header: hover feedback without switching to neutral gray */
+.nav-item.nav-group__header.active:hover {
+  background-color: #e8f2e6;
 }
 
 .sidebar-footer {
@@ -306,6 +467,11 @@
   }
 }
 html:lang(ar) :host {
+  /* RTL: align active sub-item bar with rail (logical start is mirrored) */
+  .nav-item.nav-group__child.active::before {
+    inset-inline-start: -7px;
+  }
+
   .sidebar {
     left: auto;
     right: 0;

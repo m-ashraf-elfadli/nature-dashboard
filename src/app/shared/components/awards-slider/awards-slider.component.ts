@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { AwardsService } from '../../../services/awards.service';
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 

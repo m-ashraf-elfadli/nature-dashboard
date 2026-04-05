@@ -70,6 +70,17 @@ export class ReusableTableComponent<T> implements OnChanges {
   filteredData: T[] = [];
   baseMediaUrl = environment.mediaUrl;
 
+  /** Supports backend relative paths or absolute URLs (e.g. dummy picsum). */
+  imageSrc(path: string | null | undefined): string {
+    if (!path) {
+      return 'images/nature-logo.png';
+    }
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+      return path;
+    }
+    return this.baseMediaUrl + path;
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
       this.filteredData = this.data;
@@ -153,6 +164,22 @@ export class ReusableTableComponent<T> implements OnChanges {
 
   getVisibleRowActions(row: T): TableAction<T>[] {
     return this.actions.filter((a) => !a.visibleWhen || a.visibleWhen(row));
+  }
+
+  formatViewCount(value: unknown): string {
+    const n = typeof value === 'number' ? value : Number(value);
+    if (!Number.isFinite(n) || n < 0) {
+      return '0';
+    }
+    if (n >= 1_000_000) {
+      const m = n / 1_000_000;
+      const t = m % 1 === 0 ? String(Math.floor(m)) : m.toFixed(1).replace(/\.0$/, '');
+      return `${t}M`;
+    }
+    if (n >= 1_000) {
+      return `${Math.floor(n / 1_000)}k`;
+    }
+    return String(Math.floor(n));
   }
 
   getLanguagesChips(

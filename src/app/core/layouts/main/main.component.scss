@@ -12,8 +12,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-left: 242px;
-  width: calc(100% - 242px);
+  margin-left: 240px;
+  width: calc(100% - 240px);
   transition: margin-left 0.3s ease;
 }
 
@@ -54,7 +54,7 @@ html:lang(ar) :host .app-layout {
     flex-direction: column;
     flex: 1;
     margin-left: 0;
-    margin-right: 242px;
+    margin-right: 240px;
     transition: margin-left 0.3s ease;
     &{
       @media screen and (max-width:768px) {

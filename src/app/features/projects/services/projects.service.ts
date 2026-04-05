@@ -9,7 +9,7 @@ import {
 } from '../../../core/models/global.interface';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Project, ProjectById } from '../models/projects.interface';
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
