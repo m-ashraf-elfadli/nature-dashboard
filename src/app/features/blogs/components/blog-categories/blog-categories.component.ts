@@ -226,7 +226,7 @@ export class BlogCategoriesComponent implements OnInit, OnDestroy {
   }
 
   export(): void {
-    if (environment.blogs.useDummyData) {
+    if (this.service.categoriesUseDummy()) {
       this.messageService.add({
         severity: 'info',
         summary: this.translate.instant('blogs.common.export_dummy_title'),
