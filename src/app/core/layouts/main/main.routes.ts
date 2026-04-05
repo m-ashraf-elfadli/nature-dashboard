@@ -88,4 +88,12 @@ export const dashboardRoutes: Routes = [
       breadcrumb: 'questions.list.breadcurmb',
     },
   },
+  {
+    path: 'blogs',
+    loadChildren: () =>
+      import('../../../features/blogs/blogs.routes').then((m) => m.blogsRoutes),
+    data: {
+      breadcrumb: 'blogs.breadcrumb_parent',
+    },
+  },
 ];

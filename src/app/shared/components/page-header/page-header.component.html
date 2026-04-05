@@ -18,7 +18,7 @@
     </div>
 
     <div class="page-title">
-        <button class="backBtn" *ngIf="breadcrumbs.length > 2" (click)="goBack()" severity="success">
+        <button class="backBtn" *ngIf="showBackButton && breadcrumbs.length > 2" (click)="goBack()" severity="success">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <g clip-path="url(#clip0_10269_3464)">
                     <path d="M11.2 14.4L6.40001 9.59995L11.2 4.79995" stroke="#FEFEFE" stroke-width="1.2"
