@@ -108,10 +108,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
       this.form.get('title_ar')!.valueChanges,
     )
       .pipe(startWith(null))
-      .subscribe(() => {
-        this.syncLanguageStatusFromTitles();
-        this.updateSettingsComponent();
-      });
+      .subscribe(() => this.syncLanguageStatusFromTitles());
     this.route.params.subscribe((params) => {
       const id = params['id'];
       if (id) {
@@ -192,11 +189,8 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
       image: null,
       status: 1,
     });
-    this.languageStatuses.set('en', { code: 'en', status: 'not-started' });
-    this.languageStatuses.set('ar', { code: 'ar', status: 'not-started' });
     this.form.markAsPristine();
     this.syncLanguageStatusFromTitles();
-    this.updateSettingsComponent();
   }
 
   private loadPost(id: string): void {
@@ -222,23 +216,39 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.syncLanguageStatusFromTitles();
         this.form.markAsPristine();
-        this.updateSettingsComponent();
         this.cdr.detectChanges();
       },
     });
   }
 
+  /**
+   * Same rules as project/service forms: title filled → completed;
+   * active UI language with no title yet → ongoing (create or edit);
+   * other language empty → not-started.
+   */
   private syncLanguageStatusFromTitles(): void {
-    const en = this.form.get('title_en')?.value?.trim();
-    const ar = this.form.get('title_ar')?.value?.trim();
+    const en = !!this.form.get('title_en')?.value?.trim();
+    const ar = !!this.form.get('title_ar')?.value?.trim();
+    const current = this.currentLanguage();
+
+    const statusFor = (
+      lang: 'en' | 'ar',
+      hasTitle: boolean,
+    ): LanguageStatusType => {
+      if (hasTitle) return 'completed';
+      if (lang === current) return 'ongoing';
+      return 'not-started';
+    };
+
     this.languageStatuses.set('en', {
       code: 'en',
-      status: en ? 'completed' : 'not-started',
+      status: statusFor('en', en),
     });
     this.languageStatuses.set('ar', {
       code: 'ar',
-      status: ar ? 'completed' : 'not-started',
+      status: statusFor('ar', ar),
     });
+    this.updateSettingsComponent();
   }
 
   addSection(): void {
@@ -314,7 +324,6 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
           this.isEditMode = true;
         }
         this.syncLanguageStatusFromTitles();
-        this.updateSettingsComponent();
         this.form.markAsPristine();
         this.router.navigate(['/blogs/posts']);
       },
@@ -330,7 +339,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.formActionsComponent?.confirmLanguage(event.newLang);
     localStorage.setItem('app_lang', event.newLang);
     this.isFirstTimeToSend = true;
-    this.updateSettingsComponent();
+    this.syncLanguageStatusFromTitles();
   }
 
   private updateSettingsComponent(): void {
