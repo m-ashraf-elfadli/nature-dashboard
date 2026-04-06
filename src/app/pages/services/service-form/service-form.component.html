@@ -109,6 +109,17 @@
       </app-empty-state-action>
       }
 
+      <ng-container *ngIf="stagesArray.length">
+        <ng-container *ngFor="let _ctrl of stagesArray.controls; let i = index">
+          <small class="error-message" *ngIf="isServiceItemFieldInvalid(stagesArray, i, 'title')">
+            {{ getServiceItemFieldError(stagesArray, i, 'title', 'services.stage_form') }}
+          </small>
+          <small class="error-message" *ngIf="isServiceItemFieldInvalid(stagesArray, i, 'description')">
+            {{ getServiceItemFieldError(stagesArray, i, 'description', 'services.stage_form') }}
+          </small>
+        </ng-container>
+      </ng-container>
+
       <small class="error-message" *ngIf="stepsError">{{ stepsError }}</small>
     </div>
 
@@ -277,6 +288,17 @@
           [buttonLabel]="'services.form.results.add_new' | translate" (action)="openServiceResultPopup()">
         </app-empty-state-action>
         }
+
+        <ng-container *ngIf="serviceResultsArray.length">
+          <ng-container *ngFor="let _ctrl of serviceResultsArray.controls; let i = index">
+            <small class="error-message" *ngIf="isServiceItemFieldInvalid(serviceResultsArray, i, 'title')">
+              {{ getServiceItemFieldError(serviceResultsArray, i, 'title', 'services.result_form') }}
+            </small>
+            <small class="error-message" *ngIf="isServiceItemFieldInvalid(serviceResultsArray, i, 'description')">
+              {{ getServiceItemFieldError(serviceResultsArray, i, 'description', 'services.result_form') }}
+            </small>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
   </form>

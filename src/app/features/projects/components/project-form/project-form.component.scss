@@ -61,7 +61,7 @@
         @extend %section-shared-styles;
         .metrics-form-group-fields {
           display: flex;
-          align-items: center;
+          align-items: start;
           gap: 8px;
           .title-field {
             width: 70%;

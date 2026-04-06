@@ -362,6 +362,11 @@
                                     <input type="number" formControlName="metric_number" id="metric_number" pInputText
                                     [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
                                         [placeholder]="currentLanguage() === 'ar'?'الرقم':'Number'">
+                                    @if (hasMetricControlError($index, 'metric_number', 'max')) {
+                                    <p-message severity="error" variant="simple" size="small">
+                                        {{ getMetricNumberMaxMessage($index) }}
+                                    </p-message>
+                                    }
                                 </div>
                                 <div class="case-field">
                                     <p-select [options]="metricCases" formControlName="metric_case" optionValue="id"

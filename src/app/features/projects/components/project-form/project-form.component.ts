@@ -463,6 +463,30 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     return !!(control.touched && control.invalid);
   }
 
+  hasMetricControlError(
+    index: number,
+    controlName: string,
+    errorName: string,
+  ): boolean {
+    const control = this.metrics.at(index)?.get(controlName);
+    if (!control) return false;
+    return !!(
+      (control.touched || control.dirty) &&
+      control.invalid &&
+      control.hasError(errorName)
+    );
+  }
+
+  getMetricNumberMaxMessage(index: number): string {
+    const control = this.metrics.at(index)?.get('metric_number');
+    const maxErr = control?.errors?.['max'] as { max: number } | undefined;
+    if (!maxErr) return '';
+    return this.translate.instant(
+      'projects.form.validation.metric_number_max',
+      { max: maxErr.max },
+    );
+  }
+
   buildFormData(): FormData {
     const formData = new FormData();
     const value = this.form.getRawValue(); // includes disabled fields

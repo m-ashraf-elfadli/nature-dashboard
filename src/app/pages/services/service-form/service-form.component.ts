@@ -207,7 +207,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(400),
+          Validators.maxLength(40),
         ],
       ],
       tagline: [
@@ -215,7 +215,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(400),
+          Validators.maxLength(140),
         ],
       ],
       status: [1],
@@ -228,7 +228,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(400),
+          Validators.maxLength(30),
         ],
       ],
       benefitTagline: [
@@ -288,7 +288,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
       id: [data?.id],
       metricTitle: [
         data?.metricTitle || '',
-        [Validators.minLength(3), Validators.maxLength(400)],
+        [Validators.minLength(3), Validators.maxLength(30)],
       ],
       metricNumber: [
         data?.metricNumber || '',
@@ -357,10 +357,15 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
         // Trigger benefit fields validation after patching values
         this.toggleBenefitsFields(service.benefitEnabled ?? true);
 
-        this.populateArray(this.stagesArray, service.steps, (step: any) => ({
-          ...step,
-          imagePreview: step.image ? this.getImageUrl(step.image) : null,
-        }));
+        this.populateArray(
+          this.stagesArray,
+          service.steps,
+          (step: any) => ({
+            ...step,
+            imagePreview: step.image ? this.getImageUrl(step.image) : null,
+          }),
+          'stage',
+        );
 
         this.populateArray(
           this.serviceValuesArray,
@@ -369,6 +374,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
             ...val,
             tools: val.tools || [],
           }),
+          'value',
         );
 
         this.populateArray(
@@ -378,6 +384,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
             ...impact,
             imagePreview: impact.image ? this.getImageUrl(impact.image) : null,
           }),
+          'impact',
         );
 
         this.populateInsights(service.benefitInsights);
@@ -394,11 +401,12 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
     formArray: FormArray,
     data: any[],
     transform?: (item: any) => any,
+    itemKind: 'stage' | 'value' | 'impact' = 'value',
   ): void {
     formArray.clear();
     data?.forEach((item) => {
       const processedItem = transform ? transform(item) : item;
-      formArray.push(this.createItemGroup(processedItem));
+      formArray.push(this.createItemGroup(processedItem, itemKind));
     });
   }
 
@@ -425,7 +433,9 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
         control?.setValidators([
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(400),
+          Validators.maxLength(
+            field === 'benefitTitle' ? 30 : 400,
+          ),
         ]);
         control?.enable();
       } else {
@@ -521,6 +531,36 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
     return '';
   }
 
+  isServiceItemFieldInvalid(
+    array: FormArray,
+    index: number,
+    fieldName: string,
+  ): boolean {
+    const control = array.at(index)?.get(fieldName);
+    return !!(control?.invalid && (control.dirty || control.touched));
+  }
+
+  getServiceItemFieldError(
+    array: FormArray,
+    index: number,
+    fieldName: 'title' | 'description',
+    i18nPrefix: 'services.stage_form' | 'services.result_form',
+  ): string {
+    const control = array.at(index)?.get(fieldName);
+    if (!control?.errors) return '';
+
+    if (control.hasError('required')) {
+      return this.translate.instant(`${i18nPrefix}.${fieldName}_required`);
+    }
+    if (control.hasError('minlength')) {
+      return this.translate.instant(`${i18nPrefix}.${fieldName}_min`);
+    }
+    if (control.hasError('maxlength')) {
+      return this.translate.instant(`${i18nPrefix}.${fieldName}_max`);
+    }
+    return '';
+  }
+
   getInsightFieldError(index: number, fieldName: string): string {
     const control = this.benefitInsightsArray.at(index).get(fieldName);
     if (!control || !control.errors || !control.touched) return '';
@@ -553,10 +593,29 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
     return !!(control?.invalid && control.touched);
   }
 
-  private createItemGroup(item: ServiceItemFormValue): FormGroup {
+  private createItemGroup(
+    item: ServiceItemFormValue,
+    kind: 'stage' | 'value' | 'impact',
+  ): FormGroup {
+    const titleMax = 70;
+    const descriptionMax = kind === 'value' ? 200 : 215;
     const config: any = {
-      title: [item.title, Validators.required],
-      description: [item.description, Validators.required],
+      title: [
+        item.title,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(titleMax),
+        ],
+      ],
+      description: [
+        item.description,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(descriptionMax),
+        ],
+      ],
     };
 
     const optionalFields = ['image', 'imagePreview', 'tools'];
@@ -623,6 +682,9 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
       width: '600px',
     });
 
+    const itemKind: 'stage' | 'value' | 'impact' =
+      type === 'stage' ? 'stage' : type === 'value' ? 'value' : 'impact';
+
     ref.onClose.subscribe((data: ServiceItemFormValue | null) => {
       if (!data) return;
 
@@ -630,7 +692,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
       if (data.image) {
         processedData.imagePreview = URL.createObjectURL(data.image);
       }
-      targetArray.push(this.createItemGroup(processedData));
+      targetArray.push(this.createItemGroup(processedData, itemKind));
     });
   }
 
@@ -676,23 +738,29 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Reorder handlers
   onReorder(data: any): void {
-    this.reorderArray(this.stagesArray, data);
+    this.reorderArray(this.stagesArray, data, 'stage');
   }
 
   onReorderServiceValues(data: any): void {
-    this.reorderArray(this.serviceValuesArray, data);
+    this.reorderArray(this.serviceValuesArray, data, 'value');
   }
 
   onReorderServiceResults(data: any): void {
-    this.reorderArray(this.serviceResultsArray, data);
+    this.reorderArray(this.serviceResultsArray, data, 'impact');
   }
 
-  private reorderArray(formArray: FormArray, data: any): void {
+  private reorderArray(
+    formArray: FormArray,
+    data: any,
+    kind: 'stage' | 'value' | 'impact',
+  ): void {
     const items = Array.isArray(data) ? data : data?.value || [];
     if (!items.length) return;
 
     formArray.clear();
-    items.forEach((item: any) => formArray.push(this.createItemGroup(item)));
+    items.forEach((item: any) =>
+      formArray.push(this.createItemGroup(item, kind)),
+    );
   }
 
   private removeFromArray(array: FormArray, index: number): void {

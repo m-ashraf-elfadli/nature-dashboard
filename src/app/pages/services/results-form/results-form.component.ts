@@ -41,7 +41,7 @@ export class ResultsFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(400),
+          Validators.maxLength(70),
         ],
       ],
       description: [
@@ -49,7 +49,7 @@ export class ResultsFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(400),
+          Validators.maxLength(215),
         ],
       ],
       image: [null],
@@ -82,7 +82,8 @@ export class ResultsFormComponent implements OnInit {
 
   getErrorMessage(fieldName: string): string {
     const control = this.form.get(fieldName);
-    if (!control || !control.errors || !control.touched) return '';
+    if (!control || !control.errors || !(control.dirty || control.touched))
+      return '';
 
     if (control.errors['required']) {
       return this.translate.instant(
@@ -100,7 +101,7 @@ export class ResultsFormComponent implements OnInit {
 
   isFieldInvalid(fieldName: string): boolean {
     const field = this.form.get(fieldName);
-    return !!(field?.invalid && field.touched);
+    return !!(field?.invalid && (field.dirty || field.touched));
   }
 
   submit() {
