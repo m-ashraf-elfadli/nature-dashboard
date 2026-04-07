@@ -543,7 +543,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
   getServiceItemFieldError(
     array: FormArray,
     index: number,
-    fieldName: 'title' | 'description',
+    fieldName: 'title' | 'description' | 'image',
     i18nPrefix: 'services.stage_form' | 'services.result_form',
   ): string {
     const control = array.at(index)?.get(fieldName);
@@ -618,15 +618,31 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
       ],
     };
 
-    const optionalFields = ['image', 'imagePreview', 'tools'];
+    if (kind === 'impact') {
+      const hasExistingImage = !!(item.imagePreview || item.image);
+      config.image = hasExistingImage
+        ? [item.image ?? item.imagePreview ?? null]
+        : [null, Validators.required];
+      config.imagePreview = [item.imagePreview ?? null];
+    }
+
+    const optionalFields =
+      kind === 'impact' ? ['tools'] : ['image', 'imagePreview', 'tools'];
     optionalFields.forEach((field) => {
-      if (item.hasOwnProperty(field)) {
-        config[field] = field === 'tools' ? [item.tools || []] : [item[field]];
+      if (Object.prototype.hasOwnProperty.call(item, field)) {
+        config[field] =
+          field === 'tools' ? [item.tools || []] : [item[field]];
       }
     });
 
     Object.keys(item).forEach((key) => {
-      if (![...optionalFields, 'title', 'description'].includes(key)) {
+      if (
+        [...optionalFields, 'title', 'description'].includes(key) ||
+        (kind === 'impact' && (key === 'image' || key === 'imagePreview'))
+      ) {
+        return;
+      }
+      if (!Object.prototype.hasOwnProperty.call(config, key)) {
         config[key] = [item[key]];
       }
     });

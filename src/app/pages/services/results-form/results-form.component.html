@@ -26,6 +26,9 @@
 
   <app-gallery-upload [multiple]="false" formControlName="image" (removed)="onImageRemoved()"
     style="width: 100%"></app-gallery-upload>
+  <small class="error-message" *ngIf="isFieldInvalid('image')">
+    {{ getErrorMessage('image') }}
+  </small>
 
   <div class="custom-btns-container">
     <button type="button" (click)="cancel()" class="custom-btn btn-white">

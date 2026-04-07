@@ -25,7 +25,6 @@ export class ResultsFormComponent implements OnInit {
   form!: FormGroup;
   isEditMode = false;
   rowData: any = null;
-  imageRemoved = false;
 
   constructor(
     private fb: FormBuilder,
@@ -52,7 +51,7 @@ export class ResultsFormComponent implements OnInit {
           Validators.maxLength(215),
         ],
       ],
-      image: [null],
+      image: [null, Validators.required],
       imagePreview: [null],
     });
 
@@ -68,16 +67,19 @@ export class ResultsFormComponent implements OnInit {
       if (this.rowData.imagePreview) {
         this.form.get('image')?.setValue(this.rowData.imagePreview);
         this.form.get('imagePreview')?.setValue(this.rowData.imagePreview);
+        this.form.get('image')?.clearValidators();
+        this.form.get('image')?.updateValueAndValidity();
       }
     }
   }
 
   onImageRemoved() {
-    this.imageRemoved = true;
     this.form.patchValue({
       image: null,
       imagePreview: null,
     });
+    this.form.get('image')?.setValidators([Validators.required]);
+    this.form.get('image')?.updateValueAndValidity();
   }
 
   getErrorMessage(fieldName: string): string {
@@ -116,13 +118,6 @@ export class ResultsFormComponent implements OnInit {
     const formValue = { ...this.form.value };
 
     if (this.isEditMode) {
-      if (this.imageRemoved) {
-        formValue.image = null;
-        formValue.imagePreview = null;
-        this.returnFormData(formValue);
-        return;
-      }
-
       const image = formValue.image;
       if (typeof image === 'string' && image === this.rowData.imagePreview) {
         formValue.imagePreview = this.rowData.imagePreview;

@@ -447,6 +447,7 @@
       "description_required": "Description is required",
       "description_min": "Description must be at least 3 characters",
       "description_max": "Description cannot exceed 215 characters",
+      "image_required": "Result image is required",
       "cancel": "Cancel",
       "save": "Save",
       "update": "Update"

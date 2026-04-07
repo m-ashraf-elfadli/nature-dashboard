@@ -426,6 +426,7 @@
       "description_required": "الوصف مطلوب",
       "description_min": "الوصف يجب أن يكون على الأقل 3 أحرف",
       "description_max": "الوصف لا يمكن أن يتجاوز 215 حرفاً",
+      "image_required": "صورة النتيجة والتأثير مطلوبة",
       "cancel": "إلغاء",
       "save": "حفظ",
       "update": "تحديث"

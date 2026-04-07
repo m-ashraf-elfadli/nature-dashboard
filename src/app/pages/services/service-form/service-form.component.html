@@ -297,6 +297,9 @@
             <small class="error-message" *ngIf="isServiceItemFieldInvalid(serviceResultsArray, i, 'description')">
               {{ getServiceItemFieldError(serviceResultsArray, i, 'description', 'services.result_form') }}
             </small>
+            <small class="error-message" *ngIf="isServiceItemFieldInvalid(serviceResultsArray, i, 'image')">
+              {{ getServiceItemFieldError(serviceResultsArray, i, 'image', 'services.result_form') }}
+            </small>
           </ng-container>
         </ng-container>
       </div>
