@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { LocaleComplete } from '../../projects/models/projects.interface';
 import { ApiService } from '../../../core/services/api.service';
 import { environment } from '../../../../environments/environment';
@@ -13,16 +13,56 @@ import {
   BlogPostFormPayload,
   BlogPostSection,
 } from '../models/blogs.model';
-import {
-  createInitialDummyCategories,
-  createInitialDummyPosts,
-} from '../data/blog-dummy.data';
 
 @Injectable({ providedIn: 'root' })
 export class BlogsService {
   private readonly api = inject(ApiService);
-  private dummyCategories: BlogCategory[] = createInitialDummyCategories();
-  private dummyPosts: BlogPost[] = createInitialDummyPosts();
+
+  private normalizeTagsValue(value: any): string {
+    const tags = this.extractTagList(value);
+    return tags.join(', ');
+  }
+
+  private extractTagList(value: any): string[] {
+    if (!value) return [];
+    if (Array.isArray(value)) {
+      return value
+        .map((item: any) => {
+          if (typeof item === 'string') return item.trim();
+          if (item && typeof item === 'object') {
+            return String(item.name ?? item.label ?? item.value ?? '').trim();
+          }
+          return String(item ?? '').trim();
+        })
+        .filter(Boolean);
+    }
+    return String(value)
+      .split(',')
+      .map((x) => x.trim())
+      .filter(Boolean);
+  }
+
+  private toNumberSafe(value: any): number {
+    if (typeof value === 'number' && Number.isFinite(value)) return value;
+    const raw = String(value ?? '').trim();
+    if (!raw) return 0;
+    const direct = Number(raw);
+    if (Number.isFinite(direct)) return direct;
+    const match = raw.match(/\d+/);
+    return match ? Number(match[0]) : 0;
+  }
+
+  private toBoolean(value: any, fallback = true): boolean {
+    if (value === undefined || value === null) return fallback;
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'number') return value === 1;
+    if (typeof value === 'string') {
+      const v = value.trim().toLowerCase();
+      if (v === '1' || v === 'true') return true;
+      if (v === '0' || v === 'false') return false;
+    }
+    return fallback;
+  }
 
   private categoriesPath(): string {
     return environment.blogs.categoriesApiPath;
@@ -30,25 +70,6 @@ export class BlogsService {
 
   private postsPath(): string {
     return environment.blogs.postsApiPath;
-  }
-
-  private useDummy(): boolean {
-    return environment.blogs.useDummyData;
-  }
-
-  /**
-   * When true, categories use in-memory dummy data; when false, real API.
-   * If `blogs.useDummyCategories` is unset, follows `blogs.useDummyData`.
-   */
-  categoriesUseDummy(): boolean {
-    const b = environment.blogs as {
-      useDummyData: boolean;
-      useDummyCategories?: boolean;
-    };
-    if (typeof b.useDummyCategories === 'boolean') {
-      return b.useDummyCategories;
-    }
-    return b.useDummyData;
   }
 
   private mapCategoryListResponse(res: any): { result: BlogCategory[]; total: number } {
@@ -97,9 +118,6 @@ export class BlogsService {
   // --- Categories ---
 
   getCategories(pagination: PaginationObj, search?: string): Observable<any> {
-    if (this.categoriesUseDummy()) {
-      return of(this.sliceCategories(pagination, search || ''));
-    }
     let params = new HttpParams()
       .set('page', pagination.page.toString())
       .set('size', pagination.size.toString());
@@ -111,28 +129,7 @@ export class BlogsService {
       .pipe(map((res) => this.mapCategoryListResponse(res)));
   }
 
-  private sliceCategories(pagination: PaginationObj, search: string) {
-    let list = [...this.dummyCategories];
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      list = list.filter(
-        (c) =>
-          c.name.toLowerCase().includes(q) ||
-          c.name_en.toLowerCase().includes(q) ||
-          c.name_ar.includes(search),
-      );
-    }
-    const total = list.length;
-    const start = (pagination.page - 1) * pagination.size;
-    const result = list.slice(start, start + pagination.size);
-    return { result, total };
-  }
-
   getCategoryById(id: string): Observable<any> {
-    if (this.categoriesUseDummy()) {
-      const row = this.dummyCategories.find((c) => c.id === id) || null;
-      return of({ result: row });
-    }
     this.api.setCulture(localStorage.getItem('app_lang') || 'en');
     return this.api.get<any>(`${this.categoriesPath()}/${id}`).pipe(
       map((res) => ({
@@ -143,58 +140,12 @@ export class BlogsService {
   }
 
   createCategory(payload: BlogCategoryFormPayload): Observable<any> {
-    if (this.categoriesUseDummy()) {
-      const nextNum =
-        this.dummyCategories.reduce(
-          (m, c) => Math.max(m, parseInt(c.id, 10) || 0),
-          0,
-        ) + 1;
-      const id = String(nextNum);
-      const row: BlogCategory = {
-        id,
-        name: payload.name_en,
-        name_en: payload.name_en,
-        name_ar: payload.name_ar,
-        type_id: payload.type_id,
-        type_label: '',
-        image:
-          typeof payload.image === 'string'
-            ? payload.image
-            : `https://picsum.photos/seed/bcat${id}/96/64`,
-        created_at: new Date().toISOString().slice(0, 10),
-        status: true,
-      };
-      this.dummyCategories = [...this.dummyCategories, row];
-      return of({ result: row });
-    }
     const fd = this.buildCategoryFormData(payload);
     this.api.setCulture(localStorage.getItem('app_lang') || 'en');
     return this.api.post(this.categoriesPath(), fd);
   }
 
   updateCategory(id: string, payload: BlogCategoryFormPayload): Observable<any> {
-    if (this.categoriesUseDummy()) {
-      const idx = this.dummyCategories.findIndex((c) => c.id === id);
-      if (idx < 0) return of({ result: null });
-      const prev = this.dummyCategories[idx];
-      const row: BlogCategory = {
-        ...prev,
-        name: payload.name_en,
-        name_en: payload.name_en,
-        name_ar: payload.name_ar,
-        type_id: payload.type_id,
-        image:
-          typeof payload.image === 'string'
-            ? payload.image
-            : payload.image instanceof File
-              ? `https://picsum.photos/seed/bcat${id}u/96/64`
-              : prev.image,
-      };
-      this.dummyCategories = this.dummyCategories.map((c, i) =>
-        i === idx ? row : c,
-      );
-      return of({ result: row });
-    }
     const fd = this.buildCategoryFormData(payload);
     this.api.setCulture(localStorage.getItem('app_lang') || 'en');
     return this.api.post(`${this.categoriesPath()}/${id}`, fd);
@@ -213,37 +164,17 @@ export class BlogsService {
   }
 
   deleteCategory(id: string): Observable<any> {
-    if (this.categoriesUseDummy()) {
-      this.dummyCategories = this.dummyCategories.filter((c) => c.id !== id);
-      this.dummyPosts = this.dummyPosts.filter((p) => p.category_id !== id);
-      return of({ success: true });
-    }
     this.api.setCulture(localStorage.getItem('app_lang') || 'en');
     return this.api.delete(`${this.categoriesPath()}/${id}`);
   }
 
   bulkDeleteCategories(ids: string[]): Observable<any> {
-    if (this.categoriesUseDummy()) {
-      this.dummyCategories = this.dummyCategories.filter(
-        (c) => !ids.includes(c.id),
-      );
-      this.dummyPosts = this.dummyPosts.filter(
-        (p) => !ids.includes(p.category_id),
-      );
-      return of({ success: true });
-    }
     return this.api.post(`${this.categoriesPath()}/actions/bulk-delete`, {
       ids,
     });
   }
 
   changeCategoryStatus(id: string, value: boolean): Observable<any> {
-    if (this.categoriesUseDummy()) {
-      this.dummyCategories = this.dummyCategories.map((c) =>
-        c.id === id ? { ...c, status: value } : c,
-      );
-      return of({ success: true });
-    }
     this.api.setCulture(localStorage.getItem('app_lang') || 'en');
     const fd = new FormData();
     fd.append('status', value ? '1' : '0');
@@ -252,25 +183,94 @@ export class BlogsService {
 
   // --- Posts ---
 
-  getPosts(pagination: PaginationObj, search?: string): Observable<any> {
-    if (this.useDummy()) {
-      return of(this.slicePosts(pagination, search || ''));
-    }
+  getPosts(pagination: PaginationObj, search?: string, culture?: string): Observable<any> {
     let params = new HttpParams()
       .set('page', pagination.page.toString())
-      .set('size', pagination.size.toString());
+      .set('size', pagination.size.toString())
+      .set('limit', pagination.size.toString())
+      .set('per_page', pagination.size.toString());
     if (search) {
       params = params.set('value', search);
     }
+    const activeCulture = culture || localStorage.getItem('app_lang') || 'en';
+    this.api.setCulture(activeCulture);
     return this.api.get(this.postsPath(), params).pipe(
-      map((res: any) => ({
-        ...res,
-        result: (res.result || []).map((row: any) => this.normalizePostRow(row)),
-      })),
+      map((res: any) => {
+        const rows =
+          res?.result?.data ??
+          res?.result?.items ??
+          res?.result ??
+          res?.data?.data ??
+          res?.data?.items ??
+          res?.data ??
+          res?.items ??
+          res?.blogs ??
+          [];
+        const list = Array.isArray(rows)
+          ? rows.map((row: any) => this.normalizePostRow(row, activeCulture))
+          : [];
+        const directTotal = this.toNumberSafe(
+          res?.total ??
+            res?.count ??
+            res?.recordsTotal ??
+            res?.meta?.total ??
+            res?.meta?.count ??
+            res?.meta?.pagination?.total ??
+            res?.meta?.pagination?.total_count ??
+            res?.pagination?.total ??
+            res?.pagination?.count ??
+            res?.result?.total ??
+            res?.result?.count ??
+            res?.result?.meta?.total ??
+            res?.result?.meta?.pagination?.total ??
+            res?.result?.pagination?.total ??
+            res?.data?.total ??
+            res?.data?.count ??
+            res?.data?.meta?.total ??
+            res?.data?.meta?.pagination?.total,
+        );
+        const lastPage = this.toNumberSafe(
+          res?.last_page ??
+            res?.meta?.last_page ??
+            res?.meta?.pagination?.last_page ??
+            res?.pagination?.last_page ??
+            res?.result?.last_page ??
+            res?.result?.meta?.last_page ??
+            res?.result?.meta?.pagination?.last_page ??
+            res?.data?.last_page ??
+            res?.data?.meta?.last_page ??
+            res?.data?.meta?.pagination?.last_page,
+        );
+        const perPage = this.toNumberSafe(
+          res?.per_page ??
+            res?.meta?.per_page ??
+            res?.meta?.pagination?.per_page ??
+            res?.pagination?.per_page ??
+            res?.result?.per_page ??
+            res?.result?.meta?.per_page ??
+            res?.result?.meta?.pagination?.per_page ??
+            res?.data?.per_page ??
+            res?.data?.meta?.per_page ??
+            res?.data?.meta?.pagination?.per_page ??
+            pagination.size,
+        );
+        const total =
+          (Number.isFinite(directTotal) && directTotal > 0 ? directTotal : 0) ||
+          (Number.isFinite(lastPage) && lastPage > 0 && perPage > 0
+            ? lastPage * perPage
+            : 0) ||
+          list.length;
+
+        return {
+          ...res,
+          result: list,
+          total,
+        };
+      }),
     );
   }
 
-  private normalizePostRow(row: any): BlogPost {
+  private normalizePostRow(row: any, culture = 'en'): BlogPost {
     const viewsRaw = row.views ?? row.view_count ?? row.views_count ?? 0;
     const views =
       typeof viewsRaw === 'number' ? viewsRaw : Number(viewsRaw) || 0;
@@ -281,8 +281,42 @@ export class BlogsService {
         en: row.locale_en_complete !== false,
         ar: row.locale_ar_complete === true,
       } as LocaleComplete);
+    const imageValue =
+      typeof row.image === 'string'
+        ? row.image
+        : row.image?.url ?? row.image_url ?? row.thumbnail ?? '';
+    const createdAtValue =
+      row.created_at ??
+      row.createdAt ??
+      row.date ??
+      row.created_on ??
+      row.creation_date ??
+      '';
+    const categoryName =
+      row.category_name ??
+      (culture === 'ar'
+        ? row.category?.name_ar ?? row.category?.nameAr
+        : row.category?.name_en ?? row.category?.nameEn) ??
+      row.category?.name ??
+      '';
     return {
       ...row,
+      title: row.title ?? row.name ?? row.title_en ?? '',
+      title_en: row.title_en ?? row.name_en ?? '',
+      title_ar: row.title_ar ?? row.name_ar ?? '',
+      category_id: String(row.category_id ?? row['category*id'] ?? row.category?.id ?? ''),
+      category_name: categoryName,
+      image: imageValue,
+      created_at: String(createdAtValue || ''),
+      sections: (row.sections || []).map((s: any) => ({
+        enabled: this.toBoolean(s.enabled ?? s.status, false),
+        title: s.title ?? '',
+        subtitle_html: s.subtitle_html ?? s.subtitle ?? '',
+        image: s.image ?? '',
+        quote: s.quote ?? '',
+        tags: this.normalizeTagsValue(s.tags ?? s.section_tags ?? s.sectionTags),
+      })),
+      tags: this.normalizeTagsValue(row.tags ?? row.section_tags ?? row.sectionTags),
       views,
       localeComplete: {
         en: !!lc.en,
@@ -291,221 +325,123 @@ export class BlogsService {
     } as BlogPost;
   }
 
-  private slicePosts(pagination: PaginationObj, search: string) {
-    let list = [...this.dummyPosts];
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      list = list.filter((p) => {
-        if (
-          p.title.toLowerCase().includes(q) ||
-          p.title_en.toLowerCase().includes(q) ||
-          p.title_ar.includes(search) ||
-          p.category_name.toLowerCase().includes(q)
-        ) {
-          return true;
-        }
-        return (p.sections || []).some((s) =>
-          [s.title, s.quote, s.tags, s.subtitle_html].some((x) =>
-            String(x || '')
-              .toLowerCase()
-              .includes(q),
-          ),
-        );
-      });
-    }
-    const total = list.length;
-    const start = (pagination.page - 1) * pagination.size;
-    const result = list.slice(start, start + pagination.size);
-    return { result, total };
-  }
-
-  getPostById(id: string): Observable<any> {
-    if (this.useDummy()) {
-      const row = this.dummyPosts.find((p) => p.id === id) || null;
-      return of({ result: row });
-    }
-    this.api.setCulture(localStorage.getItem('app_lang') || 'en');
-    return this.api.get(`${this.postsPath()}/show/${id}`).pipe(
+  getPostById(id: string, culture?: string): Observable<any> {
+    const activeCulture = culture || localStorage.getItem('app_lang') || 'en';
+    this.api.setCulture(activeCulture);
+    return this.api.get(`${this.postsPath()}/${id}`).pipe(
       map((res: any) => ({
         ...res,
-        result: res.result ? this.normalizePostRow(res.result) : null,
+        result: res?.result ? this.normalizePostRow(res.result, activeCulture) : null,
       })),
     );
   }
 
-  createPost(payload: BlogPostFormPayload): Observable<any> {
-    if (this.useDummy()) {
-      const nextNum =
-        this.dummyPosts.reduce(
-          (m, p) => Math.max(m, parseInt(p.id.replace(/\D/g, ''), 10) || 0),
-          0,
-        ) + 1;
-      const id = `p${nextNum}`;
-      const cat = this.dummyCategories.find((c) => c.id === payload.category_id);
-      const row: BlogPost = {
-        id,
-        title: payload.title_en,
-        title_en: payload.title_en,
-        title_ar: payload.title_ar,
-        category_id: payload.category_id,
-        category_name: cat?.name_en || '',
-        views: 0,
-        localeComplete: {
-          en: !!(payload.title_en || '').trim(),
-          ar: !!(payload.title_ar || '').trim(),
-        },
-        image:
-          typeof payload.image === 'string'
-            ? payload.image
-            : `https://picsum.photos/seed/bpost${id}/96/64`,
-        created_at: new Date().toISOString().slice(0, 10),
-        status: payload.status === 1,
-        sections: this.mapPayloadSections(id, payload),
-      };
-      this.dummyPosts = [...this.dummyPosts, row];
-      return of({ result: row });
-    }
-    const fd = this.buildPostFormData(payload);
-    this.api.setCulture(localStorage.getItem('app_lang') || 'en');
+  createPost(payload: BlogPostFormPayload, culture?: string): Observable<any> {
+    const activeCulture = culture || localStorage.getItem('app_lang') || 'en';
+    const fd = this.buildPostFormData(payload, activeCulture, false);
+    this.api.setCulture(activeCulture);
     return this.api.post(this.postsPath(), fd);
   }
 
-  private mapPayloadSections(
-    postId: string,
-    payload: BlogPostFormPayload,
-    prev?: BlogPost,
-  ): BlogPostSection[] {
-    return (payload.sections || []).map((s, i) => {
-      const prevImg = prev?.sections?.[i]?.image || '';
-      let imageStr = '';
-      if (typeof s.image === 'string' && s.image) {
-        imageStr = s.image;
-      } else if (s.image instanceof File) {
-        imageStr = `https://picsum.photos/seed/bpost${postId}sec${i}/400/240`;
-      } else {
-        imageStr = prevImg;
-      }
-      return {
-        enabled: s.enabled,
-        title: s.title,
-        subtitle_html: s.subtitle_html,
-        quote: s.quote,
-        tags: s.tags,
-        image: imageStr,
-      };
-    });
-  }
-
-  updatePost(id: string, payload: BlogPostFormPayload): Observable<any> {
-    if (this.useDummy()) {
-      const idx = this.dummyPosts.findIndex((p) => p.id === id);
-      if (idx < 0) return of({ result: null });
-      const prev = this.dummyPosts[idx];
-      const cat = this.dummyCategories.find((c) => c.id === payload.category_id);
-      const row: BlogPost = {
-        ...prev,
-        title: payload.title_en,
-        title_en: payload.title_en,
-        title_ar: payload.title_ar,
-        category_id: payload.category_id,
-        category_name: cat?.name_en || prev.category_name,
-        views: prev.views ?? 0,
-        localeComplete: {
-          en: !!(payload.title_en || '').trim(),
-          ar: !!(payload.title_ar || '').trim(),
-        },
-        image:
-          typeof payload.image === 'string'
-            ? payload.image
-            : payload.image instanceof File
-              ? `https://picsum.photos/seed/bpost${id}u/96/64`
-              : prev.image,
-        status: payload.status === 1,
-        sections: this.mapPayloadSections(id, payload, prev),
-      };
-      this.dummyPosts = this.dummyPosts.map((p, i) => (i === idx ? row : p));
-      return of({ result: row });
-    }
-    const fd = this.buildPostFormData(payload);
-    this.api.setCulture(localStorage.getItem('app_lang') || 'en');
+  updatePost(id: string, payload: BlogPostFormPayload, culture?: string): Observable<any> {
+    const activeCulture = culture || localStorage.getItem('app_lang') || 'en';
+    const fd = this.buildPostFormData(payload, activeCulture, true);
+    this.api.setCulture(activeCulture);
     return this.api.post(`${this.postsPath()}/${id}`, fd);
   }
 
-  private buildPostFormData(p: BlogPostFormPayload): FormData {
+  private buildPostFormData(
+    p: BlogPostFormPayload,
+    culture: string,
+    isUpdate: boolean,
+  ): FormData {
     const fd = new FormData();
-    fd.append('title_en', p.title_en);
-    fd.append('title_ar', p.title_ar);
+    const localizedName = culture === 'ar' ? p.title_ar : p.title_en;
+    fd.append('name', localizedName || p.title_en || p.title_ar || '');
     fd.append('category_id', String(p.category_id));
     if (p.image instanceof File) {
       fd.append('image', p.image);
-    } else if (typeof p.image === 'string' && p.image) {
+    } else if (!isUpdate && typeof p.image === 'string' && p.image) {
       fd.append('image', p.image);
     }
     fd.append('status', p.status === 1 ? '1' : '0');
-    const meta = (p.sections || []).map((s, i) => ({
-      enabled: s.enabled,
-      title: s.title,
-      subtitle_html: s.subtitle_html,
-      quote: s.quote,
-      tags: s.tags,
-      image: typeof s.image === 'string' ? s.image : null,
-      index: i,
-    }));
-    fd.append('sections_json', JSON.stringify(meta));
+
+    // Tags are sent at root level: tags[0], tags[1], ...
+    const rootTags = Array.from(
+      new Set(
+        (p.sections || [])
+          .flatMap((s) =>
+            String(s.tags || '')
+              .split(',')
+              .map((x) => x.trim())
+              .filter(Boolean),
+          )
+          .filter(Boolean),
+      ),
+    );
+    rootTags.forEach((tag, tagIndex) => fd.append(`tags[${tagIndex}]`, tag));
+
     (p.sections || []).forEach((s, i) => {
+      fd.append(`sections[${i}][title]`, s.title || '');
+      fd.append(`sections[${i}][subtitle]`, s.subtitle_html || '');
+      fd.append(`sections[${i}][quote]`, s.quote || '');
+      fd.append(`sections[${i}][status]`, s.enabled ? '1' : '0');
+      fd.append(`sections[${i}][enabled]`, s.enabled ? '1' : '0');
       if (s.image instanceof File) {
-        fd.append(`section_image_${i}`, s.image);
+        fd.append(`sections[${i}][image]`, s.image);
+      } else if (typeof s.image === 'string' && s.image) {
+        fd.append(`sections[${i}][image]`, s.image);
       }
     });
     return fd;
   }
 
   deletePost(id: string): Observable<any> {
-    if (this.useDummy()) {
-      this.dummyPosts = this.dummyPosts.filter((p) => p.id !== id);
-      return of({ success: true });
-    }
     this.api.setCulture(localStorage.getItem('app_lang') || 'en');
     return this.api.delete(`${this.postsPath()}/${id}`);
   }
 
   bulkDeletePosts(ids: string[]): Observable<any> {
-    if (this.useDummy()) {
-      this.dummyPosts = this.dummyPosts.filter((p) => !ids.includes(p.id));
-      return of({ success: true });
-    }
     return this.api.post(`${this.postsPath()}/actions/bulk-delete`, { ids });
   }
 
   changePostStatus(id: string, value: boolean): Observable<any> {
-    if (this.useDummy()) {
-      this.dummyPosts = this.dummyPosts.map((p) =>
-        p.id === id ? { ...p, status: value } : p,
-      );
-      return of({ success: true });
-    }
     this.api.setCulture(localStorage.getItem('app_lang') || 'en');
     const fd = new FormData();
     fd.append('status', value ? '1' : '0');
     return this.api.post(`${this.postsPath()}/${id}`, fd);
   }
 
-  /** Category options for post form (dummy reads in-memory categories). */
-  getCategoryOptionsForSelect(): { id: string; name: string }[] {
-    return this.dummyCategories.map((c) => ({ id: c.id, name: c.name_en }));
-  }
-
-  /** Post form: all categories as select options (dummy or API list). */
-  getCategoriesForDropdown(): Observable<{ id: string; name: string }[]> {
-    if (this.categoriesUseDummy()) {
-      return of(this.getCategoryOptionsForSelect());
-    }
-    return this.getCategories({ page: 1, size: 500 }, '').pipe(
-      map((res: any) =>
-        (res.result || []).map((c: BlogCategory) => ({
-          id: c.id,
-          name: c.name_en || c.name,
-        })),
+  /** Post form: all categories as select options. */
+  getCategoriesForDropdown(culture?: string): Observable<{ id: string; name: string }[]> {
+    this.api.setCulture(culture || localStorage.getItem('app_lang') || 'en');
+    return this.api.get<any>(`${this.categoriesPath()}/published`).pipe(
+      map((res: any) => {
+        const rows =
+          res?.result ??
+          res?.data ??
+          res?.categories ??
+          res?.items ??
+          [];
+        const list = Array.isArray(rows) ? rows : [];
+        return list
+          .map((row) => this.mapCategoryRow(row))
+          .filter((c: BlogCategory) => !!c?.id)
+          .map((c: BlogCategory) => ({
+            id: c.id,
+            name: c.name || c.name_en || c.name_ar,
+          }));
+      }),
+      catchError(() =>
+        this.getCategories({ page: 1, size: 500 }, '').pipe(
+          map((res: any) =>
+            (res.result || []).map((c: BlogCategory) => ({
+              id: c.id,
+              name: c.name || c.name_en || c.name_ar,
+            })),
+          ),
+          catchError(() => of([])),
+        ),
       ),
     );
   }
