@@ -324,7 +324,7 @@
         "benefitTitle_min": "Service Benefits Title must be at least 3 characters",
         "benefitTagline_min": "Service Benefits Tagline  must be at least 3 characters",
         "benefitBody_min": "Service Benefits Body must be at least 3 characters",
-        "benefitTitle_max": "Service Benefits Title cannot exceed 30 characters",
+        "benefitTitle_max": "Service Benefits Title cannot exceed 70 characters",
         "benefitTagline_max": "Service Benefits Tagline cannot exceed 400 characters",
         "benefitBody_max": "Service Benefits Body cannot exceed 400 characters",
         "benefitTitle_required": "Service Benefits Title is required",

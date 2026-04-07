@@ -38,7 +38,6 @@ import { AppDialogService } from '../../../shared/services/dialog.service';
 import { ServicesService } from '../../../services/services.service';
 import { environment } from '../../../../environments/environment';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { CustomValidators } from '../../../core/validators/custom-validators.';
 import { ApiService } from '../../../core/services/api.service';
 
 export interface ServiceItemFormValue {
@@ -228,7 +227,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(30),
+          Validators.maxLength(70),
         ],
       ],
       benefitTagline: [
@@ -290,10 +289,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
         data?.metricTitle || '',
         [Validators.minLength(3), Validators.maxLength(30)],
       ],
-      metricNumber: [
-        data?.metricNumber || '',
-        [CustomValidators.numericOnly(), CustomValidators.minValue(0)],
-      ],
+      metricNumber: [data?.metricNumber ?? ''],
     });
   }
 
@@ -573,16 +569,6 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
     if (control.hasError('maxlength')) {
       return this.translate.instant(
         `services.form.benefits.insights.${fieldName}_max`,
-      );
-    }
-    if (control.hasError('numericOnly')) {
-      return this.translate.instant(
-        'services.form.benefits.insights.number_invalid',
-      );
-    }
-    if (control.hasError('minValue')) {
-      return this.translate.instant(
-        'services.form.benefits.insights.number_min',
       );
     }
     return '';

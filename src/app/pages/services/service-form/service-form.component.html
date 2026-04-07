@@ -194,7 +194,7 @@
                     <label>{{ 'services.form.benefits.insights.label_number' | translate }}</label>
                   </div>
                   <input type="text" [placeholder]="'services.form.benefits.insights.number_placeholder' | translate"
-                    [formControl]="$any(control.get('metricNumber'))" pInputText min="0"
+                    [formControl]="$any(control.get('metricNumber'))" pInputText
                     [class.error]="isInsightFieldInvalid(i, 'metricNumber')" />
                   <small class="error-message" *ngIf="isInsightFieldInvalid(i, 'metricNumber')">
                     {{ getInsightFieldError(i, 'metricNumber') }}
