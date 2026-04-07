@@ -15,6 +15,7 @@ import {
   AbstractControl,
   FormArray,
   FormBuilder,
+  FormsModule,
   FormGroup,
   ReactiveFormsModule,
   ValidationErrors,
@@ -26,13 +27,16 @@ import { InputText } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { MessageModule } from 'primeng/message';
 import { EditorModule } from 'primeng/editor';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
 import { GalleryUploadComponent } from '../../../../shared/components/gallery-upload/gallery-upload.component';
 import { SettingsComponent } from '../../../../shared/components/settings/settings.component';
+import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { TrimInputDirective } from '../../../../core/directives/trim-input.directive';
 import { BlogsService } from '../../services/blogs.service';
+import { environment } from '../../../../../environments/environment';
 import {
   BlogPostFormPayload,
   BlogPostSection,
@@ -54,12 +58,13 @@ const STATUS_MAP = {
     PageHeaderComponent,
     FormActionsComponent,
     ReactiveFormsModule,
+    FormsModule,
     TranslateModule,
     InputText,
     SelectModule,
     MessageModule,
     EditorModule,
-    ToggleSwitchModule,
+    InputSwitchModule,
     GalleryUploadComponent,
     SettingsComponent,
     TrimInputDirective,
@@ -77,11 +82,15 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
+  private readonly dialogService = inject(DialogService);
   private readonly cdr = inject(ChangeDetectorRef);
   private categoriesSub?: Subscription;
   private titleStatusSub?: Subscription;
+  private confirmDialogRef?: DynamicDialogRef;
 
   form!: FormGroup;
+  mediaUrl: string = environment.mediaUrl;
+  sectionTagInput = '';
   postId = '';
   isEditMode = false;
   categoryOptions: { id: string; name: string }[] = [];
@@ -102,7 +111,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
       this.currentLanguage.set(stored);
     }
     this.initForm();
-    this.loadCategories();
+    this.loadCategories(this.currentLanguage());
     this.titleStatusSub = merge(
       this.form.get('title_en')!.valueChanges,
       this.form.get('title_ar')!.valueChanges,
@@ -114,7 +123,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
       if (id) {
         this.isEditMode = true;
         this.postId = id;
-        this.loadPost(id);
+        this.loadPost(id, this.currentLanguage());
       } else {
         this.isEditMode = false;
         this.postId = '';
@@ -136,22 +145,32 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.form.get('sections') as FormArray;
   }
 
-  private loadCategories(): void {
+  get sectionTags(): FormArray {
+    return this.form.get('section_tags') as FormArray;
+  }
+
+  get currentTitleControlName(): 'title_en' | 'title_ar' {
+    return 'title_en';
+  }
+
+  private loadCategories(culture?: string): void {
     this.categoriesSub?.unsubscribe();
-    this.categoriesSub = this.service.getCategoriesForDropdown().subscribe({
+    this.categoriesSub = this.service.getCategoriesForDropdown(culture).subscribe({
       next: (opts) => (this.categoryOptions = opts),
     });
   }
 
   private initForm(): void {
     this.form = this.fb.group({
-      title_en: ['', [Validators.required, Validators.maxLength(300)]],
-      title_ar: ['', [Validators.required, Validators.maxLength(300)]],
+      title_en: ['', [Validators.maxLength(300)]],
+      title_ar: ['', [Validators.maxLength(300)]],
       category_id: [null, Validators.required],
       image: [null, Validators.required],
       status: [1, Validators.required],
+      section_tags: this.fb.array([]),
       sections: this.fb.array([this.createSectionGroup()]),
     });
+    this.updateActiveTitleValidators(this.currentLanguage());
   }
 
   private sectionGroupValidator = (
@@ -173,7 +192,6 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
         subtitle: [data?.subtitle_html ?? ''],
         image: [data?.image ?? null],
         quote: [data?.quote ?? ''],
-        tags: [data?.tags ?? ''],
       },
       { validators: this.sectionGroupValidator },
     );
@@ -182,6 +200,8 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
   private resetFormForCreate(): void {
     this.sections.clear();
     this.sections.push(this.createSectionGroup());
+    this.sectionTags.clear();
+    this.sectionTagInput = '';
     this.form.patchValue({
       title_en: '',
       title_ar: '',
@@ -193,12 +213,13 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.syncLanguageStatusFromTitles();
   }
 
-  private loadPost(id: string): void {
-    this.service.getPostById(id).subscribe({
+  private loadPost(id: string, culture?: string): void {
+    this.service.getPostById(id, culture).subscribe({
       next: (res: any) => {
         const d = res?.result;
         if (!d) return;
         this.sections.clear();
+        this.sectionTags.clear();
         if (d.sections?.length) {
           d.sections.forEach((s: BlogPostSection) =>
             this.sections.push(this.createSectionGroup(s)),
@@ -206,11 +227,20 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
           this.sections.push(this.createSectionGroup());
         }
+        this.sections.controls.forEach((_, idx) => this.applySectionEnabledState(idx));
+        this.hydrateSectionTags(
+          d.sections,
+          d.tags ?? d.section_tags ?? d.sectionTags ?? d.tag,
+        );
+        const localizedTitles = this.resolveLocalizedTitles(d);
         this.form.patchValue({
-          title_en: d.title_en,
-          title_ar: d.title_ar,
+          title_en: localizedTitles.title_en,
+          title_ar: localizedTitles.title_ar,
           category_id: d.category_id,
-          image: d.image,
+          image:
+            d.image && !String(d.image).startsWith('http')
+              ? `${this.mediaUrl}${d.image}`
+              : d.image,
           status:
             d.status === true || d.status === 1 || d.status === '1' ? 1 : 0,
         });
@@ -253,11 +283,32 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addSection(): void {
     this.sections.push(this.createSectionGroup());
+    this.applySectionEnabledState(this.sections.length - 1);
   }
 
   removeSection(index: number): void {
     if (this.sections.length <= 1) return;
     this.sections.removeAt(index);
+  }
+
+  onSectionToggle(index: number, event?: { checked?: boolean }): void {
+    const g = this.sections.at(index) as FormGroup;
+    const current = !!g.get('enabled')?.value;
+    const next = event?.checked ?? !current;
+    g.get('enabled')?.setValue(next, { emitEvent: false });
+    this.applySectionEnabledState(index);
+    g.updateValueAndValidity();
+  }
+
+  addSectionTag(): void {
+    const val = this.sectionTagInput.trim();
+    if (!val) return;
+    this.sectionTags.push(this.fb.control(val));
+    this.sectionTagInput = '';
+  }
+
+  removeSectionTag(index: number): void {
+    this.sectionTags.removeAt(index);
   }
 
   hasError(
@@ -291,6 +342,11 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/blogs/posts']);
   }
 
+  activeTitleEmptyAndTouched(): boolean {
+    const c = this.form.get(this.currentTitleControlName);
+    return !!(c?.touched && !String(c?.value || '').trim());
+  }
+
   onSave(): void {
     this.isFirstTimeToSend = false;
     if (this.form.invalid) {
@@ -298,7 +354,20 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
       this.sections.controls.forEach((c) => c.markAllAsTouched());
       return;
     }
+    this.submitForm(this.currentLanguage(), true);
+  }
+
+  private submitForm(lang: string, navigateAway: boolean): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.sections.controls.forEach((c) => c.markAllAsTouched());
+      return;
+    }
     const v = this.form.getRawValue();
+    const normalizedTags = (this.sectionTags.value as string[])
+      .map((x) => String(x || '').trim())
+      .filter(Boolean)
+      .join(', ');
     const payload: BlogPostFormPayload = {
       title_en: v.title_en,
       title_ar: v.title_ar,
@@ -311,12 +380,12 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
         subtitle_html: s.subtitle || '',
         image: s.image,
         quote: s.quote || '',
-        tags: s.tags || '',
+        tags: normalizedTags,
       })),
     };
     const obs = this.isEditMode
-      ? this.service.updatePost(this.postId, payload)
-      : this.service.createPost(payload);
+      ? this.service.updatePost(this.postId, payload, lang)
+      : this.service.createPost(payload, lang);
     obs.subscribe({
       next: (res: any) => {
         if (!this.isEditMode && res?.result?.id) {
@@ -325,7 +394,15 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         this.syncLanguageStatusFromTitles();
         this.form.markAsPristine();
-        this.router.navigate(['/blogs/posts']);
+        if (navigateAway) {
+          this.router.navigate(['/blogs/posts']);
+        } else {
+          const currentStatus = this.languageStatuses.get(lang)?.status;
+          if (currentStatus !== 'completed') {
+            this.languageStatuses.set(lang, { code: lang, status: 'completed' });
+          }
+          this.updateSettingsComponent();
+        }
       },
       error: () => {
         this.formActionsComponent?.revertLanguage();
@@ -335,11 +412,135 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onLanguageChange(event: { newLang: string; oldLang: string }): void {
     this.previousLanguage = event.oldLang;
-    this.currentLanguage.set(event.newLang);
-    this.formActionsComponent?.confirmLanguage(event.newLang);
-    localStorage.setItem('app_lang', event.newLang);
+
+    if (this.isEditMode && this.form.valid) {
+      if (this.form.dirty) {
+        this.showLanguageChangeConfirmation(event);
+      } else {
+        this.switchLanguage(event.newLang);
+      }
+      return;
+    }
+
+    if (this.form.invalid) {
+      setTimeout(() => {
+        this.formActionsComponent?.revertLanguage();
+        this.form.markAllAsTouched();
+        this.sections.controls.forEach((c) => c.markAllAsTouched());
+      }, 0);
+      return;
+    }
+
+    if (this.form.dirty) {
+      this.showLanguageChangeConfirmation(event);
+    } else {
+      this.switchLanguage(event.newLang);
+    }
+  }
+
+  private showLanguageChangeConfirmation(event: {
+    newLang: string;
+    oldLang: string;
+  }): void {
+    this.confirmDialogRef = this.dialogService.open(ConfirmDialogComponent, {
+      width: '40vw',
+      modal: true,
+      data: {
+        title: 'general.change_lang_dialog_header',
+        subtitle: 'general.change_lang_dialog_desc',
+        confirmText: 'general.change_lang_dialog_save',
+        cancelText: 'general.cancel',
+        confirmSeverity: 'success',
+        cancelSeverity: 'cancel',
+        showCancel: true,
+        showExtraButton: false,
+        data: { lang: event.oldLang, newLang: event.newLang },
+      },
+    });
+
+    this.confirmDialogRef.onClose.subscribe(
+      (result: { action: string; data: { lang: string; newLang: string } }) => {
+        if (!result) {
+          this.formActionsComponent?.revertLanguage();
+          return;
+        }
+        if (result.action === 'confirm') {
+          this.saveAndSwitchLanguage(result.data.lang, result.data.newLang);
+        } else {
+          this.switchLanguage(event.newLang);
+        }
+      },
+    );
+  }
+
+  private saveAndSwitchLanguage(currentLang: string, newLang: string): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.sections.controls.forEach((c) => c.markAllAsTouched());
+      this.formActionsComponent?.revertLanguage();
+      return;
+    }
+    const v = this.form.getRawValue();
+    const normalizedTags = (this.sectionTags.value as string[])
+      .map((x) => String(x || '').trim())
+      .filter(Boolean)
+      .join(', ');
+    const payload: BlogPostFormPayload = {
+      title_en: v.title_en,
+      title_ar: v.title_ar,
+      category_id: String(v.category_id),
+      image: v.image,
+      status: Number(v.status) === 1 ? 1 : 0,
+      sections: (v.sections as any[]).map((s) => ({
+        enabled: !!s.enabled,
+        title: s.title || '',
+        subtitle_html: s.subtitle || '',
+        image: s.image,
+        quote: s.quote || '',
+        tags: normalizedTags,
+      })),
+    };
+    const obs = this.isEditMode
+      ? this.service.updatePost(this.postId, payload, currentLang)
+      : this.service.createPost(payload, currentLang);
+    obs.subscribe({
+      next: (res: any) => {
+        if (!this.isEditMode && res?.result?.id) {
+          this.postId = res.result.id;
+          this.isEditMode = true;
+        }
+        this.languageStatuses.set(currentLang, {
+          code: currentLang,
+          status: 'completed',
+        });
+        this.updateSettingsComponent();
+        this.form.markAsPristine();
+        this.switchLanguage(newLang);
+      },
+      error: () => this.formActionsComponent?.revertLanguage(),
+    });
+  }
+
+  private switchLanguage(lang: string): void {
+    this.currentLanguage.set(lang);
+    this.updateActiveTitleValidators(lang);
+    this.commitLanguage(lang);
+    this.loadCategories(lang);
     this.isFirstTimeToSend = true;
     this.syncLanguageStatusFromTitles();
+    if (this.isEditMode && this.postId) {
+      this.loadPost(this.postId, lang);
+    }
+  }
+
+  private resetLanguage(lang: string): void {
+    this.formActionsComponent?.revertLanguage();
+    this.currentLanguage.set(lang);
+    this.updateActiveTitleValidators(lang);
+  }
+
+  private commitLanguage(lang: string): void {
+    this.formActionsComponent?.confirmLanguage(lang);
   }
 
   private updateSettingsComponent(): void {
@@ -349,5 +550,80 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.settingsComponent.englishStatus = getStatus('en');
     this.settingsComponent.arabicStatus = getStatus('ar');
     this.cdr.detectChanges();
+  }
+
+  private extractTagTokens(value: any): string[] {
+    if (!value) return [];
+    if (Array.isArray(value)) {
+      return value
+        .map((item: any) => {
+          if (typeof item === 'string') return item.trim();
+          if (item && typeof item === 'object') {
+            return String(item.name ?? item.label ?? item.value ?? '').trim();
+          }
+          return String(item ?? '').trim();
+        })
+        .filter(Boolean);
+    }
+
+    const raw = String(value).trim();
+    if (!raw) return [];
+
+    if (raw.startsWith('[') && raw.endsWith(']')) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          return this.extractTagTokens(parsed);
+        }
+      } catch {
+        // Fallback to delimiter-based parsing below.
+      }
+    }
+
+    return raw
+      .split(/[,\u060C]/)
+      .map((x) => x.trim())
+      .filter(Boolean);
+  }
+
+  private hydrateSectionTags(sections: BlogPostSection[] = [], rootTags?: any): void {
+    const fromSections = sections.flatMap((s: any) =>
+      this.extractTagTokens(s?.tags ?? s?.section_tags ?? s?.sectionTags),
+    );
+    const fromRoot = this.extractTagTokens(rootTags);
+    const unique = Array.from(new Set([...fromSections, ...fromRoot]));
+    unique.forEach((tag) => this.sectionTags.push(this.fb.control(tag)));
+  }
+
+  private applySectionEnabledState(index: number): void {
+    const g = this.sections.at(index) as FormGroup;
+    const enabled = !!g.get('enabled')?.value;
+    ['title', 'subtitle', 'image', 'quote'].forEach((name) => {
+      const c = g.get(name);
+      if (!c) return;
+      if (enabled) c.enable({ emitEvent: false });
+      else c.disable({ emitEvent: false });
+    });
+  }
+
+  private resolveLocalizedTitles(d: any): { title_en: string; title_ar: string } {
+    const titleEn = String(d?.title_en || '').trim();
+    const titleAr = String(d?.title_ar || '').trim();
+    const singleName = String(d?.title || d?.name || '').trim();
+    if (titleEn || titleAr || !singleName) {
+      return { title_en: titleEn, title_ar: titleAr };
+    }
+
+    return { title_en: singleName, title_ar: '' };
+  }
+
+  private updateActiveTitleValidators(_lang: string): void {
+    const en = this.form.get('title_en');
+    const ar = this.form.get('title_ar');
+    if (!en || !ar) return;
+    en.setValidators([Validators.required, Validators.maxLength(300)]);
+    ar.setValidators([Validators.maxLength(300)]);
+    en.updateValueAndValidity({ emitEvent: false });
+    ar.updateValueAndValidity({ emitEvent: false });
   }
 }

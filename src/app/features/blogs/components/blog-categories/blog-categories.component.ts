@@ -16,7 +16,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { ExportService } from '../../../../shared/services/export.service';
 import { environment } from '../../../../../environments/environment';
-import { MessageService } from 'primeng/api';
 import { BlogCategoryFormComponent } from '../blog-category-form/blog-category-form.component';
 import { BlogsService } from '../../services/blogs.service';
 import {
@@ -48,7 +47,6 @@ export class BlogCategoriesComponent implements OnInit, OnDestroy {
   private readonly dialogService = inject(DialogService);
   private readonly translate = inject(TranslateService);
   private readonly exportService = inject(ExportService);
-  private readonly messageService = inject(MessageService);
   private langChangeSubscription?: Subscription;
 
   visible = false;
@@ -226,14 +224,6 @@ export class BlogCategoriesComponent implements OnInit, OnDestroy {
   }
 
   export(): void {
-    if (this.service.categoriesUseDummy()) {
-      this.messageService.add({
-        severity: 'info',
-        summary: this.translate.instant('blogs.common.export_dummy_title'),
-        detail: this.translate.instant('blogs.common.export_dummy_detail'),
-      });
-      return;
-    }
     this.exportService.exportModule(environment.blogs.categoriesApiPath);
   }
 

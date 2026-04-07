@@ -41,7 +41,7 @@
     }
   }
 
-    .blog-post-form {
+  .blog-post-form {
     width: 100%;
     display: flex;
     gap: 16px;
@@ -71,6 +71,10 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
+
+        .section-tags-section {
+          gap: 12px;
+        }
       }
 
       .remove-section-btn {
@@ -123,9 +127,74 @@
         background-color: rgba(240, 249, 238, 0.8);
       }
     }
+
+    .tools-input-wrapper {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      position: relative;
+
+      input {
+        flex: 1;
+      }
+
+      .add-another {
+        align-items: center;
+        background: transparent;
+        border: none;
+        color: var(--Color-Primary-600, #689e5b);
+        cursor: pointer;
+        display: inline-flex;
+        gap: 4px;
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    .tools-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tool-badge {
+      align-items: center;
+      background: var(--Color-Primary2-300, #e7f1cb);
+      border-radius: 12px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      padding: 4px 16px;
+
+      span {
+        color: var(--Color-Neutral-2000, #333435);
+        font-size: var(--Font-Size-2Xs, 14px);
+        font-weight: var(--Font-Weight-Medium, 500);
+      }
+
+      .remove-badge {
+        align-items: center;
+        background: none;
+        border: none;
+        color: #f96c4d;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        line-height: 1;
+        padding: 0;
+      }
+    }
   }
 }
 
 html:lang(ar) :host .blog-post-form .remove-section-btn {
   flex-direction: row-reverse;
+}
+:host ::ng-deep {
+  .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
+    position: relative !important;
+  }
 }
