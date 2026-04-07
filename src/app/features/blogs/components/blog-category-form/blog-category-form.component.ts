@@ -27,7 +27,7 @@ import {
   BlogCategoryFormEvent,
   BlogCategoryFormPayload,
 } from '../../models/blogs.model';
-import { BLOG_CATEGORY_TYPES } from '../../data/blog-dummy.data';
+import { BLOG_CATEGORY_TYPES } from '../../data/blog.constants';
 import { environment } from '../../../../../environments/environment';
 
 @Component({

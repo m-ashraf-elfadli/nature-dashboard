@@ -16,7 +16,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { ExportService } from '../../../../shared/services/export.service';
 import { environment } from '../../../../../environments/environment';
-import { MessageService } from 'primeng/api';
 import { BlogsService } from '../../services/blogs.service';
 import { BlogPost } from '../../models/blogs.model';
 
@@ -41,7 +40,6 @@ export class BlogPostsComponent implements OnInit, OnDestroy {
   private readonly dialogService = inject(DialogService);
   private readonly translate = inject(TranslateService);
   private readonly exportService = inject(ExportService);
-  private readonly messageService = inject(MessageService);
   private langChangeSubscription?: Subscription;
 
   data: BlogPost[] = [];
@@ -69,13 +67,15 @@ export class BlogPostsComponent implements OnInit, OnDestroy {
 
   loadPosts(pagination?: PaginationObj): void {
     const pag = pagination || this.paginationObj;
-    this.service.getPosts(pag, this.filterObj?.value || '').subscribe({
+    this.service
+      .getPosts(pag, this.filterObj?.value || '', this.translate.currentLang || 'en')
+      .subscribe({
       next: (res) => {
         this.data = res.result || [];
         this.totalRecords = res.total;
       },
       error: (err) => console.error('Blog posts fetch error:', err),
-    });
+      });
   }
 
   columns: TableColumn<BlogPost>[] = [
@@ -230,14 +230,6 @@ export class BlogPostsComponent implements OnInit, OnDestroy {
   }
 
   export(): void {
-    if (environment.blogs.useDummyData) {
-      this.messageService.add({
-        severity: 'info',
-        summary: this.translate.instant('blogs.common.export_dummy_title'),
-        detail: this.translate.instant('blogs.common.export_dummy_detail'),
-      });
-      return;
-    }
     this.exportService.exportModule(environment.blogs.postsApiPath);
   }
 
