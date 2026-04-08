@@ -309,6 +309,7 @@ export class BlogsService {
       image: imageValue,
       created_at: String(createdAtValue || ''),
       sections: (row.sections || []).map((s: any) => ({
+        id: s.id ?? '',
         enabled: this.toBoolean(s.enabled ?? s.status, false),
         title: s.title ?? '',
         subtitle_html: s.subtitle_html ?? s.subtitle ?? '',
@@ -382,14 +383,16 @@ export class BlogsService {
     rootTags.forEach((tag, tagIndex) => fd.append(`tags[${tagIndex}]`, tag));
 
     (p.sections || []).forEach((s, i) => {
+      if (s.id) {
+        fd.append(`sections[${i}][id]`, String(s.id));
+      }
       fd.append(`sections[${i}][title]`, s.title || '');
       fd.append(`sections[${i}][subtitle]`, s.subtitle_html || '');
       fd.append(`sections[${i}][quote]`, s.quote || '');
       fd.append(`sections[${i}][status]`, s.enabled ? '1' : '0');
-      fd.append(`sections[${i}][enabled]`, s.enabled ? '1' : '0');
       if (s.image instanceof File) {
         fd.append(`sections[${i}][image]`, s.image);
-      } else if (typeof s.image === 'string' && s.image) {
+      } else if (!isUpdate && typeof s.image === 'string' && s.image) {
         fd.append(`sections[${i}][image]`, s.image);
       }
     });

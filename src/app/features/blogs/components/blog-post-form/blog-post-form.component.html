@@ -115,7 +115,7 @@
 
       <div class="blog-sections-section">
         <div formArrayName="sections">
-          @for (item of sections.controls; track $index) {
+          @for (item of sections.controls; track item.get('id')?.value || $index) {
           <div class="details-section" [formGroupName]="$index">
             <div class="header-section header-section--split">
               <h3>

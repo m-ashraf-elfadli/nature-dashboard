@@ -30,6 +30,7 @@ export interface BlogCategoryFormEvent {
 
 /** Section block on blog post (Figma “Blog Section”). */
 export interface BlogPostSection {
+  id?: string;
   enabled: boolean;
   title: string;
   subtitle_html: string;
@@ -56,6 +57,7 @@ export interface BlogPost {
 }
 
 export interface BlogPostSectionFormPayload {
+  id?: string;
   enabled: boolean;
   title: string;
   subtitle_html: string;
