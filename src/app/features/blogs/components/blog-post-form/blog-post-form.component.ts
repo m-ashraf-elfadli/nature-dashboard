@@ -185,13 +185,21 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
   };
 
   private createSectionGroup(data?: BlogPostSection): FormGroup {
+    const raw: any = data || {};
+    const enabledRaw = raw.enabled ?? raw.status;
+    const enabled =
+      enabledRaw === undefined || enabledRaw === null
+        ? true
+        : enabledRaw === true || enabledRaw === 1 || enabledRaw === '1';
+    const sectionImage = String(raw.image || '').trim();
     return this.fb.group(
       {
-        enabled: [data?.enabled ?? true],
-        title: [data?.title ?? ''],
-        subtitle: [data?.subtitle_html ?? ''],
-        image: [data?.image ?? null],
-        quote: [data?.quote ?? ''],
+        id: [raw.id ?? null],
+        enabled: [enabled],
+        title: [raw.title ?? ''],
+        subtitle: [raw.subtitle_html ?? raw.subtitle ?? ''],
+        image: [sectionImage || null],
+        quote: [raw.quote ?? ''],
       },
       { validators: this.sectionGroupValidator },
     );
@@ -220,16 +228,37 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!d) return;
         this.sections.clear();
         this.sectionTags.clear();
-        if (d.sections?.length) {
-          d.sections.forEach((s: BlogPostSection) =>
-            this.sections.push(this.createSectionGroup(s)),
-          );
+        const rawSections = Array.isArray(d.sections)
+          ? d.sections
+          : d.sections && typeof d.sections === 'object'
+            ? Object.values(d.sections)
+            : [];
+        if (rawSections.length) {
+          rawSections.forEach((s: any) => {
+            const sectionImage = String(s?.image || '').trim();
+            const group = this.createSectionGroup();
+            group.patchValue(
+              {
+                id: s?.id ?? null,
+                enabled: s?.enabled ?? s?.status ?? true,
+                title: s?.title ?? '',
+                subtitle: s?.subtitle_html ?? s?.subtitle ?? '',
+                image:
+                  sectionImage && !sectionImage.startsWith('http')
+                    ? `${this.mediaUrl}${sectionImage}`
+                    : sectionImage || null,
+                quote: s?.quote ?? '',
+              },
+              { emitEvent: false },
+            );
+            this.sections.push(group);
+          });
         } else {
           this.sections.push(this.createSectionGroup());
         }
         this.sections.controls.forEach((_, idx) => this.applySectionEnabledState(idx));
         this.hydrateSectionTags(
-          d.sections,
+          rawSections as any,
           d.tags ?? d.section_tags ?? d.sectionTags ?? d.tag,
         );
         const localizedTitles = this.resolveLocalizedTitles(d);
@@ -244,7 +273,19 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
           status:
             d.status === true || d.status === 1 || d.status === '1' ? 1 : 0,
         });
-        this.syncLanguageStatusFromTitles();
+        if (d?.localeComplete && typeof d.localeComplete === 'object') {
+          this.languageStatuses.set('en', {
+            code: 'en',
+            status: d.localeComplete.en ? 'completed' : 'not-started',
+          });
+          this.languageStatuses.set('ar', {
+            code: 'ar',
+            status: d.localeComplete.ar ? 'completed' : 'not-started',
+          });
+          this.updateSettingsComponent();
+        } else {
+          this.syncLanguageStatusFromTitles();
+        }
         this.form.markAsPristine();
         this.cdr.detectChanges();
       },
@@ -293,9 +334,9 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSectionToggle(index: number, event?: { checked?: boolean }): void {
     const g = this.sections.at(index) as FormGroup;
-    const current = !!g.get('enabled')?.value;
-    const next = event?.checked ?? !current;
-    g.get('enabled')?.setValue(next, { emitEvent: false });
+    if (event && event.checked !== undefined) {
+      g.get('enabled')?.setValue(!!event.checked, { emitEvent: false });
+    }
     this.applySectionEnabledState(index);
     g.updateValueAndValidity();
   }
@@ -374,14 +415,21 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
       category_id: String(v.category_id),
       image: v.image,
       status: Number(v.status) === 1 ? 1 : 0,
-      sections: (v.sections as any[]).map((s) => ({
-        enabled: !!s.enabled,
-        title: s.title || '',
-        subtitle_html: s.subtitle || '',
-        image: s.image,
-        quote: s.quote || '',
-        tags: normalizedTags,
-      })),
+      sections: (v.sections as any[]).map((s, i) => {
+        const sectionImageCtrl = (this.sections.at(i) as FormGroup).get('image');
+        const shouldSendSectionImage =
+          !this.isEditMode ||
+          (!!sectionImageCtrl?.dirty && s.image instanceof File);
+        return {
+          id: s.id || undefined,
+          enabled: !!s.enabled,
+          title: s.title || '',
+          subtitle_html: s.subtitle || '',
+          image: shouldSendSectionImage ? s.image : null,
+          quote: s.quote || '',
+          tags: normalizedTags,
+        };
+      }),
     };
     const obs = this.isEditMode
       ? this.service.updatePost(this.postId, payload, lang)
@@ -491,14 +539,21 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
       category_id: String(v.category_id),
       image: v.image,
       status: Number(v.status) === 1 ? 1 : 0,
-      sections: (v.sections as any[]).map((s) => ({
-        enabled: !!s.enabled,
-        title: s.title || '',
-        subtitle_html: s.subtitle || '',
-        image: s.image,
-        quote: s.quote || '',
-        tags: normalizedTags,
-      })),
+      sections: (v.sections as any[]).map((s, i) => {
+        const sectionImageCtrl = (this.sections.at(i) as FormGroup).get('image');
+        const shouldSendSectionImage =
+          !this.isEditMode ||
+          (!!sectionImageCtrl?.dirty && s.image instanceof File);
+        return {
+          id: s.id || undefined,
+          enabled: !!s.enabled,
+          title: s.title || '',
+          subtitle_html: s.subtitle || '',
+          image: shouldSendSectionImage ? s.image : null,
+          quote: s.quote || '',
+          tags: normalizedTags,
+        };
+      }),
     };
     const obs = this.isEditMode
       ? this.service.updatePost(this.postId, payload, currentLang)
@@ -597,12 +652,10 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private applySectionEnabledState(index: number): void {
     const g = this.sections.at(index) as FormGroup;
-    const enabled = !!g.get('enabled')?.value;
+    // Keep section fields enabled to avoid CVA/UI stale rendering on initial load.
+    // The section visibility/behavior is driven by `enabled` in template + validator.
     ['title', 'subtitle', 'image', 'quote'].forEach((name) => {
-      const c = g.get(name);
-      if (!c) return;
-      if (enabled) c.enable({ emitEvent: false });
-      else c.disable({ emitEvent: false });
+      g.get(name)?.updateValueAndValidity({ emitEvent: false });
     });
   }
 
