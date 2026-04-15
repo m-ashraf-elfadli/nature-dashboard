@@ -129,7 +129,8 @@
                                     class="text-red-val">*</span></label>
                             <p-multiselect [options]="services" formControlName="service_ids" optionValue="id"
                                 optionLabel="name" [placeholder]="'projects.form.placeholders.services' | translate"
-                                [maxSelectedLabels]="3" [showHeader]="false" />
+                                [maxSelectedLabels]="3" [showHeader]="false"
+                                [emptyMessage]="'projects.form.empty_states.services' | translate" />
                             @if(hasError('service_ids')){
                             <p-message severity="error" variant="simple"
                                 size="small">{{'projects.form.validation.services' | translate}}</p-message>

@@ -144,6 +144,9 @@
         "metric_number": "Number",
         "metric_case": "Icon"
       },
+      "empty_states": {
+        "services": "No results found please create a service and publish it to be able to create a project"
+      },
       "validation": {
         "name": "Name is required",
         "overview": "Overview is required",

@@ -7,6 +7,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { CommonModule } from '@angular/common';
 import { GalleryUploadComponent } from '../../../shared/components/gallery-upload/gallery-upload.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TrimInputDirective } from '../../../core/directives/trim-input.directive';
 
 @Component({
   standalone: true,
@@ -17,6 +18,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     InputText,
     GalleryUploadComponent,
     TranslateModule,
+    TrimInputDirective
   ],
   templateUrl: './results-form.component.html',
   styleUrl: './results-form.component.scss',

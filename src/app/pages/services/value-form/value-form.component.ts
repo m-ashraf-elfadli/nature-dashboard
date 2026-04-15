@@ -6,6 +6,7 @@ import { InputText } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TrimInputDirective } from '../../../core/directives/trim-input.directive';
 
 @Component({
   standalone: true,
@@ -16,6 +17,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     ButtonModule,
     FormsModule,
     TranslateModule,
+    TrimInputDirective
   ],
   templateUrl: './value-form.component.html',
   styleUrl: './value-form.component.scss',

@@ -58,7 +58,7 @@
                     <div class="our-field">
                         <label for="name">{{ 'awards.form.labels.name' | translate }} <span
                                 class="required">*</span></label>
-                        <input pInputText id="name" [placeholder]="'awards.form.placeholders.name' | translate"
+                        <input pInputText trimInput id="name" [placeholder]="'awards.form.placeholders.name' | translate"
                             type="text" formControlName="name" />
                         @if(hasError('name')){
                         <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.name' |
@@ -110,7 +110,7 @@
                     <div class="our-field">
                         <label for="description">{{ 'awards.form.labels.description' | translate }} <span
                                 class="required">*</span></label>
-                        <p-editor [placeholder]="'awards.form.placeholders.description' | translate"
+                        <p-editor trimInput [placeholder]="'awards.form.placeholders.description' | translate"
                             formControlName="description" [style]="{ height: '100px' }">
                             <ng-template #header>
                                 <div class="w-full flex align-items-center justify-content-between">

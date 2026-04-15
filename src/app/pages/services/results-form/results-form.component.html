@@ -4,7 +4,7 @@
       {{ 'services.result_form.title_label' | translate }}
       <span class="required">*</span>
     </label>
-    <input id="resultTitle" pInputText formControlName="title"
+    <input id="resultTitle" pInputText trimInput formControlName="title"
       [placeholder]="'services.result_form.title_placeholder' | translate" [class.error]="isFieldInvalid('title')" />
     <small class="error-message" *ngIf="isFieldInvalid('title')">
       {{ getErrorMessage('title') }}
@@ -16,7 +16,7 @@
       {{ 'services.result_form.description_label' | translate }}
       <span class="required">*</span>
     </label>
-    <input id="resultDescription" pInputText formControlName="description"
+    <input id="resultDescription" pInputText trimInput formControlName="description"
       [placeholder]="'services.result_form.description_placeholder' | translate"
       [class.error]="isFieldInvalid('description')" />
     <small class="error-message" *ngIf="isFieldInvalid('description')">

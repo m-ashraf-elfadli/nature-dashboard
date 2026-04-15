@@ -34,6 +34,7 @@ import { AwardsService } from '../../../../services/awards.service';
 import { environment } from '../../../../../environments/environment';
 import { Award } from '../../models/awards.interface';
 import { ApiService } from '../../../../core/services/api.service';
+import { TrimInputDirective } from '../../../../core/directives/trim-input.directive';
 
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
@@ -58,6 +59,7 @@ const STATUS_MAP = {
     SettingsComponent,
     MessageModule,
     ToastModule,
+    TrimInputDirective
   ],
   providers: [MessageService],
   templateUrl: './award-form.component.html',
