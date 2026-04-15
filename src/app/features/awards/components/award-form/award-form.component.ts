@@ -135,7 +135,7 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   initForm() {
     this.form = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', Validators.required],
       image: [null, Validators.required],
       award_date: [null, [Validators.required, this.notFutureDate]],
@@ -484,3 +484,4 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.languageNames[langCode] || langCode.toUpperCase();
   }
 }
+

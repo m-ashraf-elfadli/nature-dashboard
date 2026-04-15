@@ -149,6 +149,7 @@
       },
       "validation": {
         "name": "Name is required",
+        "name_max_length": "Project name cannot exceed 70 characters",
         "overview": "Overview is required",
         "overview_max_length": "This field has a 200-character limit",
         "overview_min_length": "This field must be at least [10] characters long.",
@@ -213,6 +214,7 @@
       },
       "validation": {
         "name": "Name is required",
+        "name_max_length": "Award name cannot exceed 100 characters",
         "date": "Date is Required",
         "date_future": "Date cannot be in the future",
         "desc": "Description is Required",
@@ -734,3 +736,4 @@
     }
   }
 }
+

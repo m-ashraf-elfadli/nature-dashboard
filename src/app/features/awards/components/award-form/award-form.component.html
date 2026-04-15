@@ -60,8 +60,12 @@
                                 class="required">*</span></label>
                         <input pInputText trimInput id="name" [placeholder]="'awards.form.placeholders.name' | translate"
                             type="text" formControlName="name" />
-                        @if(hasError('name')){
+                        @if(hasError('name', 'required')){
                         <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.name' |
+                            translate}}</p-message>
+                        }
+                        @if(hasError('name', 'maxlength')){
+                        <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.name_max_length' |
                             translate}}</p-message>
                         }
                     </div>
@@ -110,7 +114,7 @@
                     <div class="our-field">
                         <label for="description">{{ 'awards.form.labels.description' | translate }} <span
                                 class="required">*</span></label>
-                        <p-editor trimInput [placeholder]="'awards.form.placeholders.description' | translate"
+                        <p-editor [placeholder]="'awards.form.placeholders.description' | translate"
                             formControlName="description" [style]="{ height: '100px' }">
                             <ng-template #header>
                                 <div class="w-full flex align-items-center justify-content-between">
@@ -125,9 +129,9 @@
                                             <button class="ql-underline"></button>
                                         </span>
                                         <!-- Text color -->
-                                        <span class="ql-formats">
+                                        <!-- <span class="ql-formats">
                                             <select class="ql-color"></select>
-                                        </span>
+                                        </span> -->
                                         <!-- Lists -->
                                         <span class="ql-formats">
                                             <button class="ql-list" value="ordered"></button>
@@ -187,3 +191,5 @@
         </div>
     </form>
 </div>
+
+

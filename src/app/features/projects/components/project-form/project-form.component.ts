@@ -144,7 +144,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   initForm() {
     this.form = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(70)]],
       brief: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       overview: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       start_date: ['', Validators.required],
@@ -782,3 +782,4 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updateSettingsComponent();
   }
 }
+
