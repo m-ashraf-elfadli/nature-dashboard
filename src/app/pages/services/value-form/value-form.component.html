@@ -37,6 +37,9 @@
         <span>{{ 'services.value_form.tools_add' | translate }}</span>
       </button>
     </div>
+    <small class="error-message" *ngIf="isFieldInvalid('tools')">
+      {{ getErrorMessage('tools') }}
+    </small>
     <div class="tools-badges" *ngIf="toolsArray.length > 0">
       <div class="tool-badge" *ngFor="let tool of toolsArray.value; let i = index">
         <span>{{ tool }}</span>

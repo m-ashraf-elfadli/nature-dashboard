@@ -21,6 +21,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrl: './value-form.component.scss',
 })
 export class ValueFormComponent implements OnInit {
+  readonly maxTools = 6;
   form!: FormGroup;
   toolInput = '';
   isEditMode = false;
@@ -78,18 +79,26 @@ export class ValueFormComponent implements OnInit {
   }
 
   addTool(): void {
-    if (this.toolInput.trim()) {
-      this.toolsArray.push(this.fb.control(this.toolInput.trim()));
-      this.toolInput = '';
-    }
+    if (!this.toolInput.trim()) return;
+    if (this.isToolsLimitReached) return;
+
+    this.toolsArray.push(this.fb.control(this.toolInput.trim()));
+    this.toolInput = '';
   }
 
   removeTool(index: number): void {
     this.toolsArray.removeAt(index);
   }
 
+  get isToolsLimitReached(): boolean {
+    return this.toolsArray.length >= this.maxTools;
+  }
+
   getErrorMessage(fieldName: string): string {
     const control = this.form.get(fieldName);
+    if (fieldName === 'tools' && this.isToolsLimitReached) {
+      return this.translate.instant(`services.value_form.${fieldName}_max`);
+    }
     if (!control || !control.errors || !control.touched) return '';
 
     if (control.errors['required']) {
@@ -107,6 +116,10 @@ export class ValueFormComponent implements OnInit {
   }
 
   isFieldInvalid(fieldName: string): boolean {
+    if (fieldName === 'tools') {
+      return this.isToolsLimitReached;
+    }
+
     const field = this.form.get(fieldName);
     return !!(field?.invalid && field.touched);
   }

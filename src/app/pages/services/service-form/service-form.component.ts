@@ -608,7 +608,9 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
     optionalFields.forEach((field) => {
       if (Object.prototype.hasOwnProperty.call(item, field)) {
         config[field] =
-          field === 'tools' ? [item.tools || []] : [item[field]];
+          field === 'tools'
+            ? [item.tools || [], Validators.maxLength(6)]
+            : [item[field]];
       }
     });
 
