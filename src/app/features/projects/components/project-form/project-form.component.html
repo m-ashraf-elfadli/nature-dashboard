@@ -178,14 +178,18 @@
                                                 </svg>
                                             </ng-template>
                                         </p-datepicker>
-                                        @if(hasError('start_date')){
+                                        @if(hasError('start_date', 'required')){
                                         <p-message severity="error" variant="simple"
                                             size="small">{{'projects.form.validation.from' | translate}}</p-message>
+                                        }
+                                        @if(hasError('start_date', 'startDateInFutureWhenActive')){
+                                        <p-message severity="error" variant="simple"
+                                            size="small">{{'projects.form.validation.from_date_future_when_active' | translate}}</p-message>
                                         }
                                     </div>
                                     <div class="flex flex-column w-full">
                                         <p-datepicker
-                                            class="w-full {{form.get('isCurrentlyActive')?.value ? 'p-disabled':''}}"
+                                            class="w-full"
                                             appendTo="body" [showIcon]="true" formControlName="end_date"
                                             [placeholder]="'projects.form.placeholders.to' | translate"
                                             dateFormat="dd.mm.yy">

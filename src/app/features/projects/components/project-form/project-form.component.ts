@@ -168,16 +168,44 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   compareDates(control: AbstractControl): ValidationErrors | null {
     const formGroup = control as FormGroup;
-    const startDate = formGroup.get('start_date')?.value;
-    const endDate = formGroup.get('end_date')?.value;
+    const startDateControl = formGroup.get('start_date');
+    const endDateControl = formGroup.get('end_date')
+    const isCurrentlyActive = !!formGroup.get('isCurrentlyActive')?.value;
+    const startDate = startDateControl?.value;
+    const endDate = endDateControl?.value;
+
+    if (startDateControl) {
+      this.toggleControlError(
+        startDateControl,
+        'startDateInFutureWhenActive',
+        false,
+      );
+    }
+
+    if (isCurrentlyActive && startDateControl && startDate) {
+      const normalizedStartDate = this.normalizeDate(startDate);
+      const today = this.normalizeDate(new Date());
+
+      if (normalizedStartDate && today && normalizedStartDate > today) {
+        this.toggleControlError(
+          startDateControl,
+          'startDateInFutureWhenActive',
+          true,
+        );
+      }
+    }
 
     // Skip validation if either date is missing
     if (!startDate || !endDate) {
       return null;
     }
 
-    const start = new Date(startDate).getTime();
-    const end = new Date(endDate).getTime();
+    const start = this.normalizeDate(startDate)?.getTime();
+    const end = this.normalizeDate(endDate)?.getTime();
+
+    if (start === undefined || end === undefined) {
+      return null;
+    }
 
     if (start > end) {
       // Set error on form group (silently, no toast here)
@@ -195,6 +223,37 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     return null;
+  }
+  private normalizeDate(date: Date | string | null): Date | null {
+    if (!date) return null;
+
+    const normalizedDate = new Date(date);
+    if (isNaN(normalizedDate.getTime())) return null;
+
+    normalizedDate.setHours(0, 0, 0, 0);
+    return normalizedDate;
+  }
+
+  private toggleControlError(
+    control: AbstractControl,
+    errorKey: string,
+    shouldSet: boolean,
+  ): void {
+    const currentErrors = control.errors || {};
+
+    if (shouldSet) {
+      control.setErrors({ ...currentErrors, [errorKey]: true });
+      return;
+    }
+
+    if (!currentErrors[errorKey]) {
+      return;
+    }
+
+    const { [errorKey]: _, ...remainingErrors } = currentErrors;
+    control.setErrors(
+      Object.keys(remainingErrors).length ? remainingErrors : null,
+    );
   }
   getDropDowns(lang:string) {
     forkJoin({
@@ -292,9 +351,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       isCurrentlyActive: !data.endDate,
     });
 
-    if(!data.endDate){
-      this.form.get('end_date')?.disable();
-    }
     // Services (ids)
     const serviceIds = (data.services || []).map((s: any) => s.id);
     this.form.get('service_ids')?.setValue(serviceIds);
@@ -433,21 +489,9 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   toggleCurrentlyActive() {
-    const isActive = this.form.get('isCurrentlyActive')?.value;
-    const endDateControl = this.form.get('end_date');
-
-    if (!endDateControl) return;
-
-    if (isActive) {
-      // 🔴 Disable & clear end_date
-      endDateControl.disable({ emitEvent: false });
-      endDateControl.setValue(null);
-    } else {
-      // 🟢 Enable & re-validate end_date
-      endDateControl.enable({ emitEvent: false });
-      endDateControl.setValidators(Validators.required);
-      endDateControl.updateValueAndValidity();
-    }
+    this.form.updateValueAndValidity();
+    this.form.get('start_date')?.updateValueAndValidity();
+    this.form.get('end_date')?.updateValueAndValidity();
   }
 
   hasError(controlName: string, errorName?: string): boolean {

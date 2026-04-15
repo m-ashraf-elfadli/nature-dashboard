@@ -152,6 +152,7 @@
         "brief": "Brief is required",
         "services": "Project Services is required",
         "from": "From date is required",
+        "from_date_future_when_active": "From date cannot be in the future for active projects",
         "to": "To date is required",
         "country": "Country is required",
         "city": "City is required",
