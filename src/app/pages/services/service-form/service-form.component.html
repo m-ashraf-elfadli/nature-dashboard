@@ -144,19 +144,6 @@
         </div>
 
         <div class="our-field">
-          <label for="benefitTagline">
-            {{ 'services.form.benefits.tagline_label' | translate }}
-            <span class="required" *ngIf="benefitEnabledControl.value">*</span>
-          </label>
-          <input type="text" id="benefitTagline"
-            [placeholder]="'services.form.benefits.tagline_placeholder' | translate" formControlName="benefitTagline"
-            pInputText [class.error]="isFieldInvalid('benefitTagline')" />
-          <small class="error-message" *ngIf="isFieldInvalid('benefitTagline')">
-            {{ getFieldError('benefitTagline') }}
-          </small>
-        </div>
-
-        <div class="our-field">
           <label for="benefitBody">
             {{ 'services.form.benefits.body_label' | translate }}
             <span class="required" *ngIf="benefitEnabledControl.value">*</span>

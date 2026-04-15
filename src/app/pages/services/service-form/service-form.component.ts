@@ -230,14 +230,6 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
           Validators.maxLength(70),
         ],
       ],
-      benefitTagline: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(400),
-        ],
-      ],
       benefitBody: [
         '',
         [
@@ -345,7 +337,6 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
           tagline: service.tagline || '',
           status: service.status ? 1 : 0,
           benefitTitle: service.benefitTitle || '',
-          benefitTagline: service.benefitTagline || '',
           benefitBody: service.benefitBody || '',
           benefitEnabled: service.benefitEnabled ?? true,
         });
@@ -422,7 +413,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private toggleBenefitsFields(enabled: boolean): void {
-    const fields = ['benefitTitle', 'benefitTagline', 'benefitBody'];
+    const fields = ['benefitTitle', 'benefitBody'];
     fields.forEach((field) => {
       const control = this.serviceForm.get(field);
       if (enabled) {
@@ -430,7 +421,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(
-            field === 'benefitTitle' ? 30 : 400,
+            field === 'benefitTitle' ? 70 : 400,
           ),
         ]);
         control?.enable();
@@ -494,7 +485,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
     const field = this.serviceForm.get(fieldName);
 
     // For benefit fields, only show invalid if benefits are enabled
-    const benefitFields = ['benefitTitle', 'benefitTagline', 'benefitBody'];
+    const benefitFields = ['benefitTitle', 'benefitBody'];
     if (benefitFields.includes(fieldName)) {
       const benefitEnabled = this.benefitEnabledControl?.value;
       if (!benefitEnabled) {
@@ -957,7 +948,6 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
       name: '',
       tagline: '',
       benefitTitle: '',
-      benefitTagline: '',
       benefitBody: '',
     });
 
