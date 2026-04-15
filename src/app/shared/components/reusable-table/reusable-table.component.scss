@@ -16,6 +16,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        min-width: 500px;
         img {
           width: 32px;
           height: 32px;
@@ -23,6 +24,9 @@
           object-fit: cover;
           width: 44px;
           height: 44px;
+        }
+        span{
+          white-space: wrap;
         }
       }
       .country-chip-cell {
@@ -52,15 +56,47 @@
         display: flex;
         align-items: center;
         gap: 6px;
+        overflow: auto;
         color: var(--Color-Neutral-2000, #333435);
         font-family: var(--Font-Family-Secondary, Dubai);
         font-size: var(--Font-Size-3Xs, 12px);
         font-weight: var(--Font-Weight-Medium, 500);
+        
+        // Scrollbar styling for Webkit browsers (Chrome, Safari, Edge)
+        &::-webkit-scrollbar {
+          height: 6px;
+
+        }
+        
+        &::-webkit-scrollbar-button {
+          display: none;
+        }
+        
+        &::-webkit-scrollbar-track {
+          background: #FCFCFC;
+          box-shadow: 0 1px 0 0 #E8E8E8 inset, 0 -1px 0 0 #F0F0F0 inset;
+          border-radius: 10px;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+          border-radius: 4px;
+          background: var(--Color-Neutral-400, #DEDEDF);
+          
+          &:hover {
+            background: var(--Color-Neutral-600, #6b6b6f);
+          }
+        }
+        
+        // Scrollbar styling for Firefox
+        // scrollbar-width: thin;
+        // scrollbar-color: var(--Color-Neutral-500, #939598) var(--Color-Neutral-200, #f4f4f5);
+        
         .chip {
           white-space: nowrap;
           padding: 2px 8px;
           border-radius: 12px;
           background: var(--Color-Primary-100, #f3f9f1);
+          margin-bottom: 4px;
         }
       }
       .actions-cell {

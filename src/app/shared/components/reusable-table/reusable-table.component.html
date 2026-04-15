@@ -88,7 +88,7 @@
                   <div class="chips-group" [class]="row[col.field]">
                     <span
                       class="chip"
-                      *ngFor="let s of row[col.field] | slice: 0 : 3"
+                      *ngFor="let s of row[col.field]"
                       >{{ s }}</span
                     >
                     @if (row[col.field].length > 3) {
