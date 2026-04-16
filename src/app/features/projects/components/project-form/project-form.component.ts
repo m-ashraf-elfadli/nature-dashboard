@@ -148,7 +148,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       brief: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       overview: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       start_date: ['', Validators.required],
-      end_date: ['', Validators.required],
+      end_date: [''],
       service_ids: [[], Validators.required],
       image_before: [null, Validators.required],
       image_after: [null, Validators.required],
@@ -164,6 +164,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       results: this.fb.array([]),
       metrics: this.fb.array([]),
     }, { validators: this.compareDates.bind(this) });
+
+    this.updateEndDateValidation();
   }
 
   compareDates(control: AbstractControl): ValidationErrors | null {
@@ -351,6 +353,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       isCurrentlyActive: !data.endDate,
     });
 
+    this.updateEndDateValidation();
+
     // Services (ids)
     const serviceIds = (data.services || []).map((s: any) => s.id);
     this.form.get('service_ids')?.setValue(serviceIds);
@@ -489,9 +493,27 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   toggleCurrentlyActive() {
+    this.updateEndDateValidation();
     this.form.updateValueAndValidity();
     this.form.get('start_date')?.updateValueAndValidity();
     this.form.get('end_date')?.updateValueAndValidity();
+  }
+
+  private updateEndDateValidation(): void {
+    const endDateControl = this.form.get('end_date');
+    const isCurrentlyActive = !!this.form.get('isCurrentlyActive')?.value;
+
+    if (!endDateControl) {
+      return;
+    }
+
+    if (isCurrentlyActive) {
+      endDateControl.clearValidators();
+    } else {
+      endDateControl.setValidators(Validators.required);
+    }
+
+    endDateControl.updateValueAndValidity({ emitEvent: false });
   }
 
   hasError(controlName: string, errorName?: string): boolean {
