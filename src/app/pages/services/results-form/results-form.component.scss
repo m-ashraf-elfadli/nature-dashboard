@@ -3,3 +3,23 @@ form {
     flex-direction: column;
     gap: 16px;
 }
+.input-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .info-text {
+        color: var(--Color-Neutral-2000, #333435);
+        font-family: var(--Font-Family-Secondary, Dubai);
+        font-size: var(--Font-Size-Xs, 16px);
+        font-weight: var(--Font-Weight-Light, 300);
+    }
+    .info-badge {
+        border-radius: 8px;
+        padding: 0 8px;
+        background: var(--Color-Primary-200, #ECF6EA);
+        color: var(--Color-Neutral-2000, #333435);
+        font-family: var(--Font-Family-Secondary, Dubai);
+        font-size: var(--Font-Size-2Xs, 14px);
+        font-weight: var(--Font-Weight-Light, 300);
+    }
+}

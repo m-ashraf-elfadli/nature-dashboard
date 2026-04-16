@@ -15,6 +15,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -138,7 +139,7 @@ export class CustomizeAwardSectionFormComponent
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(400),
+          Validators.maxLength(50),
         ],
       ],
       tagline: [
@@ -146,7 +147,7 @@ export class CustomizeAwardSectionFormComponent
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(400),
+          Validators.maxLength(50),
         ],
       ],
       subsection_publish: [true],
@@ -178,23 +179,11 @@ export class CustomizeAwardSectionFormComponent
       id: [data?.id || null],
       title: [
         data?.title || '',
-        publishEnabled
-          ? [
-              Validators.required,
-              Validators.minLength(3),
-              Validators.maxLength(400),
-            ]
-          : [],
+        publishEnabled ? this.getSubsectionValidators('title') : [],
       ],
       subtitle: [
         data?.subtitle || '',
-        publishEnabled
-          ? [
-              Validators.required,
-              Validators.minLength(3),
-              Validators.maxLength(400),
-            ]
-          : [],
+        publishEnabled ? this.getSubsectionValidators('subtitle') : [],
       ],
     });
   }
@@ -210,11 +199,9 @@ export class CustomizeAwardSectionFormComponent
       fields.forEach((field) => {
         const control = group.get(field);
         if (enabled) {
-          control?.setValidators([
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(200),
-          ]);
+          control?.setValidators(
+            this.getSubsectionValidators(field as 'title' | 'subtitle'),
+          );
           control?.enable();
         } else {
           control?.clearValidators();
@@ -223,6 +210,16 @@ export class CustomizeAwardSectionFormComponent
         control?.updateValueAndValidity();
       });
     });
+  }
+
+  private getSubsectionValidators(
+    field: 'title' | 'subtitle',
+  ): ValidatorFn[] {
+    return [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(field === 'title' ? 70 : 200),
+    ];
   }
 
   get subsectionsArray(): FormArray {

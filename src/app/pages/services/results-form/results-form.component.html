@@ -26,6 +26,13 @@
 
   <app-gallery-upload [multiple]="false" formControlName="image" (removed)="onImageRemoved()"
     style="width: 100%"></app-gallery-upload>
+  <div class="input-info">
+    <span class="info-text">
+      {{ 'services.result_form.info' | translate }}
+    </span>
+    <span class="info-badge">{{ 'services.result_form.2_halves' | translate }}</span>
+    <span class="info-badge">{{ 'services.result_form.single_banner' | translate }}</span>
+  </div>
   <small class="error-message" *ngIf="isFieldInvalid('image')">
     {{ getErrorMessage('image') }}
   </small>

@@ -1,11 +1,13 @@
 import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { tap } from 'rxjs';
 
 interface ApiResponse {
     success?: boolean;
     message?: string;
+    hasEnabledAward?: boolean;
     result?: {
         message?: string;
     };
@@ -13,6 +15,7 @@ interface ApiResponse {
 
 export const SuccessInterceptor: HttpInterceptorFn = (req, next) => {
     const messageService = inject(MessageService);
+    const translate = inject(TranslateService);
 
     return next(req).pipe(
         tap((event) => {
@@ -28,10 +31,9 @@ export const SuccessInterceptor: HttpInterceptorFn = (req, next) => {
                 body?.message ||
                 body?.result?.message ||
                 'Operation completed successfully';
-
             messageService.add({
-                severity: 'success',
-                summary: 'Success',
+                severity: body?.hasEnabledAward === true || body?.hasEnabledAward === undefined ? 'success' : 'info',
+                summary: body?.hasEnabledAward === true || body?.hasEnabledAward === undefined ? translate.instant('general.success') : translate.instant('general.award_disabled_info_header_message'),
                 detail: message,
                 life: 3000,
             });

@@ -99,8 +99,14 @@ export class QuestionsFormComponent implements OnInit, OnChanges {
   createAnswer(answer?: any): FormGroup {
     return this.fb.group({
       id: [answer?.id || null],
-      answer_en: [answer?.answer_en || null, Validators.required],
-      answer_ar: [answer?.answer_ar || null, Validators.required],
+      answer_en: [
+        answer?.answer_en || null,
+        [Validators.required, Validators.maxLength(400)],
+      ],
+      answer_ar: [
+        answer?.answer_ar || null,
+        [Validators.required, Validators.maxLength(400)],
+      ],
       is_accepted: [answer?.is_accepted || false],
     });
   }

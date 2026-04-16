@@ -65,7 +65,12 @@
               answer.get('answer_en')?.invalid &&
               answer.get('answer_en')?.touched
             ">
-            {{ 'questions.form.validation.answer_en' | translate }}
+            <ng-container *ngIf="answer.get('answer_en')?.errors?.['required']">
+              {{ 'questions.form.validation.answer_en' | translate }}
+            </ng-container>
+            <ng-container *ngIf="answer.get('answer_en')?.errors?.['maxlength']">
+              {{ 'questions.form.validation.max_length' | translate }}
+            </ng-container>
           </small>
         </div>
 
@@ -81,7 +86,12 @@
               answer.get('answer_ar')?.invalid &&
               answer.get('answer_ar')?.touched
             ">
-            {{ 'questions.form.validation.answer_ar' | translate }}
+            <ng-container *ngIf="answer.get('answer_ar')?.errors?.['required']">
+              {{ 'questions.form.validation.answer_ar' | translate }}
+            </ng-container>
+            <ng-container *ngIf="answer.get('answer_ar')?.errors?.['maxlength']">
+              {{ 'questions.form.validation.max_length' | translate }}
+            </ng-container>
           </small>
         </div>
 

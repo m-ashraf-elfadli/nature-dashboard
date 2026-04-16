@@ -273,6 +273,14 @@ export class ServicesComponent {
     );
   }
   changeStatus(row: Service, value: boolean, e: Event) {
-    this.service.changeStatus(row.id, value).subscribe();
+    this.service.changeStatus(row.id, value).subscribe({
+      next: () => {
+        // row.status = value;
+      },
+      error: (err) => {
+        console.error('Failed to change status', err);
+        this.fetchData(this.paginationObj);
+      }
+    });
   }
 }

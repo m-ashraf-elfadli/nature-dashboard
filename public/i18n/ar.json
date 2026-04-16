@@ -28,8 +28,10 @@
     "pagination_info": "عرض {{first}} إلى {{last}} من أصل {{total}} مُدخل",
     "show": "عرض",
     "entries": "مُدخل",
+    "success":"تمت العملية بنجاح",
     "delete_selected": "حذف المحدد",
-    "check_internet_connection": "يرجى التحقق من اتصالك بالإنترنت"
+    "check_internet_connection": "يرجى التحقق من اتصالك بالإنترنت",
+    "award_disabled_info_header_message":"مخفي حتى يتم إضافة الجوائز أو نشرها"
   },
   "login": {
     "powered_by": "مدعوم بواسطة",
@@ -251,7 +253,21 @@
     "subsection_title_placeholder": "أدخل عنوان القسم الفرعي...",
     "subsection_subtitle": "العنوان الفرعي",
     "subsection_subtitle_placeholder": "أدخل العنوان الفرعي للقسم...",
-    "add_subsection": "إضافة قسم فرعي"
+    "add_subsection": "إضافة قسم فرعي",
+    "validation": {
+      "name_required": "اسم القسم مطلوب",
+      "name_min": "يجب أن يكون اسم القسم 3 أحرف على الأقل",
+      "name_max": "لا يمكن أن يتجاوز اسم القسم 50 حرفاً",
+      "tagline_required": "الشعار التعريفي للقسم مطلوب",
+      "tagline_min": "يجب أن يكون الشعار التعريفي للقسم 3 أحرف على الأقل",
+      "tagline_max": "لا يمكن أن يتجاوز الشعار التعريفي للقسم 50 حرفاً",
+      "title_required": "عنوان القسم الفرعي مطلوب",
+      "title_min": "يجب أن يكون عنوان القسم الفرعي 3 أحرف على الأقل",
+      "title_max": "لا يمكن أن يتجاوز عنوان القسم الفرعي 70 حرفاً",
+      "subtitle_required": "العنوان الفرعي للقسم مطلوب",
+      "subtitle_min": "يجب أن يكون العنوان الفرعي للقسم 3 أحرف على الأقل",
+      "subtitle_max": "لا يمكن أن يتجاوز العنوان الفرعي للقسم 200 حرف"
+    }
   },
   "common": {
     "delete": "حذف",
@@ -407,7 +423,7 @@
       "title_required": "العنوان مطلوب",
       "title_min": "العنوان يجب أن يكون على الأقل 3 أحرف",
       "title_max": "العنوان لا يمكن أن يتجاوز 45 حرفاً",
-      "tool_max": "لا يمكن أن يتجاوز طول الأداة 100 حرف",
+      "tool_max": "لا يمكن أن يتجاوز طول الأداة 50 حرفاً",
       "description_label": "الوصف",
       "description_placeholder": "أدخل وصف القيمة",
       "description_required": "الوصف مطلوب",
@@ -434,10 +450,14 @@
       "description_required": "الوصف مطلوب",
       "description_min": "الوصف يجب أن يكون على الأقل 3 أحرف",
       "description_max": "الوصف لا يمكن أن يتجاوز 215 حرفاً",
+      "image_note": "ملاحظة: يرجى رفع صورة واضحة وعالية الجودة ليتم عرض النتيجة بالشكل المناسب.",
       "image_required": "صورة النتيجة والتأثير مطلوبة",
       "cancel": "إلغاء",
       "save": "حفظ",
-      "update": "تحديث"
+      "update": "تحديث",
+      "info": "ملاحظة: ",
+      "2_halves": "نصفان 2:1 (665x347 px)",
+      "single_banner": "بانر فردي 4:1 (1342x347 px)"
     }
   },
   "testimonials": {

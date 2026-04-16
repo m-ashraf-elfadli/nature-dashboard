@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
@@ -25,7 +25,7 @@ import { TrimInputDirective } from '../../../core/directives/trim-input.directiv
 export class ValueFormComponent implements OnInit {
   readonly maxTools = 6;
   form!: FormGroup;
-  toolInput = '';
+  toolInputControl = new FormControl('', [Validators.maxLength(50)]);
   isEditMode = false;
   rowData: any = null;
 
@@ -81,11 +81,17 @@ export class ValueFormComponent implements OnInit {
   }
 
   addTool(): void {
-    if (!this.toolInput.trim()) return;
+    this.toolInputControl.markAsTouched();
+    this.toolInputControl.updateValueAndValidity();
+
+    if (this.toolInputControl.invalid) return;
+
+    const toolValue = this.toolInputControl.value?.trim() || '';
+    if (!toolValue) return;
     if (this.isToolsLimitReached) return;
 
-    this.toolsArray.push(this.fb.control(this.toolInput.trim()));
-    this.toolInput = '';
+    this.toolsArray.push(this.fb.control(toolValue));
+    this.toolInputControl.reset('');
   }
 
   removeTool(index: number): void {
@@ -117,6 +123,16 @@ export class ValueFormComponent implements OnInit {
     return '';
   }
 
+  getToolInputErrorMessage(): string {
+    if (!this.toolInputControl.touched || !this.toolInputControl.errors) return '';
+
+    if (this.toolInputControl.errors['maxlength']) {
+      return this.translate.instant('services.value_form.tool_max');
+    }
+
+    return '';
+  }
+
   isFieldInvalid(fieldName: string): boolean {
     if (fieldName === 'tools') {
       return this.isToolsLimitReached;
@@ -124,6 +140,10 @@ export class ValueFormComponent implements OnInit {
 
     const field = this.form.get(fieldName);
     return !!(field?.invalid && field.touched);
+  }
+
+  isToolInputInvalid(): boolean {
+    return !!(this.toolInputControl.invalid && this.toolInputControl.touched);
   }
 
   submit() {
