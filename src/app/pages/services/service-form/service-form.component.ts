@@ -574,8 +574,8 @@ export class ServiceFormComponent implements OnInit, OnDestroy, AfterViewInit {
     item: ServiceItemFormValue,
     kind: 'stage' | 'value' | 'impact',
   ): FormGroup {
-    const titleMax = 70;
-    const descriptionMax = kind === 'value' ? 200 : 215;
+    const titleMax = kind === 'value' ? 45 : 70;
+    const descriptionMax = kind === 'value' ? 150 : 215;
     const config: any = {
       title: [
         item.title,
