@@ -28,7 +28,8 @@
     "pagination_info": "عرض {{first}} إلى {{last}} من أصل {{total}} مُدخل",
     "show": "عرض",
     "entries": "مُدخل",
-    "delete_selected": "حذف المحدد"
+    "delete_selected": "حذف المحدد",
+    "check_internet_connection": "يرجى التحقق من اتصالك بالإنترنت"
   },
   "login": {
     "powered_by": "مدعوم بواسطة",
@@ -715,4 +716,3 @@
     }
   }
 }
-

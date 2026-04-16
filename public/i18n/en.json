@@ -28,7 +28,8 @@
     "pagination_info": "Showing {{first}} to {{last}} of {{total}} entries",
     "show": "Show",
     "entries": "entries",
-    "delete_selected": "Delete Selected"
+    "delete_selected": "Delete Selected",
+    "check_internet_connection": "Please check your internet connection"
   },
   "login": {
     "powered_by": "Powered By",
@@ -736,4 +737,3 @@
     }
   }
 }
-
