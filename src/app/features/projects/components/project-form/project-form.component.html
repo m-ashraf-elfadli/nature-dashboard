@@ -300,13 +300,19 @@
                         </div>
                         }
                         <div class="our-field">
-                            <label for="section_title">{{ 'projects.form.labels.section_title' | translate }}</label>
+                            <label for="section_title">
+                                {{ 'projects.form.labels.section_title' | translate }}
+                                <span class="text-red-val">*</span>
+                            </label>
                             <input pInputText type="text" formControlName="section_title" id="section_title"
                                 [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
                                 [placeholder]="currentLanguage() === 'ar'? 'من فضلك قم بادخال اسم القسم ...':'Enter section title'">
                         </div>
                         <div class="our-field">
-                            <label for="section_body">{{ 'projects.form.labels.section_body' | translate }}</label>
+                            <label for="section_body">
+                                {{ 'projects.form.labels.section_body' | translate }}
+                                <span class="text-red-val">*</span>
+                            </label>
                             <p-editor formControlName="section_body" [style]="{ height: '100px' }"
                                 [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
                                 [placeholder]="currentLanguage() === 'ar'? 'من فضلك قم بادخال وصف القسم ...':'Enter section body'">
