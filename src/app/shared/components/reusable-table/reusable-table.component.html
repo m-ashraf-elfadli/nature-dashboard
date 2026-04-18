@@ -151,11 +151,11 @@
                   />
                 }
                 @case ("text-editor") {
-                  <div [innerHTML]="row[col.field]"></div>
+                  <div class="text-editor-cell" [innerHTML]="row[col.field]"></div>
                 }
 
                 @default {
-                  <span>{{ row[col.field] }}</span>
+                  <span class="text-cell">{{ row[col.field] }}</span>
                 }
               }
             </td>

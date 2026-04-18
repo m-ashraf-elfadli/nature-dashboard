@@ -16,7 +16,6 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        min-width: 500px;
         img {
           width: 32px;
           height: 32px;
@@ -104,6 +103,13 @@
         align-items: center;
         gap: 10px;
       }
+      .text-cell {
+        display: block;
+        white-space: wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+      }
     }
     ::ng-deep {
       .p-datatable-tbody > tr > td {
@@ -134,9 +140,12 @@
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
   border-bottom: none !important;
   max-width: 25vw;
-  overflow: hidden;
+  // overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  & > * {
+    width: 100%;
+  }
 }
 :host ::ng-deep {
   .pi-trash {
