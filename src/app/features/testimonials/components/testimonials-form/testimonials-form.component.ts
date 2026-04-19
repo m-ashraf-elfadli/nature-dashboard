@@ -47,12 +47,12 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
 
   private initForm() {
     this.form = this.fb.group({
-      clientNameEn: ['', Validators.required],
-      clientNameAr: ['', Validators.required],
-      jobTitleEn: ['', Validators.required],
-      jobTitleAr: ['', Validators.required],
-      testimonialEn: ['', Validators.required],
-      testimonialAr: ['', Validators.required]
+      clientNameEn: ['', [Validators.required, Validators.maxLength(60)]],
+      clientNameAr: ['', [Validators.required, Validators.maxLength(60)]],
+      jobTitleEn: ['', [Validators.required, Validators.maxLength(60)]],
+      jobTitleAr: ['', [Validators.required, Validators.maxLength(60)]],
+      testimonialEn: ['', [Validators.required, Validators.maxLength(1000)]],
+      testimonialAr: ['', [Validators.required, Validators.maxLength(1000)]]
     });
   }
 
@@ -135,5 +135,10 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
   isFieldInvalid(fieldName: string): boolean {
     const field = this.form.get(fieldName);
     return !!(field && field.invalid && field.touched);
+  }
+
+  hasError(fieldName: string, errorKey: string): boolean {
+    const field = this.form.get(fieldName);
+    return !!(field && field.touched && field.hasError(errorKey));
   }
 }

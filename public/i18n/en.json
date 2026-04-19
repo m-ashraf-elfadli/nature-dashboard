@@ -511,10 +511,16 @@
       "validation": {
         "client_name_en": "Client name in English is required",
         "client_name_ar": "Client name in Arabic is required",
+        "client_name_en_max": "Client name in English must not exceed 60 characters",
+        "client_name_ar_max": "Client name in Arabic must not exceed 60 characters",
         "job_title_en": "Job title in English is required",
         "job_title_ar": "Job title in Arabic is required",
+        "job_title_en_max": "Job title in English must not exceed 60 characters",
+        "job_title_ar_max": "Job title in Arabic must not exceed 60 characters",
         "testimonial_en": "Testimonial in English is required",
-        "testimonial_ar": "Testimonial in Arabic is required"
+        "testimonial_ar": "Testimonial in Arabic is required",
+        "testimonial_en_max": "Testimonial in English must not exceed 1000 characters",
+        "testimonial_ar_max": "Testimonial in Arabic must not exceed 1000 characters"
       },
       "btns": {
         "save_create": "Save and create new",

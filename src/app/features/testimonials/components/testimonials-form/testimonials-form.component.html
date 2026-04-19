@@ -15,7 +15,11 @@
       />
       @if (isFieldInvalid("clientNameEn")) {
         <span class="text-red-val">
-          {{ "testimonials.form.validation.client_name_en" | translate }}
+          @if (hasError("clientNameEn", "required")) {
+            {{ "testimonials.form.validation.client_name_en" | translate }}
+          } @else if (hasError("clientNameEn", "maxlength")) {
+            {{ "testimonials.form.validation.client_name_en_max" | translate }}
+          }
         </span>
       }
     </div>
@@ -35,7 +39,11 @@
       />
       @if (isFieldInvalid("clientNameAr")) {
         <span class="text-red-val">
-          {{ "testimonials.form.validation.client_name_ar" | translate }}
+          @if (hasError("clientNameAr", "required")) {
+            {{ "testimonials.form.validation.client_name_ar" | translate }}
+          } @else if (hasError("clientNameAr", "maxlength")) {
+            {{ "testimonials.form.validation.client_name_ar_max" | translate }}
+          }
         </span>
       }
     </div>
@@ -55,7 +63,11 @@
       />
       @if (isFieldInvalid("jobTitleEn")) {
         <span class="text-red-val">
-          {{ "testimonials.form.validation.job_title_en" | translate }}
+          @if (hasError("jobTitleEn", "required")) {
+            {{ "testimonials.form.validation.job_title_en" | translate }}
+          } @else if (hasError("jobTitleEn", "maxlength")) {
+            {{ "testimonials.form.validation.job_title_en_max" | translate }}
+          }
         </span>
       }
     </div>
@@ -75,7 +87,11 @@
       />
       @if (isFieldInvalid("jobTitleAr")) {
         <span class="text-red-val">
-          {{ "testimonials.form.validation.job_title_ar" | translate }}
+          @if (hasError("jobTitleAr", "required")) {
+            {{ "testimonials.form.validation.job_title_ar" | translate }}
+          } @else if (hasError("jobTitleAr", "maxlength")) {
+            {{ "testimonials.form.validation.job_title_ar_max" | translate }}
+          }
         </span>
       }
     </div>
@@ -96,7 +112,11 @@
       ></textarea>
       @if (isFieldInvalid("testimonialEn")) {
         <span class="text-red-val">
-          {{ "testimonials.form.validation.testimonial_en" | translate }}
+          @if (hasError("testimonialEn", "required")) {
+            {{ "testimonials.form.validation.testimonial_en" | translate }}
+          } @else if (hasError("testimonialEn", "maxlength")) {
+            {{ "testimonials.form.validation.testimonial_en_max" | translate }}
+          }
         </span>
       }
     </div>
@@ -117,7 +137,11 @@
       ></textarea>
       @if (isFieldInvalid("testimonialAr")) {
         <span class="text-red-val">
-          {{ "testimonials.form.validation.testimonial_ar" | translate }}
+          @if (hasError("testimonialAr", "required")) {
+            {{ "testimonials.form.validation.testimonial_ar" | translate }}
+          } @else if (hasError("testimonialAr", "maxlength")) {
+            {{ "testimonials.form.validation.testimonial_ar_max" | translate }}
+          }
         </span>
       }
     </div>
