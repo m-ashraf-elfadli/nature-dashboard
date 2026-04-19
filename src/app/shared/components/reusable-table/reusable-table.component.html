@@ -91,11 +91,11 @@
                       *ngFor="let s of row[col.field]"
                       >{{ s }}</span
                     >
-                    @if (row[col.field].length > 3) {
+                    <!-- @if (row[col.field].length > 3) {
                       <span class="chip plus"
                         >+ {{ row[col.field].length - 3 }}</span
                       >
-                    }
+                    } -->
                   </div>
                 }
                 @case ("languages-chips") {
