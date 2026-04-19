@@ -76,12 +76,12 @@ export class ServicesComponent {
   columns: TableColumn<any>[] = [
     {
       field: 'name',
-      header: 'Service',
+      header: 'services.list.table_headers.service',
       type: 'text',
     },
     {
       field: 'tagline',
-      header: 'Description',
+      header: 'services.list.table_headers.description',
       type: 'text',
     },
 
