@@ -11,3 +11,19 @@
     margin-top: 24px;
   }
 }
+
+:host ::ng-deep app-reusable-table td.testimonial-column {
+  width: 500px;
+  min-width: 500px;
+}
+
+:host ::ng-deep app-reusable-table td.testimonial-column .text-cell {
+   width: 100%;
+  display: -webkit-box !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}

@@ -453,7 +453,10 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createMetric(data?: any): FormGroup {
     return this.fb.group({
-      metric_title: [data?.metric_title || '', Validators.required],
+      metric_title: [
+        data?.metric_title || '',
+        [Validators.required, Validators.maxLength(20)],
+      ],
       metric_number: [
         data?.metric_number || '',
         [Validators.required, Validators.max(10000)],

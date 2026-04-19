@@ -91,7 +91,7 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
       field: 'Testimonial',
       header: 'testimonials.list.table_headers.testimonial',
       type: 'text',
-      class: 'max-w-15rem',
+      class:'testimonial-column',
     },
     {
       field: 'createdAt',

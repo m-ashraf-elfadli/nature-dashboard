@@ -372,6 +372,11 @@
                                     <input pInputText type="text" formControlName="metric_title" id="metric_title"
                                     [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
                                         [placeholder]="currentLanguage() === 'ar'?'أدخل عنوان القسم':'Enter section title'">
+                                    @if (hasMetricControlError($index, 'metric_title', 'maxlength')) {
+                                    <p-message severity="error" variant="simple" size="small">
+                                        {{ 'projects.form.validation.metricTitle_max' | translate }}
+                                    </p-message>
+                                    }
                                 </div>
                                 <div class="number-field">
                                     <input type="number" formControlName="metric_number" id="metric_number" pInputText
@@ -460,6 +465,4 @@
         </div>
     </form>
 </div>
-
-
 
