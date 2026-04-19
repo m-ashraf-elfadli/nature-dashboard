@@ -40,7 +40,7 @@ import { forkJoin } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ProjectById } from '../../models/projects.interface';
-import { environment } from '../../../../../environments/environment.prod';
+import { environment } from '../../../../../environments/environment';
 import { ApiService } from '../../../../core/services/api.service';
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
