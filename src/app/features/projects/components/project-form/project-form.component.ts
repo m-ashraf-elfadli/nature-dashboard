@@ -456,7 +456,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       metric_title: [data?.metric_title || '', Validators.required],
       metric_number: [
         data?.metric_number || '',
-        [Validators.required, Validators.max(100)],
+        [Validators.required, Validators.max(10000)],
       ],
       metric_case: [data?.metric_case || '', Validators.required],
     });
