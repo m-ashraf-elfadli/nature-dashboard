@@ -110,6 +110,17 @@
         text-overflow: ellipsis;
         width: 100%;
       }
+      .text-editor-cell{
+        ::ng-deep{
+          *{
+            width: 100%;
+            white-space: wrap;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
     }
     ::ng-deep {
       .p-datatable-tbody > tr > td {
