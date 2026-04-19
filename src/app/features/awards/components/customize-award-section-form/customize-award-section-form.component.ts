@@ -515,7 +515,7 @@ export class CustomizeAwardSectionFormComponent
   }
 
   onDiscard(): void {
-    this.router.navigate(['/customize']);
+    this.router.navigate(['/awards']);
   }
 
   onSave(): void {
