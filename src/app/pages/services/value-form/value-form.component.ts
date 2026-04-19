@@ -23,7 +23,7 @@ import { TrimInputDirective } from '../../../core/directives/trim-input.directiv
   styleUrl: './value-form.component.scss',
 })
 export class ValueFormComponent implements OnInit {
-  readonly maxTools = 6;
+  readonly maxTools = 2;
   form!: FormGroup;
   toolInputControl = new FormControl('', [Validators.maxLength(50)]);
   isEditMode = false;

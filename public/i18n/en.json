@@ -438,7 +438,7 @@
       "description_max": "Description cannot exceed 150 characters",
       "tools_label": "Tools Used",
       "tools_placeholder": "Enter tool name",
-      "tools_max": "You can add a maximum of 6 tools",
+      "tools_max": "You can add a maximum of 2 tools",
       "tools_add": "Add",
       "cancel": "Cancel",
       "save": "Save",
