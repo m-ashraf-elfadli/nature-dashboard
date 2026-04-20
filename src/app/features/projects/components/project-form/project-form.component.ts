@@ -452,17 +452,21 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   createMetric(data?: any): FormGroup {
-    return this.fb.group({
-      metric_title: [
-        data?.metric_title || '',
-        [Validators.required, Validators.maxLength(25)],
-      ],
-      metric_number: [
-        data?.metric_number || '',
-        [Validators.required, Validators.maxLength(7)],
-      ],
-      metric_case: [data?.metric_case || '', Validators.required],
+    const group = this.fb.group({
+      metric_title: ['', [Validators.required, Validators.maxLength(25)]],
+      metric_number: ['', [Validators.required, Validators.maxLength(7)]],
+      metric_case: [null, Validators.required],
     });
+
+    if (data) {
+      group.patchValue({
+        metric_title: data.metric_title ?? '',
+        metric_number: data.metric_number ?? '',
+        metric_case: data.metric_case ?? null,
+      });
+    }
+
+    return group;
   }
   toggleResults() {
     if (!this.form.get('enableResults')?.value) {
@@ -753,6 +757,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.currentLanguage.set(lang);
     this.commitLanguage(lang);
     this.getDropDowns(this.currentLanguage());
+    this.resetLocalizedFormState();
 
     const currentStatus = this.languageStatuses.get(lang)?.status;
     if (currentStatus !== 'completed') {
@@ -766,16 +771,23 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private clearFormForNewLanguage(): void {
+  private resetLocalizedFormState(): void {
     this.form.patchValue({
       name: '',
       brief: '',
       overview: '',
+      enableResults: false,
+      enableMetrics: false,
     });
 
     this.results.clear();
     this.metrics.clear();
+    this.cachedResults = [];
+    this.cachedMetrics = [];
+  }
 
+  private clearFormForNewLanguage(): void {
+    this.resetLocalizedFormState();
     this.form.markAsPristine();
   }
 
