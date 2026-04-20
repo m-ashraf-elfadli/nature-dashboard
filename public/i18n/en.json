@@ -379,6 +379,7 @@
           "metricTitle_min": "Insight title must be at least 3 characters",
           "metricTitle_max": "Insight title cannot exceed 30 characters",
           "number_placeholder": "Enter number",
+          "metricNumber_max": "Metrics number cannot exceed 7 characters",
           "number_min": "Minimum value is 0",
           "number_invalid": "Only numbers are allowed",
           "add_new": "Add New Insight"
