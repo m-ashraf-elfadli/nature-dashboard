@@ -379,7 +379,7 @@
                                     }
                                 </div>
                                 <div class="number-field">
-                                    <input type="number" formControlName="metric_number" id="metric_number" pInputText
+                                    <input type="text" formControlName="metric_number" id="metric_number" pInputText
                                     [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
                                         [placeholder]="currentLanguage() === 'ar'?'الرقم':'Number'">
                                     @if (hasMetricControlError($index, 'metric_number', 'max')) {
