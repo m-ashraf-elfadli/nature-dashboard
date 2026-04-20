@@ -459,7 +459,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
       ],
       metric_number: [
         data?.metric_number || '',
-        [Validators.required, Validators.max(10000)],
+        [Validators.required, Validators.maxLength(7)],
       ],
       metric_case: [data?.metric_case || '', Validators.required],
     });
@@ -548,11 +548,13 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getMetricNumberMaxMessage(index: number): string {
     const control = this.metrics.at(index)?.get('metric_number');
-    const maxErr = control?.errors?.['max'] as { max: number } | undefined;
+    const maxErr = control?.errors?.['maxlength'] as
+      | { requiredLength: number }
+      | undefined;
     if (!maxErr) return '';
     return this.translate.instant(
       'projects.form.validation.metric_number_max',
-      { max: maxErr.max },
+      { max: maxErr.requiredLength },
     );
   }
 

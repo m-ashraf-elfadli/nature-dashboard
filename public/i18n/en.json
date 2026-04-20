@@ -167,7 +167,7 @@
         "image_after": "Image after is required",
         "image_before": "Image before is required",
         "start_date_after_end_date": "Start date cannot be after end date",
-        "metric_number_max": "Metric number must not exceed {{max}}",
+        "metric_number_max": "Metric number cannot exceed {{max}} characters",
         "metricTitle_max": "Metric title cannot exceed 25 characters"
       },
       "btns": {
