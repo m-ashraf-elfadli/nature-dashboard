@@ -582,7 +582,8 @@
   "gallery_upload": {
     "click": "اضغط للرفع",
     "drag_drop": "أو اسحب وأفلت الملفات هنا",
-    "hint": "JPG أو PNG (الحد الأقصى {{max}} ميجابايت)"
+    "hint": "JPG أو JPEG أو PNG أو WEBP (الحد الأقصى {{max}} ميجابايت)",
+    "max_size_error": "يجب ألا يتجاوز حجم الصورة {{max}} ميجابايت."
   },
   "navigation": {
     "dashboard": "لوحة التحكم",

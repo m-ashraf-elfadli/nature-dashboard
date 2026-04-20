@@ -585,7 +585,8 @@
   "gallery_upload": {
     "click": "Click to upload",
     "drag_drop": "or drag and drop files here",
-    "hint": "JPG or PNG (max {{max}}MB)"
+    "hint": "JPG, JPEG, PNG or WEBP (max {{max}}MB)",
+    "max_size_error": "Image size must not exceed {{max}}MB."
   },
   "navigation": {
     "dashboard": "Dashboard",
