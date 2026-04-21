@@ -1,7 +1,6 @@
 export const environment = {
   production: true,
-  enableBlogs: false,
-  baseUrl: 'http://193.203.162.68/api',
-  mediaUrl:
-    'http://193.203.162.68/api/media/',
+  enableBlogs: true,
+  baseUrl: 'https://developer.neas.ae/api',
+  mediaUrl: 'https://developer.neas.ae/api/media/',
 };
