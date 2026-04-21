@@ -346,10 +346,14 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!val) return;
     this.sectionTags.push(this.fb.control(val));
     this.sectionTagInput = '';
+    this.sectionTags.markAsDirty();
+    this.form.markAsDirty();
   }
 
   removeSectionTag(index: number): void {
     this.sectionTags.removeAt(index);
+    this.sectionTags.markAsDirty();
+    this.form.markAsDirty();
   }
 
   hasError(
@@ -417,15 +421,17 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
       status: Number(v.status) === 1 ? 1 : 0,
       sections: (v.sections as any[]).map((s, i) => {
         const sectionImageCtrl = (this.sections.at(i) as FormGroup).get('image');
-        const shouldSendSectionImage =
-          !this.isEditMode ||
-          (!!sectionImageCtrl?.dirty && s.image instanceof File);
+        const sectionImagePayload = !this.isEditMode
+          ? s.image
+          : sectionImageCtrl?.dirty
+            ? (s.image instanceof File ? s.image : null)
+            : undefined;
         return {
           id: s.id || undefined,
           enabled: !!s.enabled,
           title: s.title || '',
           subtitle_html: s.subtitle || '',
-          image: shouldSendSectionImage ? s.image : null,
+          image: sectionImagePayload,
           quote: s.quote || '',
           tags: normalizedTags,
         };
@@ -541,15 +547,17 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
       status: Number(v.status) === 1 ? 1 : 0,
       sections: (v.sections as any[]).map((s, i) => {
         const sectionImageCtrl = (this.sections.at(i) as FormGroup).get('image');
-        const shouldSendSectionImage =
-          !this.isEditMode ||
-          (!!sectionImageCtrl?.dirty && s.image instanceof File);
+        const sectionImagePayload = !this.isEditMode
+          ? s.image
+          : sectionImageCtrl?.dirty
+            ? (s.image instanceof File ? s.image : null)
+            : undefined;
         return {
           id: s.id || undefined,
           enabled: !!s.enabled,
           title: s.title || '',
           subtitle_html: s.subtitle || '',
-          image: shouldSendSectionImage ? s.image : null,
+          image: sectionImagePayload,
           quote: s.quote || '',
           tags: normalizedTags,
         };
