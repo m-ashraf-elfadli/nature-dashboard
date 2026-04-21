@@ -4,8 +4,4 @@ export const environment = {
   baseUrl: 'https://lavenderblush-reindeer-325183.hostingersite.com/api',
   mediaUrl:
     'https://lavenderblush-reindeer-325183.hostingersite.com/api/media/',
-  blogs: {
-    categoriesApiPath: 'categories',
-    postsApiPath: 'blogs',
-  },
 };

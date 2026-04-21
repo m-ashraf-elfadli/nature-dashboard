@@ -15,7 +15,6 @@ import { PaginationObj } from '../../../../core/models/global.interface';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { ExportService } from '../../../../shared/services/export.service';
-import { environment } from '../../../../../environments/environment';
 import { BlogsService } from '../../services/blogs.service';
 import { BlogPost } from '../../models/blogs.model';
 
@@ -230,7 +229,7 @@ export class BlogPostsComponent implements OnInit, OnDestroy {
   }
 
   export(): void {
-    this.exportService.exportModule(environment.blogs.postsApiPath);
+    this.exportService.exportModule('blogs');
   }
 
   changeStatus(row: BlogPost, value: boolean, _e?: Event): void {

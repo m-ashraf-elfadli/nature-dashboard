@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LocaleComplete } from '../../projects/models/projects.interface';
 import { ApiService } from '../../../core/services/api.service';
-import { environment } from '../../../../environments/environment';
 import { PaginationObj } from '../../../core/models/global.interface';
 import {
   BlogCategory,
@@ -65,11 +64,11 @@ export class BlogsService {
   }
 
   private categoriesPath(): string {
-    return environment.blogs.categoriesApiPath;
+    return 'categories';
   }
 
   private postsPath(): string {
-    return environment.blogs.postsApiPath;
+    return 'blogs';
   }
 
   private mapCategoryListResponse(res: any): { result: BlogCategory[]; total: number } {
