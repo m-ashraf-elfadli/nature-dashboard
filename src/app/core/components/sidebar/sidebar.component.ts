@@ -10,6 +10,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription, filter } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 interface NavChild {
   labelKey: string;
@@ -183,30 +184,32 @@ export class SidebarComponent implements OnInit, OnDestroy {
         </svg>`),
         route: '/questions',
       },
-      {
-        labelKey: 'navigation.blogs',
-        icon: this.sanitizer.bypassSecurityTrustHtml(`
+      ...(environment.enableBlogs
+        ? [{
+          labelKey: 'navigation.blogs',
+          icon: this.sanitizer.bypassSecurityTrustHtml(`
            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M9.16602 3.33337H3.33268C2.89065 3.33337 2.46673 3.50897 2.15417 3.82153C1.84161 4.13409 1.66602 4.55801 1.66602 5.00004V16.6667C1.66602 17.1087 1.84161 17.5327 2.15417 17.8452C2.46673 18.1578 2.89065 18.3334 3.33268 18.3334H14.9993C15.4414 18.3334 15.8653 18.1578 16.1779 17.8452C16.4904 17.5327 16.666 17.1087 16.666 16.6667V10.8334" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M15.416 2.08332C15.7475 1.7518 16.1972 1.56555 16.666 1.56555C17.1349 1.56555 17.5845 1.7518 17.916 2.08332C18.2475 2.41484 18.4338 2.86448 18.4338 3.33332C18.4338 3.80216 18.2475 4.2518 17.916 4.58332L9.99935 12.5L6.66602 13.3333L7.49935 9.99999L15.416 2.08332Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`),
-        iconActive: this.sanitizer.bypassSecurityTrustHtml(`
+          iconActive: this.sanitizer.bypassSecurityTrustHtml(`
            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M9.16602 3.33337H3.33268C2.89065 3.33337 2.46673 3.50897 2.15417 3.82153C1.84161 4.13409 1.66602 4.55801 1.66602 5.00004V16.6667C1.66602 17.1087 1.84161 17.5327 2.15417 17.8452C2.46673 18.1578 2.89065 18.3334 3.33268 18.3334H14.9993C15.4414 18.3334 15.8653 18.1578 16.1779 17.8452C16.4904 17.5327 16.666 17.1087 16.666 16.6667V10.8334" stroke="#689E5B" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M15.416 2.08332C15.7475 1.7518 16.1972 1.56555 16.666 1.56555C17.1349 1.56555 17.5845 1.7518 17.916 2.08332C18.2475 2.41484 18.4338 2.86448 18.4338 3.33332C18.4338 3.80216 18.2475 4.2518 17.916 4.58332L9.99935 12.5L6.66602 13.3333L7.49935 9.99999L15.416 2.08332Z" stroke="#689E5B" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`),
-        route: '/blogs/categories',
-        children: [
-          {
-            labelKey: 'navigation.blog_categories',
-            route: '/blogs/categories',
-          },
-          {
-            labelKey: 'navigation.blog_posts',
-            route: '/blogs/posts',
-          },
-        ],
-      },
+          route: '/blogs/categories',
+          children: [
+            {
+              labelKey: 'navigation.blog_categories',
+              route: '/blogs/categories',
+            },
+            {
+              labelKey: 'navigation.blog_posts',
+              route: '/blogs/posts',
+            },
+          ],
+        }]
+        : []),
     ];
   }
 
