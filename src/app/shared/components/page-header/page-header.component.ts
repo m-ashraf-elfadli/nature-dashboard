@@ -29,6 +29,8 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
 
   @Input() title: string = '';
+  /** When false, the circular back control is hidden (e.g. top-level list pages under a section). */
+  @Input() showBackButton = true;
   breadcrumbs: BreadcrumbItem[] = [];
 
   private destroy$ = new Subject<void>();

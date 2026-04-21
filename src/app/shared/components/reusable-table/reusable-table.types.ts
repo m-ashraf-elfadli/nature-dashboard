@@ -13,6 +13,7 @@ export interface TableColumn<T> {
     | 'badge'
     | 'image'
     | 'date'
+    | 'views'
     | 'custom'
     | 'chip'
     | 'avatar-and-name'

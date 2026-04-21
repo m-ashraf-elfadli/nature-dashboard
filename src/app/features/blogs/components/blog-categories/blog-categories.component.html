@@ -1,0 +1,37 @@
+<div class="page-content">
+  <app-page-header [showBackButton]="false"></app-page-header>
+  <h1>{{ 'blogs.categories.page_title' | translate }}</h1>
+  <app-reusable-table
+    [data]="data"
+    [config]="config"
+    [actions]="actions"
+    [totalRecords]="totalRecords"
+    [filterItems]="filterItems"
+    [emptyStateInfo]="emptyStateInfo"
+    (paginationChange)="onPaginationChange($event)"
+    (selectionChange)="selectionChange($event)"
+    (onServerSideFilterChange)="onFilterChange($event)"
+  />
+</div>
+
+<p-dialog
+  styleClass="form-dialog"
+  [modal]="true"
+  dismissableMask="true"
+  [(visible)]="visible"
+  [style]="{ width: '60rem' }"
+  (onHide)="onDialogHide()"
+>
+  <ng-template pTemplate="header">
+    @if (currentCategoryId) {
+      <h2>{{ 'blogs.categories.form.edit_title' | translate }}</h2>
+    } @else {
+      <h2>{{ 'blogs.categories.form.title' | translate }}</h2>
+    }
+  </ng-template>
+
+  <app-blog-category-form
+    [categoryId]="currentCategoryId"
+    (formClose)="handleFormClose($event)"
+  />
+</p-dialog>

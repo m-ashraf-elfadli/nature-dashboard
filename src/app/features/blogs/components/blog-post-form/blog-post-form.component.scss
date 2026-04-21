@@ -1,0 +1,201 @@
+%section-shared-styles {
+  border-radius: 20px;
+  background: var(--Color-Neutral-white, #fff);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+:host {
+  display: block;
+
+  .form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .header-section {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--Color-Neutral-2000, #333435);
+    font-size: var(--Font-Size-M, 20px);
+
+    &.header-section--split {
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    span {
+      color: var(--Secondary-200, #9a9a9a);
+      font-size: var(--Static-Body-Small-Size, 12px);
+      font-weight: 500;
+      letter-spacing: var(--Static-Body-Small-Tracking, 0.4px);
+    }
+
+    .text-red-val {
+      color: var(--Color-Error-500, #e74c3c);
+    }
+  }
+
+  .blog-post-form {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    background-color: transparent;
+
+    @media (max-width: 992px) {
+      flex-direction: column;
+      .form-left-section {
+        width: 100%;
+      }
+      .form-right-section {
+        max-width: 100%;
+      }
+    }
+
+    .form-left-section {
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .details-section {
+        @extend %section-shared-styles;
+      }
+
+      .blog-sections-section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .section-tags-section {
+          gap: 12px;
+        }
+      }
+
+      .remove-section-btn {
+        margin-top: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+
+    .form-right-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      max-width: 30%;
+
+      .gallery-section,
+      .settings-card {
+        @extend %section-shared-styles;
+      }
+
+      @media (max-width: 768px) {
+        max-width: 100%;
+      }
+    }
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      row-gap: 16px;
+    }
+
+    .add-form-group-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--Color-Primary-500, #75b267);
+      font-size: var(--Font-Size-S, 18px);
+      font-weight: var(--Font-Weight-Medium, 500);
+      border: none;
+      background-color: transparent;
+      transition: all 0.3s;
+      border-radius: 12px;
+      cursor: pointer;
+      padding: 0.5rem;
+      width: fit-content;
+
+      &:hover {
+        background-color: rgba(240, 249, 238, 0.8);
+      }
+    }
+
+    .tools-input-wrapper {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      position: relative;
+
+      input {
+        flex: 1;
+      }
+
+      .add-another {
+        align-items: center;
+        background: transparent;
+        border: none;
+        color: var(--Color-Primary-600, #689e5b);
+        cursor: pointer;
+        display: inline-flex;
+        gap: 4px;
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    .tools-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tool-badge {
+      align-items: center;
+      background: var(--Color-Primary2-300, #e7f1cb);
+      border-radius: 12px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      padding: 4px 16px;
+
+      span {
+        color: var(--Color-Neutral-2000, #333435);
+        font-size: var(--Font-Size-2Xs, 14px);
+        font-weight: var(--Font-Weight-Medium, 500);
+      }
+
+      .remove-badge {
+        align-items: center;
+        background: none;
+        border: none;
+        color: #f96c4d;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        line-height: 1;
+        padding: 0;
+      }
+    }
+  }
+}
+
+html:lang(ar) :host .blog-post-form .remove-section-btn {
+  flex-direction: row-reverse;
+}
+:host ::ng-deep {
+  .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider,
+  .p-toggleswitch-slider {
+    position: relative !important;
+  }
+}

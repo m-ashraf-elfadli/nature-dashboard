@@ -110,6 +110,12 @@
                     </div>
                   </div>
                 }
+                @case ("views") {
+                  <div class="views-cell">
+                    <i class="pi pi-eye" aria-hidden="true"></i>
+                    <span>{{ formatViewCount(row[col.field]) }}</span>
+                  </div>
+                }
                 @case ("status") {
                   <p-inputswitch
                     (onChange)="
@@ -145,8 +151,8 @@
 
                 @case ("image") {
                   <img
-                    [src]="baseMediaUrl + row[col.field]"
-                    alt="image"
+                    [src]="imageSrc(row[col.field])"
+                    alt=""
                     class="table-image"
                   />
                 }

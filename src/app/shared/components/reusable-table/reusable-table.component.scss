@@ -51,6 +51,25 @@
           font-weight: 600;
         }
       }
+      .views-cell {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--Color-Neutral-200, #f4f4f5);
+        color: var(--Color-Neutral-2000, #333435);
+        font-family: var(--Font-Family-Secondary, Dubai);
+        font-size: var(--Font-Size-2Xs, 14px);
+        font-weight: var(--Font-Weight-Medium, 500);
+        line-height: 1.2;
+
+        .pi-eye {
+          font-size: 14px;
+          color: var(--Color-Neutral-600, #475467);
+        }
+      }
+
       .chips-group {
         display: flex;
         align-items: center;
@@ -129,7 +148,10 @@
     ::ng-deep {
       .p-datatable-tbody > tr > td {
         img {
-          width: 50px;
+          width: 60px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 6px;
         }
       }
       .p-datatable-thead > tr > th {
