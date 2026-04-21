@@ -6,11 +6,12 @@ import { ClientsService } from '../../services/clients.service';
 import { ClientFormActions, ClientFormEvent } from '../../models/clients.model';
 import { environment } from '../../../../../environments/environment';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TrimInputDirective } from '../../../../core/directives/trim-input.directive';
 
 @Component({
   selector: 'app-client-form',
   standalone: true,
-  imports: [InputTextModule, GalleryUploadComponent, ReactiveFormsModule, TranslateModule],
+  imports: [InputTextModule, GalleryUploadComponent, ReactiveFormsModule, TranslateModule, TrimInputDirective],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss'
 })

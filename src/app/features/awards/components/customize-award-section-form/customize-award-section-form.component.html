@@ -126,7 +126,7 @@
                             </label>
                             <input type="text" id="subsectionTitle-{{i}}"
                                 placeholder="{{ 'awards_section.subsection_title_placeholder' | translate }}"
-                                formControlName="title" pInputText
+                                formControlName="title" pInputText trimInput
                                 [class.error]="isSubsectionFieldInvalid(i, 'title')" />
                             <small class="error-message" *ngIf="isSubsectionFieldInvalid(i, 'title')">
                                 {{ getSubsectionFieldError(i, 'title') }}
@@ -141,7 +141,7 @@
                             </label>
                             <input type="text" id="subsectionSubtitle-{{i}}"
                                 placeholder="{{ 'awards_section.subsection_subtitle_placeholder' | translate }}"
-                                formControlName="subtitle" pInputText
+                                formControlName="subtitle" pInputText trimInput
                                 [class.error]="isSubsectionFieldInvalid(i, 'subtitle')" />
                             <small class="error-message" *ngIf="isSubsectionFieldInvalid(i, 'subtitle')">
                                 {{ getSubsectionFieldError(i, 'subtitle') }}

@@ -30,6 +30,7 @@ import { CustomizeService } from '../../../../services/customize.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AwardsSliderComponent } from '../../../../shared/components/awards-slider/awards-slider.component';
 import { ApiService } from '../../../../core/services/api.service';
+import { TrimInputDirective } from '../../../../core/directives/trim-input.directive';
 
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
@@ -54,6 +55,7 @@ const STATUS_MAP = {
     SettingsComponent,
     TranslateModule,
     AwardsSliderComponent,
+    TrimInputDirective
   ],
   templateUrl: './customize-award-section-form.component.html',
   styleUrl: './customize-award-section-form.component.scss',
