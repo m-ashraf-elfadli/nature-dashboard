@@ -323,6 +323,7 @@ export class BlogsService {
         subtitle_html: s.subtitle_html ?? s.subtitle ?? '',
         image: s.image ?? '',
         quote: s.quote ?? '',
+        quote_author: s.quote_author ?? '',
         tags: this.normalizeTagsValue(s.tags ?? s.section_tags ?? s.sectionTags),
       })),
       tags: this.normalizeTagsValue(row.tags ?? row.section_tags ?? row.sectionTags),
@@ -397,6 +398,7 @@ export class BlogsService {
       fd.append(`sections[${i}][title]`, s.title || '');
       fd.append(`sections[${i}][subtitle]`, s.subtitle_html || '');
       fd.append(`sections[${i}][quote]`, s.quote || '');
+      fd.append(`sections[${i}][quote_author]`, s.quote_author || '');
       fd.append(`sections[${i}][status]`, s.enabled ? '1' : '0');
       if (s.image instanceof File) {
         fd.append(`sections[${i}][image]`, s.image);

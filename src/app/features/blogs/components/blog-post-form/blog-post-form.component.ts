@@ -174,15 +174,8 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private sectionGroupValidator = (
-    control: AbstractControl,
-  ): ValidationErrors | null => {
-    const g = control as FormGroup;
-    if (!g.get('enabled')?.value) {
-      return null;
-    }
-    const t = g.get('title')?.value?.trim();
-    return t ? null : { sectionTitleRequired: true };
-  };
+    _control: AbstractControl,
+  ): ValidationErrors | null => null;
 
   private createSectionGroup(data?: BlogPostSection): FormGroup {
     const raw: any = data || {};
@@ -200,6 +193,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
         subtitle: [raw.subtitle_html ?? raw.subtitle ?? ''],
         image: [sectionImage || null],
         quote: [raw.quote ?? ''],
+        quote_author: [raw.quote_author ?? ''],
       },
       { validators: this.sectionGroupValidator },
     );
@@ -248,6 +242,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
                     ? `${this.mediaUrl}${sectionImage}`
                     : sectionImage || null,
                 quote: s?.quote ?? '',
+                quote_author: s?.quote_author ?? '',
               },
               { emitEvent: false },
             );
@@ -433,6 +428,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
           subtitle_html: s.subtitle || '',
           image: sectionImagePayload,
           quote: s.quote || '',
+          quote_author: s.quote_author || '',
           tags: normalizedTags,
         };
       }),
@@ -559,6 +555,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
           subtitle_html: s.subtitle || '',
           image: sectionImagePayload,
           quote: s.quote || '',
+          quote_author: s.quote_author || '',
           tags: normalizedTags,
         };
       }),
@@ -662,7 +659,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     const g = this.sections.at(index) as FormGroup;
     // Keep section fields enabled to avoid CVA/UI stale rendering on initial load.
     // The section visibility/behavior is driven by `enabled` in template + validator.
-    ['title', 'subtitle', 'image', 'quote'].forEach((name) => {
+    ['title', 'subtitle', 'image', 'quote', 'quote_author'].forEach((name) => {
       g.get(name)?.updateValueAndValidity({ emitEvent: false });
     });
   }

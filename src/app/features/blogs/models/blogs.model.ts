@@ -36,6 +36,7 @@ export interface BlogPostSection {
   subtitle_html: string;
   image: string;
   quote: string;
+  quote_author?: string;
   tags: string;
 }
 
@@ -63,6 +64,7 @@ export interface BlogPostSectionFormPayload {
   subtitle_html: string;
   image: File | string | null | undefined;
   quote: string;
+  quote_author?: string;
   tags: string;
 }
 

@@ -131,16 +131,10 @@
             <div class="inputs">
               <div class="our-field">
                 <label>{{ "blogs.posts.form.section_fields.title" | translate }}
-                  <span class="text-red-val">*</span></label>
-                <input pInputText formControlName="title" [placeholder]="
+                </label>
+                <input pInputText trimInput formControlName="title" [placeholder]="
                     'blogs.posts.form.section_fields.title_ph' | translate
                   " />
-                @if ( hasError('title', undefined, $index) ||
-                sectionGroupError($index, 'sectionTitleRequired') ) {
-                <p-message severity="error" variant="simple" size="small">{{
-                  "blogs.posts.form.section_fields.validation_title" | translate
-                  }}</p-message>
-                }
               </div>
               <div class="our-field">
                 <label>{{
@@ -176,13 +170,19 @@
                   }}</label>
                 <app-gallery-upload formControlName="image" [multiple]="false" />
               </div>
-              <div class="our-field">
-                <label>{{
-                  "blogs.posts.form.section_fields.quote" | translate
-                  }}</label>
-                <input pInputText formControlName="quote" [placeholder]="
-                    'blogs.posts.form.section_fields.quote_ph' | translate
-                  " />
+              <div class="quote-row">
+                <div class="our-field quote-field">
+                  <label>{{
+                    "blogs.posts.form.section_fields.quote" | translate
+                    }}</label>
+                  <input pInputText trimInput formControlName="quote" [placeholder]="
+                      'blogs.posts.form.section_fields.quote_ph' | translate
+                    " />
+                </div>
+                <div class="our-field quote-author-field">
+                  <label>Quote Author</label>
+                  <input pInputText trimInput formControlName="quote_author" placeholder="Quote author" />
+                </div>
               </div>
             </div>
             } @if ($index > 0) {
