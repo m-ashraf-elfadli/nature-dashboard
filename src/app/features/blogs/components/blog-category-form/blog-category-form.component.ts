@@ -11,9 +11,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -101,11 +103,45 @@ export class BlogCategoryFormComponent implements OnInit, OnChanges, OnDestroy {
 
   private initForm(): void {
     this.form = this.fb.group({
-      name_en: ['', [Validators.required, Validators.maxLength(200)]],
-      name_ar: ['', [Validators.required, Validators.maxLength(200)]],
+      name_en: ['', this.nameValidators()],
+      name_ar: ['', this.nameValidators()],
       type_id: [null, Validators.required],
       image: [null, Validators.required],
     });
+  }
+
+  private nameValidators() {
+    return [
+      Validators.required,
+      this.notBlankValidator,
+      this.trimmedMinLengthValidator(3),
+      this.trimmedMaxLengthValidator(60),
+    ];
+  }
+
+  private notBlankValidator(control: AbstractControl): ValidationErrors | null {
+    const value = String(control.value ?? '').trim();
+    return value ? null : { blank: true };
+  }
+
+  private trimmedMinLengthValidator(min: number) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = String(control.value ?? '').trim();
+      if (!value) return null;
+      return value.length >= min
+        ? null
+        : { minlength: { requiredLength: min, actualLength: value.length } };
+    };
+  }
+
+  private trimmedMaxLengthValidator(max: number) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = String(control.value ?? '').trim();
+      if (!value) return null;
+      return value.length <= max
+        ? null
+        : { maxlength: { requiredLength: max, actualLength: value.length } };
+    };
   }
 
   private load(): void {
@@ -149,8 +185,8 @@ export class BlogCategoryFormComponent implements OnInit, OnChanges, OnDestroy {
     }
     const v = this.form.getRawValue();
     const payload: BlogCategoryFormPayload = {
-      name_en: v.name_en,
-      name_ar: v.name_ar,
+      name_en: String(v.name_en ?? '').trim(),
+      name_ar: String(v.name_ar ?? '').trim(),
       type_id: v.type_id,
       image: v.image,
     };

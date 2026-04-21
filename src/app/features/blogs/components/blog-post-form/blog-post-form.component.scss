@@ -108,6 +108,28 @@
       row-gap: 16px;
     }
 
+    .quote-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+
+      .quote-field {
+        flex: 1 1 auto;
+      }
+
+      .quote-author-field {
+        flex: 0 0 180px;
+      }
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+
+        .quote-author-field {
+          flex: 1 1 auto;
+        }
+      }
+    }
+
     .add-form-group-btn {
       display: flex;
       align-items: center;
