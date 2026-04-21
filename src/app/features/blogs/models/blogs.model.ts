@@ -61,7 +61,7 @@ export interface BlogPostSectionFormPayload {
   enabled: boolean;
   title: string;
   subtitle_html: string;
-  image: File | string | null;
+  image: File | string | null | undefined;
   quote: string;
   tags: string;
 }
