@@ -514,8 +514,6 @@
         "client_name_ar": "Client name in Arabic is required",
         "client_name_en_max": "Client name in English must not exceed 60 characters",
         "client_name_ar_max": "Client name in Arabic must not exceed 60 characters",
-        "job_title_en": "Job title in English is required",
-        "job_title_ar": "Job title in Arabic is required",
         "job_title_en_max": "Job title in English must not exceed 60 characters",
         "job_title_ar_max": "Job title in Arabic must not exceed 60 characters",
         "testimonial_en": "Testimonial in English is required",
@@ -586,8 +584,7 @@
   "gallery_upload": {
     "click": "Click to upload",
     "drag_drop": "or drag and drop files here",
-    "hint": "JPG, JPEG, PNG or WEBP (max {{max}}MB)",
-    "max_size_error": "Image size must not exceed {{max}}MB."
+    "hint": "JPG, JPEG, PNG or WEBP"
   },
   "navigation": {
     "dashboard": "Dashboard",

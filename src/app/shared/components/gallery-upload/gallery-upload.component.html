@@ -29,7 +29,7 @@
             </span>
           </label>
           <p class="file-info">
-            {{ "gallery_upload.hint" | translate:{ max: maxSize } }}
+            {{ "gallery_upload.hint" | translate }}
           </p>
         </ng-container>
 
@@ -81,7 +81,7 @@
         <span class="text-upload">{{'general.gallary_btn' | translate}}</span>
         <span class="text-or">{{'general.gallary_desc' | translate}}</span>
       </label>
-      <p class="file-info">{{ "gallery_upload.hint" | translate:{ max: maxSize } }}</p>
+      <p class="file-info">{{ "gallery_upload.hint" | translate }}</p>
     </div>
 
     <!-- Gallery Grid (show when images exist) -->
@@ -158,7 +158,4 @@
     </div>
   </ng-container>
 
-  <p class="upload-error" *ngIf="uploadError">
-    {{ uploadError | translate:{ max: maxSize } }}
-  </p>
 </div>

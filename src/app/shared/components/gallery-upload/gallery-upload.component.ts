@@ -25,7 +25,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class GalleryUploadComponent implements ControlValueAccessor {
   @Input() multiple: boolean = false;
-  @Input() maxSize: number = 3;
   @Input() formControlName: string = '';
   @Output() fileSelected = new EventEmitter<File | File[]>();
   @Output() removed = new EventEmitter<void>();
@@ -34,7 +33,6 @@ export class GalleryUploadComponent implements ControlValueAccessor {
   // Track the actual file/URL data separately from display previews
   private filesData: (File | string)[] = [];
   isDragOver: boolean = false;
-  uploadError: string | null = null;
 
   // ✅ Fix: Accept any type for onChange to handle mixed arrays
   private onChange: (value: any) => void = () => {};
@@ -67,19 +65,11 @@ export class GalleryUploadComponent implements ControlValueAccessor {
 
   private handleFiles(files: File[]) {
     const validFiles: File[] = [];
-    this.uploadError = null;
 
     files.forEach((file) => {
       // Check if file is an image
       if (!file.type.startsWith('image/')) {
         console.warn(`File ${file.name} is not an image`);
-        return;
-      }
-
-      // Check file size
-      if (file.size / (1024 * 1024) > this.maxSize) {
-        console.warn(`File ${file.name} exceeds ${this.maxSize}MB limit`);
-        this.uploadError = `gallery_upload.max_size_error`;
         return;
       }
 
@@ -122,7 +112,6 @@ export class GalleryUploadComponent implements ControlValueAccessor {
   }
 
   removeImage(index: number) {
-    this.uploadError = null;
     this.images.splice(index, 1);
     this.filesData.splice(index, 1);
 
@@ -141,7 +130,6 @@ export class GalleryUploadComponent implements ControlValueAccessor {
   // ControlValueAccessor methods
   writeValue(obj: any): void {
     if (obj) {
-      this.uploadError = null;
       // Handle array of URLs/Files (for multiple mode)
       if (Array.isArray(obj)) {
         this.filesData = [...obj];
@@ -163,7 +151,6 @@ export class GalleryUploadComponent implements ControlValueAccessor {
       }
     } else {
       // Clear images when obj is null/undefined
-      this.uploadError = null;
       this.images = [];
       this.filesData = [];
     }

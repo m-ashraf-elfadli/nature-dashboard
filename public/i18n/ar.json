@@ -28,10 +28,10 @@
     "pagination_info": "عرض {{first}} إلى {{last}} من أصل {{total}} مُدخل",
     "show": "عرض",
     "entries": "مُدخل",
-    "success":"تمت العملية بنجاح",
+    "success": "تمت العملية بنجاح",
     "delete_selected": "حذف المحدد",
     "check_internet_connection": "يرجى التحقق من اتصالك بالإنترنت",
-    "award_disabled_info_header_message":"مخفي حتى يتم إضافة الجوائز أو نشرها"
+    "award_disabled_info_header_message": "مخفي حتى يتم إضافة الجوائز أو نشرها"
   },
   "login": {
     "powered_by": "مدعوم بواسطة",
@@ -511,8 +511,6 @@
         "client_name_ar": "اسم العميل بالعربية مطلوب",
         "client_name_en_max": "يجب ألا يزيد اسم العميل بالإنجليزية عن 60 حرفًا",
         "client_name_ar_max": "يجب ألا يزيد اسم العميل بالعربية عن 60 حرفًا",
-        "job_title_en": "المسمى الوظيفي بالإنجليزية مطلوب",
-        "job_title_ar": "المسمى الوظيفي بالعربية مطلوب",
         "job_title_en_max": "يجب ألا يزيد المسمى الوظيفي بالإنجليزية عن 60 حرفًا",
         "job_title_ar_max": "يجب ألا يزيد المسمى الوظيفي بالعربية عن 60 حرفًا",
         "testimonial_en": "الشهادة بالإنجليزية مطلوبة",
@@ -583,8 +581,7 @@
   "gallery_upload": {
     "click": "اضغط للرفع",
     "drag_drop": "أو اسحب وأفلت الملفات هنا",
-    "hint": "JPG أو JPEG أو PNG أو WEBP (الحد الأقصى {{max}} ميجابايت)",
-    "max_size_error": "يجب ألا يتجاوز حجم الصورة {{max}} ميجابايت."
+    "hint": "JPG, JPEG, PNG or WEBP"
   },
   "navigation": {
     "dashboard": "لوحة التحكم",
@@ -881,5 +878,3 @@
     }
   }
 }
-
-

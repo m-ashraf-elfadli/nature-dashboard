@@ -49,8 +49,8 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
     this.form = this.fb.group({
       clientNameEn: ['', [Validators.required, Validators.maxLength(60)]],
       clientNameAr: ['', [Validators.required, Validators.maxLength(60)]],
-      jobTitleEn: ['', [Validators.required, Validators.maxLength(60)]],
-      jobTitleAr: ['', [Validators.required, Validators.maxLength(60)]],
+      jobTitleEn: ['', [Validators.maxLength(60)]],
+      jobTitleAr: ['', [Validators.maxLength(60)]],
       testimonialEn: ['', [Validators.required, Validators.maxLength(1000)]],
       testimonialAr: ['', [Validators.required, Validators.maxLength(1000)]]
     });

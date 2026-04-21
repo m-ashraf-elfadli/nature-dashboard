@@ -52,7 +52,6 @@
     <div class="our-field">
       <label>
         {{ "testimonials.form.labels.job_title_en" | translate }}
-        <span class="text-red-val">*</span>
       </label>
       <input
         pInputText
@@ -63,9 +62,7 @@
       />
       @if (isFieldInvalid("jobTitleEn")) {
         <span class="text-red-val">
-          @if (hasError("jobTitleEn", "required")) {
-            {{ "testimonials.form.validation.job_title_en" | translate }}
-          } @else if (hasError("jobTitleEn", "maxlength")) {
+          @if (hasError("jobTitleEn", "maxlength")) {
             {{ "testimonials.form.validation.job_title_en_max" | translate }}
           }
         </span>
@@ -76,7 +73,6 @@
     <div class="our-field">
       <label>
         {{ "testimonials.form.labels.job_title_ar" | translate }}
-        <span class="text-red-val">*</span>
       </label>
       <input
         pInputText
@@ -87,9 +83,7 @@
       />
       @if (isFieldInvalid("jobTitleAr")) {
         <span class="text-red-val">
-          @if (hasError("jobTitleAr", "required")) {
-            {{ "testimonials.form.validation.job_title_ar" | translate }}
-          } @else if (hasError("jobTitleAr", "maxlength")) {
+          @if (hasError("jobTitleAr", "maxlength")) {
             {{ "testimonials.form.validation.job_title_ar_max" | translate }}
           }
         </span>
