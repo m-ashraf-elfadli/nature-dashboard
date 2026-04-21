@@ -17,6 +17,15 @@ import {
 export class BlogsService {
   private readonly api = inject(ApiService);
 
+  private toRowsArray<T = any>(rows: any): T[] {
+    if (Array.isArray(rows)) return rows as T[];
+    if (!rows || typeof rows !== 'object') return [];
+    // Some endpoints may return a single row object instead of an array.
+    if ('id' in rows) return [rows as T];
+    const values = Object.values(rows);
+    return values.every((v) => v && typeof v === 'object') ? (values as T[]) : [];
+  }
+
   private normalizeTagsValue(value: any): string {
     const tags = this.extractTagList(value);
     return tags.join(', ');
@@ -428,7 +437,7 @@ export class BlogsService {
           res?.categories ??
           res?.items ??
           [];
-        const list = Array.isArray(rows) ? rows : [];
+        const list = this.toRowsArray(rows);
         return list
           .map((row) => this.mapCategoryRow(row))
           .filter((c: BlogCategory) => !!c?.id)
