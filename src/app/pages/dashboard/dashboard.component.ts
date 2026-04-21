@@ -228,7 +228,7 @@ export class DashboardComponent implements OnInit {
 
   fetchProjects(pagination: PaginationObj) {
     this.service
-      .getAll(pagination, this.filterObj?.key || '', this.filterObj)
+      .getAll(pagination, this.filterObj?.value || '', this.filterObj)
       .subscribe({
         next: (res) => {
           this.data.set(res.result);
