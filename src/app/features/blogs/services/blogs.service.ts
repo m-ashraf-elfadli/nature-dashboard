@@ -392,6 +392,9 @@ export class BlogsService {
       fd.append(`sections[${i}][status]`, s.enabled ? '1' : '0');
       if (s.image instanceof File) {
         fd.append(`sections[${i}][image]`, s.image);
+      } else if (isUpdate && s.image === null) {
+        // Explicitly clear existing section image on update.
+        fd.append(`sections[${i}][image]`, '');
       } else if (!isUpdate && typeof s.image === 'string' && s.image) {
         fd.append(`sections[${i}][image]`, s.image);
       }
