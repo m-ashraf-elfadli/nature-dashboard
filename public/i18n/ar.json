@@ -787,6 +787,7 @@
         "section_remove": "حذف القسم",
         "title_en": "اسم المدونة (إنجليزي)",
         "title_ar": "اسم المدونة (عربي)",
+        "title_name": "اسم المدونة",
         "category": "تصنيف المدونة",
         "image": "صورة الغلاف",
         "placeholders": {

@@ -790,6 +790,7 @@
         "section_remove": "Remove section",
         "title_en": "Blog name (English)",
         "title_ar": "Blog name (Arabic)",
+        "title_name": "Blog name",
         "category": "Blog category",
         "image": "Cover image",
         "placeholders": {
