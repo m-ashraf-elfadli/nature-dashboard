@@ -422,7 +422,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cachedMetrics = this.metrics.value || [];
   }
 
-  getCitiesByCountry(countryId: string) {
+  getCitiesByCountryandResetCityValue(countryId: string) {
+    this.form.get('city_id')?.setValue(null);
     this.service.getCitiesByCountry(countryId).subscribe({
       next: (res) => {
         this.cities = res.result;

@@ -262,7 +262,7 @@
                             <label for="country_id">{{ 'projects.form.labels.country' | translate }} <span
                                     class="text-red-val">*</span></label>
                             <p-select [options]="countries" [filter]="true" formControlName="country_id"
-                                optionValue="id" optionLabel="name" (onChange)="getCitiesByCountry($event.value)"
+                                optionValue="id" optionLabel="name" (onChange)="getCitiesByCountryandResetCityValue($event.value)"
                                 [placeholder]="'projects.form.placeholders.country' | translate" />
                             @if(hasError('country_id')){
                             <p-message severity="error" variant="simple"
