@@ -99,9 +99,13 @@
         }
       }
       .actions-cell {
+        vertical-align: middle;
+      }
+      .actions-cell-content {
         display: flex;
         align-items: center;
         gap: 10px;
+        min-height: 100%;
       }
       .text-cell {
         display: block;
@@ -157,6 +161,10 @@
   & > * {
     width: 100%;
   }
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td.actions-cell {
+  white-space: normal;
 }
 :host ::ng-deep {
   .pi-trash {
