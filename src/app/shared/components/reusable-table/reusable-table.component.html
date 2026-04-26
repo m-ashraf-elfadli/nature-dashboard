@@ -117,7 +117,7 @@
                   </div>
                 }
                 @case ("status") {
-                  <p-inputswitch
+                  <app-input-switch
                     (onChange)="
                       col?.statusCallback(
                         row,
@@ -126,7 +126,7 @@
                       )
                     "
                     [(ngModel)]="row[col.field]"
-                  ></p-inputswitch>
+                  ></app-input-switch>
                 }
 
                 @case ("badge") {
