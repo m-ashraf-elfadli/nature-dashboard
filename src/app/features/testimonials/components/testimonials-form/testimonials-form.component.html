@@ -17,6 +17,8 @@
         <span class="text-red-val">
           @if (hasError("clientNameEn", "required")) {
             {{ "testimonials.form.validation.client_name_en" | translate }}
+          } @else if (hasError("clientNameEn", "onlySpecialChars")) {
+            {{ "testimonials.form.validation.only_special_chars" | translate }}
           } @else if (hasError("clientNameEn", "maxlength")) {
             {{ "testimonials.form.validation.client_name_en_max" | translate }}
           }
@@ -41,6 +43,8 @@
         <span class="text-red-val">
           @if (hasError("clientNameAr", "required")) {
             {{ "testimonials.form.validation.client_name_ar" | translate }}
+          } @else if (hasError("clientNameAr", "onlySpecialChars")) {
+            {{ "testimonials.form.validation.only_special_chars" | translate }}
           } @else if (hasError("clientNameAr", "maxlength")) {
             {{ "testimonials.form.validation.client_name_ar_max" | translate }}
           }
@@ -62,7 +66,9 @@
       />
       @if (isFieldInvalid("jobTitleEn")) {
         <span class="text-red-val">
-          @if (hasError("jobTitleEn", "maxlength")) {
+          @if (hasError("jobTitleEn", "onlySpecialChars")) {
+            {{ "testimonials.form.validation.only_special_chars" | translate }}
+          } @else if (hasError("jobTitleEn", "maxlength")) {
             {{ "testimonials.form.validation.job_title_en_max" | translate }}
           }
         </span>
@@ -83,7 +89,9 @@
       />
       @if (isFieldInvalid("jobTitleAr")) {
         <span class="text-red-val">
-          @if (hasError("jobTitleAr", "maxlength")) {
+          @if (hasError("jobTitleAr", "onlySpecialChars")) {
+            {{ "testimonials.form.validation.only_special_chars" | translate }}
+          } @else if (hasError("jobTitleAr", "maxlength")) {
             {{ "testimonials.form.validation.job_title_ar_max" | translate }}
           }
         </span>
@@ -108,6 +116,8 @@
         <span class="text-red-val">
           @if (hasError("testimonialEn", "required")) {
             {{ "testimonials.form.validation.testimonial_en" | translate }}
+          } @else if (hasError("testimonialEn", "onlySpecialChars")) {
+            {{ "testimonials.form.validation.only_special_chars" | translate }}
           } @else if (hasError("testimonialEn", "maxlength")) {
             {{ "testimonials.form.validation.testimonial_en_max" | translate }}
           }
@@ -133,6 +143,8 @@
         <span class="text-red-val">
           @if (hasError("testimonialAr", "required")) {
             {{ "testimonials.form.validation.testimonial_ar" | translate }}
+          } @else if (hasError("testimonialAr", "onlySpecialChars")) {
+            {{ "testimonials.form.validation.only_special_chars" | translate }}
           } @else if (hasError("testimonialAr", "maxlength")) {
             {{ "testimonials.form.validation.testimonial_ar_max" | translate }}
           }

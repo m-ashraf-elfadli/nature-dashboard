@@ -157,6 +157,7 @@
         "overview_max_length": "This field has a 200-character limit",
         "overview_min_length": "This field must be at least [10] characters long.",
         "brief": "Brief is required",
+        "only_special_chars": "This field must include at least one letter or number",
         "services": "Project Services is required",
         "from": "From date is required",
         "from_date_future_when_active": "From date cannot be in the future for active projects",
@@ -520,7 +521,8 @@
         "testimonial_en": "Testimonial in English is required",
         "testimonial_ar": "Testimonial in Arabic is required",
         "testimonial_en_max": "Testimonial in English must not exceed 1000 characters",
-        "testimonial_ar_max": "Testimonial in Arabic must not exceed 1000 characters"
+        "testimonial_ar_max": "Testimonial in Arabic must not exceed 1000 characters",
+        "only_special_chars": "This field must include at least one letter or number"
       },
       "btns": {
         "save_create": "Save and create new",

@@ -49,4 +49,25 @@ export class CustomValidators {
       return value < min ? { minValue: { min, actual: value } } : null;
     };
   }
+
+  static notOnlySpecialChars(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value === null || control.value === undefined || control.value === '') {
+        return null;
+      }
+
+      const textValue = control.value
+        .toString()
+        .replace(/<script[\s\S]*?<\/script>/gi, '')
+        .replace(/<style[\s\S]*?<\/style>/gi, '')
+        .replace(/<[^>]*>/g, '')
+        .replace(/&nbsp;|&#160;/gi, ' ')
+        .replace(/[\u200B-\u200D\uFEFF]/g, '')
+        .trim();
+
+      return /[\p{L}\p{N}]/u.test(textValue)
+        ? null
+        : { onlySpecialChars: true };
+    };
+  }
 }
