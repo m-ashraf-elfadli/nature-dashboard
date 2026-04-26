@@ -1,0 +1,58 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+}
+
+.input-switch {
+  width: 3rem;
+  height: 1.75rem;
+  padding: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  background: var(--Color-Neutral-400, #dededf);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.input-switch-slider {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: var(--Color-Neutral-white, #ffffff);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+  transition: transform 160ms ease;
+}
+
+.input-switch-checked {
+  background: var(--color-primary-500, #75b267);
+
+  .input-switch-slider {
+    transform: translateX(1.25rem);
+  }
+}
+
+.input-switch-focused {
+  box-shadow: 0 0 0 3px rgb(117 178 103 / 22%);
+  outline: none;
+}
+
+.input-switch-disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+:host-context(html:lang(ar)) .input-switch-checked .input-switch-slider {
+  right: 0.25rem;
+  left: auto;
+  transform: translateX(-1.25rem);
+}

@@ -1,0 +1,23 @@
+<button
+  #switchButton
+  type="button"
+  class="input-switch"
+  [class.input-switch-checked]="checked()"
+  [class.input-switch-disabled]="disabled"
+  [class.input-switch-focused]="focused"
+  [ngClass]="styleClass"
+  [ngStyle]="style"
+  [attr.id]="inputId"
+  [attr.name]="name"
+  [attr.tabindex]="disabled ? -1 : tabindex"
+  [attr.aria-label]="ariaLabel"
+  [attr.aria-labelledby]="ariaLabelledBy"
+  [attr.aria-checked]="checked()"
+  [disabled]="disabled"
+  role="switch"
+  (click)="onClick($event)"
+  (focus)="onFocus()"
+  (blur)="onBlur()"
+>
+  <span class="input-switch-slider" aria-hidden="true"></span>
+</button>

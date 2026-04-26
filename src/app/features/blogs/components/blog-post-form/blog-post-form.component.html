@@ -148,7 +148,7 @@
                 | translate : { n: $index + 1 }
                 }}
               </h3>
-              <p-inputSwitch class="flex align-items-center" formControlName="enabled"
+              <app-input-switch class="flex align-items-center" formControlName="enabled"
                 (onChange)="onSectionToggle($index, $event)" />
             </div>
             @if (sections.at($index).get('enabled')?.value) {

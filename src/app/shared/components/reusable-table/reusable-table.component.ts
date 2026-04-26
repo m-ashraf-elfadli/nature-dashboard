@@ -9,7 +9,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
-import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ReusablePaginationComponent } from '../reusable-pagination/reusable-pagination.component';
@@ -25,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PaginationObj } from '../../../core/models/global.interface';
 import { environment } from '../../../../environments/environment';
 import { EmptyStateComponent } from '../empty-state/empty-state.component';
+import { InputSwitchComponent } from '../input-switch/input-switch.component';
 
 @Component({
   selector: 'app-reusable-table',
@@ -33,7 +33,6 @@ import { EmptyStateComponent } from '../empty-state/empty-state.component';
     CommonModule,
     TableModule,
     CheckboxModule,
-    InputSwitchModule,
     ButtonModule,
     RadioButtonModule,
     FormsModule,
@@ -41,6 +40,7 @@ import { EmptyStateComponent } from '../empty-state/empty-state.component';
     FiltersComponent,
     TranslateModule,
     EmptyStateComponent,
+    InputSwitchComponent,
   ],
   templateUrl: './reusable-table.component.html',
   styleUrls: ['./reusable-table.component.scss'], // ❌ fix typo: styleUrls not styleUrl

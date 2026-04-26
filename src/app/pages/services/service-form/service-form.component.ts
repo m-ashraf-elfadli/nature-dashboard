@@ -21,11 +21,11 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { InputSwitchModule } from 'primeng/inputswitch';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../shared/components/form-actions/form-actions.component';
 import { EmptyStateActionComponent } from '../../../shared/components/empty-state-action/empty-state-action.component';
 import { SettingsComponent } from '../../../shared/components/settings/settings.component';
+import { InputSwitchComponent } from '../../../shared/components/input-switch/input-switch.component';
 import {
   MiniTableColumn,
   MiniTableComponent,
@@ -81,7 +81,7 @@ const DIALOG_CONFIGS = {
     FormsModule,
     InputTextModule,
     ButtonModule,
-    InputSwitchModule,
+    InputSwitchComponent,
     PageHeaderComponent,
     FormActionsComponent,
     EmptyStateActionComponent,

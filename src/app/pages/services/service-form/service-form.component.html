@@ -127,7 +127,7 @@
     <div class="fieldset">
       <div class="legend-with-toggle">
         <legend>{{ 'services.form.benefits.title' | translate }}</legend>
-        <p-inputSwitch [formControl]="benefitEnabledControl"></p-inputSwitch>
+        <app-input-switch [formControl]="benefitEnabledControl"></app-input-switch>
       </div>
 
       <div class="benefits-fields" [class.disabled]="!benefitEnabledControl.value">

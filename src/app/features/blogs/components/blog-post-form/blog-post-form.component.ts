@@ -27,13 +27,13 @@ import { InputText } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { MessageModule } from 'primeng/message';
 import { EditorModule } from 'primeng/editor';
-import { InputSwitchModule } from 'primeng/inputswitch';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
 import { GalleryUploadComponent } from '../../../../shared/components/gallery-upload/gallery-upload.component';
 import { SettingsComponent } from '../../../../shared/components/settings/settings.component';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { InputSwitchComponent } from '../../../../shared/components/input-switch/input-switch.component';
 import { TrimInputDirective } from '../../../../core/directives/trim-input.directive';
 import { BlogsService } from '../../services/blogs.service';
 import { environment } from '../../../../../environments/environment';
@@ -67,7 +67,7 @@ const SECTION_TAG_MAX_LENGTH = 50;
     SelectModule,
     MessageModule,
     EditorModule,
-    InputSwitchModule,
+    InputSwitchComponent,
     GalleryUploadComponent,
     SettingsComponent,
     TrimInputDirective,

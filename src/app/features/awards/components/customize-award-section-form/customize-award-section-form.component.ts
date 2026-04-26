@@ -20,7 +20,6 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { InputSwitchModule } from 'primeng/inputswitch';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
 import { SettingsComponent } from '../../../../shared/components/settings/settings.component';
@@ -31,6 +30,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AwardsSliderComponent } from '../../../../shared/components/awards-slider/awards-slider.component';
 import { ApiService } from '../../../../core/services/api.service';
 import { TrimInputDirective } from '../../../../core/directives/trim-input.directive';
+import { InputSwitchComponent } from '../../../../shared/components/input-switch/input-switch.component';
 
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
@@ -49,7 +49,7 @@ const STATUS_MAP = {
     FormsModule,
     InputTextModule,
     ButtonModule,
-    InputSwitchModule,
+    InputSwitchComponent,
     PageHeaderComponent,
     FormActionsComponent,
     SettingsComponent,

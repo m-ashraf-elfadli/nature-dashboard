@@ -216,11 +216,6 @@ html:lang(ar) :host .blog-post-form .remove-section-btn {
   flex-direction: row-reverse;
 }
 :host ::ng-deep {
-  .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider,
-  .p-toggleswitch-slider {
-    position: relative !important;
-  }
-
   .ql-formats .ql-color.ql-picker.ql-color-picker
   {
     display: none;
