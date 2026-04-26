@@ -50,6 +50,23 @@ export class CustomValidators {
     };
   }
 
+  static notOnlySpaces(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) return null;
+
+      const textValue = value
+        .toString()
+        .replace(/<script[\s\S]*?<\/script>/gi, '')
+        .replace(/<style[\s\S]*?<\/style>/gi, '')
+        .replace(/<[^>]*>/g, '')
+        .replace(/&nbsp;|&#160;/gi, ' ')
+        .replace(/[\u200B-\u200D\uFEFF]/g, '');
+
+      return textValue.trim().length ? null : { whitespace: true };
+    };
+  }
+
   static notOnlySpecialChars(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value === null || control.value === undefined || control.value === '') {

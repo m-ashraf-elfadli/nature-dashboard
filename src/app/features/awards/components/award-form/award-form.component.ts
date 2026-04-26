@@ -16,7 +16,6 @@ import {
   Validators,
   ReactiveFormsModule,
   AbstractControl,
-  ValidationErrors,
 } from '@angular/forms';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
@@ -36,6 +35,7 @@ import { environment } from '../../../../../environments/environment';
 import { Award } from '../../models/awards.interface';
 import { ApiService } from '../../../../core/services/api.service';
 import { TrimInputDirective } from '../../../../core/directives/trim-input.directive';
+import { CustomValidators } from '../../../../core/validators/custom-validators.';
 
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
@@ -137,7 +137,7 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
   initForm() {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', [Validators.required, this.richTextNotBlank]],
+      description: ['', [Validators.required, CustomValidators.notOnlySpaces()]],
       image: [null, Validators.required],
       award_date: [null, [Validators.required, this.notFutureDate]],
       organizations_logos: [null, Validators.required],
@@ -356,22 +356,6 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
     const today = new Date().setHours(0,0,0,0);
     return selected > today ? { futureDate: true } : null;
   }
-
-  private richTextNotBlank(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
-    if (!value) return null;
-
-    const textValue = value
-      .toString()
-      .replace(/<script[\s\S]*?<\/script>/gi, '')
-      .replace(/<style[\s\S]*?<\/style>/gi, '')
-      .replace(/<[^>]*>/g, '')
-      .replace(/&nbsp;|&#160;/gi, ' ')
-      .replace(/[\u200B-\u200D\uFEFF]/g, '');
-
-    return textValue.trim().length ? null : { whitespace: true };
-  }
-
 
   onLanguageChange(event: { newLang: string; oldLang: string }) {
     // Store the languages
