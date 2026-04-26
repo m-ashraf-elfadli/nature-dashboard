@@ -141,8 +141,12 @@
                                 </div>
                             </ng-template>
                         </p-editor>
-                        @if(hasError('description')){
+                        @if(hasError('description', 'required')){
                         <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.desc' |
+                            translate}}</p-message>
+                        }
+                        @if(hasError('description', 'whitespace')){
+                        <p-message severity="error" variant="simple" size="small">{{'awards.form.validation.desc_no_spaces' |
                             translate}}</p-message>
                         }
                     </div>

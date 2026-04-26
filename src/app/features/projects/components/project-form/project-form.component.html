@@ -382,7 +382,7 @@
                                     <input type="text" formControlName="metric_number" id="metric_number" pInputText
                                     [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
                                         [placeholder]="currentLanguage() === 'ar'?'الرقم':'Number'">
-                                    @if (hasMetricControlError($index, 'metric_number', 'maxLength')) {
+                                    @if (hasMetricControlError($index, 'metric_number', 'maxlength')) {
                                     <p-message severity="error" variant="simple" size="small">
                                         {{ getMetricNumberMaxMessage($index) }}
                                     </p-message>
@@ -465,4 +465,3 @@
         </div>
     </form>
 </div>
-

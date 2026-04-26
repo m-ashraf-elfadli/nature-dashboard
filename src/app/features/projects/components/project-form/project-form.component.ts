@@ -527,14 +527,15 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   hasError(controlName: string, errorName?: string): boolean {
     const control = this.form.get(controlName);
     if (!control) return false;
+    const shouldShowError = control.touched || control.dirty;
     if (errorName) {
       return !!(
-        control.touched &&
+        shouldShowError &&
         control.invalid &&
         control.hasError(errorName)
       );
     }
-    return !!(control.touched && control.invalid);
+    return !!(shouldShowError && control.invalid);
   }
 
   hasMetricControlError(

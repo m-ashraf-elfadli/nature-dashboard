@@ -16,6 +16,7 @@ import {
   Validators,
   ReactiveFormsModule,
   AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
@@ -136,7 +137,7 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
   initForm() {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', Validators.required],
+      description: ['', [Validators.required, this.richTextNotBlank]],
       image: [null, Validators.required],
       award_date: [null, [Validators.required, this.notFutureDate]],
       organizations_logos: [null, Validators.required],
@@ -354,6 +355,21 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
     const selected = new Date(value).setHours(0,0,0,0);
     const today = new Date().setHours(0,0,0,0);
     return selected > today ? { futureDate: true } : null;
+  }
+
+  private richTextNotBlank(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+
+    const textValue = value
+      .toString()
+      .replace(/<script[\s\S]*?<\/script>/gi, '')
+      .replace(/<style[\s\S]*?<\/style>/gi, '')
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;|&#160;/gi, ' ')
+      .replace(/[\u200B-\u200D\uFEFF]/g, '');
+
+    return textValue.trim().length ? null : { whitespace: true };
   }
 
 

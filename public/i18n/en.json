@@ -222,6 +222,7 @@
         "date": "Date is Required",
         "date_future": "Date cannot be in the future",
         "desc": "Description is Required",
+        "desc_no_spaces": "Description cannot contain only spaces",
         "image": "Image is Required",
         "organizations_logos": "You have to add at least 1 logo for organizations logos"
       },
