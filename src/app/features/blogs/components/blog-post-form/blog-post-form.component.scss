@@ -220,4 +220,9 @@ html:lang(ar) :host .blog-post-form .remove-section-btn {
   .p-toggleswitch-slider {
     position: relative !important;
   }
+
+  .ql-formats .ql-color.ql-picker.ql-color-picker
+  {
+    display: none;
+  }
 }

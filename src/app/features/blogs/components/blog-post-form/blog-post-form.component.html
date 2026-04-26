@@ -70,10 +70,18 @@
         <div class="inputs">
           <div class="our-field">
             <label for="title">{{"blogs.posts.form.title_name" | translate}} <span class="text-red-val">*</span></label>
-            <input pInputText trimInput id="title" [formControlName]="currentTitleControlName"
-              [placeholder]="'blogs.posts.form.placeholders.title_en' | translate" />
-            @if (activeTitleEmptyAndTouched()) {
-            <p-message severity="error" variant="simple" size="small">Blog name is required</p-message>
+            <input
+              pInputText
+              trimInput
+              id="title"
+              [formControlName]="currentTitleControlName"
+              [maxlength]="blogTitleMaxLength"
+              [placeholder]="'blogs.posts.form.placeholders.title_en' | translate"
+            />
+            @if (getTitleErrorMessage(); as titleErrorMsg) {
+            <p-message severity="error" variant="simple" size="small">{{
+              titleErrorMsg
+              }}</p-message>
             }
           </div>
           <div class="our-field">
@@ -92,15 +100,31 @@
           <div class="our-field">
             <label>{{ "blogs.posts.form.section_fields.tags" | translate }}</label>
             <div class="tools-input-wrapper">
-              <input id="section-tags" pInputText [(ngModel)]="sectionTagInput" [ngModelOptions]="{ standalone: true }"
-                [placeholder]="
-                  'blogs.posts.form.section_fields.tags_ph' | translate
-                " (keyup.enter)="addSectionTag()" />
+              <input
+                id="section-tags"
+                pInputText
+                [(ngModel)]="sectionTagInput"
+                [ngModelOptions]="{ standalone: true }"
+                [maxlength]="sectionTagMaxLength"
+                [placeholder]="'blogs.posts.form.section_fields.tags_ph' | translate"
+                (input)="onSectionTagInputChange()"
+                (keyup.enter)="addSectionTag()"
+              />
               <button type="button" class="add-another" (click)="addSectionTag()">
                 <i class="pi pi-plus"></i>
                 <span>Add</span>
               </button>
             </div>
+            @if (sectionTagAddError) {
+            <p-message severity="error" variant="simple" size="small">{{
+              sectionTagAddError
+              }}</p-message>
+            }
+            @if (getSectionTagArrayErrorMessage(); as sectionTagListErr) {
+            <p-message severity="error" variant="simple" size="small">{{
+              sectionTagListErr
+              }}</p-message>
+            }
             <div class="tools-badges" *ngIf="sectionTags.length > 0">
               <div class="tool-badge" *ngFor="let tag of sectionTags.value; let i = index">
                 <span>{{ tag }}</span>
@@ -180,8 +204,17 @@
                     " />
                 </div>
                 <div class="our-field quote-author-field">
-                  <label>Quote Author</label>
-                  <input pInputText trimInput formControlName="quote_author" placeholder="Quote author" />
+                  <label>{{
+                    "blogs.posts.form.section_fields.quote_author" | translate
+                    }}</label>
+                  <input
+                    pInputText
+                    trimInput
+                    formControlName="quote_author"
+                    [placeholder]="
+                      'blogs.posts.form.section_fields.quote_author_ph' | translate
+                    "
+                  />
                 </div>
               </div>
             </div>

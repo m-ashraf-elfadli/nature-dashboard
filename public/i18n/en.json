@@ -803,10 +803,13 @@
           "category": "Choose blog category…"
         },
         "validation": {
-          "title_en": "English title is required",
-          "title_ar": "Arabic title is required",
+          "title_en": "Blog name in English is required",
+          "title_en_max": "Blog name in English can be at most {{max}} characters (this field has {{current}}).",
+          "title_ar": "Blog name in Arabic is required",
+          "title_ar_max": "Blog name in Arabic can be at most {{max}} characters (this field has {{current}}).",
           "category": "Category is required",
-          "image": "Image is required"
+          "image": "Image is required",
+          "section_tag_max": "Each section tag can be at most {{max}} characters (this value has {{current}}). Shorten the tag and try again."
         },
         "section_fields": {
           "title": "Section title",
@@ -815,6 +818,8 @@
           "image": "Section image",
           "quote": "Section quote",
           "quote_ph": "Enter quote…",
+          "quote_author": "Quote author",
+          "quote_author_ph": "Author name",
           "tags": "Section tags",
           "tags_ph": "Tags (comma-separated)",
           "validation_title": "Section title is required when the section is on"
