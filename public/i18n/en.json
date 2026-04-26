@@ -742,8 +742,12 @@
           "type": "Select type"
         },
         "validation": {
-          "name_en": "English name is required",
-          "name_ar": "Arabic name is required",
+          "name_en_required": "English name is required",
+          "name_en_min": "English name must be at least {{min}} characters",
+          "name_en_max": "English name must be at most {{max}} characters",
+          "name_ar_required": "Arabic name is required",
+          "name_ar_min": "Arabic name must be at least {{min}} characters",
+          "name_ar_max": "Arabic name must be at most {{max}} characters",
           "type": "Type is required",
           "image": "Image is required"
         },
