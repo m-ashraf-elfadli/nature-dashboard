@@ -300,7 +300,7 @@
             <div class="results-section">
                 <div class="header-section justify-content-between">
                     <h3>{{ 'projects.form.titles.results' | translate }}</h3>
-                    <p-toggleswitch class="flex align-items-center justify-content-center"
+                    <app-input-switch class="flex align-items-center justify-content-center"
                         formControlName="enableResults" (onChange)="toggleResults()" />
                 </div>
                 <div class="inputs" formArrayName="results">
@@ -373,7 +373,7 @@
                 <div class="header-section justify-content-between">
                     <h3>{{ 'projects.form.titles.metrics' | translate }} <span>{{ 'projects.form.titles.metrics_desc' |
                             translate }}</span></h3>
-                    <p-toggleswitch class="flex align-items-center justify-content-center"
+                    <app-input-switch class="flex align-items-center justify-content-center"
                         formControlName="enableMetrics" (onChange)="toggleMetrics()" />
                 </div>
                 <div class="inputs" formArrayName="metrics">

@@ -448,26 +448,6 @@ p-checkbox{
   }
 }
 
-.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider:before {
-    background: var(--p-toggleswitch-handle-checked-background);
-    left: calc(var(--p-toggleswitch-width) - calc(var(--p-toggleswitch-handle-size) + var(--p-toggleswitch-gap)));
-}
-.p-toggleswitch-slider:before {
-    position: absolute;
-    content: "";
-    top: 50%;
-    width: var(--p-toggleswitch-handle-size);
-    height: var(--p-toggleswitch-handle-size);
-    margin-top: calc(-1 * calc(var(--p-toggleswitch-handle-size) / 2));
-    border-radius: var(--p-toggleswitch-handle-border-radius);
-    transition: background var(--p-toggleswitch-transition-duration), left var(--p-toggleswitch-slide-duration);
-}
-.p-toggleswitch-slider {
-  &::before {
-    display: block !important;
-  }
-}
-
 .pi-trash {
   color: #b3261e;
   font-size: 14px !important;

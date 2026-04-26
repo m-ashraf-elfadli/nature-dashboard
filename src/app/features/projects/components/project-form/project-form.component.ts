@@ -26,7 +26,6 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { MessageModule } from 'primeng/message';
 import { EditorModule } from 'primeng/editor';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -35,6 +34,7 @@ import { FormActionsComponent } from '../../../../shared/components/form-actions
 import { DropDownOption } from '../../../../core/models/global.interface';
 import { GalleryUploadComponent } from '../../../../shared/components/gallery-upload/gallery-upload.component';
 import { SettingsComponent } from '../../../../shared/components/settings/settings.component';
+import { InputSwitchComponent } from '../../../../shared/components/input-switch/input-switch.component';
 import { ProjectsService } from '../../services/projects.service';
 import { forkJoin } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -64,7 +64,7 @@ const STATUS_MAP = {
     MultiSelectModule,
     SelectModule,
     DatePickerModule,
-    ToggleSwitchModule,
+    InputSwitchComponent,
     EditorModule,
     GalleryUploadComponent,
     SettingsComponent,

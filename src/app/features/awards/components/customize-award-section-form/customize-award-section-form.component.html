@@ -96,7 +96,7 @@
                     {{ 'awards_section.subsections' | translate }}
                     <span>({{ 'awards_section.max_subsections' | translate }})</span>
                 </legend>
-                <p-inputSwitch [formControl]="$any(awardSectionForm.get('subsection_publish'))"></p-inputSwitch>
+                <app-input-switch [formControl]="$any(awardSectionForm.get('subsection_publish'))"></app-input-switch>
             </div>
 
             <div formArrayName="subsections" class="subsections-container"
