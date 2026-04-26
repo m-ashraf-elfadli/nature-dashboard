@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const blogsRoutes: Routes = [
-  { path: '', redirectTo: 'categories', pathMatch: 'full' },
+  { path: '', redirectTo: 'posts', pathMatch: 'full' },
   {
     path: 'categories',
     loadComponent: () =>

@@ -9,6 +9,8 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -51,6 +53,7 @@ import { environment } from '../../../../../environments/environment';
 export class BlogCategoryFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() categoryId?: string;
   @Output() formClose = new EventEmitter<BlogCategoryFormEvent>();
+  @ViewChild('formContainer') formContainer!: ElementRef;
 
   private readonly fb = inject(FormBuilder);
   private readonly service = inject(BlogsService);
@@ -115,7 +118,7 @@ export class BlogCategoryFormComponent implements OnInit, OnChanges, OnDestroy {
       Validators.required,
       this.notBlankValidator,
       this.trimmedMinLengthValidator(3),
-      this.trimmedMaxLengthValidator(60),
+      this.trimmedMaxLengthValidator(50),
     ];
   }
 
@@ -204,5 +207,59 @@ export class BlogCategoryFormComponent implements OnInit, OnChanges, OnDestroy {
       type_id: null,
       image: null,
     });
+    this.scrollToTop();
+  }
+
+  private scrollToTop(): void {
+    if (this.formContainer) {
+      setTimeout(() => {
+        this.formContainer.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }, 0);
+    }
+  }
+
+  getErrorMessage(
+    fieldName: 'name_en' | 'name_ar' | 'type_id' | 'image',
+  ): string {
+    const control = this.form.get(fieldName);
+    if (!control?.errors || !control.touched) return '';
+
+    const e = control.errors;
+    const base = 'blogs.categories.form.validation';
+
+    if (fieldName === 'name_en' || fieldName === 'name_ar') {
+      if (e['required']) {
+        return this.translate.instant(`${base}.${fieldName}_required`);
+      }
+      if (e['blank']) {
+        return this.translate.instant(`${base}.${fieldName}_required`);
+      }
+      if (e['minlength']) {
+        const p = e['minlength'] as { requiredLength: number; actualLength: number };
+        return this.translate.instant(`${base}.${fieldName}_min`, {
+          min: p.requiredLength,
+          current: p.actualLength,
+        });
+      }
+      if (e['maxlength']) {
+        const p = e['maxlength'] as { requiredLength: number; actualLength: number };
+        return this.translate.instant(`${base}.${fieldName}_max`, {
+          max: p.requiredLength,
+          current: p.actualLength,
+        });
+      }
+    }
+
+    if (fieldName === 'type_id' && e['required']) {
+      return this.translate.instant(`${base}.type`);
+    }
+    if (fieldName === 'image' && e['required']) {
+      return this.translate.instant(`${base}.image`);
+    }
+
+    return '';
   }
 }

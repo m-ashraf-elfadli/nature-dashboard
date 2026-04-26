@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="form-container" #formContainer>
   <form [formGroup]="form">
     <div class="our-field">
       <label>
@@ -13,7 +13,7 @@
       />
       @if (form.get('name_en')?.invalid && form.get('name_en')?.touched) {
       <p-message severity="error" variant="simple" size="small">
-        {{ "blogs.categories.form.validation.name_en" | translate }}
+        {{ getErrorMessage("name_en") }}
       </p-message>
       }
     </div>
@@ -31,7 +31,7 @@
       />
       @if (form.get('name_ar')?.invalid && form.get('name_ar')?.touched) {
       <p-message severity="error" variant="simple" size="small">
-        {{ "blogs.categories.form.validation.name_ar" | translate }}
+        {{ getErrorMessage("name_ar") }}
       </p-message>
       }
     </div>
@@ -50,7 +50,7 @@
       />
       @if (form.get('type_id')?.invalid && form.get('type_id')?.touched) {
       <p-message severity="error" variant="simple" size="small">
-        {{ "blogs.categories.form.validation.type" | translate }}
+        {{ getErrorMessage("type_id") }}
       </p-message>
       }
     </div>
@@ -63,7 +63,7 @@
       <app-gallery-upload formControlName="image" [multiple]="false" />
       @if (form.get('image')?.invalid && form.get('image')?.touched) {
       <p-message severity="error" variant="simple" size="small">
-        {{ "blogs.categories.form.validation.image" | translate }}
+        {{ getErrorMessage("image") }}
       </p-message>
       }
     </div>

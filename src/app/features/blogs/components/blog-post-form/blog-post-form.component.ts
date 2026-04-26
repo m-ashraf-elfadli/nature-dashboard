@@ -50,6 +50,9 @@ const STATUS_MAP = {
   completed: 2,
 } as const;
 
+const BLOG_TITLE_MAX_LENGTH = 255;
+const SECTION_TAG_MAX_LENGTH = 50;
+
 @Component({
   selector: 'app-blog-post-form',
   standalone: true,
@@ -105,12 +108,18 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     ['ar', { code: 'ar', status: 'not-started' }],
   ]);
 
+  /** Used in template for `maxlength` on name and tag inputs. */
+  readonly blogTitleMaxLength = BLOG_TITLE_MAX_LENGTH;
+  readonly sectionTagMaxLength = SECTION_TAG_MAX_LENGTH;
+  sectionTagAddError: string | null = null;
+
   ngOnInit(): void {
     const stored = localStorage.getItem('app_lang');
     if (stored === 'en' || stored === 'ar') {
       this.currentLanguage.set(stored);
     }
     this.initForm();
+    this.updateActiveTitleValidators(this.currentLanguage());
     this.loadCategories(this.currentLanguage());
     this.titleStatusSub = merge(
       this.form.get('title_en')!.valueChanges,
@@ -162,8 +171,8 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private initForm(): void {
     this.form = this.fb.group({
-      title_en: ['', [Validators.maxLength(300)]],
-      title_ar: ['', [Validators.maxLength(300)]],
+      title_en: ['', [Validators.maxLength(BLOG_TITLE_MAX_LENGTH)]],
+      title_ar: ['', [Validators.maxLength(BLOG_TITLE_MAX_LENGTH)]],
       category_id: [null, Validators.required],
       image: [null, Validators.required],
       status: [1, Validators.required],
@@ -204,6 +213,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.sections.push(this.createSectionGroup());
     this.sectionTags.clear();
     this.sectionTagInput = '';
+    this.sectionTagAddError = null;
     this.form.patchValue({
       title_en: '',
       title_ar: '',
@@ -337,12 +347,29 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   addSectionTag(): void {
+    this.sectionTagAddError = null;
     const val = this.sectionTagInput.trim();
     if (!val) return;
-    this.sectionTags.push(this.fb.control(val));
+    if (val.length > SECTION_TAG_MAX_LENGTH) {
+      this.sectionTagAddError = this.translate.instant(
+        'blogs.posts.form.validation.section_tag_max',
+        {
+          max: SECTION_TAG_MAX_LENGTH,
+          current: val.length,
+        },
+      );
+      return;
+    }
+    this.sectionTags.push(
+      this.fb.control(val, { validators: [Validators.maxLength(SECTION_TAG_MAX_LENGTH)] }),
+    );
     this.sectionTagInput = '';
     this.sectionTags.markAsDirty();
     this.form.markAsDirty();
+  }
+
+  onSectionTagInputChange(): void {
+    this.sectionTagAddError = null;
   }
 
   removeSectionTag(index: number): void {
@@ -382,9 +409,42 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/blogs/posts']);
   }
 
-  activeTitleEmptyAndTouched(): boolean {
-    const c = this.form.get(this.currentTitleControlName);
-    return !!(c?.touched && !String(c?.value || '').trim());
+  getTitleErrorMessage(): string {
+    const name = this.currentTitleControlName;
+    const c = this.form.get(name);
+    if (!c?.errors || !c.touched) return '';
+    const e = c.errors;
+    const base = 'blogs.posts.form.validation';
+    if (e['required']) {
+      return this.translate.instant(`${base}.${name}`);
+    }
+    if (e['maxlength']) {
+      const p = e['maxlength'] as { requiredLength: number; actualLength: number };
+      return this.translate.instant(`${base}.${name}_max`, {
+        max: p.requiredLength,
+        current: p.actualLength,
+      });
+    }
+    return '';
+  }
+
+  getSectionTagArrayErrorMessage(): string {
+    for (const ctrl of this.sectionTags.controls) {
+      if (ctrl.hasError('maxlength')) {
+        const p = ctrl.errors!['maxlength'] as {
+          requiredLength: number;
+          actualLength: number;
+        };
+        return this.translate.instant(
+          'blogs.posts.form.validation.section_tag_max',
+          {
+            max: p.requiredLength,
+            current: p.actualLength,
+          },
+        );
+      }
+    }
+    return '';
   }
 
   onSave(): void {
@@ -652,7 +712,13 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     );
     const fromRoot = this.extractTagTokens(rootTags);
     const unique = Array.from(new Set([...fromSections, ...fromRoot]));
-    unique.forEach((tag) => this.sectionTags.push(this.fb.control(tag)));
+    unique.forEach((tag) =>
+      this.sectionTags.push(
+        this.fb.control(tag, {
+          validators: [Validators.maxLength(SECTION_TAG_MAX_LENGTH)],
+        }),
+      ),
+    );
   }
 
   private applySectionEnabledState(index: number): void {
@@ -679,8 +745,11 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     const en = this.form.get('title_en');
     const ar = this.form.get('title_ar');
     if (!en || !ar) return;
-    en.setValidators([Validators.required, Validators.maxLength(300)]);
-    ar.setValidators([Validators.maxLength(300)]);
+    en.setValidators([
+      Validators.required,
+      Validators.maxLength(BLOG_TITLE_MAX_LENGTH),
+    ]);
+    ar.setValidators([Validators.maxLength(BLOG_TITLE_MAX_LENGTH)]);
     en.updateValueAndValidity({ emitEvent: false });
     ar.updateValueAndValidity({ emitEvent: false });
   }

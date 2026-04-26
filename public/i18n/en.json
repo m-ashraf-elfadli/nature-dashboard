@@ -742,8 +742,12 @@
           "type": "Select type"
         },
         "validation": {
-          "name_en": "English name is required",
-          "name_ar": "Arabic name is required",
+          "name_en_required": "English name is required",
+          "name_en_min": "English name must be at least {{min}} characters",
+          "name_en_max": "English name must be at most {{max}} characters",
+          "name_ar_required": "Arabic name is required",
+          "name_ar_min": "Arabic name must be at least {{min}} characters",
+          "name_ar_max": "Arabic name must be at most {{max}} characters",
           "type": "Type is required",
           "image": "Image is required"
         },
@@ -766,22 +770,22 @@
         "status": "Status"
       },
       "btns": {
-        "add_new": "Add post"
+        "add_new": "Add New Blog"
       },
       "empty": {
-        "create_btn": "Add post",
-        "no_data": "No posts yet. Create your first post."
+        "create_btn": "Add New Blog",
+        "no_data": "No blogs yet. Create your first blog."
       },
       "delete_dialog": {
-        "header": "Delete post",
-        "desc": "Are you sure you want to delete this post? This cannot be undone."
+        "header": "Delete blog",
+        "desc": "Are you sure you want to delete this blog? This cannot be undone."
       },
       "bulk_delete_dialog": {
-        "header": "Delete posts",
-        "desc": "Are you sure you want to delete these {{count}} posts? This cannot be undone."
+        "header": "Delete blogs",
+        "desc": "Are you sure you want to delete these {{count}} blogs? This cannot be undone."
       },
       "form": {
-        "title": "Add new blog",
+        "title": "Add New Blog",
         "edit_title": "Edit blog",
         "section_details": "Blog details",
         "main_image": "Blog image",
@@ -799,10 +803,13 @@
           "category": "Choose blog category…"
         },
         "validation": {
-          "title_en": "English title is required",
-          "title_ar": "Arabic title is required",
+          "title_en": "Blog name in English is required",
+          "title_en_max": "Blog name in English can be at most {{max}} characters (this field has {{current}}).",
+          "title_ar": "Blog name in Arabic is required",
+          "title_ar_max": "Blog name in Arabic can be at most {{max}} characters (this field has {{current}}).",
           "category": "Category is required",
-          "image": "Image is required"
+          "image": "Image is required",
+          "section_tag_max": "Each section tag can be at most {{max}} characters (this value has {{current}}). Shorten the tag and try again."
         },
         "section_fields": {
           "title": "Section title",
@@ -811,6 +818,8 @@
           "image": "Section image",
           "quote": "Section quote",
           "quote_ph": "Enter quote…",
+          "quote_author": "Quote author",
+          "quote_author_ph": "Author name",
           "tags": "Section tags",
           "tags_ph": "Tags (comma-separated)",
           "validation_title": "Section title is required when the section is on"
