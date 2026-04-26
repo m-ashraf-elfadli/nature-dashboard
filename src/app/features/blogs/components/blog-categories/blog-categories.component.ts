@@ -17,10 +17,7 @@ import { Subscription } from 'rxjs';
 import { ExportService } from '../../../../shared/services/export.service';
 import { BlogCategoryFormComponent } from '../blog-category-form/blog-category-form.component';
 import { BlogsService } from '../../services/blogs.service';
-import {
-  BlogCategory,
-  BlogCategoryFormEvent,
-} from '../../models/blogs.model';
+import { BlogCategory, BlogCategoryFormEvent } from '../../models/blogs.model';
 
 @Component({
   selector: 'app-blog-categories',
@@ -227,7 +224,9 @@ export class BlogCategoriesComponent implements OnInit, OnDestroy {
   }
 
   changeStatus(row: BlogCategory, value: boolean, _e?: Event): void {
-    this.service.changeCategoryStatus(row.id, value).subscribe();
+    this.service.changeCategoryStatus(row.id, value).subscribe({
+      error: () => this.loadCategories(),
+    });
   }
 
   onPaginationChange(event: PaginationObj): void {
@@ -257,10 +256,14 @@ export class BlogCategoriesComponent implements OnInit, OnDestroy {
       btnCallback: () => this.bulkDelete(),
     };
     if (hasSelection) {
-      const withoutBulk = this.filterItems.filter((f) => f.name !== 'delete-btn');
+      const withoutBulk = this.filterItems.filter(
+        (f) => f.name !== 'delete-btn',
+      );
       this.filterItems = [bulkDeleteBtn, ...withoutBulk];
     } else {
-      this.filterItems = this.filterItems.filter((f) => f.name !== 'delete-btn');
+      this.filterItems = this.filterItems.filter(
+        (f) => f.name !== 'delete-btn',
+      );
     }
   }
 
