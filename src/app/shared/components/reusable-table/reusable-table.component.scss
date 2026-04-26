@@ -133,14 +133,40 @@
         text-overflow: ellipsis;
         width: 100%;
       }
-      .text-editor-cell{
-        ::ng-deep{
-          *{
-            width: 100%;
-            white-space: wrap;
-            display: block;
+      .text-editor-cell {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        white-space: normal;
+
+        ::ng-deep {
+          * {
+            max-width: 100%;
+            white-space: normal;
+            overflow-wrap: anywhere;
+          }
+
+          > *,
+          li {
+            display: -webkit-box;
             overflow: hidden;
             text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+          }
+
+          p,
+          h1,
+          h2,
+          h3,
+          h4,
+          h5,
+          h6,
+          ul,
+          ol,
+          blockquote {
+            margin: 0;
           }
         }
       }
