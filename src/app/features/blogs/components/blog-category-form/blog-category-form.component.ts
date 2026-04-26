@@ -9,6 +9,8 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -51,6 +53,7 @@ import { environment } from '../../../../../environments/environment';
 export class BlogCategoryFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() categoryId?: string;
   @Output() formClose = new EventEmitter<BlogCategoryFormEvent>();
+  @ViewChild('formContainer') formContainer!: ElementRef;
 
   private readonly fb = inject(FormBuilder);
   private readonly service = inject(BlogsService);
@@ -204,6 +207,18 @@ export class BlogCategoryFormComponent implements OnInit, OnChanges, OnDestroy {
       type_id: null,
       image: null,
     });
+    this.scrollToTop();
+  }
+
+  private scrollToTop(): void {
+    if (this.formContainer) {
+      setTimeout(() => {
+        this.formContainer.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }, 0);
+    }
   }
 
   getErrorMessage(

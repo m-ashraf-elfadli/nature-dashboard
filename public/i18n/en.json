@@ -770,22 +770,22 @@
         "status": "Status"
       },
       "btns": {
-        "add_new": "Add post"
+        "add_new": "Add New Blog"
       },
       "empty": {
-        "create_btn": "Add post",
-        "no_data": "No posts yet. Create your first post."
+        "create_btn": "Add New Blog",
+        "no_data": "No blogs yet. Create your first blog."
       },
       "delete_dialog": {
-        "header": "Delete post",
-        "desc": "Are you sure you want to delete this post? This cannot be undone."
+        "header": "Delete blog",
+        "desc": "Are you sure you want to delete this blog? This cannot be undone."
       },
       "bulk_delete_dialog": {
-        "header": "Delete posts",
-        "desc": "Are you sure you want to delete these {{count}} posts? This cannot be undone."
+        "header": "Delete blogs",
+        "desc": "Are you sure you want to delete these {{count}} blogs? This cannot be undone."
       },
       "form": {
-        "title": "Add new blog",
+        "title": "Add New Blog",
         "edit_title": "Edit blog",
         "section_details": "Blog details",
         "main_image": "Blog image",
