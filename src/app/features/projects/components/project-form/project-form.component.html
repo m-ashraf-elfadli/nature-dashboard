@@ -107,7 +107,7 @@
                         <label for="brief">{{ 'projects.form.labels.brief' | translate }} <span
                                 class="text-red-val">*</span></label>
                         <div class="textarea-container">
-                            <textarea pTextarea style="height: 100px;" [disabled]="true"
+                            <textarea pTextarea style="height: 150px;" [disabled]="true"
                                 [placeholder]=" currentLanguage() === 'ar'?'من فضلك ادخل موجز عن المشروع ...':'Write project brief ...'" id="brief" [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'"
                                 formControlName="brief" rows="4"></textarea>
                             <span class="char-counter"><span [class.text-red-val]="hasError('brief','maxlength')">{{
