@@ -63,6 +63,7 @@
         font-size: var(--Font-Size-2Xs, 14px);
         font-weight: var(--Font-Weight-Medium, 500);
         line-height: 1.2;
+        max-width: fit-content;
 
         .pi-eye {
           font-size: 14px;
