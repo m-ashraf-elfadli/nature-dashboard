@@ -128,33 +128,52 @@
         min-height: 100%;
       }
       .text-cell {
-        display: block;
-        white-space: wrap;
+        display: -webkit-box;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: normal;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow-wrap: anywhere;
         width: 100%;
       }
+      .text-and-desc-cell {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        > * {
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: normal;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          overflow-wrap: anywhere;
+        }
+      }
       .text-editor-cell {
+        display: -webkit-box;
         width: 100%;
         max-width: 100%;
         overflow: hidden;
+        text-overflow: ellipsis;
         white-space: normal;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow-wrap: anywhere;
 
         ::ng-deep {
           * {
+            display: inline;
             max-width: 100%;
             white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
             overflow-wrap: anywhere;
-          }
-
-          > *,
-          li {
-            display: -webkit-box;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
           }
 
           p,

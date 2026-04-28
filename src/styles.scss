@@ -198,7 +198,9 @@ a {
   .textarea-container {
     width: 100%;
     position: relative;
-
+    .p-textarea{
+      padding: 10.087px 15.13px 7px;
+    }
     span.char-counter {
       position: absolute;
       left: 15.13px;

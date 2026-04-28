@@ -4,7 +4,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TestimonialsService } from '../../services/testimonials.service';
 import { TestimonialFormAction, TestimonialFormEvent } from '../../models/testimonials.model';
 import { TranslateModule } from '@ngx-translate/core';
-import { CustomValidators } from '../../../../core/validators/custom-validators.';
 @Component({
   selector: 'app-testimonials-form',
   standalone: true,
@@ -48,12 +47,12 @@ export class TestimonialsFormComponent implements OnInit, OnChanges {
 
   private initForm() {
     this.form = this.fb.group({
-      clientNameEn: ['', [Validators.required, Validators.maxLength(60), CustomValidators.notOnlySpecialChars()]],
-      clientNameAr: ['', [Validators.required, Validators.maxLength(60), CustomValidators.notOnlySpecialChars()]],
-      jobTitleEn: ['', [Validators.maxLength(60), CustomValidators.notOnlySpecialChars()]],
-      jobTitleAr: ['', [Validators.maxLength(60), CustomValidators.notOnlySpecialChars()]],
-      testimonialEn: ['', [Validators.required, Validators.maxLength(1000), CustomValidators.notOnlySpecialChars()]],
-      testimonialAr: ['', [Validators.required, Validators.maxLength(1000), CustomValidators.notOnlySpecialChars()]]
+      clientNameEn: ['', [Validators.required, Validators.maxLength(60)]],
+      clientNameAr: ['', [Validators.required, Validators.maxLength(60)]],
+      jobTitleEn: ['', [Validators.maxLength(60)]],
+      jobTitleAr: ['', [Validators.maxLength(60)]],
+      testimonialEn: ['', [Validators.required, Validators.maxLength(1000)]],
+      testimonialAr: ['', [Validators.required, Validators.maxLength(1000)]]
     });
   }
 

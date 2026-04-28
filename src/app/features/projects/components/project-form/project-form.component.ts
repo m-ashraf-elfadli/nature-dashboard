@@ -42,7 +42,6 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 import { ProjectById } from '../../models/projects.interface';
 import { environment } from '../../../../../environments/environment';
 import { ApiService } from '../../../../core/services/api.service';
-import { CustomValidators } from '../../../../core/validators/custom-validators.';
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
 const STATUS_MAP = {
@@ -145,9 +144,9 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   initForm() {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(70), CustomValidators.notOnlySpecialChars()]],
-      brief: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200), CustomValidators.notOnlySpecialChars()]],
-      overview: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200), CustomValidators.notOnlySpecialChars()]],
+      name: ['', [Validators.required, Validators.maxLength(70)]],
+      brief: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+      overview: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       start_date: ['', Validators.required],
       end_date: [''],
       service_ids: [[], Validators.required],

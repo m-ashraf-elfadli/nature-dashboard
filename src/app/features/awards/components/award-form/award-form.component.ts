@@ -35,7 +35,6 @@ import { environment } from '../../../../../environments/environment';
 import { Award } from '../../models/awards.interface';
 import { ApiService } from '../../../../core/services/api.service';
 import { TrimInputDirective } from '../../../../core/directives/trim-input.directive';
-import { CustomValidators } from '../../../../core/validators/custom-validators.';
 
 type LanguageStatusType = 'not-started' | 'ongoing' | 'completed';
 
@@ -137,7 +136,7 @@ export class AwardFormComponent implements OnInit, OnDestroy, AfterViewInit {
   initForm() {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', [Validators.required, CustomValidators.notOnlySpaces()]],
+      description: ['', [Validators.required]],
       image: [null, Validators.required],
       award_date: [null, [Validators.required, this.notFutureDate]],
       organizations_logos: [null, Validators.required],

@@ -64,10 +64,6 @@
                         <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.name' |
                             translate}}</p-message>
                         }
-                        @if(hasError('name', 'onlySpecialChars')){
-                        <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.only_special_chars' |
-                            translate}}</p-message>
-                        }
                         @if(hasError('name', 'maxlength')){
                         <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.name_max_length' |
                             translate}}</p-message>
@@ -79,17 +75,12 @@
                         <div class="textarea-container">
                             <textarea pTextarea [placeholder]="currentLanguage() === 'ar'? 'من فضلك ادخل وصف المشروع ...':'Write project overview ...'"
                             [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
-                                id="overview" [autoResize]="true" formControlName="overview" rows="4"></textarea>
+                                id="overview" style="height: 150px;" formControlName="overview" rows="4"></textarea>
                             <span class="char-counter"><span [class.text-red-val]="hasError('overview','maxlength')">{{
                                     form.get('overview')?.value?.length || 0 }}</span>/200</span>
                         </div>
                         @if(hasError('overview','required')){
                         <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.overview'
-                            | translate}}</p-message>
-                        }
-                        @if(hasError('overview','onlySpecialChars')){
-                        <p-message severity="error" variant="simple"
-                            size="small">{{'projects.form.validation.only_special_chars'
                             | translate}}</p-message>
                         }
                         @if(hasError('overview','maxlength')){
@@ -116,11 +107,6 @@
                         @if(hasError('brief','required')){
                         <p-message severity="error" variant="simple" size="small">{{'projects.form.validation.brief' |
                             translate}}</p-message>
-                        }
-                        @if(hasError('brief','onlySpecialChars')){
-                        <p-message severity="error" variant="simple"
-                            size="small">{{'projects.form.validation.only_special_chars'
-                            | translate}}</p-message>
                         }
                         @if(hasError('brief','maxlength')){
                         <p-message severity="error" variant="simple"
