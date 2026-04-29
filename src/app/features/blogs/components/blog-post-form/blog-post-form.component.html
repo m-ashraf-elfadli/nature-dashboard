@@ -75,7 +75,6 @@
               trimInput
               id="title"
               [formControlName]="currentTitleControlName"
-              [maxlength]="blogTitleMaxLength"
               [placeholder]="'blogs.posts.form.placeholders.title_en' | translate"
             />
             @if (getTitleErrorMessage(); as titleErrorMsg) {

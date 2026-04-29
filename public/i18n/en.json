@@ -28,10 +28,10 @@
     "pagination_info": "Showing {{first}} to {{last}} of {{total}} entries",
     "show": "Show",
     "entries": "entries",
-    "success":"Success",
+    "success": "Success",
     "delete_selected": "Delete Selected",
     "check_internet_connection": "Please check your internet connection",
-    "award_disabled_info_header_message":"Hidden until awards are added or published"
+    "award_disabled_info_header_message": "Hidden until awards are added or published"
   },
   "login": {
     "powered_by": "Powered By",
@@ -465,9 +465,9 @@
       "cancel": "Cancel",
       "save": "Save",
       "update": "Update",
-      "info":"Note: ",
-      "2_halves":"2 Halves 2:1 665x347px",
-      "single_banner":"Single Banner 4:1 1342x347px"
+      "info": "Note: ",
+      "2_halves": "2 Halves 2:1 665x347px",
+      "single_banner": "Single Banner 4:1 1342x347px"
     }
   },
   "testimonials": {
@@ -803,10 +803,10 @@
           "category": "Choose blog category…"
         },
         "validation": {
-          "title_en": "Blog name in English is required",
-          "title_en_max": "Blog name in English can be at most {{max}} characters (this field has {{current}}).",
-          "title_ar": "Blog name in Arabic is required",
-          "title_ar_max": "Blog name in Arabic can be at most {{max}} characters (this field has {{current}}).",
+          "title_en": "Blog name is required",
+          "title_en_max": "Blog name can be at most {{max}} characters.",
+          "title_ar": "Blog name is required",
+          "title_ar_max": "Blog name can be at most {{max}} characters.",
           "category": "Category is required",
           "image": "Image is required",
           "section_tag_max": "Each section tag can be at most {{max}} characters (this value has {{current}}). Shorten the tag and try again."
