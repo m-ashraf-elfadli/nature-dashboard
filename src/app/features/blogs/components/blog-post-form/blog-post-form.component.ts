@@ -108,8 +108,7 @@ export class BlogPostFormComponent implements OnInit, OnDestroy, AfterViewInit {
     ['ar', { code: 'ar', status: 'not-started' }],
   ]);
 
-  /** Used in template for `maxlength` on name and tag inputs. */
-  readonly blogTitleMaxLength = BLOG_TITLE_MAX_LENGTH;
+  /** Used in template for section tag maxlength only. */
   readonly sectionTagMaxLength = SECTION_TAG_MAX_LENGTH;
   sectionTagAddError: string | null = null;
 

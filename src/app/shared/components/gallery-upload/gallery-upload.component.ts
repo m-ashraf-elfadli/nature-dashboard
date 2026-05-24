@@ -33,6 +33,8 @@ export class GalleryUploadComponent implements ControlValueAccessor {
   // Track the actual file/URL data separately from display previews
   private filesData: (File | string)[] = [];
   isDragOver: boolean = false;
+  readonly acceptedImageTypes = '.jpg,.jpeg,.png,.gif,.webp,.svg';
+  private readonly blockedExtensions = new Set(['tif', 'tiff']);
 
   // ✅ Fix: Accept any type for onChange to handle mixed arrays
   private onChange: (value: any) => void = () => {};
@@ -67,6 +69,11 @@ export class GalleryUploadComponent implements ControlValueAccessor {
     const validFiles: File[] = [];
 
     files.forEach((file) => {
+      const ext = file.name.split('.').pop()?.toLowerCase() || '';
+      if (this.blockedExtensions.has(ext)) {
+        console.warn(`File ${file.name} type is not allowed`);
+        return;
+      }
       // Check if file is an image
       if (!file.type.startsWith('image/')) {
         console.warn(`File ${file.name} is not an image`);
