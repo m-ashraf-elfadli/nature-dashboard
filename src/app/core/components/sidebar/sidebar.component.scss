@@ -297,6 +297,13 @@
   }
 }
 
+button.nav-item {
+  border: none;
+  background: transparent;
+  font: inherit;
+  text-align: start;
+}
+
 /* Figma: inactive sub-item uses primary-1000; active sub-item uses primary-600 (not top-nav active green weight) */
 .nav-item.nav-group__child:not(.active) .nav-label {
   color: var(--Color-Primary-1000, #2e4528);

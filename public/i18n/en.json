@@ -8,6 +8,7 @@
     "text_editor_header": "Section body",
     "search_input_table_placeholder": "Search by name ...",
     "import": "Import CSV",
+    "download_template": "Download Template",
     "export": "Export CSV",
     "gallary_btn": "Click to upload",
     "gallary_desc": "or Drag and Drop files here",

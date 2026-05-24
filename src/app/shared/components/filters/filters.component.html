@@ -102,6 +102,32 @@
           <i class="pi {{ item.btnIcon }}"></i>
           <span>{{ item.label | translate }}</span>
         </button>
+      } @else if (item.type === "import") {
+        <button
+          class="custom-btn anm-{{ item.anmSeverity }} btn-{{ item.btnSeverity }}"
+          type="button"
+          (click)="fileInput.click()"
+        >
+          <i class="pi {{ item.btnIcon || 'pi-upload' }}"></i>
+          <span>{{ item.label | translate }}</span>
+        </button>
+        <input
+          #fileInput
+          type="file"
+          [accept]="item.acceptedFileTypes || '.csv'"
+          hidden
+          (change)="importFile($event, item)"
+        />
+        @if (item.downloadTemplateEndpoint || item.templateHeadersEndpoint || item.templateHeaders?.length) {
+          <button
+            class="custom-btn btn-white"
+            type="button"
+            (click)="downloadTemplate(item)"
+          >
+            <i class="pi pi-file-arrow-down"></i>
+            <span>{{ "general.download_template" | translate }}</span>
+          </button>
+        }
       } @else if (item.type === "select") {
         @if (item.name) {
           <div>

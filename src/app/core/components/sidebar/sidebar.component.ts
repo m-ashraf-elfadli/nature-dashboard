@@ -45,7 +45,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   isSidebarCollapsed = false;
   mobileMenuOpen = false;
-  blogsNavExpanded = false;
+  expandedGroups = new Set<string>();
 
   private langChangeSubscription?: Subscription;
   private routerEventsSub?: Subscription;
@@ -63,10 +63,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     this.initNavItems();
     this.updateTranslatedNavItems();
-    this.syncBlogsExpand(this.router.url);
+    this.syncExpandedGroups(this.router.url);
     this.routerEventsSub = this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
-      .subscribe((e) => this.syncBlogsExpand(e.urlAfterRedirects));
+      .subscribe((e) => this.syncExpandedGroups(e.urlAfterRedirects));
 
     // Subscribe to language changes
     this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
@@ -81,18 +81,49 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.routerEventsSub?.unsubscribe();
   }
 
-  private syncBlogsExpand(url: string): void {
-    if (url.includes('/blogs')) {
-      this.blogsNavExpanded = true;
+  private syncExpandedGroups(url: string): void {
+    for (const item of this.translatedNavItems) {
+      if (item.children?.length && this.isGroupActive(item, url)) {
+        this.expandedGroups.add(this.getGroupKey(item));
+      }
     }
   }
 
-  toggleBlogsNav(): void {
-    this.blogsNavExpanded = !this.blogsNavExpanded;
+  toggleGroup(item: { label: string; route: string }): void {
+    const key = this.getGroupKey(item);
+
+    if (this.isSidebarCollapsed) {
+      this.isSidebarCollapsed = false;
+      this.sidebarService.toggleSidebarCollapse(false);
+      this.expandedGroups.add(key);
+      return;
+    }
+
+    if (this.expandedGroups.has(key)) {
+      this.expandedGroups.delete(key);
+    } else {
+      this.expandedGroups.add(key);
+    }
   }
 
-  isBlogsSectionActive(): boolean {
-    return this.router.url.includes('/blogs');
+  isGroupExpanded(item: { label: string; route: string }): boolean {
+    return this.expandedGroups.has(this.getGroupKey(item));
+  }
+
+  isGroupActive(
+    item: { route: string; children?: { route: string }[] },
+    url = this.router.url,
+  ): boolean {
+    const routes = item.children?.map((child) => child.route) ?? [item.route];
+    return routes.some((route) => this.isRouteActive(route, url));
+  }
+
+  private getGroupKey(item: { route: string; label: string }): string {
+    return item.route || item.label;
+  }
+
+  private isRouteActive(route: string, url: string): boolean {
+    return url === route || url.startsWith(`${route}/`);
   }
 
   private initNavItems() {

@@ -10,10 +10,11 @@ import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 import { debounceTime } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { ImportService } from '../../services/import.service';
 
 export interface FilterItems {
   name?: string;
-  type?: 'filter' | 'search' | 'btn' | 'select';
+  type?: 'filter' | 'search' | 'btn' | 'select' | 'import';
   label?: string;
   placeholder?: string;
   filterOptions?: FilterOption[];
@@ -23,6 +24,14 @@ export interface FilterItems {
   btnSeverity?: 'primary' | 'danger' | 'white' | 'primary-outline';
   anmSeverity?: 'bg-grow' | 'expand' | 'expand-gap';
   btnCallback?: (e: Event) => void;
+  importEndpoint?: string;
+  downloadTemplateEndpoint?: string;
+  templateHeadersEndpoint?: string;
+  templateHeaders?: string[];
+  templateFileName?: string;
+  importFieldName?: string;
+  acceptedFileTypes?: string;
+  importCallback?: () => void;
 }
 export interface FilterOption {
   type?: 'input' | 'select' | "date";
@@ -59,6 +68,7 @@ export interface OptionsFilter {
 export class FiltersComponent implements OnInit, OnChanges {
   @ViewChild('op') op!: Popover;
   private readonly fb = inject(FormBuilder);
+  private readonly importService = inject(ImportService);
   formFilter!: FormGroup;
   @Input() filterConfig: FilterItems[] = [];
   @Output() filterChange = new EventEmitter<any>();
@@ -78,7 +88,7 @@ export class FiltersComponent implements OnInit, OnChanges {
   private initFilterForm() {
     const fields: any = {};
     this.filterConfig?.forEach((field: any) => {
-      if (field.type != 'btn' && field.type != 'filter') {
+      if (field.type != 'btn' && field.type != 'filter' && field.type != 'import') {
         fields[field.name] = field.multiple ? [[]] : [null];
       }
       if (field.type === 'filter') {
@@ -98,7 +108,7 @@ export class FiltersComponent implements OnInit, OnChanges {
             this.filterChange.emit(this.formFilter.value);
           });
         }
-      } else if (field.type !== 'btn' && field.type !== 'filter' && field.name) {
+      } else if (field.type !== 'btn' && field.type !== 'filter' && field.type !== 'import' && field.name) {
         const control = this.formFilter.get(field.name);
         if (control) {
           control.valueChanges.pipe(debounceTime(4)).subscribe(() => {
@@ -125,6 +135,50 @@ export class FiltersComponent implements OnInit, OnChanges {
   resetFilter(e: Event) {
     this.formFilter.reset();
     this.op.toggle(e);
+  }
+
+  importFile(event: Event, item: FilterItems) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file || !item.importEndpoint) {
+      input.value = '';
+      return;
+    }
+
+    this.importService
+      .importFile(item.importEndpoint, file, item.importFieldName)
+      .subscribe({
+        next: () => item.importCallback?.(),
+        complete: () => {
+          input.value = '';
+        },
+        error: () => {
+          input.value = '';
+        },
+      });
+  }
+
+  downloadTemplate(item: FilterItems) {
+    const fileName = item.templateFileName || 'template.csv';
+
+    if (item.downloadTemplateEndpoint) {
+      this.importService.downloadTemplate(item.downloadTemplateEndpoint).subscribe({
+        next: (blob) => this.importService.downloadBlob(blob, fileName),
+      });
+      return;
+    }
+
+    if (item.templateHeadersEndpoint) {
+      this.importService.getTemplateHeaders(item.templateHeadersEndpoint).subscribe({
+        next: (headers) => this.importService.downloadTemplateFromHeaders(headers, fileName),
+      });
+      return;
+    }
+
+    if (item.templateHeaders?.length) {
+      this.importService.downloadTemplateFromHeaders(item.templateHeaders, fileName);
+    }
   }
 
 }
