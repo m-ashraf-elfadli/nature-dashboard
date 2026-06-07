@@ -59,6 +59,7 @@ export class NavbarComponent implements OnInit {
     blogs: 'navigation.blogs',
     blog_categories: 'navigation.blog_categories',
     blog_posts: 'navigation.blog_posts',
+    'environmental-calendar': 'navigation.environmental_calendar',
   };
   private readonly LANG_KEY = 'app_lang';
 

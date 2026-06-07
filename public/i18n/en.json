@@ -590,6 +590,76 @@
     "drag_drop": "or drag and drop files here",
     "hint": "JPG, JPEG, PNG or WEBP"
   },
+  "environmental_calendar": {
+    "breadcrumb_parent": "Environmental Calendar",
+    "breadcrumb": "Environmental Calendar",
+    "page_title": "All Events",
+    "search_placeholder": "Search in events...",
+    "table": {
+      "event_name": "Event Name",
+      "event_date": "Event Date",
+      "event_type": "Event Type",
+      "status": "Status"
+    },
+    "btns": {
+      "add_new": "Add New Event"
+    },
+    "empty": {
+      "create_btn": "Add New Event",
+      "no_data": "No events yet. Create your first event."
+    },
+    "delete_dialog": {
+      "header": "Delete event",
+      "desc": "Are you sure you want to delete this event? This cannot be undone."
+    },
+    "bulk_delete_dialog": {
+      "header": "Delete events",
+      "desc": "Are you sure you want to delete these {{count}} events? This cannot be undone."
+    },
+    "event_types": {
+      "global": "Global Event",
+      "special": "Special Event"
+    },
+    "event_colors": {
+      "water": "Water",
+      "earth": "Earth",
+      "air": "Air"
+    },
+    "form": {
+      "title": "Create New Event",
+      "edit_title": "Edit Event",
+      "title_en": "Event Name (English)",
+      "title_ar": "Event Name (Arabic)",
+      "event_type": "Event Type",
+      "event_color": "Event Color",
+      "event_date": "Event Date",
+      "image": "Event Image",
+      "placeholders": {
+        "title_en": "Enter event name in English",
+        "title_ar": "Enter event name in Arabic",
+        "event_type": "Choose event type...",
+        "event_color": "Choose event color...",
+        "event_date": "Choose event date..."
+      },
+      "validation": {
+        "title_en_required": "English event name is required",
+        "title_en_min": "English event name must be at least {{min}} characters",
+        "title_en_max": "English event name must be at most {{max}} characters",
+        "title_ar_required": "Arabic event name is required",
+        "title_ar_min": "Arabic event name must be at least {{min}} characters",
+        "title_ar_max": "Arabic event name must be at most {{max}} characters",
+        "event_type": "Event type is required",
+        "event_color": "Event color is required",
+        "event_date": "Event date is required",
+        "image": "Image is required"
+      },
+      "btns": {
+        "save_create": "Save And Create New",
+        "save": "Save",
+        "update": "Update"
+      }
+    }
+  },
   "navigation": {
     "dashboard": "Dashboard",
     "projects": "Projects",
@@ -600,7 +670,8 @@
     "questions": "Questions",
     "blogs": "Blogs",
     "blog_categories": "Categories",
-    "blog_posts": "Blog posts"
+    "blog_posts": "Blog posts",
+    "environmental_calendar": "Environmental Calendar"
   },
   "dashboard": {
     "welcome": "Welcome back, {{name}}",

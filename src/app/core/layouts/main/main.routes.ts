@@ -23,6 +23,21 @@ const blogsRoute: Routes = environment.enableBlogs
     ]
   : [];
 
+const environmentalCalendarRoute: Routes = environment.enableEnvironmentalCalendar
+  ? [
+      {
+        path: 'environmental-calendar',
+        loadChildren: () =>
+          import(
+            '../../../features/environmental-calendar/environmental-calendar.routes'
+          ).then((m) => m.environmentalCalendarRoutes),
+        data: {
+          breadcrumb: 'environmental_calendar.breadcrumb_parent',
+        },
+      },
+    ]
+  : [];
+
 export const dashboardRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
@@ -103,4 +118,5 @@ export const dashboardRoutes: Routes = [
     },
   },
   ...blogsRoute,
+  ...environmentalCalendarRoute,
 ];

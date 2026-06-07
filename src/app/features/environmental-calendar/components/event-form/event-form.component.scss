@@ -1,0 +1,83 @@
+.form-container {
+  scroll-margin-top: 40px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .our-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-weight: 600;
+      color: #6e7072;
+
+      .required {
+        color: #df1c41;
+      }
+    }
+  }
+
+  p-select,
+  p-datepicker,
+  ::ng-deep .p-select,
+  ::ng-deep .p-datepicker {
+    width: 100%;
+  }
+
+  ::ng-deep .p-datepicker-input,
+  ::ng-deep input.p-inputtext {
+    width: 100%;
+    font-family: inherit;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f2f4f7;
+
+    button {
+      padding: 0.625rem 1.125rem;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      white-space: nowrap;
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      &.btn-outline {
+        background-color: #fff;
+        color: #344054;
+        border: 1px solid #d0d5dd;
+
+        &:hover:not(:disabled) {
+          background-color: #f9fafb;
+          border-color: #98a2b3;
+        }
+      }
+
+      &.btn-primary {
+        background: var(--Color-Primary-400, #82c672);
+        color: #fff;
+        border: 1px solid var(--Color-Primary-400, #82c672);
+
+        &:hover:not(:disabled) {
+          filter: brightness(0.95);
+        }
+      }
+    }
+  }
+}

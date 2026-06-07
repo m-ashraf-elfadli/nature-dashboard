@@ -1,0 +1,135 @@
+<div class="form-container" #formContainer>
+  <form [formGroup]="form">
+    <div class="our-field">
+      <label>
+        {{ "environmental_calendar.form.title_en" | translate }}
+        <span class="required">*</span>
+      </label>
+      <input
+        pInputText
+        trimInput
+        formControlName="title_en"
+        [placeholder]="'environmental_calendar.form.placeholders.title_en' | translate"
+      />
+      @if (form.get('title_en')?.invalid && form.get('title_en')?.touched) {
+      <p-message severity="error" variant="simple" size="small">
+        {{ getErrorMessage("title_en") }}
+      </p-message>
+      }
+    </div>
+
+    <div class="our-field">
+      <label>
+        {{ "environmental_calendar.form.title_ar" | translate }}
+        <span class="required">*</span>
+      </label>
+      <input
+        pInputText
+        trimInput
+        formControlName="title_ar"
+        [placeholder]="'environmental_calendar.form.placeholders.title_ar' | translate"
+      />
+      @if (form.get('title_ar')?.invalid && form.get('title_ar')?.touched) {
+      <p-message severity="error" variant="simple" size="small">
+        {{ getErrorMessage("title_ar") }}
+      </p-message>
+      }
+    </div>
+
+    <div class="our-field">
+      <label>
+        {{ "environmental_calendar.form.event_type" | translate }}
+        <span class="required">*</span>
+      </label>
+      <p-select
+        formControlName="event_type"
+        [options]="typeOptions"
+        optionValue="id"
+        optionLabel="label"
+        [placeholder]="'environmental_calendar.form.placeholders.event_type' | translate"
+      />
+      @if (form.get('event_type')?.invalid && form.get('event_type')?.touched) {
+      <p-message severity="error" variant="simple" size="small">
+        {{ getErrorMessage("event_type") }}
+      </p-message>
+      }
+    </div>
+
+    <div class="our-field">
+      <label>
+        {{ "environmental_calendar.form.event_color" | translate }}
+        <span class="required">*</span>
+      </label>
+      <p-select
+        formControlName="event_color"
+        [options]="colorOptions"
+        optionValue="id"
+        optionLabel="label"
+        [placeholder]="'environmental_calendar.form.placeholders.event_color' | translate"
+      />
+      @if (form.get('event_color')?.invalid && form.get('event_color')?.touched) {
+      <p-message severity="error" variant="simple" size="small">
+        {{ getErrorMessage("event_color") }}
+      </p-message>
+      }
+    </div>
+
+    <div class="our-field">
+      <label>
+        {{ "environmental_calendar.form.event_date" | translate }}
+        <span class="required">*</span>
+      </label>
+      <p-datepicker
+        class="w-full"
+        appendTo="body"
+        [showIcon]="true"
+        formControlName="event_date"
+        dateFormat="dd.mm.yy"
+        [placeholder]="'environmental_calendar.form.placeholders.event_date' | translate"
+      />
+      @if (form.get('event_date')?.invalid && form.get('event_date')?.touched) {
+      <p-message severity="error" variant="simple" size="small">
+        {{ getErrorMessage("event_date") }}
+      </p-message>
+      }
+    </div>
+
+    <div class="our-field">
+      <label>
+        {{ "environmental_calendar.form.image" | translate }}
+        <span class="required">*</span>
+      </label>
+      <app-gallery-upload formControlName="image" [multiple]="false" />
+      @if (form.get('image')?.invalid && form.get('image')?.touched) {
+      <p-message severity="error" variant="simple" size="small">
+        {{ getErrorMessage("image") }}
+      </p-message>
+      }
+    </div>
+
+    <div class="actions">
+      @if (!isEditMode) {
+      <button
+        type="button"
+        class="btn-outline"
+        (click)="submit('saveAndCreateNew')"
+        [disabled]="form.invalid || isLoading"
+      >
+        {{ "environmental_calendar.form.btns.save_create" | translate }}
+      </button>
+      }
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="submit('save')"
+        [disabled]="form.invalid || isLoading"
+      >
+        {{
+          isEditMode
+            ? ("environmental_calendar.form.btns.update" | translate)
+            : ("environmental_calendar.form.btns.save" | translate)
+        }}
+      </button>
+    </div>
+  </form>
+</div>

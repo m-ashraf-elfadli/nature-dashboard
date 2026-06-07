@@ -241,6 +241,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
           ],
         }]
         : []),
+      ...(environment.enableEnvironmentalCalendar
+        ? [{
+          labelKey: 'navigation.environmental_calendar',
+          icon: this.sanitizer.bypassSecurityTrustHtml(`
+           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6.66602 1.66667V4.16667M13.3327 1.66667V4.16667M2.91602 7.57501H17.0827M17.4993 7.08334V14.1667C17.4993 16.6667 16.2493 18.3333 13.3327 18.3333H6.66602C3.74935 18.3333 2.49935 16.6667 2.49935 14.1667V7.08334C2.49935 4.58334 3.74935 2.91667 6.66602 2.91667H13.3327C16.2493 2.91667 17.4993 4.58334 17.4993 7.08334Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.99607 11.4167H10.0036M6.91209 11.4167H6.91957M6.91209 13.9167H6.91957" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`),
+          iconActive: this.sanitizer.bypassSecurityTrustHtml(`
+           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6.66602 1.66667V4.16667M13.3327 1.66667V4.16667M2.91602 7.57501H17.0827M17.4993 7.08334V14.1667C17.4993 16.6667 16.2493 18.3333 13.3327 18.3333H6.66602C3.74935 18.3333 2.49935 16.6667 2.49935 14.1667V7.08334C2.49935 4.58334 3.74935 2.91667 6.66602 2.91667H13.3327C16.2493 2.91667 17.4993 4.58334 17.4993 7.08334Z" stroke="#689E5B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.99607 11.4167H10.0036M6.91209 11.4167H6.91957M6.91209 13.9167H6.91957" stroke="#689E5B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`),
+          route: '/environmental-calendar',
+        }]
+        : []),
     ];
   }
 
