@@ -639,7 +639,9 @@
         "title_ar": "Enter event name in Arabic",
         "event_type": "Choose event type...",
         "event_color": "Choose event color...",
-        "event_date": "Choose event date..."
+        "event_date": "Choose event date...",
+        "event_month": "Month",
+        "event_day": "Day"
       },
       "validation": {
         "title_en_required": "English event name is required",

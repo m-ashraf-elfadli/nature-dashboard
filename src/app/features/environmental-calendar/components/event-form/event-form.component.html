@@ -71,7 +71,8 @@
         appendTo="body"
         [showIcon]="true"
         formControlName="event_date"
-        dateFormat="dd.mm.yy"
+        [dateFormat]="isGlobalType ? 'dd/mm' : 'dd.mm.yy'"
+        [panelStyleClass]="isGlobalType ? 'dp-yearless' : ''"
         [placeholder]="
           'environmental_calendar.form.placeholders.event_date' | translate
         "

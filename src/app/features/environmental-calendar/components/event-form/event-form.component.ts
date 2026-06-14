@@ -78,6 +78,14 @@ export class EventFormComponent implements OnInit, OnChanges, OnDestroy {
   typeOptions: { id: string; label: string }[] = [];
   colorOptions: { id: string; label: string }[] = [];
 
+  /**
+   * Global events recur every year, so the year is meaningless for them: the
+   * calendar header hides the year and only the day/month are sent.
+   */
+  get isGlobalType(): boolean {
+    return (this.form?.get('event_type')?.value || '') === 'global';
+  }
+
   ngOnInit(): void {
     if (!this.form) {
       this.initForm();
@@ -198,14 +206,20 @@ export class EventFormComponent implements OnInit, OnChanges, OnDestroy {
     return isNaN(d.getTime()) ? null : d;
   }
 
-  private formatDate(value: any): string {
+  /**
+   * Special events → `YYYY-MM-DD`. Global events recur every year, so they are
+   * sent year-less as `MM-DD`; the backend attaches the (hidden) storage year.
+   */
+  private formatDate(value: any, yearless = false): string {
     if (!value) return '';
     const d = value instanceof Date ? value : new Date(value);
     if (isNaN(d.getTime())) return '';
-    const year = d.getFullYear();
     const month = `${d.getMonth() + 1}`.padStart(2, '0');
     const day = `${d.getDate()}`.padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    if (yearless) {
+      return `${month}-${day}`;
+    }
+    return `${d.getFullYear()}-${month}-${day}`;
   }
 
   submit(action: 'save' | 'saveAndCreateNew'): void {
@@ -219,7 +233,7 @@ export class EventFormComponent implements OnInit, OnChanges, OnDestroy {
       title_ar: String(v.title_ar ?? '').trim(),
       event_type: v.event_type,
       event_color: v.event_color,
-      event_date: this.formatDate(v.event_date),
+      event_date: this.formatDate(v.event_date, v.event_type === 'global'),
       image: v.image,
     };
     this.formClose.emit({ action, formData: payload });

@@ -14,6 +14,8 @@ export interface EnvironmentalEvent {
   event_color: string;
   /** ISO date string (YYYY-MM-DD). */
   event_date: string;
+  /** Display date for the table: year hidden for global, shown for special. */
+  event_date_label?: string;
   /** Relative media path OR absolute URL (table supports both). */
   image: string;
   status: boolean;

@@ -619,3 +619,17 @@ html:lang(ar) .table-footer .pagination .pagination-btn.prev:hover {
 html:lang(ar) .table-footer .pagination .pagination-btn.next:hover {
   transform: rotate(45deg) translate(-8px, 8px);
 }
+
+/*
+ * Global environmental events recur every year, so their date picker hides the
+ * year in the calendar header. The year button is collapsed (not display:none)
+ * so only the month label and the prev/next navigation remain.
+ */
+.dp-yearless .p-datepicker-select-year {
+  visibility: hidden;
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}

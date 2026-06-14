@@ -81,6 +81,7 @@ export class EnvironmentalEventsComponent implements OnInit, OnDestroy {
         this.data = (res.result || []).map((row) => ({
           ...row,
           event_type_label: this.eventTypeLabel(row.event_type),
+          event_date_label: this.eventDateLabel(row.event_date, row.event_type),
         }));
         this.totalRecords = res.total;
       },
@@ -93,6 +94,23 @@ export class EnvironmentalEventsComponent implements OnInit, OnDestroy {
     return found ? this.translate.instant(found.labelKey) : type;
   }
 
+  /**
+   * Global events recur every year, so their year is hidden ("21 Mar").
+   * Special events are year-specific ("21 Mar 2026").
+   */
+  private eventDateLabel(dateStr: string, type: string): string {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return dateStr;
+    const locale = this.translate.currentLang === 'ar' ? 'ar' : 'en';
+    const showYear = (type || '').toLowerCase() === 'special';
+    return new Intl.DateTimeFormat(locale, {
+      day: '2-digit',
+      month: 'short',
+      ...(showYear ? { year: 'numeric' } : {}),
+    }).format(date);
+  }
+
   columns: TableColumn<EnvironmentalEvent>[] = [
     {
       field: 'title',
@@ -100,9 +118,9 @@ export class EnvironmentalEventsComponent implements OnInit, OnDestroy {
       type: 'text',
     },
     {
-      field: 'event_date',
+      field: 'event_date_label',
       header: 'environmental_calendar.table.event_date',
-      type: 'date',
+      type: 'text',
     },
     {
       field: 'event_type_label',
