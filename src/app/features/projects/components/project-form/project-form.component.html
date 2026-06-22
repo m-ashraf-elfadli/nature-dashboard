@@ -380,11 +380,16 @@
                                 </div>
                                 <div class="number-field">
                                     <input type="text" formControlName="metric_number" id="metric_number" pInputText
-                                    [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'" 
+                                    [dir]="currentLanguage() === 'ar' ? 'rtl' : 'ltr'"
                                         [placeholder]="currentLanguage() === 'ar'?'الرقم':'Number'">
                                     @if (hasMetricControlError($index, 'metric_number', 'maxlength')) {
                                     <p-message severity="error" variant="simple" size="small">
                                         {{ getMetricNumberMaxMessage($index) }}
+                                    </p-message>
+                                    }
+                                    @if (hasMetricControlError($index, 'metric_number', 'negativeNumber')) {
+                                    <p-message severity="error" variant="simple" size="small">
+                                        {{ 'projects.form.validation.metric_number_negative' | translate }}
                                     </p-message>
                                     }
                                 </div>

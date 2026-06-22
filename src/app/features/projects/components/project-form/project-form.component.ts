@@ -452,10 +452,20 @@ export class ProjectFormComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  private noNegativeNumber(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value === null || value === '' || value === undefined) return null;
+    const num = Number(value);
+    if (!isNaN(num) && num < 0) {
+      return { negativeNumber: true };
+    }
+    return null;
+  }
+
   createMetric(data?: any): FormGroup {
     const group = this.fb.group({
       metric_title: ['', [Validators.required, Validators.maxLength(25)]],
-      metric_number: ['', [Validators.required, Validators.maxLength(7)]],
+      metric_number: ['', [Validators.required, Validators.maxLength(7), this.noNegativeNumber]],
       metric_case: [null, Validators.required],
     });
 
