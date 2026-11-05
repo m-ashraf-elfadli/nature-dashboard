@@ -36,6 +36,12 @@ export class SettingsComponent {
   ];
 
   value: number = 1;
+  disabled = false;
+
+  /** Optional title translation key (defaults to `settings.title`). */
+  @Input() title?: string;
+  /** Optional "Last Updated" date, shown under the localization status when set. */
+  @Input() lastUpdated?: string | Date | null;
 
   // Language statuses: 0 = not-started, 1 = ongoing, 2 = completed
   private _englishStatus: number = 0;
@@ -72,6 +78,10 @@ export class SettingsComponent {
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   statusView(value: number): StatusConfig {

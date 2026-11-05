@@ -674,7 +674,9 @@
     "blogs": "Blogs",
     "blog_categories": "Categories",
     "blog_posts": "Blog posts",
-    "environmental_calendar": "Environmental Calendar"
+    "environmental_calendar": "Environmental Calendar",
+    "about_us": "About Us",
+    "our_companies": "Our Companies"
   },
   "dashboard": {
     "welcome": "Welcome back, {{name}}",
@@ -707,7 +709,8 @@
     "arabic": "Arabic",
     "status_not_started": "Not Started",
     "status_ongoing": "Ongoing",
-    "status_completed": "Completed"
+    "status_completed": "Completed",
+    "last_updated": "Last Updated"
   },
   "user_menu": {
     "profile": "Profile",
@@ -965,6 +968,165 @@
     "confirm": {
       "delete_title": "Delete Question",
       "delete_subtitle": "Are you sure you want to delete this question? This action cannot be undone."
+    }
+  },
+  "about_us": {
+    "breadcrumb": "About Us",
+    "title": "About Us Content",
+    "edit": "Edit",
+    "titles": {
+      "details": "About Us Details",
+      "highlights": "Key Highlights",
+      "statistics": "Statistics",
+      "settings": "About Us Settings",
+      "founder_image": "Founder Image"
+    },
+    "labels": {
+      "title": "Section Title",
+      "description": "Section Description",
+      "highlight_title": "Title",
+      "highlight_description": "Description",
+      "metric_value": "Metric Value",
+      "metric_label": "Label",
+      "founder_name": "Founder Name",
+      "founder_title": "Founder Title"
+    },
+    "placeholders": {
+      "title": "Enter section title...",
+      "description": "Enter section description...",
+      "highlight_title": "Enter highlight title",
+      "highlight_description": "Enter highlight description...",
+      "metric_value": "Enter metric value",
+      "metric_label": "Enter metric label",
+      "founder_name": "Enter founder name",
+      "founder_title": "Enter founder title"
+    },
+    "hints": {
+      "title": "Press Enter to start a new line in the title on the website.",
+      "description": "Each line is shown as a separate paragraph on the website.",
+      "ratio": "Ratio 3/4"
+    },
+    "btns": {
+      "add_highlight": "Add New Highlight",
+      "add_statistic": "Add New Statistics"
+    },
+    "validation": {
+      "title": "Section title is required",
+      "description": "Section description is required",
+      "max_length": "Maximum {{max}} characters",
+      "highlight_title": "Highlight title is required",
+      "highlight_description": "Highlight description is required",
+      "metric_value": "Metric value is required",
+      "metric_label": "Label is required",
+      "founder_image": "Founder image is required",
+      "founder_name": "Founder name is required",
+      "founder_title": "Founder title is required",
+      "min_length": "Minimum {{min}} characters",
+      "founder_image_type": "Founder image must be a JPG or PNG file",
+      "image_size": "Image must be {{max}}MB or smaller"
+    },
+    "messages": {
+      "saved": "About Us content saved successfully"
+    }
+  },
+  "our_companies": {
+    "list": {
+      "breadcrumb": "Our Companies",
+      "page_title": "All Companies",
+      "search_placeholder": "Search in companies...",
+      "services_count": "{{count}} Services",
+      "table_headers": {
+        "name": "Company Name",
+        "location": "Location",
+        "services": "Services",
+        "last_updated": "Last Updated",
+        "status": "Status"
+      },
+      "btns": {
+        "add_new": "Add New Company"
+      },
+      "empty": {
+        "create_btn": "Add New Company",
+        "no_data": "No companies have been added yet"
+      },
+      "delete_dialog": {
+        "header": "Delete Company",
+        "desc": "Are you sure you want to delete this company? It will be removed from the website."
+      },
+      "bulk_delete_dialog": {
+        "header": "Delete Companies",
+        "desc": "Are you sure you want to delete {{count}} companies? They will be removed from the website."
+      }
+    },
+    "form": {
+      "add_title": "Add A New Company",
+      "edit_title": "Edit Company",
+      "add_breadcrumb": "Add New Company",
+      "edit_breadcrumb": "Edit Company",
+      "titles": {
+        "details": "Company Details",
+        "services": "Services",
+        "contact": "Contact Information",
+        "social": "Social Media",
+        "settings": "Company Settings",
+        "logo": "Company Logo",
+        "appearance": "Appearance"
+      },
+      "labels": {
+        "name": "Company Name",
+        "overview": "Overview",
+        "services": "Company Services",
+        "location": "Located At",
+        "email": "Email",
+        "website": "Website",
+        "platform": "Platform",
+        "social_link": "Social Link",
+        "watermark": "Card Watermark",
+        "card_color": "Card Background Color"
+      },
+      "placeholders": {
+        "name": "Enter company name",
+        "overview": "Enter company overview...",
+        "services": "Choose services",
+        "location": "e.g. UAE, KSA",
+        "email": "info@company.com",
+        "platform": "Choose platform..",
+        "social_link": "Enter Profile url..",
+        "card_color": "Pick your color"
+      },
+      "hints": {
+        "services": "Services are picked from the Services section.",
+        "contact": "The website link is shown when set; otherwise the email is shown as \"Get in touch\".",
+        "watermark": "Shown faintly in the corner of the company card on the website.",
+        "palette": "The website derives these three colors from the picked color:",
+        "website": "You can omit https:// (neas.ae is saved as https://neas.ae)."
+      },
+      "palette": {
+        "background": "Card background",
+        "leaf": "Leaf",
+        "line": "Bold line"
+      },
+      "btns": {
+        "add_social": "Add New Social Media"
+      },
+      "validation": {
+        "name": "Company name is required",
+        "overview": "Overview is required",
+        "email": "Please enter a valid email",
+        "url": "Please enter a valid URL starting with http:// or https://",
+        "logo": "Company logo is required",
+        "card_color": "Card background color is required",
+        "hex": "Use a hex color like #95C45C",
+        "min_length": "Minimum {{min}} characters",
+        "max_length": "Maximum {{max}} characters",
+        "services": "Select at least one service for this company",
+        "website": "Please enter a valid website, e.g. neas.ae",
+        "image_type": "Image must be an SVG, PNG or WebP file",
+        "image_size": "Image must be {{max}}MB or smaller"
+      }
+    },
+    "messages": {
+      "saved": "Changes saved successfully"
     }
   }
 }

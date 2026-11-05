@@ -1,0 +1,191 @@
+<div class="form-content">
+  <div class="form-header">
+    <app-page-header [title]="'about_us.title' | translate" [showBackButton]="false"></app-page-header>
+    <app-form-actions
+      [showDiscard]="false"
+      [editMode]="true"
+      [isFormValid]="canSubmit"
+      [saveLabel]="isEditing() ? 'form_actions.save' : 'about_us.edit'"
+      [saveIcon]="isEditing() ? undefined : 'pi pi-pencil'"
+      (save)="onPrimaryAction()"
+      (languageChange)="onLanguageChange($event)"
+    ></app-form-actions>
+  </div>
+
+  @if (showLanguageToast()) {
+    <div class="form-toaster">
+      <i class="pi pi-language"></i>
+      <span>
+        {{ 'general.form_toast_msg' | translate: {
+          currentContent: (currentLanguage() === 'en' ? 'general.english' : 'general.arabic') | translate,
+          previousContent: (currentLanguage() === 'en' ? 'general.arabic' : 'general.english') | translate
+        } }}
+      </span>
+    </div>
+  }
+
+  <form [formGroup]="form" class="content-form" [class.is-readonly]="!isEditing()">
+    <div class="form-left-section">
+      <!-- About Us Details -->
+      <div class="card">
+        <div class="header-section">
+          <h3>{{ 'about_us.titles.details' | translate }}</h3>
+        </div>
+        <div class="inputs">
+          <div class="our-field">
+            <label for="title">{{ 'about_us.labels.title' | translate }} <span class="required">*</span></label>
+            <textarea id="title" pTextarea [autoResize]="true" rows="1" trimInput formControlName="title"
+              [placeholder]="'about_us.placeholders.title' | translate" [class.p-invalid]="hasError('title')"></textarea>
+            <small class="hint">{{ 'about_us.hints.title' | translate }}</small>
+            @if (fieldError('title', 'about_us.validation.title'); as err) {
+              <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+            }
+          </div>
+
+          <div class="our-field">
+            <label for="description">{{ 'about_us.labels.description' | translate }} <span class="required">*</span></label>
+            <textarea id="description" pTextarea [autoResize]="true" rows="4" formControlName="description"
+              [placeholder]="'about_us.placeholders.description' | translate" [class.p-invalid]="hasError('description')"></textarea>
+            <small class="hint">{{ 'about_us.hints.description' | translate }}</small>
+            @if (fieldError('description', 'about_us.validation.description'); as err) {
+              <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Highlights -->
+      <div class="card">
+        <div class="header-section header-section--split">
+          <h3>
+            {{ 'about_us.titles.highlights' | translate }}
+            <span class="counter">({{ highlights.length }}/{{ limits.highlights }})</span>
+          </h3>
+          <app-input-switch formControlName="highlights_enabled"></app-input-switch>
+        </div>
+
+        <div formArrayName="highlights" class="rows" [class.section-off]="!isSectionEnabled('highlights')">
+          @for (row of highlights.controls; track row; let i = $index) {
+            <div class="row-group" [formGroupName]="i">
+              @if (isEditing() && highlights.length > 1) {
+                <button type="button" class="remove-row-btn" (click)="removeHighlight(i)"
+                  [attr.aria-label]="'common.delete' | translate">
+                  <i class="pi pi-trash"></i>
+                </button>
+              }
+              <div class="our-field">
+                <label [for]="'highlight-title-' + i">{{ 'about_us.labels.highlight_title' | translate }} <span class="required">*</span></label>
+                <input [id]="'highlight-title-' + i" pInputText trimInput formControlName="title"
+                  [placeholder]="'about_us.placeholders.highlight_title' | translate"
+                  [class.p-invalid]="hasError(['highlights', i, 'title'])" />
+                @if (fieldError(['highlights', i, 'title'], 'about_us.validation.highlight_title'); as err) {
+                  <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+                }
+              </div>
+              <div class="our-field">
+                <label [for]="'highlight-desc-' + i">{{ 'about_us.labels.highlight_description' | translate }} <span class="required">*</span></label>
+                <input [id]="'highlight-desc-' + i" pInputText trimInput formControlName="description"
+                  [placeholder]="'about_us.placeholders.highlight_description' | translate"
+                  [class.p-invalid]="hasError(['highlights', i, 'description'])" />
+                @if (fieldError(['highlights', i, 'description'], 'about_us.validation.highlight_description'); as err) {
+                  <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        @if (isEditing() && isSectionEnabled('highlights') && highlights.length < limits.highlights) {
+          <button class="add-another" type="button" (click)="addHighlight()">
+            <i class="pi pi-plus"></i>
+            <span>{{ 'about_us.btns.add_highlight' | translate }}</span>
+          </button>
+        }
+      </div>
+
+      <!-- Statistics -->
+      <div class="card">
+        <div class="header-section header-section--split">
+          <h3>
+            {{ 'about_us.titles.statistics' | translate }}
+            <span class="counter">({{ statistics.length }}/{{ limits.statistics }})</span>
+          </h3>
+          <app-input-switch formControlName="statistics_enabled"></app-input-switch>
+        </div>
+
+        <div formArrayName="statistics" class="rows" [class.section-off]="!isSectionEnabled('statistics')">
+          @for (row of statistics.controls; track row; let i = $index) {
+            <div class="row-group row-group--inline" [formGroupName]="i">
+              <div class="our-field">
+                <label [for]="'stat-value-' + i">{{ 'about_us.labels.metric_value' | translate }} <span class="required">*</span></label>
+                <input [id]="'stat-value-' + i" pInputText trimInput formControlName="value"
+                  [placeholder]="'about_us.placeholders.metric_value' | translate"
+                  [class.p-invalid]="hasError(['statistics', i, 'value'])" />
+                @if (fieldError(['statistics', i, 'value'], 'about_us.validation.metric_value'); as err) {
+                  <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+                }
+              </div>
+              <div class="our-field">
+                <label [for]="'stat-label-' + i">{{ 'about_us.labels.metric_label' | translate }} <span class="required">*</span></label>
+                <input [id]="'stat-label-' + i" pInputText trimInput formControlName="label"
+                  [placeholder]="'about_us.placeholders.metric_label' | translate"
+                  [class.p-invalid]="hasError(['statistics', i, 'label'])" />
+                @if (fieldError(['statistics', i, 'label'], 'about_us.validation.metric_label'); as err) {
+                  <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+                }
+              </div>
+              @if (isEditing() && statistics.length > 1) {
+                <button type="button" class="remove-row-btn remove-row-btn--inline" (click)="removeStatistic(i)"
+                  [attr.aria-label]="'common.delete' | translate">
+                  <i class="pi pi-trash"></i>
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        @if (isEditing() && isSectionEnabled('statistics') && statistics.length < limits.statistics) {
+          <button class="add-another" type="button" (click)="addStatistic()">
+            <i class="pi pi-plus"></i>
+            <span>{{ 'about_us.btns.add_statistic' | translate }}</span>
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="form-right-section">
+      <app-settings formControlName="status" title="about_us.titles.settings"
+        [englishStatus]="localeStatus().en" [arabicStatus]="localeStatus().ar"
+        [lastUpdated]="lastUpdated()"></app-settings>
+
+      <div class="card">
+        <div class="header-section">
+          <h3>{{ 'about_us.titles.founder_image' | translate }} <span class="ratio">({{ 'about_us.hints.ratio' | translate }})</span></h3>
+        </div>
+        <div [class.readonly-block]="!isEditing()">
+          <app-gallery-upload formControlName="founder_image"></app-gallery-upload>
+        </div>
+        @if (isEditing() && form.get('founder_image')?.invalid) {
+          <p-message severity="error" variant="simple" size="small">{{ founderImageError | translate: { max: 3 } }}</p-message>
+        }
+
+        <div class="our-field">
+          <label for="founder-name">{{ 'about_us.labels.founder_name' | translate }} <span class="required">*</span></label>
+          <input id="founder-name" pInputText trimInput formControlName="founder_name"
+            [placeholder]="'about_us.placeholders.founder_name' | translate" [class.p-invalid]="hasError('founder_name')" />
+          @if (fieldError('founder_name', 'about_us.validation.founder_name'); as err) {
+            <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+          }
+        </div>
+        <div class="our-field">
+          <label for="founder-title">{{ 'about_us.labels.founder_title' | translate }} <span class="required">*</span></label>
+          <input id="founder-title" pInputText trimInput formControlName="founder_title"
+            [placeholder]="'about_us.placeholders.founder_title' | translate" [class.p-invalid]="hasError('founder_title')" />
+          @if (fieldError('founder_title', 'about_us.validation.founder_title'); as err) {
+            <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+          }
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

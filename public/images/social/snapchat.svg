@@ -1,0 +1,13 @@
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="snapchat_glyph_mask" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="22">
+<rect width="21.125" height="21.125" rx="6.22917" fill="white"/>
+<path transform="translate(2.64 2.97) scale(0.66)" d="M12 3.2c2.9 0 5 2.2 5 5.1v2.2l1.4-.5c.5-.2 1 .3.7.8-.3.5-1 .8-1.7 1.1-.3.1-.4.4-.3.7.7 1.7 2 2.9 3.6 3.4.4.1.4.7 0 .8-.7.3-1.5.4-2.1.6-.2.6-.3 1.1-.9 1-.8-.1-1.6-.2-2.4.2-.9.5-1.7 1.4-3.3 1.4s-2.4-.9-3.3-1.4c-.8-.4-1.6-.3-2.4-.2-.6.1-.7-.4-.9-1-.6-.2-1.4-.3-2.1-.6-.4-.1-.4-.7 0-.8 1.6-.5 2.9-1.7 3.6-3.4.1-.3 0-.6-.3-.7-.7-.3-1.4-.6-1.7-1.1-.3-.5.2-1 .7-.8l1.4.5V8.3c0-2.9 2.1-5.1 5-5.1z" fill="black"/>
+</mask>
+<rect width="21.125" height="21.125" rx="6.22917" fill="url(#paint0_linear_snapchat_icon)" mask="url(#snapchat_glyph_mask)"/>
+<defs>
+<linearGradient id="paint0_linear_snapchat_icon" x1="10.5625" y1="0" x2="10.5625" y2="21.125" gradientUnits="userSpaceOnUse">
+<stop stop-color="#689E5B"/>
+<stop offset="1" stop-color="#82C672"/>
+</linearGradient>
+</defs>
+</svg>

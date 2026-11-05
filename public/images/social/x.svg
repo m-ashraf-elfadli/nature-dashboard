@@ -1,0 +1,13 @@
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="x_glyph_mask" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="22">
+<rect width="21.125" height="21.125" rx="6.22917" fill="white"/>
+<path transform="translate(4.81 4.81) scale(0.48)" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="black"/>
+</mask>
+<rect width="21.125" height="21.125" rx="6.22917" fill="url(#paint0_linear_x_icon)" mask="url(#x_glyph_mask)"/>
+<defs>
+<linearGradient id="paint0_linear_x_icon" x1="10.5625" y1="0" x2="10.5625" y2="21.125" gradientUnits="userSpaceOnUse">
+<stop stop-color="#689E5B"/>
+<stop offset="1" stop-color="#82C672"/>
+</linearGradient>
+</defs>
+</svg>

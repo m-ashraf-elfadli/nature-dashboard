@@ -3,6 +3,10 @@
   justify-content: flex-end;
   gap: 8px;
 }
+.action-btn i {
+  color: var(--Color-Neutral-100, #fefefe);
+  font-size: 12px;
+}
 .lang-label {
   color: var(--Secondary-500, #232323);
   text-align: center;

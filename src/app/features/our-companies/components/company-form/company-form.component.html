@@ -1,0 +1,231 @@
+<div class="form-content">
+  <div class="form-header">
+    <app-page-header [title]="(isEdit() ? 'our_companies.form.edit_title' : 'our_companies.form.add_title') | translate"></app-page-header>
+    <app-form-actions
+      [editMode]="isEdit()"
+      [isFormValid]="form.valid"
+      (discard)="onDiscard()"
+      (save)="onSave()"
+      (languageChange)="onLanguageChange($event)"
+    ></app-form-actions>
+  </div>
+
+  @if (showLanguageToast()) {
+    <div class="form-toaster">
+      <i class="pi pi-language"></i>
+      <span>
+        {{ 'general.form_toast_msg' | translate: {
+          currentContent: (currentLanguage() === 'en' ? 'general.english' : 'general.arabic') | translate,
+          previousContent: (currentLanguage() === 'en' ? 'general.arabic' : 'general.english') | translate
+        } }}
+      </span>
+    </div>
+  }
+
+  <form [formGroup]="form" class="content-form">
+    <div class="form-left-section">
+      <!-- Company Details -->
+      <div class="card">
+        <div class="header-section">
+          <h3>{{ 'our_companies.form.titles.details' | translate }}</h3>
+          <span class="ratio">({{ (currentLanguage() === 'en' ? 'general.english' : 'general.arabic') | translate }})</span>
+        </div>
+        <div class="inputs">
+          <div class="our-field">
+            <label for="name">{{ 'our_companies.form.labels.name' | translate }} <span class="required">*</span></label>
+            <input id="name" pInputText trimInput formControlName="name"
+              [placeholder]="'our_companies.form.placeholders.name' | translate" [class.p-invalid]="hasError('name')" />
+            @if (fieldError('name', 'our_companies.form.validation.name'); as err) {
+              <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+            }
+          </div>
+          <div class="our-field">
+            <label for="overview">{{ 'our_companies.form.labels.overview' | translate }} <span class="required">*</span></label>
+            <textarea id="overview" pTextarea [autoResize]="true" rows="4" formControlName="overview"
+              [placeholder]="'our_companies.form.placeholders.overview' | translate" [class.p-invalid]="hasError('overview')"></textarea>
+            @if (fieldError('overview', 'our_companies.form.validation.overview'); as err) {
+              <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="card">
+        <div class="header-section header-section--split">
+          <h3>{{ 'our_companies.form.titles.services' | translate }}</h3>
+          <app-input-switch formControlName="services_enabled"></app-input-switch>
+        </div>
+        <div class="our-field" [class.section-off]="!isEnabled('services')">
+          <label for="services">{{ 'our_companies.form.labels.services' | translate }} <span class="required">*</span></label>
+          <p-multiselect inputId="services" formControlName="service_ids" [options]="serviceOptions()"
+            optionLabel="name" optionValue="id" display="chip" [filter]="true" appendTo="body"
+            [placeholder]="'our_companies.form.placeholders.services' | translate" styleClass="w-full"
+            [class.p-invalid]="hasError('service_ids')"></p-multiselect>
+          <small class="hint">{{ 'our_companies.form.hints.services' | translate }}</small>
+          @if (hasError('service_ids')) {
+            <p-message severity="error" variant="simple" size="small">{{ 'our_companies.form.validation.services' | translate }}</p-message>
+          }
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="card">
+        <div class="header-section header-section--split">
+          <h3>{{ 'our_companies.form.titles.contact' | translate }}</h3>
+          <app-input-switch formControlName="contact_enabled"></app-input-switch>
+        </div>
+        <div class="inputs" [class.section-off]="!isEnabled('contact')">
+          <div class="our-field">
+            <label for="location">{{ 'our_companies.form.labels.location' | translate }}</label>
+            <input id="location" pInputText trimInput formControlName="location"
+              [placeholder]="'our_companies.form.placeholders.location' | translate" />
+          </div>
+          <div class="row-group row-group--inline">
+            <div class="our-field">
+              <label for="email">{{ 'our_companies.form.labels.email' | translate }}</label>
+              <input id="email" type="email" pInputText trimInput formControlName="email"
+                [placeholder]="'our_companies.form.placeholders.email' | translate" [class.p-invalid]="hasError('email')" />
+              @if (hasError('email')) {
+                <p-message severity="error" variant="simple" size="small">{{ 'our_companies.form.validation.email' | translate }}</p-message>
+              }
+            </div>
+            <div class="our-field">
+              <label for="website">{{ 'our_companies.form.labels.website' | translate }}</label>
+              <input id="website" pInputText trimInput formControlName="website"
+                placeholder="neas.ae" [class.p-invalid]="hasError('website')" />
+              <small class="hint">{{ 'our_companies.form.hints.website' | translate }}</small>
+              @if (fieldError('website', 'our_companies.form.validation.website'); as err) {
+                <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+              }
+            </div>
+          </div>
+          <small class="hint">{{ 'our_companies.form.hints.contact' | translate }}</small>
+        </div>
+      </div>
+
+      <!-- Social Media -->
+      <div class="card">
+        <div class="header-section header-section--split">
+          <h3>{{ 'our_companies.form.titles.social' | translate }}</h3>
+          <app-input-switch formControlName="social_enabled"></app-input-switch>
+        </div>
+        <div formArrayName="social_links" class="rows" [class.section-off]="!isEnabled('social')">
+          @for (row of socialLinks.controls; track row; let i = $index) {
+            <div class="row-group row-group--inline" [formGroupName]="i">
+              <div class="our-field">
+                <label [for]="'platform-' + i">{{ 'our_companies.form.labels.platform' | translate }}</label>
+                <p-select [inputId]="'platform-' + i" formControlName="platform" [options]="availablePlatforms(i)"
+                  optionLabel="label" optionValue="value" appendTo="body"
+                  [placeholder]="'our_companies.form.placeholders.platform' | translate"
+                  [class.p-invalid]="hasError(['social_links', i, 'platform'])" styleClass="w-full">
+                  <ng-template let-selected pTemplate="selectedItem">
+                    @if (platformOf(selected?.value ?? selected); as p) {
+                      <div class="platform-option"><img [src]="p.icon" alt="" /><span>{{ p.label }}</span></div>
+                    }
+                  </ng-template>
+                  <ng-template let-item pTemplate="item">
+                    <div class="platform-option"><img [src]="item.icon" alt="" /><span>{{ item.label }}</span></div>
+                  </ng-template>
+                </p-select>
+              </div>
+              <div class="our-field">
+                <label [for]="'url-' + i">{{ 'our_companies.form.labels.social_link' | translate }}</label>
+                <input [id]="'url-' + i" pInputText trimInput formControlName="url"
+                  [placeholder]="'our_companies.form.placeholders.social_link' | translate"
+                  [class.p-invalid]="hasError(['social_links', i, 'url'])" />
+                @if (hasError(['social_links', i, 'url'])) {
+                  <p-message severity="error" variant="simple" size="small">{{ 'our_companies.form.validation.url' | translate }}</p-message>
+                }
+              </div>
+              <button type="button" class="remove-row-btn remove-row-btn--inline" (click)="removeSocialLink(i)"
+                [disabled]="!isEnabled('social')" [attr.aria-label]="'common.delete' | translate">
+                <i class="pi pi-trash"></i>
+              </button>
+            </div>
+          }
+        </div>
+        @if (canAddSocialLink) {
+          <button class="add-another" type="button" (click)="addSocialLink()">
+            <i class="pi pi-plus"></i>
+            <span>{{ 'our_companies.form.btns.add_social' | translate }}</span>
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="form-right-section">
+      <app-settings formControlName="status" title="our_companies.form.titles.settings"
+        [englishStatus]="localeStatus().en" [arabicStatus]="localeStatus().ar"></app-settings>
+
+      <div class="card">
+        <div class="header-section">
+          <h3>{{ 'our_companies.form.titles.logo' | translate }} <span class="required">*</span></h3>
+        </div>
+        <app-gallery-upload formControlName="logo"></app-gallery-upload>
+        @if (fieldError('logo', 'our_companies.form.validation.logo'); as err) {
+          <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+        }
+      </div>
+
+      <div class="card">
+        <div class="header-section">
+          <h3>{{ 'our_companies.form.titles.appearance' | translate }}</h3>
+        </div>
+
+        <div class="our-field">
+          <label>{{ 'our_companies.form.labels.watermark' | translate }}</label>
+          <app-gallery-upload formControlName="watermark"></app-gallery-upload>
+          <small class="hint">{{ 'our_companies.form.hints.watermark' | translate }}</small>
+          @if (fieldError('watermark', 'our_companies.form.validation.image_type'); as err) {
+            <p-message severity="error" variant="simple" size="small">{{ err.key | translate: err.params }}</p-message>
+          }
+        </div>
+
+        <div class="our-field">
+          <label for="card-color">{{ 'our_companies.form.labels.card_color' | translate }} <span class="required">*</span></label>
+          <div class="color-field" [class.p-invalid]="hasError('card_color')">
+            <p-colorpicker [ngModel]="form.get('card_color')!.value || '#95C45C'" [ngModelOptions]="{ standalone: true }"
+              (ngModelChange)="onColorPicked($event)" format="hex" appendTo="body"></p-colorpicker>
+            <input id="card-color" pInputText formControlName="card_color" maxlength="7"
+              [placeholder]="'our_companies.form.placeholders.card_color' | translate" (blur)="normalizeHex()" />
+          </div>
+          @if (errorOf('card_color', 'required')) {
+            <p-message severity="error" variant="simple" size="small">{{ 'our_companies.form.validation.card_color' | translate }}</p-message>
+          }
+          @if (errorOf('card_color', 'hexColor')) {
+            <p-message severity="error" variant="simple" size="small">{{ 'our_companies.form.validation.hex' | translate }}</p-message>
+          }
+
+          @if (palette(); as p) {
+            <div class="palette-preview">
+              <small class="hint">{{ 'our_companies.form.hints.palette' | translate }}</small>
+              <div class="swatches">
+                <div class="swatch">
+                  <span class="chip" [style.background]="p.background"></span>
+                  <span>{{ 'our_companies.form.palette.background' | translate }}</span>
+                  <code>{{ p.background }}</code>
+                </div>
+                <div class="swatch">
+                  <span class="chip" [style.background]="p.leaf"></span>
+                  <span>{{ 'our_companies.form.palette.leaf' | translate }}</span>
+                  <code>{{ p.leaf }}</code>
+                </div>
+                <div class="swatch">
+                  <span class="chip" [style.background]="p.line"></span>
+                  <span>{{ 'our_companies.form.palette.line' | translate }}</span>
+                  <code>{{ p.line }}</code>
+                </div>
+              </div>
+              <!-- Mini card preview: background + watermark corner + leaf border + bold line -->
+              <div class="card-preview" [style.background]="p.background">
+                <span class="leaf" [style.border-color]="p.leaf"></span>
+                <span class="line" [style.background]="p.line"></span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

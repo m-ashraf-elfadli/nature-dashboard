@@ -1,5 +1,5 @@
 <div class="btns-container">
-    <button (click)="onDiscard($event)" class="basic-btn">
+    <button *ngIf="showDiscard" (click)="onDiscard($event)" class="basic-btn">
         <span>{{ 'form_actions.discard' | translate }}</span>
     </button>
 
@@ -17,7 +17,11 @@
     </div>
 
     <button (click)="onSave($event)" class="action-btn" [disabled]="!isFormValid" [class.disabled]="!isFormValid">
-        <span *ngIf="!editMode">{{ 'form_actions.save' | translate }}</span>
-        <span *ngIf="editMode">{{ 'form_actions.update' | translate }}</span>
+        <i *ngIf="saveIcon" [class]="saveIcon"></i>
+        <span *ngIf="saveLabel">{{ saveLabel | translate }}</span>
+        <ng-container *ngIf="!saveLabel">
+            <span *ngIf="!editMode">{{ 'form_actions.save' | translate }}</span>
+            <span *ngIf="editMode">{{ 'form_actions.update' | translate }}</span>
+        </ng-container>
     </button>
 </div>

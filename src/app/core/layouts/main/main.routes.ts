@@ -117,6 +117,24 @@ export const dashboardRoutes: Routes = [
       breadcrumb: 'questions.list.breadcurmb',
     },
   },
+  {
+    path: 'about-us',
+    loadChildren: () =>
+      import('../../../features/about-us/about-us.routes').then((m) => m.aboutUsRoutes),
+    data: {
+      breadcrumb: 'about_us.breadcrumb',
+    },
+  },
+  {
+    path: 'our-companies',
+    loadChildren: () =>
+      import('../../../features/our-companies/our-companies.routes').then(
+        (m) => m.ourCompaniesRoutes,
+      ),
+    data: {
+      breadcrumb: 'our_companies.list.breadcrumb',
+    },
+  },
   ...blogsRoute,
   ...environmentalCalendarRoute,
 ];

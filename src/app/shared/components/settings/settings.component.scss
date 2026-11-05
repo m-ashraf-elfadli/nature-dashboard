@@ -31,6 +31,12 @@
     }
   }
 
+  .last-updated {
+    color: var(--Color-Neutral-2000, #333435);
+    font-size: var(--Font-Size-Xs, 16px);
+    font-weight: var(--Font-Weight-Bold, 700);
+  }
+
   .languages {
     display: flex;
     flex-direction: column;

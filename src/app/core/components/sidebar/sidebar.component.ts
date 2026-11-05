@@ -191,6 +191,30 @@ export class SidebarComponent implements OnInit, OnDestroy {
         route: '/awards',
       },
       {
+        labelKey: 'navigation.about_us',
+        icon: this.sanitizer.bypassSecurityTrustHtml(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6.63923 12.2683L5.83366 18.3333L9.65733 16.0391C9.78204 15.9643 9.84439 15.9269 9.91096 15.9123C9.96983 15.8994 10.0308 15.8994 10.0897 15.9123C10.1563 15.9269 10.2186 15.9643 10.3433 16.0391L14.167 18.3333L13.3622 12.2677M15.8337 7.5C15.8337 10.7217 13.222 13.3333 10.0003 13.3333C6.77866 13.3333 4.16699 10.7217 4.16699 7.5C4.16699 4.27834 6.77866 1.66666 10.0003 1.66666C13.222 1.66666 15.8337 4.27834 15.8337 7.5Z" stroke="#2E4528" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`),
+        iconActive: this.sanitizer.bypassSecurityTrustHtml(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6.63923 12.2682L5.83366 18.3333L9.65733 16.0391C9.78204 15.9643 9.84439 15.9269 9.91096 15.9122C9.96983 15.8993 10.0308 15.8993 10.0897 15.9122C10.1563 15.9269 10.2186 15.9643 10.3433 16.0391L14.167 18.3333L13.3622 12.2677M15.8337 7.49996C15.8337 10.7216 13.222 13.3333 10.0003 13.3333C6.77866 13.3333 4.16699 10.7216 4.16699 7.49996C4.16699 4.2783 6.77866 1.66663 10.0003 1.66663C13.222 1.66663 15.8337 4.2783 15.8337 7.49996Z" stroke="#689E5B" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`),
+        route: '/about-us',
+      },
+      {
+        labelKey: 'navigation.our_companies',
+        icon: this.sanitizer.bypassSecurityTrustHtml(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10.8333 9.16667H14.8333C15.7668 9.16667 16.2335 9.16667 16.59 9.34832C16.9036 9.50811 17.1586 9.76308 17.3183 10.0767C17.5 10.4332 17.5 10.8999 17.5 11.8333V17.5M10.8333 17.5V5.16667C10.8333 4.23325 10.8333 3.76654 10.6517 3.41002C10.4919 3.09641 10.2369 2.84144 9.92332 2.68166C9.5668 2.5 9.10009 2.5 8.16667 2.5H5.16667C4.23325 2.5 3.76654 2.5 3.41002 2.68166C3.09641 2.84144 2.84144 3.09641 2.68166 3.41002C2.5 3.76654 2.5 4.23325 2.5 5.16667V17.5M18.3333 17.5H1.66667M5.41667 5.83333H7.91667M5.41667 9.16667H7.91667M5.41667 12.5H7.91667" stroke="#2E4528" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`),
+        iconActive: this.sanitizer.bypassSecurityTrustHtml(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10.8333 9.16667H14.8333C15.7668 9.16667 16.2335 9.16667 16.59 9.34832C16.9036 9.50811 17.1586 9.76308 17.3183 10.0767C17.5 10.4332 17.5 10.8999 17.5 11.8333V17.5M10.8333 17.5V5.16667C10.8333 4.23325 10.8333 3.76654 10.6517 3.41002C10.4919 3.09641 10.2369 2.84144 9.92332 2.68166C9.5668 2.5 9.10009 2.5 8.16667 2.5H5.16667C4.23325 2.5 3.76654 2.5 3.41002 2.68166C3.09641 2.84144 2.84144 3.09641 2.68166 3.41002C2.5 3.76654 2.5 4.23325 2.5 5.16667V17.5M18.3333 17.5H1.66667M5.41667 5.83333H7.91667M5.41667 9.16667H7.91667M5.41667 12.5H7.91667" stroke="#689E5B" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`),
+        route: '/our-companies',
+      },
+      {
         labelKey: 'navigation.testimonials',
         icon: this.sanitizer.bypassSecurityTrustHtml(`
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">

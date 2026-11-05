@@ -22,6 +22,12 @@ export class FormActionsComponent implements OnInit {
 
   @Input() editMode: boolean = false;
   @Input() isFormValid: boolean = false;
+  /** Hide the Discard button (e.g. read-only "view then edit" pages). */
+  @Input() showDiscard: boolean = true;
+  /** Overrides the Save/Update label (translation key). */
+  @Input() saveLabel?: string;
+  /** Optional PrimeIcons class shown before the save label, e.g. `pi pi-pencil`. */
+  @Input() saveIcon?: string;
   @Output() discard = new EventEmitter<any>();
   @Output() save = new EventEmitter<any>();
   @Output() languageChange = new EventEmitter<{

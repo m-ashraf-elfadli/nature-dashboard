@@ -671,7 +671,9 @@
     "blogs": "المدونة",
     "blog_categories": "التصنيفات",
     "blog_posts": "المقالات",
-    "environmental_calendar": "التقويم البيئي"
+    "environmental_calendar": "التقويم البيئي",
+    "about_us": "من نحن",
+    "our_companies": "شركاتنا"
   },
   "Projects": "المشاريع",
   "Services": "الخدمات",
@@ -709,7 +711,8 @@
     "arabic": "العربية",
     "status_not_started": "لم تبدأ",
     "status_ongoing": "قيد التنفيذ",
-    "status_completed": "مكتمل"
+    "status_completed": "مكتمل",
+    "last_updated": "آخر تحديث"
   },
   "user_menu": {
     "profile": "الملف الشخصي",
@@ -962,6 +965,165 @@
     "confirm": {
       "delete_title": "حذف السؤال",
       "delete_subtitle": "هل أنت متأكد أنك تريد حذف هذا السؤال؟ لا يمكن التراجع عن هذا الإجراء."
+    }
+  },
+  "about_us": {
+    "breadcrumb": "من نحن",
+    "title": "محتوى من نحن",
+    "edit": "تعديل",
+    "titles": {
+      "details": "تفاصيل من نحن",
+      "highlights": "أبرز النقاط",
+      "statistics": "الإحصائيات",
+      "settings": "إعدادات من نحن",
+      "founder_image": "صورة المؤسس"
+    },
+    "labels": {
+      "title": "عنوان القسم",
+      "description": "وصف القسم",
+      "highlight_title": "العنوان",
+      "highlight_description": "الوصف",
+      "metric_value": "القيمة",
+      "metric_label": "التسمية",
+      "founder_name": "اسم المؤسس",
+      "founder_title": "منصب المؤسس"
+    },
+    "placeholders": {
+      "title": "أدخل عنوان القسم...",
+      "description": "أدخل وصف القسم...",
+      "highlight_title": "أدخل عنوان النقطة",
+      "highlight_description": "أدخل وصف النقطة...",
+      "metric_value": "أدخل القيمة",
+      "metric_label": "أدخل التسمية",
+      "founder_name": "أدخل اسم المؤسس",
+      "founder_title": "أدخل منصب المؤسس"
+    },
+    "hints": {
+      "title": "اضغط Enter لبدء سطر جديد في العنوان على الموقع.",
+      "description": "كل سطر يظهر كفقرة منفصلة على الموقع.",
+      "ratio": "نسبة 3/4"
+    },
+    "btns": {
+      "add_highlight": "إضافة نقطة جديدة",
+      "add_statistic": "إضافة إحصائية جديدة"
+    },
+    "validation": {
+      "title": "عنوان القسم مطلوب",
+      "description": "وصف القسم مطلوب",
+      "max_length": "الحد الأقصى {{max}} حرف",
+      "highlight_title": "عنوان النقطة مطلوب",
+      "highlight_description": "وصف النقطة مطلوب",
+      "metric_value": "القيمة مطلوبة",
+      "metric_label": "التسمية مطلوبة",
+      "founder_image": "صورة المؤسس مطلوبة",
+      "founder_name": "اسم المؤسس مطلوب",
+      "founder_title": "منصب المؤسس مطلوب",
+      "min_length": "الحد الأدنى {{min}} أحرف",
+      "founder_image_type": "يجب أن تكون صورة المؤسس بصيغة JPG أو PNG",
+      "image_size": "يجب ألا يتجاوز حجم الصورة {{max}} ميجابايت"
+    },
+    "messages": {
+      "saved": "تم حفظ محتوى من نحن بنجاح"
+    }
+  },
+  "our_companies": {
+    "list": {
+      "breadcrumb": "شركاتنا",
+      "page_title": "جميع الشركات",
+      "search_placeholder": "ابحث في الشركات...",
+      "services_count": "{{count}} خدمات",
+      "table_headers": {
+        "name": "اسم الشركة",
+        "location": "الموقع",
+        "services": "الخدمات",
+        "last_updated": "آخر تحديث",
+        "status": "الحالة"
+      },
+      "btns": {
+        "add_new": "إضافة شركة جديدة"
+      },
+      "empty": {
+        "create_btn": "إضافة شركة جديدة",
+        "no_data": "لم تتم إضافة أي شركات بعد"
+      },
+      "delete_dialog": {
+        "header": "حذف الشركة",
+        "desc": "هل أنت متأكد من حذف هذه الشركة؟ سيتم إزالتها من الموقع."
+      },
+      "bulk_delete_dialog": {
+        "header": "حذف الشركات",
+        "desc": "هل أنت متأكد من حذف {{count}} شركات؟ سيتم إزالتها من الموقع."
+      }
+    },
+    "form": {
+      "add_title": "إضافة شركة جديدة",
+      "edit_title": "تعديل الشركة",
+      "add_breadcrumb": "إضافة شركة جديدة",
+      "edit_breadcrumb": "تعديل الشركة",
+      "titles": {
+        "details": "تفاصيل الشركة",
+        "services": "الخدمات",
+        "contact": "معلومات التواصل",
+        "social": "وسائل التواصل الاجتماعي",
+        "settings": "إعدادات الشركة",
+        "logo": "شعار الشركة",
+        "appearance": "المظهر"
+      },
+      "labels": {
+        "name": "اسم الشركة",
+        "overview": "نبذة",
+        "services": "خدمات الشركة",
+        "location": "تقع في",
+        "email": "البريد الإلكتروني",
+        "website": "الموقع الإلكتروني",
+        "platform": "المنصة",
+        "social_link": "رابط الحساب",
+        "watermark": "العلامة المائية للبطاقة",
+        "card_color": "لون خلفية البطاقة"
+      },
+      "placeholders": {
+        "name": "أدخل اسم الشركة",
+        "overview": "أدخل نبذة عن الشركة...",
+        "services": "اختر الخدمات",
+        "location": "مثال: الإمارات، السعودية",
+        "email": "info@company.com",
+        "platform": "اختر المنصة..",
+        "social_link": "أدخل رابط الحساب..",
+        "card_color": "اختر اللون"
+      },
+      "hints": {
+        "services": "يتم اختيار الخدمات من قسم الخدمات.",
+        "contact": "يظهر رابط الموقع عند إضافته، وإلا يظهر البريد الإلكتروني كـ \"تواصل معنا\".",
+        "watermark": "تظهر بشكل خافت في زاوية بطاقة الشركة على الموقع.",
+        "palette": "يستخرج الموقع هذه الألوان الثلاثة من اللون المختار:",
+        "website": "يمكنك حذف https:// (يتم حفظ neas.ae كـ https://neas.ae)."
+      },
+      "palette": {
+        "background": "خلفية البطاقة",
+        "leaf": "الورقة",
+        "line": "الخط العريض"
+      },
+      "btns": {
+        "add_social": "إضافة حساب جديد"
+      },
+      "validation": {
+        "name": "اسم الشركة مطلوب",
+        "overview": "النبذة مطلوبة",
+        "email": "يرجى إدخال بريد إلكتروني صحيح",
+        "url": "يرجى إدخال رابط صحيح يبدأ بـ http:// أو https://",
+        "logo": "شعار الشركة مطلوب",
+        "card_color": "لون خلفية البطاقة مطلوب",
+        "hex": "استخدم لونًا سداسيًا مثل #95C45C",
+        "min_length": "الحد الأدنى {{min}} أحرف",
+        "max_length": "الحد الأقصى {{max}} حرف",
+        "services": "اختر خدمة واحدة على الأقل لهذه الشركة",
+        "website": "يرجى إدخال موقع صحيح، مثل neas.ae",
+        "image_type": "يجب أن تكون الصورة بصيغة SVG أو PNG أو WebP",
+        "image_size": "يجب ألا يتجاوز حجم الصورة {{max}} ميجابايت"
+      }
+    },
+    "messages": {
+      "saved": "تم حفظ التغييرات بنجاح"
     }
   }
 }
