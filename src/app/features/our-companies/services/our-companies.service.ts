@@ -101,7 +101,8 @@ export class OurCompaniesService {
     return {
       id: c.id,
       name: c.name ?? '',
-      logo: toMediaUrl(c.logo, environment.mediaUrl),
+      // Relative path: the table's avatar column adds the media URL itself.
+      logo: c.logo,
       location: c.location || '-',
       services_label: this.translate.instant('our_companies.list.services_count', {
         count: c.servicesCount ?? 0,
